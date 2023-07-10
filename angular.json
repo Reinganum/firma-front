@@ -25,7 +25,18 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/assets/css/estilos-otic-pro.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/styles.css",
+              "src/assets/fonts/feather/iconfont.css",
+              "src/assets/fonts/font-awesome/css/font-awesome.min.css",
+              "src/assets/fonts/flag-icon-css/css/flag-icon.min.css",
+              "src/assets/css/vertical-menu.min.css",
+              "src/assets/css/horizontal-menu.min.css",
+              "src/assets/css/components.css",
+              "src/assets/css/bootstrap.css",
+              "src/assets/css/bootstrap-extended.css",
+              "src/assets/css/forms/form-validation.css"
             ],
             "scripts": []
           },
@@ -87,6 +98,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
             "scripts": []

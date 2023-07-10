@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="19" height="26" viewBox="0 0 19 26">
+  <g id="Grupo_35" data-name="Grupo 35" transform="translate(-1031 -18)">
+    <g id="Grupo_36" data-name="Grupo 36" transform="translate(-123 -1)">
+      <g id="Elipse_3" data-name="Elipse 3" transform="translate(1157 19)" fill="#fff" stroke="#1d2345" stroke-linecap="round" stroke-linejoin="round" stroke-width="1">
+        <circle cx="6.5" cy="6.5" r="6.5" stroke="none"/>
+        <circle cx="6.5" cy="6.5" r="6" fill="none"/>
+      </g>
+      <g id="Rectángulo_44" data-name="Rectángulo 44" transform="translate(1154 32)" fill="#fff" stroke="#1d2345" stroke-linecap="round" stroke-linejoin="round" stroke-width="1">
+        <path d="M7,0h5a7,7,0,0,1,7,7v6a0,0,0,0,1,0,0H0a0,0,0,0,1,0,0V7A7,7,0,0,1,7,0Z" stroke="none"/>
+        <path d="M7,.5h5A6.5,6.5,0,0,1,18.5,7v5.5a0,0,0,0,1,0,0H.5a0,0,0,0,1,0,0V7A6.5,6.5,0,0,1,7,.5Z" fill="none"/>
+      </g>
+    </g>
+  </g>
+</svg>

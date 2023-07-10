@@ -1,0 +1,21 @@
+<div class="pace-done vertical-layout navbar-floating footer-static vertical-overlay-menu vertical-menu-modern"
+     [class.menu-expanded]="!isCollapsed"
+     [class.menu-collapsed]="isCollapsed"
+     [class.menu-open]="menuShow"
+     [class.menu-hide]="!menuShow"
+
+     [class.vertical-overlay-menu]="!tipeMenu"
+     [class.vertical-menu-modern]="tipeMenu"
+
+
+>
+  <app-header (menuShow)="menu($event)" [menuVar]="menuShow"></app-header>
+  <!-- <app-menu  (menuShow)="menu($event)"
+             [menuVar]="menuShow" (menuColapsar)="colapsar($event)"></app-menu> -->
+
+  <div class="app-content content pb-5" [@fadeIn]="getState(o)">
+    <router-outlet name='pages' #o="outlet"></router-outlet>
+  </div>
+  <div class="sidenav-overlay"></div>
+  <!-- <app-footer style="position: fixed;bottom: 0px;"></app-footer> -->
+</div>
