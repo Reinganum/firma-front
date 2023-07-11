@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="50.854" height="50.854" viewBox="0 0 50.854 50.854">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectángulo_1586" data-name="Rectángulo 1586" width="38" height="35" transform="translate(-0.096 0.261)" fill="#3377b9"/>
+    </clipPath>
+  </defs>
+  <g id="Grupo_3280" data-name="Grupo 3280" transform="translate(-2349.146 -1340)">
+    <path id="Trazado_1669" data-name="Trazado 1669" d="M10.171,0H40.683A10.171,10.171,0,0,1,50.854,10.171V40.683A10.171,10.171,0,0,1,40.683,50.854H10.171A10.171,10.171,0,0,1,0,40.683V10.171A10.171,10.171,0,0,1,10.171,0Z" transform="translate(2349.146 1340)" fill="#e3ebf5"/>
+    <g id="firma_tabla" transform="translate(2359.096 1347.739)" clip-path="url(#clip-path)">
+      <path id="Trazado_1665" data-name="Trazado 1665" d="M10.339,21.416,20.907,10.848l4.529,4.529L14.869,25.945Z" transform="translate(7.998 6.522)" fill="none" stroke="#0b58a4" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.667"/>
+      <path id="Trazado_1666" data-name="Trazado 1666" d="M26.161,19.122,23.9,7.8,2.005,2.515,7.289,24.405,18.612,26.67Z" transform="translate(1.235 -0.241)" fill="none" stroke="#0b58a4" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.667"/>
+      <path id="Trazado_1667" data-name="Trazado 1667" d="M2.005,2.515,13.459,13.969" transform="translate(1.235 -0.241)" fill="none" stroke="#0b58a4" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.667"/>
+      <path id="Trazado_1668" data-name="Trazado 1668" d="M10.859,14.387a3.02,3.02,0,1,0-3.02-3.02A3.02,3.02,0,0,0,10.859,14.387Z" transform="translate(5.969 4.493)" fill="none" stroke="#0b58a4" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.667"/>
+    </g>
+  </g>
+</svg>

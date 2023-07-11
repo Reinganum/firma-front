@@ -110,7 +110,7 @@ import {animate, group, query, state, style, transition, trigger,animateChild} f
     ])
   ],
 })
-export class PagesComponent  implements OnInit{
+export class PagesComponent implements OnInit{
   menuShow = true;
   tipeMenu=true;
   isCollapsed=false;

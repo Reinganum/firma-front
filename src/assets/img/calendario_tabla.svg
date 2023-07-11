@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20.002" height="20.002" viewBox="0 0 20.002 20.002">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectángulo_1470" data-name="Rectángulo 1470" width="20.002" height="20.002" fill="#fff"/>
+    </clipPath>
+  </defs>
+  <g id="calendario_tabla" clip-path="url(#clip-path)">
+    <path id="Trazado_1458" data-name="Trazado 1458" d="M15.852,3.475H4.184A1.667,1.667,0,0,0,2.518,5.142V16.809a1.667,1.667,0,0,0,1.667,1.667H15.852a1.667,1.667,0,0,0,1.667-1.667V5.142A1.667,1.667,0,0,0,15.852,3.475Z" transform="translate(-0.018 -0.141)" fill="none" stroke="#3d3d3d" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.667"/>
+    <path id="Trazado_1459" data-name="Trazado 1459" d="M2.518,8.475h15" transform="translate(-0.018 -0.141)" fill="none" stroke="#3d3d3d" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.667"/>
+    <path id="Trazado_1460" data-name="Trazado 1460" d="M13.352,1.808V5.142" transform="translate(-0.018 -0.141)" fill="none" stroke="#3d3d3d" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.667"/>
+    <path id="Trazado_1461" data-name="Trazado 1461" d="M6.685,1.808V5.142" transform="translate(-0.018 -0.141)" fill="none" stroke="#3d3d3d" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.667"/>
+  </g>
+</svg>

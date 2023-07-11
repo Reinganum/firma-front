@@ -6,16 +6,17 @@
 
      [class.vertical-overlay-menu]="!tipeMenu"
      [class.vertical-menu-modern]="tipeMenu"
-
-
 >
+
   <app-header (menuShow)="menu($event)" [menuVar]="menuShow"></app-header>
+  <app-menu></app-menu>
+  
   <!-- <app-menu  (menuShow)="menu($event)"
              [menuVar]="menuShow" (menuColapsar)="colapsar($event)"></app-menu> -->
 
-  <div class="app-content content pb-5" [@fadeIn]="getState(o)">
+   <div class="app-content content pb-5" [@fadeIn]="getState(o)">
     <router-outlet name='pages' #o="outlet"></router-outlet>
-  </div>
+   </div>
   <div class="sidenav-overlay"></div>
   <!-- <app-footer style="position: fixed;bottom: 0px;"></app-footer> -->
 </div>

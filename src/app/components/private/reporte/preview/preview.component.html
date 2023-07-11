@@ -1,0 +1,40 @@
+<div class="modal-header">
+    <h4 class="modal-title">Vista Previa</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+</div>
+<div class="modal-body py-2">
+    <ng-container [ngSwitch]="tipo">
+        <ng-container *ngSwitchCase="'PDF'">
+            <div #pdf>
+                <div id="portada" class="pagina">
+                    <span class="border-bottom top-0" [ngStyle]="{'background-color':colorCorporativo}"></span>
+                    <h1>Informe</h1>
+                    <span class="border-top bottom-0" [ngStyle]="{'background-color':colorCorporativo}"></span>
+                </div>
+                <!-- Graficos -->
+                <ng-template #paginas dynamicComponents></ng-template>
+            </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'PPT'">
+            <div #ppt>
+                <div class="pagina">
+        
+                </div>
+                <!-- Graficos -->
+                <ng-template #paginas dynamicComponents></ng-template>
+            </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'XLSX'">
+            <div #xlsx>
+                <!-- Sheets -->
+                <ng-template #paginas dynamicComponents></ng-template>
+            </div>
+        </ng-container>
+    </ng-container>
+
+    <!-- <ng-template #loading>...Cargando vista previa</ng-template> -->
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close(false)">Cancelar</button>
+    <button type="button" class="btn btn-outline-dark" (click)="download()">Descargar</button>
+</div>

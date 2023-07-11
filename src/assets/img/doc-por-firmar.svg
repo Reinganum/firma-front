@@ -1,0 +1,12 @@
+<svg id="Grupo_3215" data-name="Grupo 3215" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24.452" height="22" viewBox="0 0 24.452 22">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectángulo_1512" data-name="Rectángulo 1512" width="24.452" height="22" fill="#1e2345"/>
+    </clipPath>
+  </defs>
+  <g id="fi_arrow-up-circle" transform="translate(24.452 22) rotate(180)" clip-path="url(#clip-path)">
+    <path id="Trazado_1529" data-name="Trazado 1529" d="M6.519,2.933,3.26,0,0,2.933" transform="translate(8.561 7.333)" fill="none" stroke="#1e2345" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.667"/>
+    <path id="Trazado_1530" data-name="Trazado 1530" d="M0,5.866V0" transform="translate(11.82 8.067)" fill="none" stroke="#1e2345" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.667"/>
+  </g>
+  <path id="Vector" d="M22.269,16.678a1.848,1.848,0,0,1-.6,1.354,2.145,2.145,0,0,1-1.458.561H3.71a2.145,2.145,0,0,1-1.458-.561,1.848,1.848,0,0,1-.6-1.354V3.272a1.848,1.848,0,0,1,.6-1.354A2.145,2.145,0,0,1,3.71,1.357H8.865L10.927,4.23h9.28a2.145,2.145,0,0,1,1.458.561,1.848,1.848,0,0,1,.6,1.354Z" transform="translate(0.268 -0.208)" fill="none" stroke="#1e2345" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.667"/>
+</svg>

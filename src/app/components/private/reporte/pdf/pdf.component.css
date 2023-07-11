@@ -1,0 +1,4 @@
+.chart{
+    display: grid;
+    place-content: center;
+}

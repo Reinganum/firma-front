@@ -10,6 +10,7 @@ import { MenuModule } from "../layout/menu/menu.module";
 import { HeaderModule } from "../layout/header/header.module";
 import { FooterModule } from "../layout/footer/footer.module";
 
+
 // routing
 const routes: Routes = [
   {
@@ -143,8 +144,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     HeaderModule,
     MenuModule,
-    FooterModule
-
+    FooterModule,
   ],
   exports: [
     PagesComponent

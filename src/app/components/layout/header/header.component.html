@@ -1,8 +1,11 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow sticky-top  floating-nav">
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow sticky-top floating-nav">
   <div class="container-fluid">
       <a class="navbar-brand" href="#">
           <img src="../assets/img/logo-otic-sofofa-main.svg" class="logo-cabecera pull-left" style="margin-top:-7px;">
       </a>
+      <a class="navbar-brand" href="#">
+        <img src="../assets/img/logo-firma-header.svg" class="logo-cabecera pull-left" style="margin-top:-7px;">
+    </a>
       <nav class="nav d-sm-block d-xl-none">
           <button  (click)="menu()" class="navbar-toggler d-block" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="border-color:transparent!important;font-size:12px;">
               <!--<span class="navbar-toggler-icon"></span>-->
@@ -13,12 +16,13 @@
           <ul class="nav justify-content-end">
               <li class="nav-item">
                   <div class="usuario-cabecera">
-                      <img src="../assets/img/user-ok.svg">
-                      <span style="margin-left:10px;"><strong>{{userInfo.firstName}} {{userInfo.lastName}}</strong></span>
+                      <img class="px-3" src="../assets/img/mensaje_header.svg">
+                      <img class="px-3" src="../assets/img/user_header.svg">
+                      <span style="margin-left:10px;"><strong><!--{{userInfo.firstName}} {{userInfo.lastName}}--> Tania Cortés F.</strong></span>
                       <a (click)="logOut()" data-bs-toggle="tooltip" data-bs-placement="top" title="Salir de Encuestas" style="margin-left:5px;">
-                          <img src="../assets/img/salir.svg">
+                          <img  class="px-3" src="../assets/img/salir_header.svg">
                       </a>
-                      <p style="margin-left:33px; margin-top:-8px; margin-bottom:0px;">Otic Sofofa</p>
+                      <p style="margin-left:100px; margin-top:-8px; margin-bottom:0px;">Otic Sofofa</p>
                   </div>
               </li>
           </ul>

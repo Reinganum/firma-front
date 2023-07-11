@@ -1,0 +1,46 @@
+<main>
+    <!-- Sheet -->
+    <div [ngbNavOutlet]="nav"></div>
+    <!-- Fin Sheet -->
+    <ul ngbNav #nav="ngbNav" class="nav-tabs">
+        <li ngbNavItem>
+          <a ngbNavLink>Encuesta</a>
+          <ng-template ngbNavContent>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th *ngFor="let encabezado of encuestas.encabezados">{{encabezado}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let fila of encuestas.filas">
+                        <td *ngFor="let celda of fila;let index = index">
+                            <ng-container *ngIf="index == 0;else informacion">
+                                <img *ngIf="celda" class="img-thumbnail" [src]="celda">
+                            </ng-container>
+                            <ng-template #informacion>{{celda}}</ng-template>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+          </ng-template>
+        </li>
+        <li ngbNavItem>
+          <a ngbNavLink>Participantes</a>
+          <ng-template ngbNavContent>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th *ngFor="let encabezado of participantes.encabezados">{{encabezado}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let fila of participantes.filas">
+                        <td *ngFor="let celda of fila">{{celda}}</td>
+                    </tr>
+                </tbody>
+            </table>
+          </ng-template>
+        </li>
+      </ul>
+</main>

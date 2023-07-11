@@ -1,0 +1,177 @@
+<main id="main">
+    <div class="container">
+        <div class="content-wrapper container-xxl p-0">
+            <div class="content-body">
+                <div class="row">
+                    <div class="col-12">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a [routerLink]="['/private/home']">Inicio</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Reportes</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="col-12">
+                        <h1 class="fw-bold">REPORTES</h1>
+                        <p>Descarga informes y reportes de las encuestas realizadas, preguntas repondidas y participantes.</p>
+                    </div>
+                </div>
+
+                <div class="row my-1" id="filtros">
+                    <div class="col-12 px-4">
+                        <div class="row">
+                            <div class="col-12 card shadow-sm pt-3 pb-2">
+                                <div [formGroup]="filtrosForm" class="row">
+                                    <div class="col-12">
+                                        <h4 class="fw-bold">FILTRAR EN EL LISTADO</h4>
+                                    </div>
+                                    <div class="col-12 col-md-6 form-group">
+                                        <mat-form-field>
+                                            <input matInput formControlName="encuesta" type="text" placeholder="Encuesta">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-md-6 form-group">
+                                        <mat-form-field>
+        
+                                            <mat-select multiple formControlName="cliComercial" placeholder="Cliente">
+                                                <mat-option *ngFor="let cliente of clientesAll" [value]="cliente.cliComercialId">{{cliente.cliComercialNombreAC}}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-md-3 form-group">
+                                        <mat-form-field>
+                                            <mat-label>FECHA CREACIÓN DESDE</mat-label>
+                                            <input formControlName="fechaDesde" matInput [matDatepicker]="desde">
+                                         
+                                            <mat-datepicker-toggle matSuffix [for]="desde"></mat-datepicker-toggle>
+                                            <mat-datepicker #desde></mat-datepicker>
+                                          </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-md-3 form-group">
+                                        <mat-form-field>
+                                            <mat-label>FECHA CREACIÓN HASTA</mat-label>
+                                            <input formControlName="fechaHasta" matInput [matDatepicker]="hasta">
+                                        
+                                            <mat-datepicker-toggle matSuffix [for]="hasta"></mat-datepicker-toggle>
+                                            <mat-datepicker #hasta></mat-datepicker>
+                                          </mat-form-field>
+                                    </div>
+                                       <div class="col-12 col-md-3 form-group">
+                                        <mat-form-field>
+                                            <mat-label>FECHA TERMINO DESDE</mat-label>
+                                            <input formControlName="fechaDesdeTermino" matInput [matDatepicker]="desdeTermino">
+                                          
+                                            <mat-datepicker-toggle matSuffix [for]="desdeTermino"></mat-datepicker-toggle>
+                                            <mat-datepicker #desdeTermino></mat-datepicker>
+                                          </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-md-3 form-group">
+                                        <mat-form-field>
+                                            <mat-label>FECHA TERMINO HASTA</mat-label>
+                                            <input formControlName="fechaHastaTermino" matInput [matDatepicker]="hastaTermino">
+                                           
+                                            <mat-datepicker-toggle matSuffix [for]="hastaTermino"></mat-datepicker-toggle>
+                                            <mat-datepicker #hastaTermino></mat-datepicker>
+                                          </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-md-6 form-group">
+        
+                                        <mat-form-field>
+                                            <mat-select formControlName="areas" multiple placeholder="Areas">
+                                                <mat-option *ngFor="let area of areasAll" [value]="area.area">{{area.area | titlecase}}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-md-6 form-group">
+        
+                                        <mat-form-field>
+                                            <mat-select formControlName="cursos"  multiple placeholder="Cursos">
+                                                <mat-option *ngFor="let curso of cursosAll" [value]="curso.cursoIdAC">{{curso.cursoIdAC}} - {{curso.nombreCursoAC}}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 text-end mt-md-3 mt-1">
+                                        <a (click)="setPage()" class="mt-2 btn btn-primary mx-1"><img
+                                                src="../assets/img/aplicar-filtros.svg">Aplicar filtros</a>
+                                        <a  (click)="resetFiltros()" class="mt-2 btn boton-filtro-gris mx-1"><img
+                                                src="../assets/img/limpiar-filtros.svg">Limpiar Filtros</a>
+                                        
+                                    </div>
+                                    <div class="col-12 text-end mt-md-3 mt-1">
+                                        <a (click)="generarReporteExcel()" class="mt-2 btn btn-primary mx-1"><img
+                                            src="../assets/img/aplicar-filtros.svg">Exportar en Excel</a>
+                                        <a (click)="generarReportePDF()" class="mt-2 btn btn-primary mx-1"><img
+                                            src="../assets/img/aplicar-filtros.svg">Exportar en PDF</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-lg-4 col-xl-4 pt-3">
+                        <h3 class="fw-bold">VISTA PREVIA REPORTE</h3>
+                    </div>
+             
+                </div>
+        
+        
+                <div class="row mt-3">
+                    <div class="col-12 table-responsive d-none d-md-block">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Nombre Encuesta</th>
+                                    <th>Nombre Plantilla</th>
+                                    <th>Tipo Plantilla</th>
+                                    <th>Cantidad Preguntas</th>
+                                    <th>Colaboradores</th>
+                                    <th>Actualizado El</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let encuesta of encuestas ;index as i;">
+                                <tr>
+                                    <td>{{encuesta.nombre}}</td>
+                                    <td>{{encuesta.plantillaModel.nombre}}</td>
+                                    <td>{{encuesta.plantillaModel.tipoPlanillaModel ? encuesta.plantillaModel.tipoPlanillaModel.nombre : ''}}</td>
+                                    <td><span class="badge badge-primary">{{encuesta.cantidadPreguntas}}</span></td>
+                                    <td [style]="encuesta.plantillaModel.plantillaColaboradoresModels.length>0?'display: flex;align-items: center;':''">
+                                        <div class="colaborador mx-auto" *ngFor="let colaborador of encuesta.plantillaModel.plantillaColaboradoresModels" [attr.data-bs-toggle]="'tooltip'" [ngbTooltip]="colaborador.usuariosModel.nombre+' '+colaborador.usuariosModel.apellido">{{getAcrom(colaborador.usuariosModel.nombre+' '+colaborador.usuariosModel.apellido)}}</div>
+                                    </td>
+                                    <td>{{encuesta.plantillaModel.actualizadoEl | date:'dd-MM-yyyy hh:mm'}}</td>
+                                    <td><span class="badge" [class]="encuesta.estado == 0 ? 'badge-warning' : encuesta.estado == 1 ? 'badge-success': 'badge-danger'">{{encuesta.estado == 0 ? 'Borrador': encuesta.estado == 1 ? 'Enviada' : 'Cerrada'}}</span></td>
+                               
+                                </tr>
+                             
+                            </tbody>
+                        </table>
+                    </div>
+                
+                </div>
+        
+                <div class="row">
+                    <div class="col-md-5 col-12">
+                        {{encuestasTotal}} {{encuestasTotal==1?'registro':'registros'}}
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <ngb-pagination class="text-center" [pageSize]="pageSize" [collectionSize]="encuestasTotal" [(page)]="page"
+                                        [maxSize]="maxPage"
+                                        [rotate]="true"
+                                        [ellipses]="false"
+                                        [boundaryLinks]="true"
+                                        aria-label="Default pagination" (pageChange)="setPage()"></ngb-pagination>
+                    </div>
+                    <div class="col-md-1 col-12">
+                        <mat-form-field >
+                            <mat-select [(ngModel)]="pageSize" placeholder="Cantidad de registros" (selectionChange)="setPage()">
+                                <mat-option *ngFor="let pagesize of allPagesSice" [value]="pagesize">{{pagesize}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+        
+            </div>
+        </div>
+    </div>
+</main>

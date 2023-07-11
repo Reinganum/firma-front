@@ -1,1 +1,53 @@
-<p>menu works!</p>
+<div class="main-menu menu-fixed menu-accordion menu-shadow menu-native-scroll sidebar pt-0"
+    [class.expanded]="!isCollapsed || mouseEnter" data-scroll-to-active="true"
+    style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+
+    <div class="main-menu-content">
+        <div class="navbar-header">
+            <ul class="nav navbar-nav flex-row">
+                <li class="nav-item me-auto">
+                </li>
+                <li class="nav-item nav-toggle">
+                    <a class="nav-link modern-nav-toggle d-none d-xl-block pr-0" (click)="colapsar()">
+                        <i [class.icon-circle]="isCollapsed" [class.icon-disc]="!isCollapsed"
+                            class="toggle-icon feather font-medium-4 collapse-toggle-icon text-white"></i>
+                    </a>
+                    <a class="nav-link modern-nav-toggle d-block d-xl-none pr-0" (click)="menu()">
+                        <i data-feather="x" class="font-medium-4 text-white toggle-icon"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="shadow-bottom"></div>
+        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+            <li class=" nav-item"><a class="d-flex align-items-center">
+                    <i ></i><span class="menu-title text-truncate"
+                        data-i18n="Home">Home</span></a>
+            </li>
+            <li class="nav-item"><a class="d-flex align-items-center" [routerLink]="['disenoPlantillas']">
+                    <i [data-feather]="'home'"></i><span class="menu-title text-truncate" data-i18n="Home">Diseño de
+                        Plantillas</span></a>
+            </li>
+            <li class=" nav-item"><a class="d-flex align-items-center" [routerLink]="['bancoPreguntas']">
+                    <i [data-feather]="'home'"></i><span class="menu-title text-truncate" data-i18n="Home">Banco de
+                        Preguntas</span></a>
+            </li>
+            <li class=" nav-item"><a class="d-flex align-items-center" [routerLink]="['listadoEncuestas']">
+                    <i [data-feather]="'home'"></i><span class="menu-title text-truncate" data-i18n="Home">Lanzamiento de
+                        Encuestas</span></a>
+            </li>
+            <li class=" nav-item"><a class="d-flex align-items-center" [routerLink]="['reporte']">
+                    <i [data-feather]="'home'"></i><span class="menu-title text-truncate"
+                        data-i18n="Home">Reportes</span></a>
+            </li>
+            <li class=" nav-item"><a class="d-flex align-items-center" [routerLink]="['categorias']">
+                    <i [data-feather]="'home'"></i><span class="menu-title text-truncate"
+                        data-i18n="Home">Categorias</span></a>
+            </li>
+            <li class=" nav-item"><a class="d-flex align-items-center" [routerLink]="['usuarios']">
+                    <i [data-feather]="'home'"></i><span class="menu-title text-truncate"
+                        data-i18n="Home">Usuarios</span></a>
+            </li>
+        </ul>
+    </div>
+</div>

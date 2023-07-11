@@ -8,6 +8,7 @@ const routes: Routes = [
     loadChildren: () => import('./components/private/pages.module').then(m => m.PagesModule),
     data: { animation: 'private' }
   },
+  {path: '', redirectTo:'login',pathMatch:'full'},
   { path: 'login', loadChildren: () => import('./components/public/login/login.module').then(m => m.LoginModule) },
 ];
 

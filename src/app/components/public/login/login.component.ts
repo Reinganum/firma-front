@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -7,7 +8,9 @@ import { Component } from '@angular/core';
 })
 export class LoginComponent {
 
-  async login() {
+  constructor(private router:Router){}
 
+  async login() {
+    this.router.navigate(['private/home'])
   }
 }
