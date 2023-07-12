@@ -1,21 +1,25 @@
 
 <div class="container mx-4 my-5">
     <h1>Datos de la firma</h1>
-    <div class="row rounded">
+    <div class="row rounded" style="background-color: #fafbfc;">
         <div class="col-2 py-4 px-5">
             <img src="../assets/img/img-firma-resumen.svg">
         </div> 
-        <div class="col-2">
-            <p>Nombre:</p>
-            <p>RUT:</p>
-            <p>Email:</p>
-            <p>Teléfono:</p>
+        <div class="col-2 d-flex" style="align-items: center;">   
+            <div>
+                <p>Nombre:</p>
+                <p>RUT:</p>
+                <p>Email:</p>
+                <p>Teléfono:</p>
+            </div>
         </div>
-        <div class="col-2 fw-bold">
-            <p>{{user.name}}<p>
-            <p>{{user.rut}}</p>
-            <p>{{user.email}}</p>
-            <p>{{user.phone}}</p>
+        <div class="col-2 d-flex fw-bold" style="align-items: center;">
+            <div>
+                <p>{{user.name}}<p>
+                <p>{{user.rut}}</p>
+                <p>{{user.email}}</p>
+                <p>{{user.phone}}</p>
+            </div>
         </div>
     </div>
 </div>

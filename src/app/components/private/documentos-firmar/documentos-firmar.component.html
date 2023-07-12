@@ -1,21 +1,21 @@
 <app-datos-firma></app-datos-firma>
 
-<div class="container rounded">
-    <div class="row">
+<div class="container rounded" style="background-color: #fafbfc;">
+    <div class="row py-4 ms-2">
         <div class="col-6">
-                <span><img src="../assets/img/doc-por-firmar.svg">Documentos por firmar</span>
+                <span class="fw-bold"><img class="pe-2" src="../assets/img/doc-por-firmar.svg">Documentos por firmar</span>
                 <p>listado de documentos por firmar</p>
         </div>
-        <div class="col-6">
-            <button class="filter-btn btn"><img class="px-3" src="../assets/img/filtro-btn.svg">Filtrar</button>
+        <div class="d-flex col-6 justify-content-end">
+            <button class="filter-btn btn me-2" style="border: 1px solid #979ba2;"><img class="px-3" src="../assets/img/filtro-btn.svg">Filtrar</button>
             <button class="btn-firmar-seleccionados btn btn-primary btn-main" (click)="showModal()">Firmar seleccionados</button>
         </div>
     </div>
-        <table class="ms-2 table mat-table table-light">
+        <table class="ms-2 table">
            <thead class="pt-4">
             <tr>
-                <td><input class="form-check-input" type="checkbox"></td>
-                <td *ngFor="let dataColumn of documentData, let i = index">
+                <td><input class="form-check-input" style="outline:#1e5180;" type="checkbox"></td>
+                <td  *ngFor="let dataColumn of documentData, let i = index">
                     <span><img class="px-3" [src]=dataColumn.icon>{{dataColumn.nombre}}</span>
                 </td>
             </tr>
@@ -27,8 +27,10 @@
                     <td>{{document.documento}}</td>
                     <td>{{document.origen}}</td>
                     <td>
-                        <img src="../../../../assets/img/firma_tabla.svg">
-                        <img src="../../../../assets/img/lupa_btn.svg">
+                        <div class="d-flex justify-content-center">
+                            <img class="px-1" src="../../../../assets/img/firma_tabla.svg">
+                            <img src="../../../../assets/img/lupa_btn.svg">
+                        </div>
                     </td>
                 </tr>
            </tbody>
