@@ -24,8 +24,8 @@
                 <tr *ngFor="let document of documentList, let i = index">
                     <td><input class="form-check-input" type="checkbox"></td>
                     <td>{{document.fecha}}</td>
-                    <td>{{document.documento}}</td>
-                    <td>{{document.origen}}</td>
+                    <td>{{document.nombreArchivo}}</td>
+                    <td>{{document.medio == 1 ? 'Mail enviado' : document.medio == 2 ? 'Notificacion GN' : document.medio == 3 ? 'Generación GN': document.medio == 4 ? 'PP': ''}}</td>
                     <td>
                         <div class="d-flex justify-content-center">
                             <img class="px-1" src="../../../../assets/img/firma_tabla.svg">

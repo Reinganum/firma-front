@@ -4,6 +4,7 @@ export const environment = {
 
   API_DOMAINS: {
     USUARIOS: 'http://localhost:3500/local',
+    DOCUMENTOS: 'http://localhost:3400/local',
   },
   URL_SENCE: 'https://eligemejor.sence.cl/BuscarCurso/DetalleCurso?curso=',
   API_MOTORES: {

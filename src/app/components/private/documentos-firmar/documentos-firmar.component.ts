@@ -1,17 +1,37 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmacionFirmaDocumentoComponent } from '../../modals/confirmacion-firma-documento/confirmacion-firma-documento.component';
 import { Document, DocumentData } from '../types';
+import { DocumentosService } from 'src/app/services/documentos.service';
 
 @Component({
   selector: 'app-documentos-firmar',
   templateUrl: './documentos-firmar.component.html',
   styleUrls: ['./documentos-firmar.component.css']
 })
-export class DocumentosFirmarComponent {
+export class DocumentosFirmarComponent implements OnInit {
   modalRef!:NgbModalRef
 
-  constructor(private modalService:NgbModal){}
+  constructor(
+    private modalService:NgbModal,
+    private documentosService: DocumentosService
+      ){}
+
+  ngOnInit(): void {
+    this.obtenerDocumentos();
+  }
+
+  obtenerDocumentos() {
+    try {
+      this.documentosService.listarDocumentos().subscribe((res:any) => {
+        console.log(res);
+        this.documentList = res.usuarios;
+      });
+    } catch (error:any) {
+      console.log(error);
+
+    }
+  }
 
   showModal(){
     this.modalRef=this.modalService.open(ConfirmacionFirmaDocumentoComponent,{backdrop:'static',size:'lg'});
@@ -26,13 +46,15 @@ export class DocumentosFirmarComponent {
     {icon:"../assets/img/archivo_tabla.svg",nombre:"Documento"},
     {icon:"../assets/img/origen_tabla.svg",nombre:"Origen"},
     {icon:"../assets/img/opcion_tabla.svg",nombre:"Opciones"}
-  ]
-  documentList:Document[]=[
-    {fecha: new Date("11-04-2023 10:30"), documento: "CarlosMirandaPrecontrato.pdf" , origen: "Gestión Normativa"},
-    {fecha: new Date("11-04-2023 10:30"), documento: "CarlosMirandaPrecontrato.pdf" , origen: "Gestión Normativa"},
-    {fecha: new Date("11-04-2023 10:30"), documento: "CarlosMirandaPrecontrato.pdf" , origen: "Gestión Normativa"},
-    {fecha: new Date("11-04-2023 10:30"), documento: "CarlosMirandaPrecontrato.pdf" , origen: "Gestión Normativa"},
-    {fecha: new Date("11-04-2023 10:30"), documento: "CarlosMirandaPrecontrato.pdf" , origen: "Gestión Normativa"}
-  ]
+  ];
+  // documentList:any[]=[
+  //   {fecha: new Date("11-04-2023 10:30"), documento: "CarlosMirandaPrecontrato.pdf" , origen: "Gestión Normativa"},
+  //   {fecha: new Date("11-04-2023 10:30"), documento: "CarlosMirandaPrecontrato.pdf" , origen: "Gestión Normativa"},
+  //   {fecha: new Date("11-04-2023 10:30"), documento: "CarlosMirandaPrecontrato.pdf" , origen: "Gestión Normativa"},
+  //   {fecha: new Date("11-04-2023 10:30"), documento: "CarlosMirandaPrecontrato.pdf" , origen: "Gestión Normativa"},
+  //   {fecha: new Date("11-04-2023 10:30"), documento: "CarlosMirandaPrecontrato.pdf" , origen: "Gestión Normativa"}
+  // ];
+
+  documentList!:any[];
 
 }
