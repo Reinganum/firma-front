@@ -9,12 +9,12 @@
 >
 
   <app-header (menuShow)="menu($event)" [menuVar]="menuShow"></app-header>
-  <app-menu></app-menu>
-  
-  <!-- <app-menu  (menuShow)="menu($event)"
-             [menuVar]="menuShow" (menuColapsar)="colapsar($event)"></app-menu> -->
+  <!-- <app-menu></app-menu> -->
 
-   <div class="app-content content pb-5" [@fadeIn]="getState(o)">
+  <app-menu  (menuShow)="menu($event)"
+             [menuVar]="menuShow" (menuColapsar)="colapsar($event)"></app-menu>
+
+   <div class="app-content content pb-5">
     <router-outlet name='pages' #o="outlet"></router-outlet>
    </div>
   <div class="sidenav-overlay"></div>

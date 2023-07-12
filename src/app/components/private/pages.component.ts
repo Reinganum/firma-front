@@ -113,11 +113,11 @@ import {animate, group, query, state, style, transition, trigger,animateChild} f
 export class PagesComponent implements OnInit{
   menuShow = true;
   tipeMenu=true;
-  isCollapsed=false;
+  isCollapsed:boolean = false;
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
-  this.checkSize();
+    this.checkSize();
   }
 
   checkSize(){
@@ -134,6 +134,7 @@ export class PagesComponent implements OnInit{
 
 
   getState(outlet: any) {
+    console.log(outlet);
 
     // Changing the activatedRouteData.state triggers the animation
     return outlet.activatedRouteData.animation;
@@ -141,6 +142,12 @@ export class PagesComponent implements OnInit{
 
   ngOnInit(): void {
     this.checkSize();
+    this.isCollapsed = true;
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+    });
   }
 
 }

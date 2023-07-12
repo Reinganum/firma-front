@@ -20,11 +20,11 @@
         </div>
         <div class="shadow-bottom"></div>
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-            <li class="nav-item"><a class="d-flex align-items-center" routerLink='documentos'>
-                <img class="me-2" src="../../../../assets/img/bandeja-sidebar.svg"/><span class="menu-title text-truncate"
-                        data-i18n="Home">Documentos por firmar</span></a>
+            <li class=" nav-item"><a class="d-flex align-items-center" [routerLink]="['reporte']">
+              <i [data-feather]="'home'"></i><span class="menu-title text-truncate"
+                  data-i18n="Home">Reportes</span></a>
             </li>
-            <li class="nav-item"><a class="d-flex align-items-center" [routerLink]="['disenoPlantillas']">
+            <!-- <li class="nav-item"><a class="d-flex align-items-center" [routerLink]="['disenoPlantillas']">
                 <img class="me-2"  src="../../../../assets/img/salida-sidebar.svg"/><span class="menu-title text-truncate" data-i18n="Home">Documentos firmados</span></a>
             </li>
             <li class=" nav-item"><a class="d-flex align-items-center" [routerLink]="['bancoPreguntas']">
@@ -38,7 +38,7 @@
             <li class=" nav-item"><a class="d-flex align-items-center" [routerLink]="['reporte']">
                     <i [data-feather]="'home'"></i><span class="menu-title text-truncate"
                         data-i18n="Home">Reportes</span></a>
-            </li>
+            </li> -->
         </ul>
     </div>
 </div>

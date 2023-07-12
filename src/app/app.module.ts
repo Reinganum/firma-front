@@ -8,6 +8,7 @@ import { ConfirmacionFirmaDocumentoComponent } from './components/modals/confirm
 import { RechazarFirmaDocumentoComponent } from './components/modals/rechazar-firma-documento/rechazar-firma-documento.component';
 import {CoreDirectivesModule} from "./directives/directives";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MaterialModule } from './material.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AppRoutingModule,
     BrowserAnimationsModule,
     CoreDirectivesModule,
-    NgbModule
+    NgbModule,
+    MaterialModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

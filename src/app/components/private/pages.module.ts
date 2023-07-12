@@ -22,7 +22,7 @@ const routes: Routes = [
         // canActivate: [AuthGuard],
         // canLoad: [AuthGuard],
         data: { animation: 'home' }
-      }, 
+      },
       {path: 'documentos', loadChildren: () => import('./documentos-firmar/documentos-firmar.module').then(m => m.DocumentosFirmarModule)},
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       // {
@@ -148,7 +148,8 @@ const routes: Routes = [
     FooterModule,
   ],
   exports: [
-    PagesComponent
+    PagesComponent,
+    MenuModule
   ]
 })
 

@@ -64,4 +64,8 @@ export class MenuComponent {
       // Collapse the sidebar temporarily
       this.mouseEnter=false;
     }
+
+    ngOnInit() {
+      this.colapsar();
+    }
 }
