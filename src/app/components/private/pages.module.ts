@@ -9,7 +9,7 @@ import { MenuComponent } from "../layout/menu/menu.component";
 import { MenuModule } from "../layout/menu/menu.module";
 import { HeaderModule } from "../layout/header/header.module";
 import { FooterModule } from "../layout/footer/footer.module";
-
+import { DocumentosFirmarModule } from "./documentos-firmar/documentos-firmar.module";
 
 // routing
 const routes: Routes = [
@@ -17,13 +17,14 @@ const routes: Routes = [
     path: '',
     component: PagesComponent,
     children: [
-      { path: '', redirectTo: 'home', pathMatch: 'full' },
       {
         path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
         // canActivate: [AuthGuard],
         // canLoad: [AuthGuard],
         data: { animation: 'home' }
-      },
+      }, 
+      {path: 'documentos', loadChildren: () => import('./documentos-firmar/documentos-firmar.module').then(m => m.DocumentosFirmarModule)},
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
       // {
       //   path: 'bancoPreguntas', loadChildren: () => import('./bancoPreguntas/banco-preguntas/banco-preguntas.module').then(m => m.BancoPreguntasModule),
       //   canActivate: [AuthGuard],
@@ -137,7 +138,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    PagesComponent
+    PagesComponent,
   ],
   imports: [
     CommonModule,

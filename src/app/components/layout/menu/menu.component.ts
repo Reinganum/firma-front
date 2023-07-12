@@ -33,13 +33,9 @@ export class MenuComponent {
         this.isScrolled = false;
       }
     }
-
-
     /**
      * Toggle sidebar collapsed status
      */
-
-
     menu(){
       console.log('!this.menuVar',!this.menuVar);
       this.menuShow.emit(!this.menuVar);

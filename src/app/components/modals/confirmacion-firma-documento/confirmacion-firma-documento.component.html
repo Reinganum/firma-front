@@ -5,23 +5,43 @@
             <div class="modal-body">
                 <h1 class="mb-1 fw-bold text-center py-2" id="cardTitle">Confirmación firma documento</h1>
                 <h4 class="text-center py-4">¿Estas seguro que deseas firmar el documento <span class="fw-bold">Declaración Jurada Participante?</span></h4>
-            <div class="row border border-dark">
-                <div class="col-2 py-1">
-                    <p>Nombre:</p>
-                    <p>RUT:</p>
-                    <p>Email:</p>
-                </div>
-                <div class="col-2 fw-bold py-1">
-                    <p>Tania Cortés F.<p>
-                    <p>15.446.942-5</p>
-                    <p>tcortes@otic.sofofa.cl</p>
-                </div>
-            </div> 
-            <div class="row justify-content-end">
-                <div class="col-2">
-                    <button (click)="activeModal.close({ estado: false})">Cancelar</button>
-                </div>
-                <div class="col-2">
-                    <button class="btn btn-primary btn-main" (click)="confirmar()">Firmar</button>
+            
+                <div *ngIf="userKnown; else userForm">
+                <div class="row border border-dark">
+                    <div class="col-2 py-1">
+                        <p>Nombre:</p>
+                        <p>RUT:</p>
+                        <p>Email:</p>
+                    </div>
+                    <div class="col-2 fw-bold py-1">
+                        <p>{{user.name}}<p>
+                        <p>{{user.rut}}</p>
+                        <p>{{user.email}}</p>
+                    </div>
+                </div> 
+            </div>
+            <ng-template #userForm>
+                <form>
+                    <div class="mb-3">
+                      <label for="nombreCompleto" class="form-label">NOMBRE COMPLETO</label>
+                      <input type="text" placeholder="Escriba su nombre" class="form-control" id="nombreCompleto" aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                      <label for="inputRut" class="form-label">RUT</label>
+                      <input type="text" placeholder="Escriba su RUT" class="form-control" id="inputRut">
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputEmail" class="form-label">E-MAIL</label>
+                        <input type="email" placeholder="Escriba su e-mail" class="form-control" id="inputEmail" aria-describedby="emailHelp">
+                      </div>
+                  </form>
+            </ng-template>
+            <div class="row justify-content-end py-5">
+                <div class="d-flex flex-row-reverse">
+                    <button class="btn btn-primary btn-main mx-2 py-2" (click)="confirmar()">
+                        <img class="px-3" src="../../../../assets/img/firma_btn.svg">Firmar</button>
+                    <button class="btn btn-primary btn-main mx-2" (click)="activeModal.close({ estado: false})">
+                        <img class="px-3 py-2" src="../../../../assets/img/cancelar_btn.svg">Cancelar</button>
                 </div>
             </div>
+            
