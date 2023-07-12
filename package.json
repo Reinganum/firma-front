@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "^16.1.0",
     "@angular/router": "^16.1.0",
     "@ng-bootstrap/ng-bootstrap": "^15.1.0",
+    "angular-web-storage": "^16.0.0",
     "bootstrap": "^5.3.0",
     "feather-icons": "4.28.0",
     "ngx-perfect-scrollbar": "10.1.1",

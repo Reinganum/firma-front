@@ -39,7 +39,10 @@
               "src/assets/css/bootstrap-extended.css",
               "src/assets/css/forms/form-validation.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/js/keycloak.js",
+              "./node_modules/bootstrap/dist/js/bootstrap.min.js"
+            ]
           },
           "configurations": {
             "production": {
