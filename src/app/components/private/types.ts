@@ -10,3 +10,10 @@ export interface Document {
   documento: string
   origen:string
 }
+
+export interface DocumentData{
+  icon:string
+  nombre:string
+}
+
+             

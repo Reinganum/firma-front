@@ -14,20 +14,9 @@
         <table class="ms-2 table mat-table table-light">
            <thead class="pt-4">
             <tr>
-                <td>
-                    <input class="form-check-input" type="checkbox">
-                </td>
-                <td>
-                    <span><img class="px-3" src="../assets/img/calendario_tabla.svg">Fecha</span>
-                </td>
-                <td>
-                    <span><img class="px-3" src="../assets/img/archivo_tabla.svg">Documento</span>
-                </td>
-                <td>
-                    <span><img class="px-3" src="../assets/img/origen_tabla.svg">Origen</span>
-                </td>
-                <td>
-                    <span><img class="px-3" src="../assets/img/opcion_tabla.svg">Opciones</span>
+                <td><input class="form-check-input" type="checkbox"></td>
+                <td *ngFor="let dataColumn of documentData, let i = index">
+                    <span><img class="px-3" [src]=dataColumn.icon>{{dataColumn.nombre}}</span>
                 </td>
             </tr>
            </thead>
@@ -39,6 +28,7 @@
                     <td>{{document.origen}}</td>
                     <td>
                         <img src="../../../../assets/img/firma_tabla.svg">
+                        <img src="../../../../assets/img/lupa_btn.svg">
                     </td>
                 </tr>
            </tbody>

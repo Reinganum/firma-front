@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmacionFirmaDocumentoComponent } from '../../modals/confirmacion-firma-documento/confirmacion-firma-documento.component';
-import { Document } from '../types';
+import { Document, DocumentData } from '../types';
 
 @Component({
   selector: 'app-documentos-firmar',
@@ -21,6 +21,12 @@ export class DocumentosFirmarComponent {
       }
     })
   }
+  documentData:DocumentData[]=[
+    {icon:"../assets/img/calendario_tabla.svg",nombre:"Fecha"},
+    {icon:"../assets/img/archivo_tabla.svg",nombre:"Documento"},
+    {icon:"../assets/img/origen_tabla.svg",nombre:"Origen"},
+    {icon:"../assets/img/opcion_tabla.svg",nombre:"Opciones"}
+  ]
   documentList:Document[]=[
     {fecha: new Date("11-04-2023 10:30"), documento: "CarlosMirandaPrecontrato.pdf" , origen: "Gestión Normativa"},
     {fecha: new Date("11-04-2023 10:30"), documento: "CarlosMirandaPrecontrato.pdf" , origen: "Gestión Normativa"},

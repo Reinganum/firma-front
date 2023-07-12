@@ -9,7 +9,6 @@ import { MenuComponent } from "../layout/menu/menu.component";
 import { MenuModule } from "../layout/menu/menu.module";
 import { HeaderModule } from "../layout/header/header.module";
 import { FooterModule } from "../layout/footer/footer.module";
-import { DocumentosFirmarModule } from "./documentos-firmar/documentos-firmar.module";
 
 // routing
 const routes: Routes = [
