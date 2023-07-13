@@ -1,20 +1,26 @@
 <app-datos-firma></app-datos-firma>
 
 <div class="container rounded" style="background-color: #fafbfc;">
+    <div *ngIf=" firmaParam === 'firmar'; else firmados">
+        <h1>Documentos por firmar</h1>
+    </div>
+    <ng-template #firmados>
+        <h1>Documentos firmados</h1>
+    </ng-template>
     <div class="row py-4 ms-2">
         <div class="col-6">
-                <span class="fw-bold"><img class="pe-2" src="../assets/img/doc-por-firmar.svg">Documentos por firmar</span>
-                <p>listado de documentos por firmar</p>
+                <span class="fw-bold"><img class="pe-2" src="../assets/img/doc-por-firmar.svg">{{firmaParam==="firmar"?"Documentos por firmar":"Documentos firmados"}}</span>
+                <p>{{firmaParam==="firmar"?"Listado de documentos listos para firmar":"listado de documentos firmados y listos para gestión"}}</p>
         </div>
         <div class="d-flex col-6 justify-content-end">
             <button class="filter-btn btn me-2" style="border: 1px solid #979ba2;"><img class="px-3" src="../assets/img/filtro-btn.svg">Filtrar</button>
             <button class="btn-firmar-seleccionados btn btn-primary btn-main" (click)="showModal()">Firmar seleccionados</button>
         </div>
     </div>
-        <table class="ms-2 table">
+        <table mat-table class="ms-2 table">
            <thead class="pt-4">
             <tr>
-                <td><input class="form-check-input" style="outline:#1e5180;" type="checkbox"></td>
+                <td><input class="form-check-input" style="outline:#1e5180;" type="checkbox" disabled></td>
                 <td  *ngFor="let dataColumn of documentData, let i = index">
                     <span><img class="px-3" [src]=dataColumn.icon>{{dataColumn.nombre}}</span>
                 </td>
@@ -22,7 +28,7 @@
            </thead>
            <tbody>
                 <tr *ngFor="let document of documentList, let i = index">
-                    <td><input class="form-check-input" type="checkbox"></td>
+                    <td><input class="form-check-input" [value]=i type="checkbox" (change)="onCheckChange($event)"></td>
                     <td>{{document.fecha}}</td>
                     <td>{{document.nombreArchivo}}</td>
                     <td>{{document.medio == 1 ? 'Mail enviado' : document.medio == 2 ? 'Notificacion GN' : document.medio == 3 ? 'Generación GN': document.medio == 4 ? 'PP': ''}}</td>
@@ -35,6 +41,12 @@
                 </tr>
            </tbody>
         </table>
+        <mat-paginator #paginadorDocumentos
+            [length]="totalFilas"
+            [pageSize]="pageSize"
+            [pageSizeOptions]="pageSizeOptions"
+        >
+        </mat-paginator>
 </div>
 
 

@@ -22,7 +22,7 @@ const routes: Routes = [
         // canLoad: [AuthGuard],
         data: { animation: 'home' }
       },
-      {path: 'documentos', loadChildren: () => import('./documentos-firmar/documentos-firmar.module').then(m => m.DocumentosFirmarModule)},
+      {path: 'documentos/:estadoFirma', loadChildren: () => import('./documentos-firmar/documentos-firmar.module').then(m => m.DocumentosFirmarModule)},
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       // {
       //   path: 'bancoPreguntas', loadChildren: () => import('./bancoPreguntas/banco-preguntas/banco-preguntas.module').then(m => m.BancoPreguntasModule),
