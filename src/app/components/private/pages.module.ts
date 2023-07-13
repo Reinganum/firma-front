@@ -35,6 +35,7 @@ const routes: Routes = [
         data: {animation: 'vista'}
       },
       // { path: '', redirectTo: 'home', pathMatch: 'full' },
+      {path: 'documentos/:estadoFirma', loadChildren: () => import('./documentos-firmar/documentos-firmar.module').then(m => m.DocumentosFirmarModule)},
       // {
       //   path: 'bancoPreguntas', loadChildren: () => import('./bancoPreguntas/banco-preguntas/banco-preguntas.module').then(m => m.BancoPreguntasModule),
       //   canActivate: [AuthGuard],

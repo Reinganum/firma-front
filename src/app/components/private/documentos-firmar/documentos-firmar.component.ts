@@ -1,39 +1,85 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, ViewChild} from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmacionFirmaDocumentoComponent } from '../../modals/confirmacion-firma-documento/confirmacion-firma-documento.component';
-import { Document, DocumentData } from '../types';
+import { DocumentData } from '../types';
+import { ActivatedRoute} from '@angular/router';
 import { DocumentosService } from 'src/app/services/documentos.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { dutchRangeLabel } from 'src/app/shared/dutchRangeLabel';
+
 
 @Component({
   selector: 'app-documentos-firmar',
   templateUrl: './documentos-firmar.component.html',
   styleUrls: ['./documentos-firmar.component.css']
 })
+
 export class DocumentosFirmarComponent implements OnInit {
   modalRef!:NgbModalRef
-
+  isChecked: boolean = false
+  firmaParam!:any
+  userInfo:any={}
+  totalFilas!:number
+  pageSize=5
+  pageSizeOptions=[5,10,20]
   constructor(
     private modalService:NgbModal,
     private documentosService: DocumentosService,
     private toastrService:ToastrService,
-    private router: Router
-      ){}
+    private router: Router,
 
+    private activatedRoute:ActivatedRoute,
+      ){
+        this.activatedRoute.params.subscribe(params=>this.firmaParam=(params['estadoFirma']))
+      }
   ngOnInit(): void {
-    this.obtenerDocumentos();
+    this.obtenerDocumentos(this.paginador.pageIndex, this.paginador.pageSize | this.pageSize);
+    console.log(this.paginador.pageSize)
+
   }
 
-  async obtenerDocumentos() {
+  ngAfterViewInit(){
+    this.paginador._intl.itemsPerPageLabel="Items por Página";
+    this.paginador._intl.nextPageLabel="Página Siguiente";
+    this.paginador._intl.previousPageLabel="Página Anterior";
+    this.paginador._intl.getRangeLabel=dutchRangeLabel;
+    console.log(this.paginador.pageSize)
+    this.paginador.page.subscribe((data)=>{
+      this.obtenerDocumentos(this.paginador.pageIndex, this.paginador.pageSize);
+    })
+  }
+
+  @ViewChild(MatPaginator,{static:true}) paginador!:MatPaginator;
+  @ViewChild(MatTable,{static:true}) table!:MatTable<any>;
+
+
+  OnPageChange(event:PageEvent){
+    console.log(event)
+  }
+
+  documentosFirmar:any[]=[]
+  onCheckChange($event:any){
+    if($event.target.checked){
+      this.documentosFirmar.push(this.documentList[$event.target.value]);
+      console.log(this.documentosFirmar);
+    } else {
+      this.documentosFirmar.splice($event.target.value,1);
+      console.log(this.documentosFirmar);
+    }
+  }
+  obtenerDocumentos(pageOffset:number,pageLimit:number) {
     try {
-      this.documentosService.listarDocumentos(0, 5).subscribe((res:any) => {
+      this.documentosService.listarDocumentos(pageOffset,pageLimit).subscribe((res:any) => {
         console.log(res);
         this.documentList = res.documentos;
+        this.totalFilas=this.documentList[0].contadorDocumentos;
       });
     } catch (error:any) {
       console.log(error);
-
     }
   }
 
@@ -55,14 +101,15 @@ export class DocumentosFirmarComponent implements OnInit {
     {icon:"../assets/img/origen_tabla.svg",nombre:"Origen"},
     {icon:"../assets/img/opcion_tabla.svg",nombre:"Opciones"}
   ];
-  // documentList:any[]=[
-  //   {fecha: new Date("11-04-2023 10:30"), documento: "CarlosMirandaPrecontrato.pdf" , origen: "Gestión Normativa"},
-  //   {fecha: new Date("11-04-2023 10:30"), documento: "CarlosMirandaPrecontrato.pdf" , origen: "Gestión Normativa"},
-  //   {fecha: new Date("11-04-2023 10:30"), documento: "CarlosMirandaPrecontrato.pdf" , origen: "Gestión Normativa"},
-  //   {fecha: new Date("11-04-2023 10:30"), documento: "CarlosMirandaPrecontrato.pdf" , origen: "Gestión Normativa"},
-  //   {fecha: new Date("11-04-2023 10:30"), documento: "CarlosMirandaPrecontrato.pdf" , origen: "Gestión Normativa"}
-  // ];
 
+  /*documentList:any[]=[
+     {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , medio: 3, id:0},
+     {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , medio: 2, id:1},
+     {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , medio: 1, id:2},
+     {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , medio: 3, id:3},
+     {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , medio: 2, id:4}
+   ];
+*/
   documentList!:any[];
 
 }

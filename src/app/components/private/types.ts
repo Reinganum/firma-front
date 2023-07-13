@@ -5,12 +5,6 @@ export interface User {
     phone:string
   }
   
-export interface Document {
-  fecha: Date
-  documento: string
-  origen:string
-}
-
 export interface DocumentData{
   icon:string
   nombre:string
