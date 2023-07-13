@@ -9,6 +9,8 @@ import { MenuComponent } from "../layout/menu/menu.component";
 import { MenuModule } from "../layout/menu/menu.module";
 import { HeaderModule } from "../layout/header/header.module";
 import { FooterModule } from "../layout/footer/footer.module";
+import { VistaDocumentoComponent } from './vista-documento/vista-documento.component';
+import { VistaDocumentoModule } from "./vista-documento/vista-documento.module";
 
 // routing
 const routes: Routes = [
@@ -22,8 +24,17 @@ const routes: Routes = [
         // canLoad: [AuthGuard],
         data: { animation: 'home' }
       },
-      {path: 'documentos', loadChildren: () => import('./documentos-firmar/documentos-firmar.module').then(m => m.DocumentosFirmarModule)},
-      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      {path: 'documentos', loadChildren: () => import('./documentos-firmar/documentos-firmar.module').then(m => m.DocumentosFirmarModule),
+        // canActivate: [AuthGuard],
+        // canLoad: [AuthGuard],
+        data: {animation: 'documentos'}
+      },
+      {path: 'vista/:id', loadChildren: () => import('./vista-documento/vista-documento.module').then(m => m.VistaDocumentoModule),
+        // canActivate: [AuthGuard],
+        // canLoad: [AuthGuard],
+        data: {animation: 'vista'}
+      },
+      // { path: '', redirectTo: 'home', pathMatch: 'full' },
       // {
       //   path: 'bancoPreguntas', loadChildren: () => import('./bancoPreguntas/banco-preguntas/banco-preguntas.module').then(m => m.BancoPreguntasModule),
       //   canActivate: [AuthGuard],
@@ -145,6 +156,7 @@ const routes: Routes = [
     HeaderModule,
     MenuModule,
     FooterModule,
+    VistaDocumentoModule
   ],
   exports: [
     PagesComponent,

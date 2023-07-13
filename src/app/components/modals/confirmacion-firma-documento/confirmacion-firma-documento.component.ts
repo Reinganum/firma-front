@@ -11,7 +11,7 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit{
 
   user:User={name:"Tania Cortés F.",rut:"15.446.942-5",email:"tcortes@otic.sofofa.cl",phone:"(+56 2) 23362890"}
 
-  userKnown:boolean=false;
+  userKnown:boolean=true;
 
   ngOnInit(): void {
   }

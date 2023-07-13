@@ -16,13 +16,13 @@ export class LoginComponent implements OnInit {
     private _toastrService:ToastrService
     ){}
 
-    
+
 
     ngOnInit(): void {
-      // if (this.authenticationService.isTokenNoValid()) {
-      //   localStorage.clear();
-      //   return;
-      // }
+      if (this.authenticationService.isTokenNoValid()) {
+        localStorage.clear();
+        return;
+      }
       let nombre;
       let correo;
       let token:any = localStorage.getItem('token');
@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/private/home']);
         } else {
           this._toastrService.info('Tu usuario debe ser activado','Contacte con el Administrador')
-        }  
+        }
         // this.timersService.startTimerToken();
         // this.fechaCreacion = moment().format("YYYY/MM/DD HH:mm");
         // let that = this;

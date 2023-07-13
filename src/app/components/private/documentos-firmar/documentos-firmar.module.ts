@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+      import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { DocumentosFirmarComponent } from "./documentos-firmar.component";
 import { DatosFirmaComponent } from "../datos-firma/datos-firma.component";

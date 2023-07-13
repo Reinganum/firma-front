@@ -28,8 +28,9 @@
                     <td>{{document.medio == 1 ? 'Mail enviado' : document.medio == 2 ? 'Notificacion GN' : document.medio == 3 ? 'Generación GN': document.medio == 4 ? 'PP': ''}}</td>
                     <td>
                         <div class="d-flex justify-content-center">
-                            <img class="px-1" src="../../../../assets/img/firma_tabla.svg">
-                            <img src="../../../../assets/img/lupa_btn.svg">
+                          <a (click)="vistaPrevia(document)"><img src="../../../../assets/img/vista-previa.svg" alt="Vista previa"></a>
+                          <img class="px-1" src="../../../../assets/img/firma_tabla.svg">
+                          <img src="../../../../assets/img/lupa_btn.svg">
                         </div>
                     </td>
                 </tr>

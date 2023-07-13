@@ -4,6 +4,7 @@ import { ConfirmacionFirmaDocumentoComponent } from '../../modals/confirmacion-f
 import { Document, DocumentData } from '../types';
 import { DocumentosService } from 'src/app/services/documentos.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-documentos-firmar',
@@ -16,23 +17,28 @@ export class DocumentosFirmarComponent implements OnInit {
   constructor(
     private modalService:NgbModal,
     private documentosService: DocumentosService,
-    private toastrService:ToastrService
+    private toastrService:ToastrService,
+    private router: Router
       ){}
 
   ngOnInit(): void {
     this.obtenerDocumentos();
   }
 
-  obtenerDocumentos() {
+  async obtenerDocumentos() {
     try {
-      this.documentosService.listarDocumentos().subscribe((res:any) => {
+      this.documentosService.listarDocumentos(0, 5).subscribe((res:any) => {
         console.log(res);
-        this.documentList = res.usuarios;
+        this.documentList = res.documentos;
       });
     } catch (error:any) {
       console.log(error);
 
     }
+  }
+
+  vistaPrevia(documento:any) {
+    this.router.navigate([`private/vista/${documento.id}`]);
   }
 
   showModal(){

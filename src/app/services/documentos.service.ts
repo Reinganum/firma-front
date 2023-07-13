@@ -12,7 +12,11 @@ export class DocumentosService {
     private http: HttpClient
   ) { }
 
-  listarDocumentos(): Observable<any[]>{
-    return this.http.get<any>(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/obtenerDocumentos`);
+  listarDocumentos(pageOffset:any, pageLimit:any): Observable<any[]>{
+    return this.http.get<any>(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/obtenerDocumentos?pageOffset=${pageOffset}&pageLimit=${pageLimit}`);
+  }
+
+  listaDocId(idDoc:number): Observable<any>{
+    return this.http.get<any>(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/getDocumentoId?idDoc=${idDoc}`);
   }
 }
