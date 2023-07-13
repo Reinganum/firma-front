@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../../auth/service/authentication.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,11 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private router:Router,
-    private authenticationService: AuthenticationService){}
+    private authenticationService: AuthenticationService,
+    private _toastrService:ToastrService
+    ){}
+
+    
 
     ngOnInit(): void {
       // if (this.authenticationService.isTokenNoValid()) {
@@ -29,10 +34,15 @@ export class LoginComponent implements OnInit {
       setTimeout(() => {
         // this.spinner.hide();
       }, 200);
-      this.authenticationService.setUser().then(async (res:any) => {
-        console.log(res);
-        
-        this.router.navigate(['/private/home']);
+      this.authenticationService.setUser().then(async (user:any) => {
+        console.log(user);
+        if (user && user.token) {
+          this.authenticationService.currentUser=user
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          this.router.navigate(['/private/home']);
+        } else {
+          this._toastrService.info('Tu usuario debe ser activado','Contacte con el Administrador')
+        }  
         // this.timersService.startTimerToken();
         // this.fechaCreacion = moment().format("YYYY/MM/DD HH:mm");
         // let that = this;

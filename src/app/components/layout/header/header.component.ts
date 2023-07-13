@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-
+import { AuthenticationService } from '../../auth/service/authentication.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -10,13 +10,13 @@ export class HeaderComponent {
   @Output() menuShow = new EventEmitter();
   userInfo:any={}
 
-  constructor() { }
+  constructor(private authenticationService:AuthenticationService) { }
   // constructor(private authenticationService: AuthenticationService) {
 
   //  }
 
   ngOnInit(): void {
-    // this.userInfo = this.authenticationService.currentUserValue;
+    this.userInfo = this.authenticationService.currentUserValue;
     console.log(this.userInfo);
   }
 
