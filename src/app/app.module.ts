@@ -16,6 +16,7 @@ import { RechazarFirmaDocumentoComponent } from './components/modals/rechazar-fi
 import {CoreDirectivesModule} from "./directives/directives";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MaterialModule } from './material.module';
+import { ToastrModule } from 'ngx-toastr';
 
 export function kcFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -47,8 +48,12 @@ const CUSTOM_DATE_FORMATS = {
     CoreDirectivesModule,
     NgbModule,
     MaterialModule,
-    HttpClientModule
-
+    HttpClientModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-center',
+      preventDuplicates: true,
+      closeButton: true
+  })
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'es-CL' },

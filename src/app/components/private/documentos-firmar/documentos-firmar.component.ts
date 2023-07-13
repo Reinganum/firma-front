@@ -3,6 +3,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmacionFirmaDocumentoComponent } from '../../modals/confirmacion-firma-documento/confirmacion-firma-documento.component';
 import { Document, DocumentData } from '../types';
 import { DocumentosService } from 'src/app/services/documentos.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-documentos-firmar',
@@ -14,7 +15,8 @@ export class DocumentosFirmarComponent implements OnInit {
 
   constructor(
     private modalService:NgbModal,
-    private documentosService: DocumentosService
+    private documentosService: DocumentosService,
+    private toastrService:ToastrService
       ){}
 
   ngOnInit(): void {
@@ -37,7 +39,7 @@ export class DocumentosFirmarComponent implements OnInit {
     this.modalRef=this.modalService.open(ConfirmacionFirmaDocumentoComponent,{backdrop:'static',size:'lg'});
     this.modalRef.result.then((res)=>{
       if(res.estado){
-        console.log("pulsó firmar documentos")
+        this.toastrService.info('Pinchaste firmar documentos toastr')
       }
     })
   }

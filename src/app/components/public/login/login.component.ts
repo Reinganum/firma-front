@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
       }, 200);
       this.authenticationService.setUser().then(async (res:any) => {
         console.log(res);
+        
         this.router.navigate(['/private/home']);
         // this.timersService.startTimerToken();
         // this.fechaCreacion = moment().format("YYYY/MM/DD HH:mm");
