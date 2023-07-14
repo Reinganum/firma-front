@@ -10,14 +10,15 @@
           </div>
           <div class="row p-4 my-4" style="background-color: #fafbfc;border-radius: 12px;">
             <form [formGroup]="formDatosUsuario">
-              <p style="font-size: 1em!important;">Bienvenido al portal para consultar los documentos firmados electrónicamente.</p>
+              <p style="font-size: 1em!important;">Bienvenido al portal para consultar los documentos firmados <br/> electrónicamente.</p>
               <p class="py-4" style="font-size: 1em!important;">Debes ingresar el código de validación del documento para conocer y revisar detalles. Tiene de 10 a 12 caracteres.</p>
-                <label for="inputEmail" class="form-label">Código de Documento</label>
-                <input type="email" placeholder="Ingresa el rut" class="form-control" id="inputEmail" aria-describedby="emailHelp">
-                <button (click)="consultarDocumento()" class="btn btn-primary btn-main btn-nuevo w-100 mt-4 py-3 mb-5" style="background-color:#0B58A4 !important" tabindex="4"><img
+                <label for="inputDocument" style="font-size: 1em!important;" class="form-label">Código de Documento</label>
+                <input type="email" style="line-height: 3em;" placeholder="Ingresa tu número de documento" class="form-control" id="inputDocument" aria-describedby="documentNum">
+                <button (click)="consultarDocumento()" class="btn btn-primary btn-main btn-nuevo w-100 mt-4 py-3 mb-5" 
+                style="background-color:#0B58A4 !important; font-size: 1.1em !important;" tabindex="4"><img
                   src="../../../../assets/img/lupa_btn.svg">&nbsp;&nbsp;Consultar documento</button>
             </form>
-          </div>
+          </div>ç
         </div>
       </div>
     </div>
