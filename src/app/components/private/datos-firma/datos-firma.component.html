@@ -1,11 +1,11 @@
 
-<div class="container mx-4 my-5">
+<div class="container my-5">
     <h1>Datos de la firma</h1>
     <div class="row rounded" style="background-color: #fafbfc;">
-        <div class="col-2 py-4 px-5">
-            <img src="../assets/img/img-firma-resumen.svg">
+        <div class="d-flex col-2 justify-content-center">
+            <img style="border-right: 5px solid #e38c48; padding-right:25%" src="../assets/img/img-firma-resumen.svg">
         </div> 
-        <div class="col-2 d-flex" style="align-items: center;">   
+        <div class="d-flex col-2" style="align-items: center;">   
             <div>
                 <p>Nombre:</p>
                 <p>RUT:</p>
@@ -13,7 +13,7 @@
                 <p>Teléfono:</p>
             </div>
         </div>
-        <div class="col-2 d-flex fw-bold" style="align-items: center;">
+        <div class="d-flex fw-bold col-2" style="align-items: center;">
             <div>
                 <p>{{userInfo.firstName + " " + userInfo.lastName}}<p>
                 <p>{{user.rut}}</p>
