@@ -8,15 +8,15 @@
             
                 <div *ngIf="userKnown; else userForm">
                 <div class="row border border-dark">
-                    <div class="col-2 py-1">
+                    <div class="col-2 py-1 px-4">
                         <p>Nombre:</p>
                         <p>RUT:</p>
                         <p>Email:</p>
                     </div>
-                    <div class="col-2 fw-bold py-1">
-                        <p>{{user.name}}<p>
-                        <p>{{user.rut}}</p>
-                        <p>{{user.email}}</p>
+                    <div class="col-6 fw-bold py-1">
+                        <p>{{userInfo?.firstName}} {{userInfo?.lastName}}<p>
+                        <p>{{userInfo?.rut}}</p>
+                        <p>{{userInfo?.email}}</p>
                     </div>
                 </div> 
             </div>

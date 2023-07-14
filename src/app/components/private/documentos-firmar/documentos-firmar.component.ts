@@ -110,7 +110,7 @@ export class DocumentosFirmarComponent implements OnInit {
     {icon:"../assets/img/opcion_tabla.svg",nombre:"Opciones"}
   ];
 
-  /*documentList:any[]=[
+  /* documentList:any[]=[
      {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , medio: 3, id:0},
      {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , medio: 2, id:1},
      {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , medio: 1, id:2},
@@ -118,6 +118,6 @@ export class DocumentosFirmarComponent implements OnInit {
      {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , medio: 2, id:4}
    ];
 */
-  documentList!:any[];
 
+  documentList!:any[];
 }

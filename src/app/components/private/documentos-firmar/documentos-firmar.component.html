@@ -14,7 +14,7 @@
         </div>
         <div class="d-flex col-6 justify-content-end">
             <button class="filter-btn btn me-2" style="border: 1px solid #979ba2;"><img class="px-3" src="../assets/img/filtro-btn.svg">Filtrar</button>
-            <button class="btn-firmar-seleccionados btn btn-primary btn-main" (click)="showModal()">Firmar seleccionados</button>
+            <button class="btn-firmar-seleccionados btn btn-primary btn-main">Firmar seleccionados</button>
         </div>
     </div>
         <table mat-table class="ms-2 table">
@@ -31,12 +31,11 @@
                     <td><input class="form-check-input" [value]=i type="checkbox" (change)="onCheckChange($event)"></td>
                     <td>{{document.fecha}}</td>
                     <td>{{document.nombreArchivo}}</td>
-                    <td>{{document.medio}}</td>
+                    <td><div class="d-flex flex-row"><div class="mx-2 rounded-circle bg-dark" style="color:white;">GN</div>{{document.medio}}</div></td>
                     <td>
                         <div class="d-flex justify-content-center">
                           <a (click)="vistaPrevia(document)"><img src="../../../../assets/img/vista-previa.svg" alt="Vista previa"></a>
-                          <img class="px-1" src="../../../../assets/img/firma_tabla.svg">
-                          <img src="../../../../assets/img/lupa_btn.svg">
+                          <a (click)="showModal()"><img class="px-1" src="../../../../assets/img/firma_tabla.svg"></a>
                         </div>
                     </td>
                 </tr>
