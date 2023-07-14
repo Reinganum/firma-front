@@ -1,11 +1,36 @@
 <main class="fondo-consulta">
   <div class="content-fluid">
+    <div class="container">
+      <div class="row d-flex flex-row-reverse">
+        <div class="col-12 col-md-8 col-sm-10  col-lg-6" style="margin-top: 10%;">
+          <h1 class="fw-bold display-3 mt-5" style="color:white;font-size: 2.5em !important;">Te damos la bienvenida</h1>
+          <div class="d-flex pt-3">
+          <h1 style="color:white;font-size: 2.2em !important;font-weight: bold; line-height: 2em;">a <span class="rounded py-2 px-1" style="background-color: white; color: black;">
+            FIRMA <span style="color:#0B58A4"> ELECTRÓNICA</span> OTIC Sofofa</span></h1>
+          </div>
+          <div class="row p-4 my-4" style="background-color: #fafbfc;border-radius: 12px;">
+            <form [formGroup]="formDatosUsuario">
+              <p style="font-size: 1em!important;">Bienvenido al portal para consultar los documentos firmados electrónicamente.</p>
+              <p class="py-4" style="font-size: 1em!important;">Debes ingresar el código de validación del documento para conocer y revisar detalles. Tiene de 10 a 12 caracteres.</p>
+                <label for="inputEmail" class="form-label">Código de Documento</label>
+                <input type="email" placeholder="Ingresa el rut" class="form-control" id="inputEmail" aria-describedby="emailHelp">
+                <button (click)="consultarDocumento()" class="btn btn-primary btn-main btn-nuevo w-100 mt-4 py-3 mb-5" style="background-color:#0B58A4 !important" tabindex="4"><img
+                  src="../../../../assets/img/lupa_btn.svg">&nbsp;&nbsp;Consultar documento</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!--
     <div class="d-flex col-12 align-items-center auth-bg px-1 p-lg-2">
       <div class="col-12 col-sm-8 col-md-6 col-lg-6 px-xl-1 mx-auto card new-width" style="margin: 25% 71% 6% 40% !important">
         <div class="mx-5 my-5">
           <div class="row mb-5">
             <p>Bienvenido al portal para consultar los documentos firmados electrónicamente.</p>
-            <p>Deebes ingresar el código de validación del documento para conocer y revisar detalles. Tiene de 10 a 12 caracteres.</p>
+            <p>Debes ingresar el código de validación del documento para conocer y revisar detalles. Tiene de 10 a 12 caracteres.</p>
           </div>
           <div class="row text-center">
             <div class="col-12 mt-5">
@@ -20,12 +45,10 @@
               </form>
             <!-- <h2 class="fw-bold mb-1 d-block d-lg-none mt-2"><b>Bienvenido</b></h2> -->
             <!-- <p class="mb-2" style="margin-top:-10px;">Haz click en el siguiente botón para ingresar con tu perfil:</p> -->
-            <button (click)="consultarDocumento()" class="btn btn-primary btn-main btn-nuevo w-80 mt-4 py-3" tabindex="4"><img
-                src="../../../../assets/img/lupa_btn.svg">&nbsp;&nbsp;Consultar documento</button>
-          </div>
-          </div>
+            <!--<button (click)="consultarDocumento()" class="btn btn-primary btn-main btn-nuevo w-80 mt-4 py-3" tabindex="4"><img
+              src="../../../../assets/img/lupa_btn.svg">&nbsp;&nbsp;Consultar documento</button>
+        </div>
         </div>
       </div>
     </div>
-  </div>
-</main>
+  </div>-->
