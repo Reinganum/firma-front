@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 import { RouterModule, Routes } from "@angular/router";
 import { ConsultarDocumentoComponent } from "./consultar-documento.component";
 import { MaterialModule } from "src/app/material.module";
+import { ToastrModule } from "ngx-toastr";
 
 const routes: Routes = [{ path: '', component: ConsultarDocumentoComponent }];
 
@@ -11,7 +12,12 @@ const routes: Routes = [{ path: '', component: ConsultarDocumentoComponent }];
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    MaterialModule
+    MaterialModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-center',
+      preventDuplicates: true,
+      closeButton: true
+    }),
   ],
   exports: [ConsultarDocumentoComponent]
 })

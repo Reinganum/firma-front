@@ -39,7 +39,8 @@
               "src/assets/css/bootstrap.css",
               "src/assets/css/bootstrap-extended.css",
               "src/assets/css/forms/form-validation.css",
-              "node_modules/ngx-spinner/animations/ball-circus.css"
+              "node_modules/ngx-spinner/animations/ball-circus.css",
+              "./node_modules/ngx-toastr/toastr.css"
 
             ],
             "scripts": [
@@ -109,6 +110,7 @@
               "src/assets/css/estilos-otic-pro.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css",
+              "./node_modules/ngx-toastr/toastr.css",
               "src/assets/css/nuevosEstilos.css",
               "src/assets/fonts/feather/iconfont.css",
               "src/assets/fonts/font-awesome/css/font-awesome.min.css",

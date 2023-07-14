@@ -23,7 +23,9 @@ export class ConsultarDocumentoComponent implements OnInit{
   }
   consultarDocumento() {
     console.log(this.formDatosUsuario.value.codigoDoc);
-    this.toaster.success("Código del documento:" + this.formDatosUsuario.value.codigoDoc)
+    this.toaster.success("Código del documento:" + this.formDatosUsuario.value.codigoDoc, '',{
+      positionClass:'toast-bottom-right'
+  })
     this.router.navigate([`private/vista/${this.formDatosUsuario.value.codigoDoc}`]);
   }
 }
