@@ -82,8 +82,8 @@ export class DocumentosFirmarComponent implements OnInit {
       await this.spinner.show();
       this.documentosService.listarDocumentos(pageOffset,pageLimit).subscribe(async (res:any) => {
         console.log(res);
-        this.documentList = res.documentos;
-        this.totalFilas=this.documentList[0].contadorDocumentos;
+        this.documentList = res.documentos.data;
+        this.totalFilas= res.documentos.total;
         await this.spinner.hide();
       });
     } catch (error:any) {

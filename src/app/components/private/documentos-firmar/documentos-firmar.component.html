@@ -31,7 +31,7 @@
                     <td><input class="form-check-input" [value]=i type="checkbox" (change)="onCheckChange($event)"></td>
                     <td>{{document.fecha}}</td>
                     <td>{{document.nombreArchivo}}</td>
-                    <td>{{document.medio == 1 ? 'Mail enviado' : document.medio == 2 ? 'Notificacion GN' : document.medio == 3 ? 'Generación GN': document.medio == 4 ? 'PP': ''}}</td>
+                    <td>{{document.medio}}</td>
                     <td>
                         <div class="d-flex justify-content-center">
                           <a (click)="vistaPrevia(document)"><img src="../../../../assets/img/vista-previa.svg" alt="Vista previa"></a>
