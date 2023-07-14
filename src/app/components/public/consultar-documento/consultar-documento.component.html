@@ -1,0 +1,31 @@
+<main class="fondo-consulta">
+  <div class="content-fluid">
+    <div class="d-flex col-12 align-items-center auth-bg px-1 p-lg-2">
+      <div class="col-12 col-sm-8 col-md-6 col-lg-6 px-xl-1 mx-auto card new-width" style="margin: 25% 71% 6% 40% !important">
+        <div class="mx-5 my-5">
+          <div class="row mb-5">
+            <p>Bienvenido al portal para consultar los documentos firmados electrónicamente.</p>
+            <p>Deebes ingresar el código de validación del documento para conocer y revisar detalles. Tiene de 10 a 12 caracteres.</p>
+          </div>
+          <div class="row text-center">
+            <div class="col-12 mt-5">
+              <form [formGroup]="formDatosUsuario">
+                <div class="col-12 form-group">
+                    <mat-form-field>
+                    <mat-label>Código de Documento</mat-label>
+                      <input type="text" matInput  formControlName="codigoDoc" placeholder="Ingresa el rut"/>
+                    </mat-form-field>
+                </div>
+
+              </form>
+            <!-- <h2 class="fw-bold mb-1 d-block d-lg-none mt-2"><b>Bienvenido</b></h2> -->
+            <!-- <p class="mb-2" style="margin-top:-10px;">Haz click en el siguiente botón para ingresar con tu perfil:</p> -->
+            <button (click)="consultarDocumento()" class="btn btn-primary btn-main btn-nuevo w-80 mt-4 py-3" tabindex="4"><img
+                src="../../../../assets/img/lupa_btn.svg">&nbsp;&nbsp;Consultar documento</button>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

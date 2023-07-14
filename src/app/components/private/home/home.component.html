@@ -1,28 +1,29 @@
-<div class="container mt-5">
-    <div class="row">
-        <div class="d-flex justify-content-evenly">
-        <div class="col-5">
-            <div class="d-flex col-6 rounded">
+<main id="main" class="fondo-home">
+  <div class="container-fluid ">
+    <div class="row mt-5">
+        <div class="row d-flex justify-content-evenly mt-5">
+        <div class="col-sm-12 col-lg-5 card" [routerLink]="['/private/docsFirmar']">
+            <div class="d-flex col-6 ">
                 <div class="d-flex col-6">
                     <img src="../../../../assets/img/por_firmar_card.svg">
                 </div>
-                <div class="d-flex flex-column col-10">
+                <div class="d-flex flex-column col-11">
                     <p class="fw-bold">Documentos por firmar</p>
                     <p >Tienes 5 documentos pendientes por firmar</p>
                 </div>
             </div>
-        <div class="row">
-            <div class="col-12">
-                <p class="text-end text-primary" >Ir a Firmar<img src="../../../../assets/img/flechita.svg"></p>
+            <div class="row">
+                <div class="col-12">
+                    <p class="text-end text-primary" >Ir a Firmar<img src="../../../../assets/img/flechita.svg"></p>
+                </div>
             </div>
         </div>
-        </div>
-        <div class="col-5">
-            <div class="d-flex col-6 rounded">
+        <div class="col-sm-12 col-lg-5 card rounded" [routerLink]="['/private/docsFirmados']">
+            <div class="d-flex col-6">
                 <div class="d-flex col-6">
                     <img src="../../../../assets/img/firmados_card.svg">
                 </div>
-                <div class="d-flex flex-column col-10">
+                <div class="d-flex flex-column col-12">
                     <p class="fw-bold">Documentos firmados</p>
                     <p>Listado de documentos firmados y listos para gestión</p>
                 </div>
@@ -36,5 +37,6 @@
     </div>
     </div>
 </div>
+</main>
 
 
