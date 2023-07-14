@@ -1,4 +1,4 @@
-<div class="main-menu menu-fixed menu-accordion menu-shadow menu-native-scroll sidebar pt-0"
+<div *ngIf="userInfo" class="main-menu menu-fixed menu-accordion menu-shadow menu-native-scroll sidebar pt-0"
     [class.expanded]="!isCollapsed || mouseEnter" data-scroll-to-active="true"
     style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
 
@@ -20,7 +20,7 @@
         </div>
         <div class="shadow-bottom"></div>
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-            <li class=" nav-item"><a class="d-flex align-items-center" [routerLink]="['docsFirmar']">
+            <li  class=" nav-item"><a class="d-flex align-items-center" [routerLink]="['docsFirmar']">
               <i [data-feather]="'home'"></i><span class="menu-title text-truncate"
                   data-i18n="Home">Documentos por Firmar</span></a>
             </li>

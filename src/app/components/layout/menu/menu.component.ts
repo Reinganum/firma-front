@@ -8,6 +8,7 @@ import {
   ViewChild,
   ViewEncapsulation } from '@angular/core';
   import { Router, NavigationEnd } from '@angular/router';
+import { AuthenticationService } from '../../auth/service/authentication.service';
 
 @Component({
   selector: 'app-menu',
@@ -18,9 +19,11 @@ export class MenuComponent {
   isCollapsed: boolean=false;
   isScrolled: boolean = false;
   mouseEnter: boolean = false;
+  userInfo:any={}
   @Input() menuVar:any;
   @Output() menuShow = new EventEmitter();
   @Output() menuColapsar = new EventEmitter();
+  constructor(private authenticationService:AuthenticationService) { }
 
     /**
    * On Sidebar scroll set isScrolled as true
@@ -67,5 +70,7 @@ export class MenuComponent {
 
     ngOnInit() {
       this.colapsar();
+      this.userInfo = this.authenticationService.currentUserValue;
+      console.log(this.userInfo);
     }
 }
