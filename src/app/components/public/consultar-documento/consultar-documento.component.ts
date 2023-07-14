@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-consultar-documento',
@@ -14,7 +13,7 @@ export class ConsultarDocumentoComponent implements OnInit{
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private toaster: ToastrService
+
   ) {}
   ngOnInit(): void {
     this.formDatosUsuario = this.formBuilder.group({
@@ -23,7 +22,7 @@ export class ConsultarDocumentoComponent implements OnInit{
   }
   consultarDocumento() {
     console.log(this.formDatosUsuario.value.codigoDoc);
-    this.toaster.success("Código del documento:" + this.formDatosUsuario.value.codigoDoc);
+
     this.router.navigate([`private/vista/${this.formDatosUsuario.value.codigoDoc}`]);
   }
 }

@@ -18,7 +18,7 @@
                   <div class="usuario-cabecera">
                       <img class="px-3" src="../assets/img/mensaje_header.svg">
                       <img class="px-3" src="../assets/img/user_header.svg">
-                      <span style="margin-left:10px;"><strong>{{userInfo.firstName}} {{userInfo.lastName}}</strong></span>
+                      <span style="margin-left:10px;"><strong>{{userInfo?.firstName}} {{userInfo?.lastName}}</strong></span>
                       <a (click)="logOut()" data-bs-toggle="tooltip" data-bs-placement="top" title="Salir de Encuestas" style="margin-left:5px;">
                           <img  class="px-3" src="../assets/img/salir_header.svg">
                       </a>

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 import { ComunesService } from 'src/app/services/comunes.service';
 import { DocumentosService } from 'src/app/services/documentos.service';
 
@@ -15,7 +17,10 @@ export class VistaDocumentoComponent implements OnInit {
   constructor(
     private comunesServices: ComunesService,
     private route: ActivatedRoute,
-    private documentosService: DocumentosService
+    private documentosService: DocumentosService,
+    private spinner: NgxSpinnerService,
+    private toaster: ToastrService,
+    private router: Router
   ) {
 
   }
@@ -29,9 +34,16 @@ export class VistaDocumentoComponent implements OnInit {
     })
   }
 
-  obtenerPath(id:number) {
-    this.documentosService.listaDocId(id).subscribe((res:any) => {
+  async obtenerPath(id:number) {
+    await this.spinner.show();
+    this.documentosService.listaDocId(id).subscribe(async (res:any) => {
       console.log(res);
+      if (!res.documento) {
+        await this.spinner.hide();
+        this.router.navigate(["consulta-documento"]);
+        this.toaster.warning("No se encontró el documento.");
+        return ;
+      }
       this.obtenerPathS3(res.documento.nombreArchivo)
     });
   }
@@ -46,6 +58,8 @@ export class VistaDocumentoComponent implements OnInit {
     const resultado:any = await this.comunesServices.getSignedUrl(fileData).toPromise();
     console.log(resultado);
     this.archivoFirmar = resultado.message;
+    this.toaster.success("Documento cargado correctamente!");
+    await this.spinner.hide();
 
   }
 
