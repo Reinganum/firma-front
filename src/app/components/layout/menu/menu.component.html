@@ -20,9 +20,13 @@
         </div>
         <div class="shadow-bottom"></div>
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-            <li class=" nav-item"><a class="d-flex align-items-center" [routerLink]="['documentos/firmar']">
+            <li class=" nav-item"><a class="d-flex align-items-center" [routerLink]="['docsFirmar']">
               <i [data-feather]="'home'"></i><span class="menu-title text-truncate"
-                  data-i18n="Home">Reportes</span></a>
+                  data-i18n="Home">Documentos por Firmar</span></a>
+            </li>
+            <li class=" nav-item"><a class="d-flex align-items-center" [routerLink]="['docsFirmados']">
+              <i [data-feather]="'home'"></i><span class="menu-title text-truncate"
+                  data-i18n="Home">Documentos Firmados</span></a>
             </li>
             <!-- <li class="nav-item"><a class="d-flex align-items-center" [routerLink]="['disenoPlantillas']">
                 <img class="me-2"  src="../../../../assets/img/salida-sidebar.svg"/><span class="menu-title text-truncate" data-i18n="Home">Documentos firmados</span></a>

@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild} from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmacionFirmaDocumentoComponent } from '../../modals/confirmacion-firma-documento/confirmacion-firma-documento.component';
 import { DocumentData } from '../types';
-import { ActivatedRoute} from '@angular/router';
+import { ActivatedRoute, Params} from '@angular/router';
 import { DocumentosService } from 'src/app/services/documentos.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
@@ -10,6 +10,7 @@ import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { dutchRangeLabel } from 'src/app/shared/dutchRangeLabel';
+import {NgxSpinnerService} from "ngx-spinner";
 
 
 @Component({
@@ -31,15 +32,20 @@ export class DocumentosFirmarComponent implements OnInit {
     private documentosService: DocumentosService,
     private toastrService:ToastrService,
     private router: Router,
+    private spinner: NgxSpinnerService,
 
-    private activatedRoute:ActivatedRoute,
-      ){
-        this.activatedRoute.params.subscribe(params=>this.firmaParam=(params['estadoFirma']))
-      }
+    private route:ActivatedRoute,
+      ){}
   ngOnInit(): void {
     this.obtenerDocumentos(this.paginador.pageIndex, this.paginador.pageSize | this.pageSize);
-    console.log(this.paginador.pageSize)
+    const rutaActual = this.route.snapshot.routeConfig?.path;
+    if (rutaActual?.includes('docsFirmar')) {
+      console.log("docsFirmar");
 
+    } else if (rutaActual?.includes('docsFirmados')) {
+      console.log("docsFirmados");
+
+    }
   }
 
   ngAfterViewInit(){
@@ -71,12 +77,14 @@ export class DocumentosFirmarComponent implements OnInit {
       console.log(this.documentosFirmar);
     }
   }
-  obtenerDocumentos(pageOffset:number,pageLimit:number) {
+  async obtenerDocumentos(pageOffset:number,pageLimit:number) {
     try {
-      this.documentosService.listarDocumentos(pageOffset,pageLimit).subscribe((res:any) => {
+      await this.spinner.show();
+      this.documentosService.listarDocumentos(pageOffset,pageLimit).subscribe(async (res:any) => {
         console.log(res);
         this.documentList = res.documentos;
         this.totalFilas=this.documentList[0].contadorDocumentos;
+        await this.spinner.hide();
       });
     } catch (error:any) {
       console.log(error);

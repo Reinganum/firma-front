@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../../auth/service/authentication.service';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-login',
@@ -13,12 +14,13 @@ export class LoginComponent implements OnInit {
   constructor(
     private router:Router,
     private authenticationService: AuthenticationService,
-    private _toastrService:ToastrService
+    private _toastrService:ToastrService,
+    private spinner: NgxSpinnerService
     ){}
 
 
 
-    ngOnInit(): void {
+    async ngOnInit() {
       if (this.authenticationService.isTokenNoValid()) {
         localStorage.clear();
         return;
@@ -30,17 +32,20 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/private/home']);
 
       }
-      // this.spinner.show();
-      setTimeout(() => {
-        // this.spinner.hide();
-      }, 200);
+      await this.spinner.show();
+      setTimeout(async () => {
+        await this.spinner.hide();
+      }, 2000);
       this.authenticationService.setUser().then(async (user:any) => {
         console.log(user);
+        await this.spinner.show();
         if (user && user.token) {
           this.authenticationService.currentUser=user
           localStorage.setItem('currentUser', JSON.stringify(user));
+
           this.router.navigate(['/private/home']);
         } else {
+          await this.spinner.hide();
           this._toastrService.info('Tu usuario debe ser activado','Contacte con el Administrador')
         }
         // this.timersService.startTimerToken();
@@ -117,8 +122,8 @@ export class LoginComponent implements OnInit {
         //         this.spinner.hide();
         //       }})
       }).catch(e => {
-        this.router.navigate(['/login']);
-        // this.spinner.hide();
+        // this.router.navigate(['/login']);
+        this.spinner.hide();
 
       });
     }

@@ -1,0 +1,35 @@
+<div class="modal-content">
+
+  <div class="modal-header border-0">
+      <h2 class="modal-title mb-0">Datos</h2>
+      <button type="button" class="btn-close" style="margin: 0 1% 0 0 !important;" aria-label="Close"
+              (click)="activeModal.close({estado:false})"></button>
+  </div>
+  <div class="modal-body">
+      <div class="row">
+          <div class="col-12"><p>Para firmar debes agregar tu rut.</p></div>
+      </div>
+      <form [formGroup]="formDatosUsuario">
+        <div class="col-12 form-group">
+            <mat-form-field>
+            <mat-label>Rut Usuario</mat-label>
+              <input type="text" matInput  formControlName="rutUsuario" placeholder="Ingresa el rut"/>
+            </mat-form-field>
+        </div>
+
+      </form>
+  </div>
+  <div class="modal-footer">
+      <div class="row">
+          <div class="col-12 justify-content-center text-center">
+              <button (click)="aceptar()" class="btn btn-sm btn-primary mx-1">
+                  Aceptar
+              </button>
+              <button (click)="activeModal.close({estado:false})" class="btn btn-sm btn-default">
+                  Cancelar
+              </button>
+          </div>
+      </div>
+  </div>
+
+</div>

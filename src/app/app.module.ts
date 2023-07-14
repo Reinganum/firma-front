@@ -7,6 +7,7 @@ import { registerLocaleData } from '@angular/common';
 import localeEsCL from '@angular/common/locales/es-CL';
 import { KeycloakService } from './services/keycloak.service';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 import { AppComponent } from './app.component';
@@ -17,6 +18,7 @@ import {CoreDirectivesModule} from "./directives/directives";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MaterialModule } from './material.module';
 import { ToastrModule } from 'ngx-toastr';
+import { ObtenerRutComponent } from './components/modals/obtener-rut/obtener-rut.component';
 
 export function kcFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -40,6 +42,7 @@ const CUSTOM_DATE_FORMATS = {
     NoAutorizadoComponent,
     RechazarFirmaDocumentoComponent,
     ConfirmacionFirmaDocumentoComponent,
+    ObtenerRutComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +52,7 @@ const CUSTOM_DATE_FORMATS = {
     NgbModule,
     MaterialModule,
     HttpClientModule,
+    NgxSpinnerModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-center',
       preventDuplicates: true,
