@@ -1,3 +1,19 @@
 thead{
     background-color:#e4eaf5 !important;
 }
+
+.firmado{
+    color: #4dab61;
+    background-color: rgba(236,248,239,255);
+    border-radius: 12px;
+}
+
+.parcial{
+    color: #e0c453;
+    background-color: rgb(253,249,230);
+}
+
+.rechazado{
+    color: #d9605d;
+    background-color: rgb(251,234,235);
+}

@@ -22,7 +22,7 @@ import {NgxSpinnerService} from "ngx-spinner";
 export class DocumentosFirmarComponent implements OnInit {
   modalRef!:NgbModalRef
   isChecked: boolean = false
-  firmaParam!:any
+  firmaParam:any="firmados"
   userInfo:any={}
   totalFilas!:number
   pageSize=5
@@ -79,7 +79,7 @@ export class DocumentosFirmarComponent implements OnInit {
   }
   async obtenerDocumentos(pageOffset:number,pageLimit:number) {
     try {
-      await this.spinner.show();
+      // await this.spinner.show();
       this.documentosService.listarDocumentos(pageOffset,pageLimit).subscribe(async (res:any) => {
         console.log(res);
         this.documentList = res.documentos.data;
@@ -107,17 +107,18 @@ export class DocumentosFirmarComponent implements OnInit {
     {icon:"../assets/img/calendario_tabla.svg",nombre:"Fecha"},
     {icon:"../assets/img/archivo_tabla.svg",nombre:"Documento"},
     {icon:"../assets/img/origen_tabla.svg",nombre:"Origen"},
+    {icon:"../assets/img/firma_tabla",nombre:"Estado"},
     {icon:"../assets/img/opcion_tabla.svg",nombre:"Opciones"}
   ];
 
   /* documentList:any[]=[
-     {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , medio: 3, id:0},
-     {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , medio: 2, id:1},
-     {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , medio: 1, id:2},
-     {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , medio: 3, id:3},
-     {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , medio: 2, id:4}
+     {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Firma parcial", medio: 3, id:0},
+     {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Rechazado", medio: 2, id:1},
+     {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Firmado", medio: 1, id:2},
+     {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Firmado", medio: 3, id:3},
+     {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Firma parcial", medio: 2, id:4}
    ];
-*/
+  */
 
   documentList!:any[];
 }
