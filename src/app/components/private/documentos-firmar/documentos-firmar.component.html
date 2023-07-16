@@ -1,15 +1,14 @@
 <app-datos-firma></app-datos-firma>
-
 <div class="container rounded" style="background-color: #fafbfc;">
-    <div *ngIf=" firmaParam === 'firmar'; else firmados">
-        <h1>Documentos por firmar</h1>
+    <div *ngIf=" firmaParam === 'docsFirmar'; else firmados">
+        <h1 class="ms-3">Documentos por firmar</h1>
     </div>
     <ng-template #firmados>
-        <h1>Documentos firmados</h1>
+        <h1 class="ms-3">Documentos firmados</h1>
     </ng-template>
     <div class="row py-4 ms-2">
         <div class="col-6">
-                <span class="fw-bold"><img class="pe-2" src="../assets/img/doc-por-firmar.svg">{{firmaParam==="firmar"?"Documentos por firmar":"Documentos firmados"}}</span>
+                <span class="fw-bold"><img class="pe-2" src="../assets/img/doc-por-firmar.svg">{{firmaParam==="docsFirmar"?"Documentos por firmar":"Documentos firmados"}}</span>
                 <p>{{firmaParam==="firmar"?"Listado de documentos listos para firmar":"listado de documentos firmados y listos para gestión"}}</p>
         </div>
         <div class="d-flex col-6 justify-content-end">

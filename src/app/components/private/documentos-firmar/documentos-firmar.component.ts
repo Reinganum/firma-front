@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild} from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmacionFirmaDocumentoComponent } from '../../modals/confirmacion-firma-documento/confirmacion-firma-documento.component';
 import { DocumentData } from '../types';
-import { ActivatedRoute, Params} from '@angular/router';
+import { ActivatedRoute} from '@angular/router';
 import { DocumentosService } from 'src/app/services/documentos.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
@@ -22,7 +22,7 @@ import {NgxSpinnerService} from "ngx-spinner";
 export class DocumentosFirmarComponent implements OnInit {
   modalRef!:NgbModalRef
   isChecked: boolean = false
-  firmaParam:any="firmados"
+  firmaParam:any="firmar"
   userInfo:any={}
   totalFilas!:number
   pageSize=5
@@ -33,9 +33,10 @@ export class DocumentosFirmarComponent implements OnInit {
     private toastrService:ToastrService,
     private router: Router,
     private spinner: NgxSpinnerService,
-
     private route:ActivatedRoute,
+    
       ){}
+
   ngOnInit(): void {
     this.obtenerDocumentos(this.paginador.pageIndex, this.paginador.pageSize | this.pageSize);
     const rutaActual = this.route.snapshot.routeConfig?.path;
@@ -47,6 +48,8 @@ export class DocumentosFirmarComponent implements OnInit {
 
     }
   }
+
+
 
   ngAfterViewInit(){
     this.paginador._intl.itemsPerPageLabel="Items por Página";
@@ -63,10 +66,6 @@ export class DocumentosFirmarComponent implements OnInit {
   @ViewChild(MatTable,{static:true}) table!:MatTable<any>;
 
 
-  OnPageChange(event:PageEvent){
-    console.log(event)
-  }
-
   documentosFirmar:any[]=[]
   onCheckChange($event:any){
     if($event.target.checked){
@@ -79,7 +78,7 @@ export class DocumentosFirmarComponent implements OnInit {
   }
   async obtenerDocumentos(pageOffset:number,pageLimit:number) {
     try {
-      // await this.spinner.show();
+      await this.spinner.show();
       this.documentosService.listarDocumentos(pageOffset,pageLimit).subscribe(async (res:any) => {
         console.log(res);
         this.documentList = res.documentos.data;
@@ -96,7 +95,7 @@ export class DocumentosFirmarComponent implements OnInit {
   }
 
   showModal(){
-    this.modalRef=this.modalService.open(ConfirmacionFirmaDocumentoComponent,{backdrop:'static',size:'lg'});
+    this.modalRef=this.modalService.open(ConfirmacionFirmaDocumentoComponent,{backdrop:'static',size:'md'});
     this.modalRef.result.then((res)=>{
       if(res.estado){
         this.toastrService.info('Pinchaste firmar documentos toastr')
@@ -111,14 +110,16 @@ export class DocumentosFirmarComponent implements OnInit {
     {icon:"../assets/img/opcion_tabla.svg",nombre:"Opciones"}
   ];
 
-  /* documentList:any[]=[
+  /*
+  documentList:any[]=[
      {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Firma parcial", medio: 3, id:0},
      {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Rechazado", medio: 2, id:1},
      {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Firmado", medio: 1, id:2},
      {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Firmado", medio: 3, id:3},
      {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Firma parcial", medio: 2, id:4}
    ];
-  */
+   */
+  
 
-  documentList!:any[];
+   documentList!:any[];
 }
