@@ -12,6 +12,12 @@ import { dutchRangeLabel } from 'src/app/shared/dutchRangeLabel';
 import {NgxSpinnerService} from "ngx-spinner";
 import { FormBuilder, FormGroup } from '@angular/forms';
 
+enum SwitchRender{
+  "Usuario OTEC Firmar"=1,
+  "Usuario OTEC Firmado",
+  "Usuario externo firmar",
+  "Usuario externo firmado"
+}
 
 @Component({
   selector: 'app-documentos-firmar',
@@ -43,6 +49,8 @@ export class DocumentosFirmarComponent implements OnInit {
 
       }
 
+  casosSwitch:number=1;
+
   ngOnInit(): void {
     this.obtenerDocumentos(this.paginador.pageIndex, this.paginador.pageSize | this.pageSize);
     const rutaActual = window.location.pathname;
@@ -50,9 +58,17 @@ export class DocumentosFirmarComponent implements OnInit {
     if (rutaActual?.includes('docsFirmar')) {
       console.log("docsFirmar");
       this.tipoTabla = 'firmar';
+
     } else if (rutaActual?.includes('docsFirmados')) {
       console.log("docsFirmados");
       this.tipoTabla = 'firmados';
+      this.documentData=[
+        {icon:"../assets/img/calendario_tabla.svg",nombre:"Fecha"},
+        {icon:"../assets/img/archivo_tabla.svg",nombre:"Documento"},
+        {icon:"../assets/img/origen_tabla.svg",nombre:"Origen"},
+        {icon:"../assets/img/firma_tabla.svg",nombre:"Estado"},
+        {icon:"../assets/img/opcion_tabla.svg",nombre:"Opciones"}
+      ]
     }
 
     this.filtrosForm = this.formBuilder.group({
@@ -62,8 +78,6 @@ export class DocumentosFirmarComponent implements OnInit {
       fechaComunicacion: [null]
     });
   }
-
-
 
   ngAfterViewInit(){
     this.paginador._intl.itemsPerPageLabel="Items por Página";
@@ -106,9 +120,10 @@ export class DocumentosFirmarComponent implements OnInit {
       console.log(this.documentosFirmar);
     }
   }
+
   async obtenerDocumentos(pageOffset:number,pageLimit:number) {
     try {
-      await this.spinner.show();
+      // await this.spinner.show();
       this.documentosService.listarDocumentos(pageOffset,pageLimit).subscribe(
         {
           next: async (res:any) => {
@@ -155,11 +170,11 @@ export class DocumentosFirmarComponent implements OnInit {
       }
     })
   }
+
   documentData:DocumentData[]=[
     {icon:"../assets/img/calendario_tabla.svg",nombre:"Fecha"},
     {icon:"../assets/img/archivo_tabla.svg",nombre:"Documento"},
     {icon:"../assets/img/origen_tabla.svg",nombre:"Origen"},
-    {icon:"../assets/img/firma_tabla",nombre:"Estado"},
     {icon:"../assets/img/opcion_tabla.svg",nombre:"Opciones"}
   ];
 
