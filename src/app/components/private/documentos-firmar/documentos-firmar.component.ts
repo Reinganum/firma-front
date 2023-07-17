@@ -13,6 +13,12 @@ import { dutchRangeLabel } from 'src/app/shared/dutchRangeLabel';
 import {NgxSpinnerService} from "ngx-spinner";
 import { Location } from '@angular/common';
 
+enum SwitchRender{
+  "Usuario OTEC Firmar"=1,
+  "Usuario OTEC Firmado",
+  "Usuario externo firmar",
+  "Usuario externo firmado"
+}
 
 @Component({
   selector: 'app-documentos-firmar',
@@ -40,6 +46,8 @@ export class DocumentosFirmarComponent implements OnInit {
 
       ){}
 
+  casosSwitch:SwitchRender=SwitchRender['Usuario OTEC Firmar'];
+
   ngOnInit(): void {
     this.obtenerDocumentos(this.paginador.pageIndex, this.paginador.pageSize | this.pageSize);
     const rutaActual = window.location.pathname;
@@ -47,13 +55,13 @@ export class DocumentosFirmarComponent implements OnInit {
     if (rutaActual?.includes('docsFirmar')) {
       console.log("docsFirmar");
       this.tipoTabla = 'firmar';
+      this.casosSwitch=SwitchRender['Usuario OTEC Firmar'];
     } else if (rutaActual?.includes('docsFirmados')) {
       console.log("docsFirmados");
       this.tipoTabla = 'firmados';
+      this.casosSwitch=SwitchRender['Usuario OTEC Firmado'];
     }
   }
-
-
 
   ngAfterViewInit(){
     this.paginador._intl.itemsPerPageLabel="Items por Página";
@@ -80,9 +88,10 @@ export class DocumentosFirmarComponent implements OnInit {
       console.log(this.documentosFirmar);
     }
   }
+  
   async obtenerDocumentos(pageOffset:number,pageLimit:number) {
     try {
-      await this.spinner.show();
+      // await this.spinner.show();
       this.documentosService.listarDocumentos(pageOffset,pageLimit).subscribe(
         {
           next: async (res:any) => {
@@ -129,14 +138,14 @@ export class DocumentosFirmarComponent implements OnInit {
       }
     })
   }
+
   documentData:DocumentData[]=[
     {icon:"../assets/img/calendario_tabla.svg",nombre:"Fecha"},
     {icon:"../assets/img/archivo_tabla.svg",nombre:"Documento"},
     {icon:"../assets/img/origen_tabla.svg",nombre:"Origen"},
-    {icon:"../assets/img/firma_tabla",nombre:"Estado"},
+    //{icon:"../assets/img/firma_tabla.svg",nombre:"Estado"},
     {icon:"../assets/img/opcion_tabla.svg",nombre:"Opciones"}
   ];
-
 
   documentList:any[]=[
      {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Firma parcial", medio: 3, id:0},
@@ -145,8 +154,6 @@ export class DocumentosFirmarComponent implements OnInit {
      {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Firmado", medio: 3, id:3},
      {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Firma parcial", medio: 2, id:4}
    ];
-
-
 
   //  documentList!:any[];
 }
