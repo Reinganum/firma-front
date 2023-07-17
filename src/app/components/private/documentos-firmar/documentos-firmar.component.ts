@@ -167,7 +167,7 @@ export class DocumentosFirmarComponent implements OnInit {
     this.modalRef=this.modalService.open(ConfirmacionFirmaDocumentoComponent,{backdrop:'static',size:'md'});
     this.modalRef.result.then((res)=>{
       if(res.estado){
-        this.toastrService.info('Pinchaste firmar documentos toastr')
+        
       }
     })
   }

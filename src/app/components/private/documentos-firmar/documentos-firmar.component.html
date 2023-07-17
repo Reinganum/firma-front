@@ -10,7 +10,7 @@
       </div>
       <div class="d-flex col-6 justify-content-end">
         <button class="filter-btn btn me-2" style="border: 1px solid #979ba2;" (click)="flagFiltros = !flagFiltros"><img class="px-3" src="../assets/img/filtro-btn.svg">Filtrar</button>
-        <button class="btn-firmar-seleccionados btn btn-primary btn-main">Firmar seleccionados</button>
+        <button *ngIf="tipoTabla === 'firmar'" class="btn-firmar-seleccionados btn btn-primary btn-main"style="background-color: #0B58A4 !important;">Firmar seleccionados</button>
       </div>
   </div>
 
@@ -121,13 +121,13 @@
                    [ngClass]="{'firmado':document.estado==='Firmado',
                                'parcial':document.estado==='Firma parcial',
                                'rechazado':document.estado==='Rechazado'}">
-                               {{document.estado}}
+                               {{document.estadoFirma}}
                    </span>
                </td>
                <td>
-                   <div class="d-flex">
-                     <a (click)="vistaPrevia(document)"><img src="../../../../assets/img/vista-previa.svg" alt="Vista previa"></a>
-                     <a (click)="showModal()"><img class="px-1" src="../../../../assets/img/firma_tabla.svg"></a>
+                   <div class="d-flex justify-content-center">
+                     <a (click)="vistaPrevia(document)"><img class="iconos-options rounded p-1" src="../../../../assets/img/lupa_btn.svg" alt="Vista previa"></a>
+                     <a (click)="showModal()"><img class="mx-1 iconos-options rounded p-1" src="../../../../assets/img/firma_btn.svg"></a>
                    </div>
                </td>
            </tr>
