@@ -1,5 +1,5 @@
 <app-datos-firma *ngIf="currentUser"></app-datos-firma>
-<div class="container" style="background-color: #fafbfc;">
+<div class="container col-lg-12" style="background-color: #fafbfc;">
   <!--Titulo según tipo de usuario y vista Por Firmar/Firmados-->
   <h1 *ngIf="!currentUser">Tus documentos</h1>
   <div *ngIf="currentUser" class="row py-4">
@@ -13,7 +13,6 @@
         <button *ngIf="tipoTabla === 'firmar'" class="btn-firmar-seleccionados btn btn-primary btn-main"style="background-color: #0B58A4 !important;">Firmar seleccionados</button>
       </div>
   </div>
-
   <div *ngIf="flagFiltros" class="row my-1" id="verfiltros">
     <div class="col-12">
         <form [formGroup]="filtrosForm" class="row">
@@ -24,35 +23,35 @@
                     </div>
                     <!-- <div class="col-12 col-md-4 col-lg-3 form-group">
                         <mat-form-field>
-                          <mat-label>Tipo de capacitación</mat-label>
-                          <mat-select formControlName="tipoCapacitacion">
+                        <mat-label>Tipo de capacitación</mat-label>
+                        <mat-select formControlName="tipoCapacitacion">
                             <mat-option *ngFor="let tipo of tiposACFiltro" [value]="tipo.value">{{tipo.nombre}}</mat-option>
-                          </mat-select>
+                        </mat-select>
                         </mat-form-field>
-                      </div>  -->
+                    </div>  -->
                     <!-- <div class="col-12 col-md-4 col-lg-3 form-group">
                         <mat-form-field>
-                          <mat-label>Agencia</mat-label>
-                          <mat-select formControlName="agencia">
+                        <mat-label>Agencia</mat-label>
+                        <mat-select formControlName="agencia">
                             <mat-option *ngFor="let agencia of agencias" [value]="agencia.codigo">{{agencia.nom_agencia}}</mat-option>
-                          </mat-select>
+                        </mat-select>
                         </mat-form-field>
-                      </div> -->
-                    <div class="col-12 col-md-4 col-lg-3 form-group">
+                    </div> -->
+                    <div class="col-12 col-sm-12 col-md-6 col-l-6 col-xl-6 col-xxl-3 form-group">
                         <mat-form-field>
                             <mat-label>Fecha</mat-label>
-                            <input matInput [matDatepicker]="pickerFSolicitud" class="form-control" formControlName="fechaDoc">
+                            <input matInput [matDatepicker]="pickerFSolicitud" class="form-control inputs-filter" formControlName="fechaDoc">
                             <mat-datepicker-toggle matSuffix [for]="pickerFSolicitud"></mat-datepicker-toggle>
                             <mat-datepicker #pickerFSolicitud></mat-datepicker>
                         </mat-form-field>
                     </div>
-                    <div class="col-12 col-md-4 col-lg-3 form-group">
+                    <div class="col-12 col-sm-12 col-md-6 col-l-6 col-xl-6 col-xxl-3 form-group inputs-filter">
                         <mat-form-field>
                         <mat-label>RUT O Nombre Cliente</mat-label>
                         <input type="text" matInput formControlName="cliente" placeholder="Ingresa texto"/>
                         </mat-form-field>
                     </div>
-                    <div class="col-12 col-md-4 col-lg-3 form-group">
+                    <div class="col-12 col-sm-12 col-md-6 col-l-6 col-xl-6 col-xxl-3 form-group inputs-filter">
                         <mat-form-field >
                         <mat-label>Fecha Inicio Curso</mat-label>
                         <input matInput [matDatepicker]="pickerFInicio" formControlName="fechaInicio">
@@ -60,7 +59,7 @@
                         <mat-datepicker #pickerFInicio></mat-datepicker>
                         </mat-form-field>
                     </div>
-                    <div class="col-12 col-md-4 col-lg-3 form-group">
+                    <div class="col-12 col-sm-12 col-md-6 col-l-6 col-xl-6 col-xxl-3 form-group inputs-filter">
                         <mat-form-field>
                         <mat-label>Fecha Comunicación</mat-label>
                         <input matInput [matDatepicker]="pickerComunicacion" formControlName="fechaComunicacion">
@@ -72,26 +71,27 @@
                         <mat-form-field>
                             <mat-label>Estado</mat-label>
                             <mat-select formControlName="estado">
-                              <mat-option *ngFor="let estado of ESTADOS_INS" [value]="estado.id">{{estado.descripcion}}</mat-option>
+                            <mat-option *ngFor="let estado of ESTADOS_INS" [value]="estado.id">{{estado.descripcion}}</mat-option>
                             </mat-select>
-                          </mat-form-field>
+                        </mat-form-field>
                     </div> -->
                     <!-- <div class="col-12 col-md-4 col-lg-3 form-group">
                         <mat-form-field>
                             <mat-label>Sociedad</mat-label>
                             <mat-select formControlName="sociedad">
-                              <mat-option *ngFor="let sociedad of SOCIEDAD" [value]="sociedad.valor">{{sociedad.nombre}}</mat-option>
+                            <mat-option *ngFor="let sociedad of SOCIEDAD" [value]="sociedad.valor">{{sociedad.nombre}}</mat-option>
                             </mat-select>
-                          </mat-form-field>
+                        </mat-form-field>
                     </div> -->
                     <div class="col-12 text-end mt-md-3">
-                        <a (click)="exportar()" class="mt-2 btn boton-filtro-gris mx-1"><img src="../assets/img/excel.png" style="
+                        <a (click)="exportar()" class="mt-2 btn boton-filtro-gris mx-1" style="background-color: transparent !important;"><img src="../assets/img/excel.png" style="
                         height: 17px;
                         ">Exportar</a>
-                        <a (click)="filtrar()" class="mt-2 btn btn-primary mx-1"><img src="../assets/img/aplicar-filtros.svg">Aplicar
+                        <a (click)="filtrar()" class="mt-2 btn btn-primary mx-1" style="background-color: #0B58A4 !important;">
+                        <img src="../assets/img/aplicar-filtros.svg">Aplicar
                         filtros</a>
-                        <a (click)="limpiar()" class="mt-2 btn boton-filtro-gris mx-1"><img
-                        src="../assets/img/limpiar-filtros.svg">Limpiar Filtros</a>
+                        <a (click)="limpiar()" class="mt-2 btn btn-outline-secondary mx-1" style="background-color: transparent !important;"><img
+                        class="mx-1" src="../assets/img/limpiar-filtros.svg">Limpiar Filtros</a>
                     </div>
                 </div>
             </div>
@@ -99,7 +99,7 @@
     </div>
   </div>
 
-  <div>
+  <div class="col-12">
     <table class="table">
       <thead class="pt-4">
        <tr>

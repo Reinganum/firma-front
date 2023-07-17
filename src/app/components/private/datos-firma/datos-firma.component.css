@@ -1,0 +1,6 @@
+@media screen and (max-width: 771px) {
+    #img-firmar{
+        border-right:none !important;
+        padding-right: 0 !important;
+    }
+  }
