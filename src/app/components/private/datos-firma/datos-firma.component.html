@@ -1,23 +1,23 @@
 <div class="container col-12 my-5">
-        <h1 class="ms-3">Datos de la firma</h1>
-        <div class="row rounded py-2" style="background-color: #fafbfc;">
-            <div class="d-flex col-sm-12 col-md-4 col-lg-2 justify-content-center">
+    <h1>Datos de la firma</h1>
+    <div class="row rounded py-2" style="background-color: #fafbfc;">
+        <div class="d-flex col-sm-2 col-md-2 col-lg-2 justify-content-center" id="img-container">
+            <div style="background-size: contain;">
                 <img class="img-fluid" id="img-firmar" style="border-right: 5px solid #e38c48; padding-right:25%;min-width: 150px;" src="../assets/img/img-firma-resumen.svg">
+            </div>  
+        </div>
+        <div class="d-flex flex-row col-sm-12 col-md-8 col-lg-4 justify-content-around flex-wrap" style="align-items: center;">
+            <div class="d-flex col-lg-6 flex-column">
+                <p>Nombre:</p>
+                <p>RUT:</p>
+                <p>Email:</p>
+                <p>Teléfono:</p>
             </div>
-            <div class="d-flex col-sm-12 col-md-4 col-lg-2" style="align-items: center;">
-                <div>
-                    <p>Nombre:</p>
-                    <p>RUT:</p>
-                    <p>Email:</p>
-                    <p>Teléfono:</p>
-                </div>
-            </div>
-            <div class="d-flex fw-bold col-sm-12 col-md-4 col-lg-2" style="align-items: center;">
-                <div>
-                    <p>{{userInfo.firstName + " " + userInfo.lastName}}<p>
-                    <p>{{user.rut}}</p>
-                    <p>{{userInfo.email}}</p>
-                    <p>{{user.phone}}</p>
+            <div class="d-flex col-lg-6 flex-column">
+                <p>{{userInfo.firstName + " " + userInfo.lastName}}<p>
+                <p>{{user.rut}}</p>
+                <p>{{userInfo.email}}</p>
+                <p>{{user.phone}}</p>
             </div>
         </div>
     </div>

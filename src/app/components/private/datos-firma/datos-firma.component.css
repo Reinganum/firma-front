@@ -1,4 +1,7 @@
-@media screen and (max-width: 771px) {
+@media screen and (max-width: 768px) {
+    #img-container{
+        width: 100% !important;
+    }
     #img-firmar{
         border-right:none !important;
         padding-right: 0 !important;
