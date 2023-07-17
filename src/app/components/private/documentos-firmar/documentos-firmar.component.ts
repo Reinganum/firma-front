@@ -49,12 +49,13 @@ export class DocumentosFirmarComponent implements OnInit {
 
       }
 
-  casosSwitch:number=1;
+  casosSwitch:number=2;
+  currentUser:any;
 
   ngOnInit(): void {
     this.obtenerDocumentos(this.paginador.pageIndex, this.paginador.pageSize | this.pageSize);
     const rutaActual = window.location.pathname;
-
+    this.currentUser = localStorage.getItem("currentUser");
     if (rutaActual?.includes('docsFirmar')) {
       console.log("docsFirmar");
       this.tipoTabla = 'firmar';
