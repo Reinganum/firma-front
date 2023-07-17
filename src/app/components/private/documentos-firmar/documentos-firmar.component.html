@@ -1,34 +1,22 @@
 <app-datos-firma></app-datos-firma>
     <div class="container rounded" style="background-color: #fafbfc;">
-        <div class="container rounded" style="background-color: #fafbfc;" [ngSwitch]="casosSwitch">
+        <div class="container rounded" style="background-color: #fafbfc;">
             <!--Titulo según tipo de usuario y vista Por Firmar/Firmados-->
-            <div *ngSwitchCase="1" class="row py-4">
+
+            <div *ngIf="casosSwitch==1; else externalUser" class="row py-4">
                 <div class="col-6">
-                        <span class="fw-bold"><img class="pe-2" src="../assets/img/doc-por-firmar.svg">Documentos por firmar</span>
-                        <p>Listado de documentos listos para firmar</p>
+                        <span class="fw-bold"><img class="pe-2" src="../assets/img/doc-por-firmar.svg">
+                            {{tipoTabla === 'firmar' ? "Documentos por firmar": "Documentos firmados"}}</span>
+                        <p>{{tipoTabla === 'firmar' ? "Listado de documentos listos para firmar" : "Listado de documentos firmados y listos para gestión"}}</p>
                 </div>
                 <div class="d-flex col-6 justify-content-end">
                     <button class="filter-btn btn me-2" style="border: 1px solid #979ba2;"><img class="px-3" src="../assets/img/filtro-btn.svg">Filtrar</button>
                     <button class="btn-firmar-seleccionados btn btn-primary btn-main">Firmar seleccionados</button>
                 </div>
             </div>
-            <div *ngSwitchCase="2" class="row py-4">
-                <div class="col-6">
-                        <span class="fw-bold"><img class="pe-2" src="../assets/img/doc-por-firmar.svg">Documentos firmados</span>
-                        <p>listado de documentos firmados y listos para gestión</p>
-                </div>
-                <div class="d-flex col-6 justify-content-end">
-                    <button class="filter-btn btn me-2" style="border: 1px solid #979ba2;"><img class="px-3" src="../assets/img/filtro-btn.svg">Filtrar</button>
-                    <button class="btn-firmar-seleccionados btn btn-primary btn-main">Firmar seleccionados</button>
-                </div>
-            </div>
-            <div *ngSwitchCase="3">
+            <ng-template #externalUser>
                 <h1>Tus documentos</h1>
-            </div>
-            <div *ngSwitchDefault>
-                <h1 class="ms-3">Bienvenido al portal Firma electrónica OTIC Sofofa</h1>
-                <h5 class="ms-3">para consultar los documentos firmados electrónicamente</h5>
-            </div>
+            </ng-template>
         </div>
         
         <table mat-table class="ms-2 table">
@@ -43,20 +31,20 @@
            <tbody>
                 <tr *ngFor="let document of documentList, let i = index">
                     <td><input class="form-check-input" [value]=i type="checkbox" (change)="onCheckChange($event)"></td>
-                    <td>{{document.fecha}}</td>
+                    <td>{{document.fecha | date: "dd/mm/yyyy"}}</td>
                     <td>{{document.nombreArchivo}}</td>
-                    <td><div class="d-flex flex-row justify-content-center"><div class="mx-2 rounded-circle bg-dark" style="color:white;">GN</div>{{document.medio}}</div></td>
+                    <td><div class="d-flex flex-row"><div class="mx-2 rounded-circle bg-dark" style="color:white;">GN</div>{{document.medio}}</div></td>
                     <!-- CUANDO SE INTEGRE COLUMNA DE ESTADO-->
-                    <!--<td *ngIf="firmaParam !== 'firmar'" class="text-center"> 
+                    <td *ngIf="tipoTabla !== 'firmar'" class="text-center"> 
                         <span class="fw-bold p-1 rounded"
                         [ngClass]="{'firmado':document.estado==='Firmado',
                                     'parcial':document.estado==='Firma parcial',
                                     'rechazado':document.estado==='Rechazado'}">
                                     {{document.estado}}
                         </span>
-                    </td>-->
+                    </td>
                     <td>
-                        <div class="d-flex justify-content-center">
+                        <div class="d-flex">
                           <a (click)="vistaPrevia(document)"><img src="../../../../assets/img/vista-previa.svg" alt="Vista previa"></a>
                           <a (click)="showModal()"><img class="px-1" src="../../../../assets/img/firma_tabla.svg"></a>
                         </div>

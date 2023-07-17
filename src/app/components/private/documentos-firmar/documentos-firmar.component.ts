@@ -46,7 +46,7 @@ export class DocumentosFirmarComponent implements OnInit {
 
       ){}
 
-  casosSwitch:SwitchRender=SwitchRender['Usuario OTEC Firmar'];
+  casosSwitch:number=1;
 
   ngOnInit(): void {
     this.obtenerDocumentos(this.paginador.pageIndex, this.paginador.pageSize | this.pageSize);
@@ -55,11 +55,17 @@ export class DocumentosFirmarComponent implements OnInit {
     if (rutaActual?.includes('docsFirmar')) {
       console.log("docsFirmar");
       this.tipoTabla = 'firmar';
-      this.casosSwitch=SwitchRender['Usuario OTEC Firmar'];
+
     } else if (rutaActual?.includes('docsFirmados')) {
       console.log("docsFirmados");
       this.tipoTabla = 'firmados';
-      this.casosSwitch=SwitchRender['Usuario OTEC Firmado'];
+      this.documentData=[
+        {icon:"../assets/img/calendario_tabla.svg",nombre:"Fecha"},
+        {icon:"../assets/img/archivo_tabla.svg",nombre:"Documento"},
+        {icon:"../assets/img/origen_tabla.svg",nombre:"Origen"},
+        {icon:"../assets/img/firma_tabla.svg",nombre:"Estado"},
+        {icon:"../assets/img/opcion_tabla.svg",nombre:"Opciones"}
+      ]
     }
   }
 
@@ -143,7 +149,6 @@ export class DocumentosFirmarComponent implements OnInit {
     {icon:"../assets/img/calendario_tabla.svg",nombre:"Fecha"},
     {icon:"../assets/img/archivo_tabla.svg",nombre:"Documento"},
     {icon:"../assets/img/origen_tabla.svg",nombre:"Origen"},
-    //{icon:"../assets/img/firma_tabla.svg",nombre:"Estado"},
     {icon:"../assets/img/opcion_tabla.svg",nombre:"Opciones"}
   ];
 
