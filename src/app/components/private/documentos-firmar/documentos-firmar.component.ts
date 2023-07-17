@@ -11,6 +11,7 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { dutchRangeLabel } from 'src/app/shared/dutchRangeLabel';
 import {NgxSpinnerService} from "ngx-spinner";
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -26,7 +27,8 @@ export class DocumentosFirmarComponent implements OnInit {
   userInfo:any={}
   totalFilas!:number
   pageSize=5
-  pageSizeOptions=[5,10,20]
+  pageSizeOptions=[5,10,20];
+  tipoTabla:string = '';
   constructor(
     private modalService:NgbModal,
     private documentosService: DocumentosService,
@@ -34,18 +36,20 @@ export class DocumentosFirmarComponent implements OnInit {
     private router: Router,
     private spinner: NgxSpinnerService,
     private route:ActivatedRoute,
+    private location: Location
 
       ){}
 
   ngOnInit(): void {
     this.obtenerDocumentos(this.paginador.pageIndex, this.paginador.pageSize | this.pageSize);
-    const rutaActual = this.route.snapshot.routeConfig?.path;
+    const rutaActual = window.location.pathname;
+
     if (rutaActual?.includes('docsFirmar')) {
       console.log("docsFirmar");
-
+      this.tipoTabla = 'firmar';
     } else if (rutaActual?.includes('docsFirmados')) {
       console.log("docsFirmados");
-
+      this.tipoTabla = 'firmados';
     }
   }
 
