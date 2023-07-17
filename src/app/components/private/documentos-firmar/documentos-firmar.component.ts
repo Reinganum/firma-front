@@ -34,7 +34,7 @@ export class DocumentosFirmarComponent implements OnInit {
     private router: Router,
     private spinner: NgxSpinnerService,
     private route:ActivatedRoute,
-    
+
       ){}
 
   ngOnInit(): void {
@@ -79,13 +79,36 @@ export class DocumentosFirmarComponent implements OnInit {
   async obtenerDocumentos(pageOffset:number,pageLimit:number) {
     try {
       await this.spinner.show();
-      this.documentosService.listarDocumentos(pageOffset,pageLimit).subscribe(async (res:any) => {
-        console.log(res);
-        this.documentList = res.documentos.data;
-        this.totalFilas= res.documentos.total;
-        await this.spinner.hide();
+      this.documentosService.listarDocumentos(pageOffset,pageLimit).subscribe(
+        {
+          next: async (res:any) => {
+              console.log(res);
+              this.documentList = res.documentos.data;
+              this.totalFilas= res.documentos.total;
+              await this.spinner.hide();
+          },
+          error: async (error:any) => {
+            await this.spinner.hide();
+
+            if (error.status.toString() === '404') {
+              this.toastrService.warning(error.error.message);
+            } else if (['0', '401', '403', '504'].includes(error.status.toString())) {
+              this.toastrService.error("Error de conexión.");
+            } else {
+              this.toastrService.error("Ha ocurrido un error.");
+            }
+          }
       });
     } catch (error:any) {
+      await this.spinner.hide();
+
+      if (error.status.toString() === '404') {
+        this.toastrService.warning(error.error.message);
+      } else if (['0', '401', '403', '504'].includes(error.status.toString())) {
+
+      } else {
+        this.toastrService.error("Ha ocurrido un error");
+      }
       console.log(error);
     }
   }
@@ -110,7 +133,7 @@ export class DocumentosFirmarComponent implements OnInit {
     {icon:"../assets/img/opcion_tabla.svg",nombre:"Opciones"}
   ];
 
-  /*
+
   documentList:any[]=[
      {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Firma parcial", medio: 3, id:0},
      {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Rechazado", medio: 2, id:1},
@@ -118,8 +141,8 @@ export class DocumentosFirmarComponent implements OnInit {
      {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Firmado", medio: 3, id:3},
      {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Firma parcial", medio: 2, id:4}
    ];
-   */
-  
 
-   documentList!:any[];
+
+
+  //  documentList!:any[];
 }

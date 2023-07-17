@@ -2,9 +2,12 @@
   <div class="row mt-5">
     <pdf-viewer class="iframeFac" [src]="archivoFirmar" [zoom]="1" [original-size]="true"></pdf-viewer>
   </div>
-  <div class="row">
-    <button [routerLink]="['/consulta-documento']" class="btn btn-sm btn-primary mx-1">
-      Volver
-    </button>
-  </div>
+  <div class="row justify-content-left py-5">
+    <div class="d-flex justify-content-center">
+        <button class="btn btn-primary btn-main mx-2 py-2" (click)="modalFirmar()">
+            <img class="px-3" src="../../../../assets/img/firma_btn.svg">Firmar</button>
+        <button class="btn btn-outline-secondary mx-2" style="background-color: transparent !important;" [routerLink]="['/consulta-documento']">
+            <span class="fw-bold mx-2">X</span>Cancelar</button>
+    </div>
+</div>
 </div>
