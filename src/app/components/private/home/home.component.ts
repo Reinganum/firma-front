@@ -10,22 +10,7 @@ import { ObtenerRutComponent } from '../../modals/obtener-rut/obtener-rut.compon
 
 export class HomeComponent implements OnInit {
 
-  modalRef!:NgbModalRef;
-  constructor(
-    private modalService:NgbModal
-  ) {}
-  async ngOnInit() {
-    this.abrirModalRut();
-  }
+  constructor() { }
 
-  abrirModalRut() {
-    this.modalRef = this.modalService.open(ObtenerRutComponent, { backdrop: 'static', size: 'sm'});
-    this.modalRef.result.then(res => {
-      if (res.estado) {
-        console.log(res);
-        console.log(res.estado);
-      }
-
-    });
-  }
+  async ngOnInit() { }
 }

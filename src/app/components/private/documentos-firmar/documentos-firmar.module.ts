@@ -6,6 +6,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { FormsModule } from "@angular/forms";
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatSortModule } from "@angular/material/sort";
+import { MaterialModule } from "src/app/material.module";
 
 const routes: Routes = [
     { path: '', outlet: 'pages', component: DocumentosFirmarComponent }
@@ -21,7 +22,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     FormsModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MaterialModule
   ],
   exports: [
     DocumentosFirmarComponent

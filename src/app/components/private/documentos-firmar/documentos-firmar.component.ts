@@ -8,10 +8,9 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
 import { dutchRangeLabel } from 'src/app/shared/dutchRangeLabel';
 import {NgxSpinnerService} from "ngx-spinner";
-import { Location } from '@angular/common';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -29,16 +28,20 @@ export class DocumentosFirmarComponent implements OnInit {
   pageSize=5
   pageSizeOptions=[5,10,20];
   tipoTabla:string = '';
+  flagFiltros = false;
+  filtrosForm!: FormGroup;
+  columndefs:any;
   constructor(
     private modalService:NgbModal,
     private documentosService: DocumentosService,
     private toastrService:ToastrService,
     private router: Router,
     private spinner: NgxSpinnerService,
-    private route:ActivatedRoute,
-    private location: Location
+    private formBuilder: FormBuilder
 
-      ){}
+      ){
+
+      }
 
   ngOnInit(): void {
     this.obtenerDocumentos(this.paginador.pageIndex, this.paginador.pageSize | this.pageSize);
@@ -51,6 +54,13 @@ export class DocumentosFirmarComponent implements OnInit {
       console.log("docsFirmados");
       this.tipoTabla = 'firmados';
     }
+
+    this.filtrosForm = this.formBuilder.group({
+      fechaDoc: [null],
+      cliente: [null],
+      fechaInicio: [null],
+      fechaComunicacion: [null]
+    });
   }
 
 
@@ -71,6 +81,22 @@ export class DocumentosFirmarComponent implements OnInit {
 
 
   documentosFirmar:any[]=[]
+
+  filtrar() {
+    this.paginador.firstPage();
+    this.paginador.pageSize = this.pageSize;
+    this.obtenerDocumentos(this.paginador.pageIndex, this.paginador.pageSize | this.pageSize);
+  }
+
+  limpiar() {
+
+  }
+
+  exportar() {
+
+  }
+
+
   onCheckChange($event:any){
     if($event.target.checked){
       this.documentosFirmar.push(this.documentList[$event.target.value]);
@@ -138,15 +164,15 @@ export class DocumentosFirmarComponent implements OnInit {
   ];
 
 
-  documentList:any[]=[
-     {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Firma parcial", medio: 3, id:0},
-     {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Rechazado", medio: 2, id:1},
-     {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Firmado", medio: 1, id:2},
-     {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Firmado", medio: 3, id:3},
-     {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Firma parcial", medio: 2, id:4}
-   ];
+  // documentList:any[]=[
+  //    {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Firma parcial", medio: 3, id:0},
+  //    {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Rechazado", medio: 2, id:1},
+  //    {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Firmado", medio: 1, id:2},
+  //    {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Firmado", medio: 3, id:3},
+  //    {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Firma parcial", medio: 2, id:4}
+  //  ];
 
 
 
-  //  documentList!:any[];
+   documentList!:any[];
 }
