@@ -1,8 +1,12 @@
 import { NgModule } from "@angular/core";
-import { VistaDocumentoComponent } from "./vista-documento.component";
 import { CommonModule } from "@angular/common";
-import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { RouterModule, Routes } from "@angular/router";
+
+import { MaterialModule } from "src/app/material.module";
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+
+import { VistaDocumentoComponent } from "./vista-documento.component";
+import { MatIconModule } from "@angular/material/icon";
 
 const routes: Routes = [
   { path: '', outlet: 'pages', component: VistaDocumentoComponent }
@@ -10,12 +14,13 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    VistaDocumentoComponent
+    VistaDocumentoComponent,
   ],
   imports: [
     CommonModule,
     PdfViewerModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    MatIconModule
   ],
   exports: [
     VistaDocumentoComponent

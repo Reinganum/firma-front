@@ -30,6 +30,7 @@
     "ngx-spinner": "^16.0.2",
     "ngx-toastr": "^15.2.2",
     "pdf-viewer": "^0.8.1",
+    "pdfjs-dist": "^3.8.162",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"

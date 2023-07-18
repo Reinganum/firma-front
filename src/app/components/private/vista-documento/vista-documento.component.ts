@@ -11,22 +11,16 @@ import { PdfViewerComponent as Ng2PdfViewerComponent, PdfViewerComponent } from 
 @Component({
   selector: 'app-vista-documento',
   templateUrl: './vista-documento.component.html',
-  styleUrls: ['./vista-documento.component.css']
+  styleUrls: ['./vista-documento.component.css'],
 })
+
 export class VistaDocumentoComponent implements OnInit {
   archivoFirmar:string = '';
   idDoc!:number;
   modalRef!: NgbModalRef;
-  currentPage: number = 1;
-
-  @ViewChild('pdfViewer', { static: false }) pdfViewer!: PdfViewerComponent;
-  onPageChange(event: any): void {
-    this.currentPage = event.pageNumber;
-  }
-
-  nextPage(): void {
-    this.pdfViewer.pageChange;
-  }
+  zoom:number=1
+  rotation:number=0
+  fileName:string=""
 
   constructor(
     private comunesServices: ComunesService,
@@ -49,6 +43,17 @@ export class VistaDocumentoComponent implements OnInit {
     })
   }
 
+  rotate():void{
+    this.rotation+=90
+  }
+
+  zoomIn():void{
+    this.zoom += 0.25
+  }
+
+  zoomOut():void{
+    this.zoom > 0.25 ? this.zoom -= 0.25 : this.zoom;
+  }
   async obtenerPath(id:number) {
     await this.spinner.show();
     this.documentosService.listaDocId(id).subscribe({
@@ -61,6 +66,7 @@ export class VistaDocumentoComponent implements OnInit {
           return ;
         }
         this.obtenerPathS3(res.documento.nombreArchivo)
+        this.fileName=res.documento.nombreArchivo
       },
       error: async (error:any) => {
         await this.spinner.hide();

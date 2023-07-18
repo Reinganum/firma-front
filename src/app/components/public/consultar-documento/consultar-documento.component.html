@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row d-flex flex-row-reverse">
         <div class="col-12 col-md-8 col-sm-10  col-lg-6" style="margin-top: 10%;">
-          <h1 class="fw-bold display-3 mt-5" style="color:white;font-size: 2.5em !important;">Te damos la bienvenida</h1>
+          <h1 id="main-title" class="fw-bold display-3 mt-5" style="color:white;font-size: 2.5em !important;">Te damos la bienvenida</h1>
           <div class="d-flex pt-3">
           <h1 class="text-center" style="color:white;font-size: 2.2em !important;font-weight: bold; line-height: 2em;">a 
             <span class="rounded py-2 px-1" style="background-color: white; color: black;">
@@ -17,7 +17,7 @@
               <p style="font-size: 1em!important;">Bienvenido al portal para consultar los documentos firmados <br/> electrónicamente.</p>
               <p class="py-4" style="font-size: 1em!important;">Debes ingresar el código de validación del documento para conocer y revisar detalles. Tiene de 10 a 12 caracteres.</p>
                 <label for="inputDocument" style="font-size: 1em!important;" class="form-label">Código de Documento</label>
-                <input type="email" style="line-height: 3em;" placeholder="Ingresa tu número de documento" class="form-control" id="inputDocument" aria-describedby="documentNum">
+                <input matInput  formControlName="codigoDoc" type="email" style="line-height: 3em;" placeholder="Ingresa tu número de documento" class="form-control" id="inputDocument" aria-describedby="documentNum">
                 <button (click)="consultarDocumento()" class="btn btn-primary btn-main btn-nuevo w-100 mt-4 py-3 mb-5" 
                 style="background-color:#0B58A4 !important; font-size: 1.1em !important;" tabindex="4"><img
                   src="../../../../assets/img/lupa_btn.svg">&nbsp;&nbsp;Consultar documento</button>

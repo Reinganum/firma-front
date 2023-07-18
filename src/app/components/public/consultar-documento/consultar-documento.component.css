@@ -8,3 +8,9 @@
   margin-top:-41px !important;
   margin-left: 0px !important;
 }
+
+@media screen and (max-width: 770px) {
+  #main-title {
+   text-align: center;
+  }
+}

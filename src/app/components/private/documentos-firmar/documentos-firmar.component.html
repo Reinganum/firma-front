@@ -102,7 +102,7 @@
   </div>
   <div class="col-12" style="overflow-x: scroll !important;">
     <table class="table">
-      <thead class="pt-4">
+      <thead class="pt-4 text-center">
        <tr>
            <td><input class="form-check-input" style="outline:#1e5180;" type="checkbox" disabled></td>
            <td  *ngFor="let dataColumn of documentData, let i = index">
@@ -115,9 +115,9 @@
                <td><input class="form-check-input" [value]=i type="checkbox" (change)="onCheckChange($event)"></td>
                <td>{{document.fecha | date: "dd-MM-yyyy"}}</td>
                <td class="text-left">{{document.nombreArchivo}}</td>
-               <td><div class="d-flex flex-row"><div class="mx-2 rounded-circle bg-dark" style="color:white;">GN</div>{{document.medio}}</div></td>
+               <td><div class="d-flex flex-row justify-content-centerç"><div class="mx-2 rounded-circle bg-dark" style="color:white;">GN</div>{{document.medio}}</div></td>
                <!-- CUANDO SE INTEGRE COLUMNA DE ESTADO-->
-               <td *ngIf="tipoTabla !== 'firmar'" class="text-center">
+               <td *ngIf="tipoTabla !== 'firmar'">
                    <span class="fw-bold p-1 rounded"
                    [ngClass]="{'firmado':document.estado==='Firmado',
                                'parcial':document.estado==='Firma parcial',
