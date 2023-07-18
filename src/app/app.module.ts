@@ -9,7 +9,6 @@ import { KeycloakService } from './services/keycloak.service';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { NgxSpinnerModule } from 'ngx-spinner';
 
-
 import { AppComponent } from './app.component';
 import { NoAutorizadoComponent } from './components/public/no-autorizado/no-autorizado.component';
 import { ConfirmacionFirmaDocumentoComponent } from './components/modals/confirmacion-firma-documento/confirmacion-firma-documento.component';
@@ -43,7 +42,7 @@ const CUSTOM_DATE_FORMATS = {
     NoAutorizadoComponent,
     RechazarFirmaDocumentoComponent,
     ConfirmacionFirmaDocumentoComponent,
-    ObtenerRutComponent
+    ObtenerRutComponent,
   ],
   imports: [
     BrowserModule,

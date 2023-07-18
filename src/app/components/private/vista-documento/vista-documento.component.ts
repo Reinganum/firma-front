@@ -6,7 +6,14 @@ import { ToastrService } from 'ngx-toastr';
 import { ComunesService } from 'src/app/services/comunes.service';
 import { DocumentosService } from 'src/app/services/documentos.service';
 import { ConfirmacionFirmaDocumentoComponent } from '../../modals/confirmacion-firma-documento/confirmacion-firma-documento.component';
-import { PdfViewerComponent as Ng2PdfViewerComponent, PdfViewerComponent } from 'ng2-pdf-viewer';
+import { PDFDocumentProxy } from 'ng2-pdf-viewer';
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { CanvasElement } from 'pdfmake/interfaces';
+import { Firmante } from '../types';
+
+
+(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'app-vista-documento',
@@ -21,6 +28,29 @@ export class VistaDocumentoComponent implements OnInit {
   zoom:number=1
   rotation:number=0
   fileName:string=""
+  currentUser:any=""
+  pdfPages:number=1
+  page!:any
+  pdfMake = pdfFonts.pdfMake.vfs;
+  firmantes:Firmante[]=[
+    {
+    nombre: "Juan Pérez",
+    rut: "17.114.423-4",
+    telefono:9328487334,
+    email:"cormoran@hotmail.com"
+  },{
+    nombre: "Joan Baez",
+    rut: "19.112.432-7",
+    telefono:9932928429,
+    email:"galindo@hotmail.com"
+  },
+  {
+    nombre: "Joan Baez",
+    rut: "19.112.432-7",
+    telefono:9932928429,
+    email:"galindo@hotmail.com"
+  }
+]
 
   constructor(
     private comunesServices: ComunesService,
@@ -31,7 +61,7 @@ export class VistaDocumentoComponent implements OnInit {
     private router: Router,
     private modalService: NgbModal
   ) {
-
+    
   }
 
   ngOnInit(): void {
@@ -78,7 +108,6 @@ export class VistaDocumentoComponent implements OnInit {
 
   async obtenerPathS3(archivo:any) {
     console.log(archivo);
-
     const fileData:any = {
       key: archivo,
       metodo: 'get'
@@ -88,12 +117,64 @@ export class VistaDocumentoComponent implements OnInit {
     this.archivoFirmar = resultado.message;
     this.toaster.success("Documento cargado correctamente!");
     await this.spinner.hide();
+  }
 
+  async descargarArchivo(archivo:any){
+    const fileData:any = {
+      key: archivo,
+      metodo: 'get'
+    }
+    const resultado:any = await this.comunesServices.getSignedUrl(fileData).toPromise();
+    const link = document.createElement('a');
+    link.href = resultado.message;
+    link.download = fileData.key.split('/')[fileData.key.split('/').length - 1];
+    link.target = '_blank';
+    link.click();
   }
 
   modalFirmar() {
     this.modalRef = this.modalService.open(ConfirmacionFirmaDocumentoComponent, {backdrop: 'static', size: 'lg'});
   }
-
-
+  callBackFn(pdf: PDFDocumentProxy) {
+    this.pdfPages=pdf._pdfInfo.pages
+    console.log(pdf._pdfInfo)
+ }
+ generatePDF() {  
+  let docDefinition = {  
+    header: {
+      text:'Firmantes del Documento',
+      fontsize:18,
+      bold:true,
+    }, 
+    content: [   
+      {  
+          columns: [  
+              [
+                {text:""},
+              ],
+          ],
+      },
+      {
+          table: {headerRows: 1,  
+          widths: ['*', 'auto', 'auto', 'auto','auto'],  
+          body: [  
+              ['RUT', 'Nombre', 'Teléfono', 'E-mail','Fecha'],    
+              ...this.firmantes.map(p=>([p.rut,p.nombre,p.telefono,p.email, Date.now()]))
+          ]  
+        }
+      },
+      {
+        columns:[
+          [
+          {
+            
+            qr:this.firmantes[0].nombre}
+          ]
+        ]
+      }
+    ],  
+  };  
+  pdfMake.createPdf(docDefinition).open();  
+}  
 }
+

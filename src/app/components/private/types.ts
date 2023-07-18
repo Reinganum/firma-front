@@ -10,4 +10,11 @@ export interface DocumentData{
   nombre:string
 }
 
+export interface Firmante{
+  rut:string
+  telefono:number
+  email:string
+  nombre:string
+}
+
              

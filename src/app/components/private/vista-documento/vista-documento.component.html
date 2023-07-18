@@ -1,7 +1,7 @@
 <div class="container rounded mt-5">
   <div class="row">
     <div class="d-flex justify-content-center">
-      <div class="col-12-sm col-md-10">
+      <div *ngIf="currentUser"class="col-12-sm col-md-10">
         <h4>¡Te damos la bienvenida!</h4>
         <h1 class="fw-bold">{{"Juan Pérez"}}</h1>
         <hr>
@@ -35,6 +35,8 @@
             <div class="col-sm-4 col-md-4 py-1 d-flex d-row align-items-center flex-wrap">
               <mat-icon class="px-5" (click)="rotate()"><span>text_rotation_down</span></mat-icon>
               <mat-icon class="px-5">settings_ethernet</mat-icon>
+              <mat-icon class="px-5" (click)="descargarArchivo(fileName)">cloud_download</mat-icon>
+              <mat-icon class="px-5" (click)="generatePDF()">cloud_upload</mat-icon>
             </div>
           </div>
         </div>
@@ -45,7 +47,7 @@
     <div class="d-flex justify-content-center">
       <div class="col-10">
           <div style="background-color: #dedfe2;">
-            <pdf-viewer class="iframeFac" [rotation]="rotation" [src]="archivoFirmar" [show-all]="false" [zoom]="zoom" [original-size]="true"></pdf-viewer>
+            <pdf-viewer (after-load-complete)="callBackFn($event)" class="iframeFac" [rotation]="rotation" [src]="archivoFirmar" [show-all]="true" [zoom]="zoom" [original-size]="true"></pdf-viewer>
           </div>
         </div>
       </div>
@@ -55,7 +57,8 @@
         <button class="btn btn-primary btn-main mx-2 py-2" (click)="modalFirmar()">
             <img class="px-3" src="../../../../assets/img/firma_btn.svg">Firmar</button>
         <button class="btn btn-outline-secondary mx-2" style="background-color: transparent !important;" [routerLink]="['/consulta-documento']">
-            <span class="fw-bold mx-2">X</span>Cancelar</button>
+            <span class="fw-bold mx-2">X</span>Cancelar
+        </button>
     </div>
 </div>
 </div>
