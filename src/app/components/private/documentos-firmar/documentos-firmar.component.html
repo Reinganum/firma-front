@@ -16,8 +16,7 @@
   <div *ngIf="flagFiltros" class="row my-1" id="verfiltros">
     <div class="col-12">
         <form [formGroup]="filtrosForm" class="row">
-            <div class="col-12 card shadow-sm pt-3 pb-2">
-                <div class="row">
+            <div>
                     <div class="col-12">
                         <h4 class="fw-bold">FILTRAR EN EL LISTADO</h4>
                     </div>
@@ -37,35 +36,39 @@
                         </mat-select>
                         </mat-form-field>
                     </div> -->
-                    <div class="col-12 col-sm-12 col-l-6 col-xl-6 col-xxl-3 form-group">
-                        <mat-form-field>
-                            <mat-label>Fecha</mat-label>
-                            <input matInput [matDatepicker]="pickerFSolicitud" class="form-control inputs-filter" formControlName="fechaDoc">
-                            <mat-datepicker-toggle matSuffix [for]="pickerFSolicitud"></mat-datepicker-toggle>
-                            <mat-datepicker #pickerFSolicitud></mat-datepicker>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-12 col-sm-12 col-l-6 col-xl-6 col-xxl-3 form-group inputs-filter">
-                        <mat-form-field>
-                        <mat-label>RUT O Nombre Cliente</mat-label>
-                        <input type="text" matInput formControlName="cliente" placeholder="Ingresa texto"/>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-12 col-sm-12 col-l-6 col-xl-6 col-xxl-3 form-group inputs-filter">
-                        <mat-form-field >
-                        <mat-label>Fecha Inicio Curso</mat-label>
-                        <input matInput [matDatepicker]="pickerFInicio" formControlName="fechaInicio">
-                        <mat-datepicker-toggle matSuffix [for]="pickerFInicio"></mat-datepicker-toggle>
-                        <mat-datepicker #pickerFInicio></mat-datepicker>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-12 col-sm-12 col-l-6 col-xl-6 col-xxl-3 form-group inputs-filter">
-                        <mat-form-field>
-                        <mat-label>Fecha Comunicación</mat-label>
-                        <input matInput [matDatepicker]="pickerComunicacion" formControlName="fechaComunicacion">
-                        <mat-datepicker-toggle matSuffix [for]="pickerComunicacion"></mat-datepicker-toggle>
-                        <mat-datepicker #pickerComunicacion></mat-datepicker>
-                        </mat-form-field>
+                    <div class="d-flex justify-content-center">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="d-flex form-group mx-1">
+                                <mat-form-field>
+                                    <mat-label>Fecha</mat-label>
+                                    <input matInput [matDatepicker]="pickerFSolicitud" class="form-control inputs-filter" formControlName="fechaDoc">
+                                    <mat-datepicker-toggle matSuffix [for]="pickerFSolicitud"></mat-datepicker-toggle>
+                                    <mat-datepicker #pickerFSolicitud></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="d-flex mx-1 form-group inputs-filter">
+                                <mat-form-field>
+                                <mat-label>RUT O Nombre Cliente</mat-label>
+                                <input type="text" matInput formControlName="cliente" placeholder="Ingresa texto"/>
+                                </mat-form-field>
+                            </div>
+                            <div class="d-flex mx-1 form-group inputs-filter">
+                                <mat-form-field >
+                                <mat-label>Fecha Inicio Curso</mat-label>
+                                <input matInput [matDatepicker]="pickerFInicio" formControlName="fechaInicio">
+                                <mat-datepicker-toggle matSuffix [for]="pickerFInicio"></mat-datepicker-toggle>
+                                <mat-datepicker #pickerFInicio></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="d-flex mx-1 form-group inputs-filter">
+                                <mat-form-field>
+                                <mat-label>Fecha Comunicación</mat-label>
+                                <input matInput [matDatepicker]="pickerComunicacion" formControlName="fechaComunicacion">
+                                <mat-datepicker-toggle matSuffix [for]="pickerComunicacion"></mat-datepicker-toggle>
+                                <mat-datepicker #pickerComunicacion></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
                     </div>
                     <!-- <div class="col-12 col-md-4 col-lg-3 form-group">
                         <mat-form-field>
@@ -83,7 +86,7 @@
                             </mat-select>
                         </mat-form-field>
                     </div> -->
-                    <div class="col-12 text-end mt-md-3">
+                    <div class="col-12 d-flex justify-content-center mt-md-3 mb-2">
                         <a (click)="exportar()" class="mt-2 btn boton-filtro-gris mx-1" style="background-color: transparent !important;"><img src="../assets/img/excel.png" style="
                         height: 17px;
                         ">Exportar</a>
@@ -97,7 +100,6 @@
         </form>
     </div>
   </div>
-
   <div class="col-12" style="overflow-x: scroll !important;">
     <table class="table">
       <thead class="pt-4">
