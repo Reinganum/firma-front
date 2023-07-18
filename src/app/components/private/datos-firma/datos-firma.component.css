@@ -1,9 +1,4 @@
-@media screen and (max-width: 768px) {
-    #img-container{
-        width: 100% !important;
-    }
-    #img-firmar{
-        border-right:none !important;
-        padding-right: 0 !important;
-    }
-  }
+p{
+    padding:0.25rem 0 0.25rem 0;
+}
+
