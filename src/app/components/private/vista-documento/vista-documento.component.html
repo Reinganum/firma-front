@@ -27,14 +27,14 @@
             </div>
             <div class="col-sm-4 col-md-2" style="border-inline:solid 1px grey">
               <div class="d-flex flex-row justify-content-center flex-wrap align-items-center">
-                <button (click)="zoomOut()">-</button>
+                <mat-icon (click)="zoomOut()">remove</mat-icon>
                 <button class="mx-2 btn btn-main" style="background-color: #0B58A4 !important; color: white; border-radius: 0;">{{ (zoom * 100) | number: '1.0-0' }}%</button>
-                <button (click)="zoomIn()">+</button>
+                <mat-icon (click)="zoomIn()">add</mat-icon>
               </div>
             </div>
             <div class="col-sm-4 col-md-4 py-1 d-flex d-row align-items-center flex-wrap">
-              <img class="px-3" (click)="rotate()" src="../../../../assets/img/desactivar.svg"/>
-              <img class="px-3" src="../../../../assets/img/desactivar.svg"/>
+              <mat-icon class="px-5" (click)="rotate()"><span>text_rotation_down</span></mat-icon>
+              <mat-icon class="px-5">settings_ethernet</mat-icon>
             </div>
           </div>
         </div>
@@ -44,8 +44,8 @@
   <div class="row mt-5">
     <div class="d-flex justify-content-center">
       <div class="col-10">
-          <div style="background-color: grey;">
-            <pdf-viewer class="iframeFac" [rotation]="rotation" [src]="archivoFirmar" [zoom]="zoom" [original-size]="true"></pdf-viewer>
+          <div style="background-color: #dedfe2;">
+            <pdf-viewer class="iframeFac" [rotation]="rotation" [src]="archivoFirmar" [show-all]="false" [zoom]="zoom" [original-size]="true"></pdf-viewer>
           </div>
         </div>
       </div>

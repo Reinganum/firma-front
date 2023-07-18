@@ -20,7 +20,6 @@ export class VistaDocumentoComponent implements OnInit {
   zoom:number=1
   rotation:number=0
   fileName:string=""
-
   
   constructor(
     private comunesServices: ComunesService,
