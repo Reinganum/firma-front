@@ -26,6 +26,6 @@ export class HeaderComponent {
   }
 
   logOut(){
-    // this.authenticationService.logout()
+    this.authenticationService.logout()
   }
 }
