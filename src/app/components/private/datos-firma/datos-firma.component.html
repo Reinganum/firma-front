@@ -1,8 +1,8 @@
-<div class="container col-12 my-5">
+<div class="container my-5">
     <h1>Datos de la firma</h1>
     <div class="row">
         <div class="d-flex flex-row" style="background-color: #fafbfc;">
-            <div class="d-flex py-2 justify-content-center align-items-center" style="margin-left: 2.5vw !important;">
+            <div class="d-flex py-2 justify-content-center align-items-center" id="#img-firmar" style="margin-left: 2.5vw !important;">
                 <img class="" id="img-firmar"src="../assets/img/img-firma-resumen.svg">
             </div> 
             <div class="mx-5 d-flex flex-column justify-content-center" style="margin-top: 1%;border-left: 5px solid #e38c48; padding-left:5%;height:80% !important" >
@@ -11,7 +11,7 @@
                 <p>Email:</p>
                 <p>Teléfono:</p>
             </div> 
-            <div class="fw-bold d-flex flex-column justify-content-center"  style="margin-top: 1%;margin-left:10%; height:80% !important" >
+            <div class="fw-bold d-flex flex-column justify-content-center" id="user-data"  style="margin-top: 1%;margin-left:10%; height:80% !important" >
                 <p>{{userInfo.firstName + " " + userInfo.lastName}}</p>
                 <p>{{user.rut}}</p>
                 <p>{{userInfo.email}}</p>
