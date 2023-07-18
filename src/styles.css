@@ -1,7 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  /*Colores**/
+  --azul-principal: #0B58A4 !important;
+}
+
 .bg-azul {
-  background-color: #0B58A4 !important;
+  background-color: var(--azul-principal)
 }
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+

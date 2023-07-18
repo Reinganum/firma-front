@@ -124,7 +124,7 @@ export class DocumentosFirmarComponent implements OnInit {
 
   async obtenerDocumentos(pageOffset:number,pageLimit:number) {
     try {
-      // await this.spinner.show();
+      await this.spinner.show();
       this.documentosService.listarDocumentos(pageOffset,pageLimit).subscribe(
         {
           next: async (res:any) => {
@@ -167,7 +167,7 @@ export class DocumentosFirmarComponent implements OnInit {
     this.modalRef=this.modalService.open(ConfirmacionFirmaDocumentoComponent,{backdrop:'static',size:'md'});
     this.modalRef.result.then((res)=>{
       if(res.estado){
-        
+
       }
     })
   }

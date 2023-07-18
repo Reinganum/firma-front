@@ -15,74 +15,20 @@
   </div>
   <div *ngIf="flagFiltros" class="row my-1" id="verfiltros">
     <div class="col-12">
-        <form [formGroup]="filtrosForm" class="row">
+        <form [formGroup]="filtrosForm" class="row formulario">
             <div class="col-12 card shadow-sm pt-3 pb-2">
                 <div class="row">
                     <div class="col-12">
                         <h4 class="fw-bold">FILTRAR EN EL LISTADO</h4>
                     </div>
-                    <!-- <div class="col-12 col-md-4 col-lg-3 form-group">
-                        <mat-form-field>
-                        <mat-label>Tipo de capacitación</mat-label>
-                        <mat-select formControlName="tipoCapacitacion">
-                            <mat-option *ngFor="let tipo of tiposACFiltro" [value]="tipo.value">{{tipo.nombre}}</mat-option>
-                        </mat-select>
-                        </mat-form-field>
-                    </div>  -->
-                    <!-- <div class="col-12 col-md-4 col-lg-3 form-group">
-                        <mat-form-field>
-                        <mat-label>Agencia</mat-label>
-                        <mat-select formControlName="agencia">
-                            <mat-option *ngFor="let agencia of agencias" [value]="agencia.codigo">{{agencia.nom_agencia}}</mat-option>
-                        </mat-select>
-                        </mat-form-field>
-                    </div> -->
                     <div class="col-12 col-sm-12 col-md-6 col-l-6 col-xl-6 col-xxl-3 form-group">
-                        <mat-form-field>
+                        <mat-form-field appearance="fill">
                             <mat-label>Fecha</mat-label>
-                            <input matInput [matDatepicker]="pickerFSolicitud" class="form-control inputs-filter" formControlName="fechaDoc">
+                            <input matInput [matDatepicker]="pickerFSolicitud" class="form-new-material" formControlName="fechaDoc">
                             <mat-datepicker-toggle matSuffix [for]="pickerFSolicitud"></mat-datepicker-toggle>
                             <mat-datepicker #pickerFSolicitud></mat-datepicker>
                         </mat-form-field>
                     </div>
-                    <div class="col-12 col-sm-12 col-md-6 col-l-6 col-xl-6 col-xxl-3 form-group inputs-filter">
-                        <mat-form-field>
-                        <mat-label>RUT O Nombre Cliente</mat-label>
-                        <input type="text" matInput formControlName="cliente" placeholder="Ingresa texto"/>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-12 col-sm-12 col-md-6 col-l-6 col-xl-6 col-xxl-3 form-group inputs-filter">
-                        <mat-form-field >
-                        <mat-label>Fecha Inicio Curso</mat-label>
-                        <input matInput [matDatepicker]="pickerFInicio" formControlName="fechaInicio">
-                        <mat-datepicker-toggle matSuffix [for]="pickerFInicio"></mat-datepicker-toggle>
-                        <mat-datepicker #pickerFInicio></mat-datepicker>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-12 col-sm-12 col-md-6 col-l-6 col-xl-6 col-xxl-3 form-group inputs-filter">
-                        <mat-form-field>
-                        <mat-label>Fecha Comunicación</mat-label>
-                        <input matInput [matDatepicker]="pickerComunicacion" formControlName="fechaComunicacion">
-                        <mat-datepicker-toggle matSuffix [for]="pickerComunicacion"></mat-datepicker-toggle>
-                        <mat-datepicker #pickerComunicacion></mat-datepicker>
-                        </mat-form-field>
-                    </div>
-                    <!-- <div class="col-12 col-md-4 col-lg-3 form-group">
-                        <mat-form-field>
-                            <mat-label>Estado</mat-label>
-                            <mat-select formControlName="estado">
-                            <mat-option *ngFor="let estado of ESTADOS_INS" [value]="estado.id">{{estado.descripcion}}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div> -->
-                    <!-- <div class="col-12 col-md-4 col-lg-3 form-group">
-                        <mat-form-field>
-                            <mat-label>Sociedad</mat-label>
-                            <mat-select formControlName="sociedad">
-                            <mat-option *ngFor="let sociedad of SOCIEDAD" [value]="sociedad.valor">{{sociedad.nombre}}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div> -->
                     <div class="col-12 text-end mt-md-3">
                         <a (click)="exportar()" class="mt-2 btn boton-filtro-gris mx-1" style="background-color: transparent !important;"><img src="../assets/img/excel.png" style="
                         height: 17px;
@@ -110,10 +56,10 @@
        </tr>
       </thead>
       <tbody>
-           <tr *ngFor="let document of documentList, let i = index">
+           <tr *ngFor="let document of documentList, let i = index" class="text-center">
                <td><input class="form-check-input" [value]=i type="checkbox" (change)="onCheckChange($event)"></td>
-               <td>{{document.fecha | date: "dd/mm/yyyy"}}</td>
-               <td>{{document.nombreArchivo}}</td>
+               <td>{{document.fecha | date: "dd-MM-yyyy"}}</td>
+               <td class="text-left">{{document.nombreArchivo}}</td>
                <td><div class="d-flex flex-row"><div class="mx-2 rounded-circle bg-dark" style="color:white;">GN</div>{{document.medio}}</div></td>
                <!-- CUANDO SE INTEGRE COLUMNA DE ESTADO-->
                <td *ngIf="tipoTabla !== 'firmar'" class="text-center">
@@ -126,7 +72,7 @@
                </td>
                <td>
                    <div class="d-flex justify-content-center">
-                     <a (click)="vistaPrevia(document)"><img class="iconos-options rounded p-1" src="../../../../assets/img/lupa_btn.svg" alt="Vista previa"></a>
+                     <a (click)="vistaPrevia(document)"><img class="iconos-options rounded p-1" src="../../../../assets/img/lupa_btn.svg" alt="Vista previa" style="margin-left: 1px !important;"></a>
                      <a (click)="showModal()"><img class="mx-1 iconos-options rounded p-1" src="../../../../assets/img/firma_btn.svg"></a>
                    </div>
                </td>
