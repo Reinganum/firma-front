@@ -2,7 +2,7 @@ import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 import localeEsCL from '@angular/common/locales/es-CL';
 import { KeycloakService } from './services/keycloak.service';
@@ -19,6 +19,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MaterialModule } from './material.module';
 import { ToastrModule } from 'ngx-toastr';
 import { ObtenerRutComponent } from './components/modals/obtener-rut/obtener-rut.component';
+import { AuthInterceptor, ErrorInterceptor } from './components/auth/helpers';
 
 export function kcFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -62,6 +63,8 @@ const CUSTOM_DATE_FORMATS = {
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'es-CL' },
     { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     KeycloakService,
     {
       provide: APP_INITIALIZER,

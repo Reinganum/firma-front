@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ComunesService } from 'src/app/services/comunes.service';
 import { DocumentosService } from 'src/app/services/documentos.service';
 import { ConfirmacionFirmaDocumentoComponent } from '../../modals/confirmacion-firma-documento/confirmacion-firma-documento.component';
+import { PdfViewerComponent as Ng2PdfViewerComponent, PdfViewerComponent } from 'ng2-pdf-viewer';
 
 @Component({
   selector: 'app-vista-documento',
@@ -16,6 +17,16 @@ export class VistaDocumentoComponent implements OnInit {
   archivoFirmar:string = '';
   idDoc!:number;
   modalRef!: NgbModalRef;
+  currentPage: number = 1;
+
+  @ViewChild('pdfViewer', { static: false }) pdfViewer!: PdfViewerComponent;
+  onPageChange(event: any): void {
+    this.currentPage = event.pageNumber;
+  }
+
+  nextPage(): void {
+    this.pdfViewer.pageChange;
+  }
 
   constructor(
     private comunesServices: ComunesService,

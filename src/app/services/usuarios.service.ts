@@ -10,12 +10,12 @@ export class UsuariosService {
 
   constructor(private http:HttpClient) {}
 
-  listarUsuarios(): Observable<any[]>{
-    return this.http.get<any>(`${environment.API_DOMAINS.USUARIOS}/usuarios/listaUsuarios`);
+  listarUsuarios(pageOffset:number, pageLimit:number ): Observable<any[]>{
+    return this.http.get<any>(`${environment.API_DOMAINS.USUARIOS}/usuarios/listaUsuarios?pageOffset=${pageOffset}&pageLimit=${pageLimit}`);
   }
 
   mantenerUsuario(data:any): Observable<any> {
-    const body = JSON.parse(data);
+    const body = JSON.stringify(data);
     const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
     return this.http.post(`${environment.API_DOMAINS.USUARIOS}/usuarios/mantenerUsuario`, body, {headers})
   }

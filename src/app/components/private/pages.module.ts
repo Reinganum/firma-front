@@ -11,6 +11,9 @@ import { HeaderModule } from "../layout/header/header.module";
 import { FooterModule } from "../layout/footer/footer.module";
 import { VistaDocumentoComponent } from './vista-documento/vista-documento.component';
 import { VistaDocumentoModule } from "./vista-documento/vista-documento.module";
+import { MantenedorUsuariosComponent } from './mantenedor-usuarios/mantenedor-usuarios.component';
+import { MantenedorUsuariosModule } from "./mantenedor-usuarios/mantenedor-usuarios.module";
+import { AuthGuard } from "../auth/helpers/auth.guard";
 
 // routing
 const routes: Routes = [
@@ -18,24 +21,33 @@ const routes: Routes = [
     path: '',
     component: PagesComponent,
     children: [
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
       {
         path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
-        // canActivate: [AuthGuard],
-        // canLoad: [AuthGuard],
+        canActivate: [AuthGuard],
+        canLoad: [AuthGuard],
         data: { animation: 'home' }
       },
       {path: 'docsFirmar', loadChildren: () => import('./documentos-firmar/documentos-firmar.module').then(m => m.DocumentosFirmarModule),
-        // canActivate: [AuthGuard],
-        // canLoad: [AuthGuard],
-        data: {animation: 'documentos'}
+        canActivate: [AuthGuard],
+        canLoad: [AuthGuard],
+        data: {animation: 'docsFirmar'}
       },
       {path: 'vista/:id', loadChildren: () => import('./vista-documento/vista-documento.module').then(m => m.VistaDocumentoModule),
-        // canActivate: [AuthGuard],
-        // canLoad: [AuthGuard],
+        canActivate: [AuthGuard],
+        canLoad: [AuthGuard],
         data: {animation: 'vista'}
       },
-      // { path: '', redirectTo: 'home', pathMatch: 'full' },
-      {path: 'docsFirmados', loadChildren: () => import('./documentos-firmar/documentos-firmar.module').then(m => m.DocumentosFirmarModule)},
+      {path: 'docsFirmados', loadChildren: () => import('./documentos-firmar/documentos-firmar.module').then(m => m.DocumentosFirmarModule),
+        canActivate: [AuthGuard],
+        canLoad: [AuthGuard],
+        data: {animation: 'docsFirmar'}
+      },
+      {path: 'mantenedor', loadChildren: () => import('./mantenedor-usuarios/mantenedor-usuarios.module').then(m => m.MantenedorUsuariosModule),
+        canActivate: [AuthGuard],
+        canLoad: [AuthGuard],
+        data: {animation: 'mantenedor'}
+      },
       // {
       //   path: 'bancoPreguntas', loadChildren: () => import('./bancoPreguntas/banco-preguntas/banco-preguntas.module').then(m => m.BancoPreguntasModule),
       //   canActivate: [AuthGuard],
@@ -149,7 +161,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    PagesComponent,
+    PagesComponent
   ],
   imports: [
     CommonModule,
@@ -157,7 +169,8 @@ const routes: Routes = [
     HeaderModule,
     MenuModule,
     FooterModule,
-    VistaDocumentoModule
+    VistaDocumentoModule,
+    MantenedorUsuariosModule
   ],
   exports: [
     PagesComponent,
