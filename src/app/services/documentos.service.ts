@@ -19,4 +19,10 @@ export class DocumentosService {
   listaDocId(idDoc:number): Observable<any>{
     return this.http.get<any>(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/getDocumentoId?idDoc=${idDoc}`);
   }
+
+  crearPdfFirma(data:any): Observable<any> {
+    const body = JSON.stringify(data);
+    const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+    return this.http.post(`${environment.API_DOMAINS.USUARIOS}/documentos/pdfFirma`, body, {headers})
+  }
 }
