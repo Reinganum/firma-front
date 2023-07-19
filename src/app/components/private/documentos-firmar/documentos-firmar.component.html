@@ -117,7 +117,7 @@
                <td><input class="form-check-input" [value]=i type="checkbox" (change)="onCheckChange($event)"></td>
                <td>{{document.fecha | date: "dd-MM-yyyy"}}</td>
                <td class="text-left">{{document.nombreArchivo}}</td>
-               <td><div class="d-flex flex-row justify-content-centerç"><div class="mx-2 rounded-circle bg-dark" style="color:white;">GN</div>{{document.medio}}</div></td>
+               <td><div class="d-flex flex-row justify-content-center"><div class="mx-2 rounded-circle bg-dark" style="color:white;">GN</div>{{document.medio}}</div></td>
                <!-- CUANDO SE INTEGRE COLUMNA DE ESTADO-->
                <td *ngIf="tipoTabla !== 'firmar'">
                    <span class="fw-bold p-1 rounded"
