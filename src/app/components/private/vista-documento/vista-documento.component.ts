@@ -27,9 +27,10 @@ export class VistaDocumentoComponent implements OnInit {
   modalRef!: NgbModalRef;
   zoom:number=1
   rotation:number=0
+  currentPage:number=1
+  pdfPages:number=1
   fileName:string=""
   currentUser:any=""
-  pdfPages:number=1
   page!:any
   pdfMake = pdfFonts.pdfMake.vfs;
   firmantes:Firmante[]=[
@@ -176,5 +177,11 @@ export class VistaDocumentoComponent implements OnInit {
   };  
   pdfMake.createPdf(docDefinition).open();  
 }  
+
+  pasarPagina():void{
+    console.log("clicked asdopasdkpoa")
+    this.currentPage+=1    
+    console.log(this.currentPage);
+  }
 }
 

@@ -20,7 +20,7 @@
                     <p class="fw-bold">{{fileName}}</p>
                   </div>
                   <div class="w-20">
-                    <p class="fw-bold"><span class="mx-2">{{'1'}}</span>/<span class="p-2 mx-1" style="background-color: #0B58A4 !important; color: white;">{{'2'}}</span></p>
+                    <p class="fw-bold"><span class="mx-2">{{currentPage}}</span>/<span class="p-2 mx-1" style="background-color: #0B58A4 !important; color: white;">{{'2'}}</span></p>
                   </div>
                 </div>
               </div>
@@ -34,7 +34,7 @@
             </div>
             <div class="col-sm-4 col-md-4 py-1 d-flex d-row align-items-center flex-wrap">
               <mat-icon class="px-5" (click)="rotate()"><span>text_rotation_down</span></mat-icon>
-              <mat-icon class="px-5">settings_ethernet</mat-icon>
+              <mat-icon class="px-5" (click)="pasarPagina()">settings_ethernet</mat-icon>
               <mat-icon class="px-5" (click)="descargarArchivo(fileName)">cloud_download</mat-icon>
               <mat-icon class="px-5" (click)="generatePDF()">cloud_upload</mat-icon>
             </div>
@@ -47,7 +47,7 @@
     <div class="d-flex justify-content-center">
       <div class="col-10">
           <div style="background-color: #dedfe2;">
-            <pdf-viewer (after-load-complete)="callBackFn($event)" class="iframeFac" [rotation]="rotation" [src]="archivoFirmar" [show-all]="true" [zoom]="zoom" [original-size]="true"></pdf-viewer>
+            <pdf-viewer (after-load-complete)="callBackFn($event)" class="iframeFac" [(page)]="currentPage"  [rotation]="rotation" [src]="archivoFirmar" [show-all]="false" [zoom]="zoom" [original-size]="true"></pdf-viewer>
           </div>
         </div>
       </div>

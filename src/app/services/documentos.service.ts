@@ -23,6 +23,6 @@ export class DocumentosService {
   crearPdfFirma(data:any): Observable<any> {
     const body = JSON.stringify(data);
     const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
-    return this.http.post(`${environment.API_DOMAINS.USUARIOS}/documentos/pdfFirma`, body, {headers})
+    return this.http.post(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/pdfFirma`, body, {headers})
   }
 }

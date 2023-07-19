@@ -2,22 +2,14 @@ import { Component, OnInit, Input, ViewChild} from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmacionFirmaDocumentoComponent } from '../../modals/confirmacion-firma-documento/confirmacion-firma-documento.component';
 import { DocumentData } from '../types';
-import { ActivatedRoute} from '@angular/router';
 import { DocumentosService } from 'src/app/services/documentos.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-import {MatPaginator, PageEvent} from '@angular/material/paginator';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTable } from '@angular/material/table';
 import { dutchRangeLabel } from 'src/app/shared/dutchRangeLabel';
-import {NgxSpinnerService} from "ngx-spinner";
+import { NgxSpinnerService } from "ngx-spinner";
 import { FormBuilder, FormGroup } from '@angular/forms';
-
-enum SwitchRender{
-  "Usuario OTEC Firmar"=1,
-  "Usuario OTEC Firmado",
-  "Usuario externo firmar",
-  "Usuario externo firmado"
-}
 
 @Component({
   selector: 'app-documentos-firmar',
@@ -36,7 +28,7 @@ export class DocumentosFirmarComponent implements OnInit {
   tipoTabla:string = '';
   flagFiltros = false;
   filtrosForm!: FormGroup;
-  columndefs:any;
+
   constructor(
     private modalService:NgbModal,
     private documentosService: DocumentosService,
@@ -86,7 +78,7 @@ export class DocumentosFirmarComponent implements OnInit {
     this.paginador._intl.previousPageLabel="Página Anterior";
     this.paginador._intl.getRangeLabel=dutchRangeLabel;
     console.log(this.paginador.pageSize)
-    this.paginador.page.subscribe((data)=>{
+    this.paginador.page.subscribe(()=>{
       this.obtenerDocumentos(this.paginador.pageIndex, this.paginador.pageSize);
     })
   }
@@ -101,6 +93,7 @@ export class DocumentosFirmarComponent implements OnInit {
     this.paginador.firstPage();
     this.paginador.pageSize = this.pageSize;
     this.obtenerDocumentos(this.paginador.pageIndex, this.paginador.pageSize | this.pageSize);
+    
   }
 
   limpiar() {
