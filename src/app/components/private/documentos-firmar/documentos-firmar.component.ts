@@ -10,6 +10,7 @@ import { MatTable } from '@angular/material/table';
 import { dutchRangeLabel } from 'src/app/shared/dutchRangeLabel';
 import { NgxSpinnerService } from "ngx-spinner";
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatFormField } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-documentos-firmar',
@@ -38,7 +39,12 @@ export class DocumentosFirmarComponent implements OnInit {
     private formBuilder: FormBuilder
 
       ){
-
+        this.filtrosForm = this.formBuilder.group({
+          fechaDoc: [null],
+          origen: [null],
+          fechaInicio: [null],
+          fechaComunicacion: [null]
+        });
       }
 
   casosSwitch:number=2;
@@ -66,7 +72,7 @@ export class DocumentosFirmarComponent implements OnInit {
 
     this.filtrosForm = this.formBuilder.group({
       fechaDoc: [null],
-      cliente: [null],
+      origen: [null],
       fechaInicio: [null],
       fechaComunicacion: [null]
     });
@@ -88,22 +94,24 @@ export class DocumentosFirmarComponent implements OnInit {
 
 
   documentosFirmar:any[]=[]
-
+  
   filtrar() {
     this.paginador.firstPage();
     this.paginador.pageSize = this.pageSize;
-    this.obtenerDocumentos(this.paginador.pageIndex, this.paginador.pageSize | this.pageSize);
-    
+    this.obtenerDocumentos(
+      this.paginador.pageIndex, 
+      this.paginador.pageSize | this.pageSize, 
+      this.filtrosForm.value.origen,
+      this.filtrosForm.value.fechaDoc);
   }
 
   limpiar() {
-
+    this.filtrosForm.reset()
   }
 
   exportar() {
 
   }
-
 
   onCheckChange($event:any){
     if($event.target.checked){
@@ -115,10 +123,10 @@ export class DocumentosFirmarComponent implements OnInit {
     }
   }
 
-  async obtenerDocumentos(pageOffset:number,pageLimit:number) {
+  async obtenerDocumentos(pageOffset:number,pageLimit:number,origen?:string,fecha?:Date) {
     try {
       await this.spinner.show();
-      this.documentosService.listarDocumentos(pageOffset,pageLimit).subscribe(
+      this.documentosService.listarDocumentos(pageOffset,pageLimit,origen,fecha).subscribe(
         {
           next: async (res:any) => {
               console.log(res);

@@ -12,8 +12,8 @@ export class DocumentosService {
     private http: HttpClient
   ) { }
 
-  listarDocumentos(pageOffset:any, pageLimit:any): Observable<any[]>{
-    return this.http.get<any>(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/obtenerDocumentos?pageOffset=${pageOffset}&pageLimit=${pageLimit}`);
+  listarDocumentos(pageOffset:any, pageLimit:any, origen?:any,fechaDoc?:any): Observable<any[]>{
+    return this.http.get<any>(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/obtenerDocumentos?pageOffset=${pageOffset}&pageLimit=${pageLimit}&origen=${origen}&fechaDoc=${fechaDoc}`);
   }
 
   listaDocId(idDoc:number): Observable<any>{
