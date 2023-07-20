@@ -71,8 +71,11 @@ export class MantenedorUsuariosComponent implements OnInit {
             } else {
               this.toastrService.error("Ha ocurrido un error.");
             }
-
       }
     });
+  }
+
+  entregarAcceso():void{
+    this.toastrService.success("se le entregó acceso al usuario")
   }
 }

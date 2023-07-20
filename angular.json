@@ -46,8 +46,7 @@
               "src/assets/css/bootstrap-extended.css",
               "src/assets/css/forms/form-validation.css",
               "node_modules/ngx-spinner/animations/ball-circus.css",
-              "./node_modules/ngx-toastr/toastr.css",
-              "node_modules/sweetalert2/src/sweetalert2.scss"
+              "./node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [
               "src/assets/js/keycloak.js",
