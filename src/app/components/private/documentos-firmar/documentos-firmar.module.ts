@@ -1,12 +1,12 @@
 import { NgModule, ViewChild } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { DocumentosFirmarComponent } from "./documentos-firmar.component";
-import { DatosFirmaComponent } from "../datos-firma/datos-firma.component";
 import { RouterModule, Routes } from "@angular/router";
 import { FormsModule } from "@angular/forms";
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatSortModule } from "@angular/material/sort";
 import { MaterialModule } from "src/app/material.module";
+import { DatosFirmaModule } from "../datos-firma/datos-firma.module";
 
 const routes: Routes = [
     { path: '', outlet: 'pages', component: DocumentosFirmarComponent }
@@ -14,8 +14,8 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    DocumentosFirmarComponent,
-    DatosFirmaComponent
+    DocumentosFirmarComponent
+
   ],
   imports: [
     CommonModule,
@@ -23,7 +23,8 @@ const routes: Routes = [
     FormsModule,
     MatPaginatorModule,
     MatSortModule,
-    MaterialModule
+    MaterialModule,
+    DatosFirmaModule
   ],
   exports: [
     DocumentosFirmarComponent
