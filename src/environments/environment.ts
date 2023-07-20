@@ -6,6 +6,7 @@ export const environment = {
     // USUARIOS: 'http://localhost:3500/local',
     // DOCUMENTOS: 'http://localhost:3400/local',
     // COMUNES: 'http://localhost:3300/local',
+    CORREOS: 'http://localhost:3200/local',
     USUARIOS: 'https://j42wt568v5.execute-api.us-east-1.amazonaws.com/local',
     DOCUMENTOS: 'https://vosip7qx50.execute-api.us-east-1.amazonaws.com/local',
     COMUNES: 'https://au8clsl9fg.execute-api.us-east-1.amazonaws.com/local'
