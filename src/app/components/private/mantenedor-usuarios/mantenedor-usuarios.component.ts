@@ -11,6 +11,7 @@ import { dutchRangeLabel } from 'src/app/shared/dutchRangeLabel';
   styleUrls: ['./mantenedor-usuarios.component.css']
 })
 export class MantenedorUsuariosComponent implements OnInit {
+
   @ViewChild(MatPaginator,{static:true}) paginador!:MatPaginator;
   documentData:any;
   // documentList:any;
@@ -74,11 +75,31 @@ export class MantenedorUsuariosComponent implements OnInit {
       }
     });
   }
-  entregarAcceso(userIndex:number):void{
-    console.log(this.listaUsuarios[userIndex].email)
-    const userData={/* información correo*/}
-
-    //this.usuarioService.entregarAcceso(userData);
-    this.toastrService.success(`se le entregó acceso al usuario ${this.listaUsuarios[userIndex].email}`);
+  entregarAcceso(user:any):void{
+    this.spinner.show();
+    let datos = {
+      tipoEvento: 'put',
+      id:user.id,
+      usuario: {
+        estado:1
+      }
+    };
+    this.usuarioService.entregarAcceso(datos).subscribe({
+      next: async(res:any) => {
+        console.log(res)
+        this.toastrService.success(`se le entregó acceso al usuario ${user.email}`);
+        await this.spinner.hide();
+      },
+      error: async (error:any) =>{
+        await this.spinner.hide();
+        if (error.status.toString() === '404') {
+          this.toastrService.warning(error.error.message);
+        } else if (['0', '401', '403', '504'].includes(error.status.toString())) {
+          this.toastrService.error("Error de conexión.");
+        } else {
+          this.toastrService.error("Ha ocurrido un error.");
+        }
+      }
+    });
   }
 }

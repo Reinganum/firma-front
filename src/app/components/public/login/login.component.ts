@@ -65,8 +65,10 @@ export class LoginComponent implements OnInit {
                 this.router.navigate(['/private/home']);
               } else if (res.code===2){
                this._toastrService.success(res.message)
+               return 
               } else if (res.code===0){
                 this._toastrService.warning(res.message)
+                return 
               }
             },
             error: (error:any) => {
