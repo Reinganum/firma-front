@@ -45,7 +45,8 @@ import { MatBadgeModule } from '@angular/material/badge';
         MatChipsModule,
         MatNativeDateModule,
         FormsModule,
-        MatProgressBarModule
+        MatProgressBarModule,
+        MatSelectModule
     ],
     exports:[
         ReactiveFormsModule,

@@ -19,4 +19,10 @@ export class UsuariosService {
     const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
     return this.http.post(`${environment.API_DOMAINS.USUARIOS}/usuarios/mantenerUsuario`, body, {headers})
   }
+
+  entregarAcceso(data:any):Observable<any>{
+    const body = JSON.stringify(data);
+    const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+    return this.http.put(`${environment.API_DOMAINS.USUARIOS}/usuarios/mantenerUsuario`, body, {headers})
+  }
 }

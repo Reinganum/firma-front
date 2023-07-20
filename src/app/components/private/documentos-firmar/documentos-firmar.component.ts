@@ -73,8 +73,8 @@ export class DocumentosFirmarComponent implements OnInit {
     this.filtrosForm = this.formBuilder.group({
       fechaDoc: [null],
       origen: [null],
-      fechaInicio: [null],
-      fechaComunicacion: [null]
+      RUT: [null],
+      fechaComunicacion: [null],
     });
   }
 
@@ -98,6 +98,7 @@ export class DocumentosFirmarComponent implements OnInit {
   filtrar() {
     this.paginador.firstPage();
     this.paginador.pageSize = this.pageSize;
+    console.log(this.filtrosForm.value)
     this.obtenerDocumentos(
       this.paginador.pageIndex, 
       this.paginador.pageSize | this.pageSize, 
@@ -188,6 +189,13 @@ export class DocumentosFirmarComponent implements OnInit {
   //    {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Firmado", medio: 3, id:3},
   //    {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Firma parcial", medio: 2, id:4}
   //  ];
+
+  opcionesOrigen:any[]=[
+    {value:0,origen:"Gestión Normativa"},
+    {value:1,origen:"Portal Proveedores"},
+    {value:2,origen:"Gestor Capital Humano"},
+    {value:3,origen:"Otros"},
+  ]
 
 
 
