@@ -11,6 +11,8 @@ import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { CanvasElement } from 'pdfmake/interfaces';
 import { Firmante } from '../types';
+import { AuthenticationService } from '../../auth/service/authentication.service';
+
 
 
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
@@ -27,9 +29,10 @@ export class VistaDocumentoComponent implements OnInit {
   modalRef!: NgbModalRef;
   zoom:number=1
   rotation:number=0
+  currentPage:number=1
+  totalPages:number=1
   fileName:string=""
   currentUser:any=""
-  pdfPages:number=1
   page!:any
   pdfMake = pdfFonts.pdfMake.vfs;
   firmantes:Firmante[]=[
@@ -59,12 +62,14 @@ export class VistaDocumentoComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private toaster: ToastrService,
     private router: Router,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private authenticationService:AuthenticationService
   ) {
     
   }
 
   ngOnInit(): void {
+    this.currentUser = this.authenticationService.currentUserValue;
     this.route.params.subscribe((params:any) => {
       console.log(params);
       console.log(params["id"]);
@@ -136,8 +141,8 @@ export class VistaDocumentoComponent implements OnInit {
     this.modalRef = this.modalService.open(ConfirmacionFirmaDocumentoComponent, {backdrop: 'static', size: 'lg'});
   }
   callBackFn(pdf: PDFDocumentProxy) {
-    this.pdfPages=pdf._pdfInfo.pages
-    console.log(pdf._pdfInfo)
+    this.totalPages=pdf._pdfInfo.numPages
+    console.log(pdf._pdfInfo.numPages)
  }
  generatePDF() {  
   let docDefinition = {  
@@ -176,5 +181,9 @@ export class VistaDocumentoComponent implements OnInit {
   };  
   pdfMake.createPdf(docDefinition).open();  
 }  
+
+  pasarPagina():void{
+    this.currentPage < this.totalPages ? this.currentPage+=1 : this.currentPage=1
+  }
 }
 

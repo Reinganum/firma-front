@@ -1,8 +1,7 @@
 <app-datos-firma *ngIf="currentUser"></app-datos-firma>
 <div class="container col-lg-12" style="background-color: #fafbfc;">
   <!--Titulo según tipo de usuario y vista Por Firmar/Firmados-->
-  <h1 *ngIf="!currentUser">Tus documentos</h1>
-  <div *ngIf="currentUser" class="row py-4">
+  <div *ngIf="!currentUser" class="row py-4">
       <div class="col-6">
               <span class="fw-bold"><img class="pe-2" src="../assets/img/doc-por-firmar.svg">
                   {{tipoTabla === 'firmar' ? "Documentos por firmar": "Documentos firmados"}}</span>
@@ -16,7 +15,7 @@
   <div *ngIf="flagFiltros" class="row my-1" id="verfiltros">
     <div class="col-12">
         <form [formGroup]="filtrosForm" class="row">
-            <div>
+            <div class="card shadow-sm pt-3 pb-2">
                     <div class="col-12">
                         <h4 class="fw-bold">FILTRAR EN EL LISTADO</h4>
                     </div>
@@ -38,24 +37,25 @@
                     </div> -->
                     <div class="d-flex justify-content-center">
                         <div class="d-flex flex-row flex-wrap">
+                            <div class="d-flex mx-1 form-group inputs-filter">
+                                <mat-form-field>
+                                <mat-label>Origen</mat-label>
+                                <input type="text" matInput formControlName="origen" placeholder="Ingresa texto"/>
+                                </mat-form-field>
+                            </div>
                             <div class="d-flex form-group mx-1">
                                 <mat-form-field>
-                                    <mat-label>Fecha</mat-label>
+                                    <mat-label>Fecha de recepción</mat-label>
                                     <input matInput [matDatepicker]="pickerFSolicitud" class="form-control inputs-filter" formControlName="fechaDoc">
                                     <mat-datepicker-toggle matSuffix [for]="pickerFSolicitud"></mat-datepicker-toggle>
                                     <mat-datepicker #pickerFSolicitud></mat-datepicker>
                                 </mat-form-field>
                             </div>
-                            <div class="d-flex mx-1 form-group inputs-filter">
-                                <mat-form-field>
-                                <mat-label>RUT O Nombre Cliente</mat-label>
-                                <input type="text" matInput formControlName="cliente" placeholder="Ingresa texto"/>
-                                </mat-form-field>
-                            </div>
+                            <!--
                             <div class="d-flex mx-1 form-group inputs-filter">
                                 <mat-form-field >
-                                <mat-label>Fecha Inicio Curso</mat-label>
-                                <input matInput [matDatepicker]="pickerFInicio" formControlName="fechaInicio">
+                                <mat-label>Origen</mat-label>
+                                <input matInput type="text" formControlName="origen">
                                 <mat-datepicker-toggle matSuffix [for]="pickerFInicio"></mat-datepicker-toggle>
                                 <mat-datepicker #pickerFInicio></mat-datepicker>
                                 </mat-form-field>
@@ -68,6 +68,7 @@
                                 <mat-datepicker #pickerComunicacion></mat-datepicker>
                                 </mat-form-field>
                             </div>
+                            -->
                         </div>
                     </div>
                     <!-- <div class="col-12 col-md-4 col-lg-3 form-group">
@@ -115,7 +116,7 @@
                <td><input class="form-check-input" [value]=i type="checkbox" (change)="onCheckChange($event)"></td>
                <td>{{document.fecha | date: "dd-MM-yyyy"}}</td>
                <td class="text-left">{{document.nombreArchivo}}</td>
-               <td><div class="d-flex flex-row justify-content-centerç"><div class="mx-2 rounded-circle bg-dark" style="color:white;">GN</div>{{document.medio}}</div></td>
+               <td><div class="d-flex flex-row justify-content-center"><div class="mx-2 rounded-circle bg-dark" style="color:white;">GN</div>{{document.medio}}</div></td>
                <!-- CUANDO SE INTEGRE COLUMNA DE ESTADO-->
                <td *ngIf="tipoTabla !== 'firmar'">
                    <span class="fw-bold p-1 rounded"

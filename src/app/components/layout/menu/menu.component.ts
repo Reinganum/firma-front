@@ -19,7 +19,7 @@ export class MenuComponent {
   isCollapsed: boolean=false;
   isScrolled: boolean = false;
   mouseEnter: boolean = false;
-  userInfo:any={}
+  currentUser!:any
   @Input() menuVar:any;
   @Output() menuShow = new EventEmitter();
   @Output() menuColapsar = new EventEmitter();
@@ -70,7 +70,7 @@ export class MenuComponent {
 
     ngOnInit() {
       this.colapsar();
-      this.userInfo = this.authenticationService.currentUserValue;
-      console.log(this.userInfo);
+      this.currentUser = this.authenticationService.currentUserValue;
+      console.log(this.currentUser);
     }
 }

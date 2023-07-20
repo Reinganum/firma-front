@@ -8,18 +8,16 @@ import { AuthenticationService } from '../../auth/service/authentication.service
 export class HeaderComponent {
   @Input() menuVar:any;
   @Output() menuShow = new EventEmitter();
-  userInfo:any={}
+  currentUser!:any
 
   constructor(private authenticationService:AuthenticationService) { }
-  // constructor(private authenticationService: AuthenticationService) {
 
-  //  }
+  hidden=false;
 
   ngOnInit(): void {
-    this.userInfo = this.authenticationService.currentUserValue;
-    console.log(this.userInfo);
+    this.currentUser = this.authenticationService.currentUserValue;
+    console.log(this.currentUser);
   }
-
 
   menu(){
     this.menuShow.emit(!this.menuVar);
@@ -27,5 +25,8 @@ export class HeaderComponent {
 
   logOut(){
     this.authenticationService.logout()
+  }
+  toggleBadgeVisibility(){
+    this.hidden = !this.hidden;
   }
 }

@@ -2,22 +2,15 @@ import { Component, OnInit, Input, ViewChild} from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmacionFirmaDocumentoComponent } from '../../modals/confirmacion-firma-documento/confirmacion-firma-documento.component';
 import { DocumentData } from '../types';
-import { ActivatedRoute} from '@angular/router';
 import { DocumentosService } from 'src/app/services/documentos.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-import {MatPaginator, PageEvent} from '@angular/material/paginator';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTable } from '@angular/material/table';
 import { dutchRangeLabel } from 'src/app/shared/dutchRangeLabel';
-import {NgxSpinnerService} from "ngx-spinner";
+import { NgxSpinnerService } from "ngx-spinner";
 import { FormBuilder, FormGroup } from '@angular/forms';
-
-enum SwitchRender{
-  "Usuario OTEC Firmar"=1,
-  "Usuario OTEC Firmado",
-  "Usuario externo firmar",
-  "Usuario externo firmado"
-}
+import { MatFormField } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-documentos-firmar',
@@ -36,7 +29,7 @@ export class DocumentosFirmarComponent implements OnInit {
   tipoTabla:string = '';
   flagFiltros = false;
   filtrosForm!: FormGroup;
-  columndefs:any;
+
   constructor(
     private modalService:NgbModal,
     private documentosService: DocumentosService,
@@ -46,7 +39,12 @@ export class DocumentosFirmarComponent implements OnInit {
     private formBuilder: FormBuilder
 
       ){
-
+        this.filtrosForm = this.formBuilder.group({
+          fechaDoc: [null],
+          origen: [null],
+          fechaInicio: [null],
+          fechaComunicacion: [null]
+        });
       }
 
   casosSwitch:number=2;
@@ -74,7 +72,7 @@ export class DocumentosFirmarComponent implements OnInit {
 
     this.filtrosForm = this.formBuilder.group({
       fechaDoc: [null],
-      cliente: [null],
+      origen: [null],
       fechaInicio: [null],
       fechaComunicacion: [null]
     });
@@ -86,7 +84,7 @@ export class DocumentosFirmarComponent implements OnInit {
     this.paginador._intl.previousPageLabel="Página Anterior";
     this.paginador._intl.getRangeLabel=dutchRangeLabel;
     console.log(this.paginador.pageSize)
-    this.paginador.page.subscribe((data)=>{
+    this.paginador.page.subscribe(()=>{
       this.obtenerDocumentos(this.paginador.pageIndex, this.paginador.pageSize);
     })
   }
@@ -96,21 +94,24 @@ export class DocumentosFirmarComponent implements OnInit {
 
 
   documentosFirmar:any[]=[]
-
+  
   filtrar() {
     this.paginador.firstPage();
     this.paginador.pageSize = this.pageSize;
-    this.obtenerDocumentos(this.paginador.pageIndex, this.paginador.pageSize | this.pageSize);
+    this.obtenerDocumentos(
+      this.paginador.pageIndex, 
+      this.paginador.pageSize | this.pageSize, 
+      this.filtrosForm.value.origen,
+      this.filtrosForm.value.fechaDoc);
   }
 
   limpiar() {
-
+    this.filtrosForm.reset()
   }
 
   exportar() {
 
   }
-
 
   onCheckChange($event:any){
     if($event.target.checked){
@@ -122,10 +123,10 @@ export class DocumentosFirmarComponent implements OnInit {
     }
   }
 
-  async obtenerDocumentos(pageOffset:number,pageLimit:number) {
+  async obtenerDocumentos(pageOffset:number,pageLimit:number,origen?:number,fecha?:Date) {
     try {
       await this.spinner.show();
-      this.documentosService.listarDocumentos(pageOffset,pageLimit).subscribe(
+      this.documentosService.listarDocumentos(pageOffset,pageLimit,origen,fecha).subscribe(
         {
           next: async (res:any) => {
               console.log(res);

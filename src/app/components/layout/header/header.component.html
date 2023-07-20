@@ -1,31 +1,44 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow sticky-top floating-nav">
-  <div class="container-fluid">
-      <a class="navbar-brand" href="#">
-          <img src="../assets/img/logo-otic-sofofa-main.svg" class="logo-cabecera pull-left" style="margin-top:-7px;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="../assets/img/logo-otic-sofofa-main.svg" class="logo-cabecera pull-left" style="margin-top:-7px;">
+        </a>
+        <a class="navbar-brand" href="#">
+          <img src="../assets/img/logo-firma-header.svg" class="logo-cabecera pull-left" style="margin-top:-7px;">
       </a>
-      <a class="navbar-brand" href="#">
-        <img src="../assets/img/logo-firma-header.svg" class="logo-cabecera pull-left" style="margin-top:-7px;">
-    </a>
-      <nav class="nav d-sm-block d-xl-none">
-          <button  (click)="menu()" class="navbar-toggler d-block" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="border-color:transparent!important;font-size:12px;">
-              <!--<span class="navbar-toggler-icon"></span>-->
-              <img src="../assets/img/menu-open.svg" style="height:15px;margin-right:10px;">Menú
-          </button>
-      </nav>
-      <div class="collapse navbar-collapse justify-content-end d-lg-block d-none" id="navbarSupportedContent">
-          <ul class="nav justify-content-end">
-              <li class="nav-item">
-                  <div class="usuario-cabecera">
-                      <img class="px-3" src="../assets/img/mensaje_header.svg">
-                      <img class="px-3" src="../assets/img/user_header.svg">
-                      <span style="margin-left:10px;"><strong>{{userInfo?.firstName}} {{userInfo?.lastName}}</strong></span>
-                      <a (click)="logOut()" data-bs-toggle="tooltip" data-bs-placement="top" title="Salir de Encuestas" style="margin-left:5px;">
-                          <img  class="px-3" src="../assets/img/salir_header.svg">
-                      </a>
-                      <p class="text-center" style="margin-left: -18px !important;">Otic Sofofa</p>
-                  </div>
-              </li>
-          </ul>
-      </div>
-  </div>
-</nav>
+        <nav class="nav d-sm-block d-xl-none">
+            <button  (click)="menu()" class="navbar-toggler d-block" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="border-color:transparent!important;font-size:12px;">
+                <!--<span class="navbar-toggler-icon"></span>-->
+                <img src="../assets/img/menu-open.svg" style="height:15px;margin-right:10px;">Menú
+            </button>
+        </nav>
+        <div class="collapse navbar-collapse justify-content-end d-lg-block d-none" id="navbarSupportedContent">
+            <ul class="nav justify-content-end">
+                <li *ngIf="currentUser" style="align-self: center;">
+                    <div class="d-flex flex-row">
+                        <div class="">
+                            <i matBadge="1" matBadgeSize="small" matBadgePosition="below after" [matBadgeHidden]="hidden" matBadgeColor="warn" (click)="toggleBadgeVisibility()">
+                                <img class="" src="../assets/img/mensaje_header.svg">
+                            </i>
+                        </div>
+                        <div class="mx-4">
+                            <img class="px-" src="../assets/img/user_header.svg">
+                        </div>
+                    </div>
+                </li>
+                <li *ngIf="currentUser" style="align-self: center;">
+                    <div class="d-flex flex-column px-2">
+                        <p class="fw-bold">{{currentUser?.firstName}} {{currentUser?.lastName}}</p>
+                        <p>Otic Sofofa</p>
+                    </div>
+                </li>
+                <li class="nav-item me-3" style="align-self: center;">
+                    <a (click)="logOut()" data-bs-toggle="tooltip" data-bs-placement="top" title="Salir de Encuestas" style="margin-left:5px;">
+                        <img  class="px-3" src="../assets/img/salir_header.svg">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+  </nav>
+  
