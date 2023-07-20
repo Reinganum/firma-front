@@ -4,7 +4,6 @@ import { AuthenticationService } from '../../auth/service/authentication.service
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { UsuariosService } from 'src/app/services/usuarios.service';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -88,10 +87,5 @@ export class LoginComponent implements OnInit {
     const url = this.authenticationService.login();
     console.log("url", url);
     window.location.href = url;
-  }
-
-  showToast():void{
-    this._toastrService.success("TOASTR SERVICE DISPLAYING NEW TOAST")
-    console.log("pinchaste shotoast");
   }
 }
