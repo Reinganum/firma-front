@@ -4,6 +4,7 @@ import { AuthenticationService } from '../../auth/service/authentication.service
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { UsuariosService } from 'src/app/services/usuarios.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -20,10 +21,9 @@ export class LoginComponent implements OnInit {
     private usuarioService: UsuariosService
     ){}
 
-
-
     async ngOnInit() {
       if (this.authenticationService.isTokenNoValid()) {
+        this._toastrService.show("No hay token guardado")
         localStorage.clear();
         return;
       }
@@ -32,7 +32,6 @@ export class LoginComponent implements OnInit {
       let token:any = localStorage.getItem('token');
       if (token !== null) {
         this.router.navigate(['/private/home']);
-
       }
       await this.spinner.show();
       setTimeout(async () => {
@@ -40,10 +39,8 @@ export class LoginComponent implements OnInit {
       }, 2000);
       this.authenticationService.setUser().then(async (user:any) => {
         console.log(user);
-
         if (user && user.token) {
           console.log('aqio');
-
           this.authenticationService.currentUser=user
           localStorage.setItem('currentUser', JSON.stringify(user));
           let datos = {
@@ -59,18 +56,22 @@ export class LoginComponent implements OnInit {
               estado:null
             }
           };
+          
           await this.spinner.show();
           this.usuarioService.mantenerUsuario(datos).subscribe({
             next: async (res:any) => {
               console.log(res);
-              await this.spinner.show();
-              this.router.navigate(['/private/home']);
-              await this.spinner.hide();
-
+              if(res.code===1){
+               this._toastrService.success(res.message)
+                this.router.navigate(['/private/home']);
+              } else if (res.code===2){
+               this._toastrService.success(res.message)
+              } else if (res.code===0){
+                this._toastrService.warning(res.message)
+              }
             },
             error: (error:any) => {
               console.log(error);
-
             }
           })
         } else {
@@ -80,7 +81,6 @@ export class LoginComponent implements OnInit {
       }).catch(e => {
         // this.router.navigate(['/login']);
         this.spinner.hide();
-
       });
     }
 
@@ -88,6 +88,10 @@ export class LoginComponent implements OnInit {
     const url = this.authenticationService.login();
     console.log("url", url);
     window.location.href = url;
+  }
 
+  showToast():void{
+    this._toastrService.success("TOASTR SERVICE DISPLAYING NEW TOAST")
+    console.log("pinchaste shotoast");
   }
 }
