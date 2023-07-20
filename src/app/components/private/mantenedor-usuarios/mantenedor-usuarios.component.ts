@@ -74,8 +74,11 @@ export class MantenedorUsuariosComponent implements OnInit {
       }
     });
   }
+  entregarAcceso(userIndex:number):void{
+    console.log(this.listaUsuarios[userIndex].email)
+    const userData={/* información correo*/}
 
-  entregarAcceso():void{
-    this.toastrService.success("se le entregó acceso al usuario")
+    //this.usuarioService.entregarAcceso(userData);
+    this.toastrService.success(`se le entregó acceso al usuario ${this.listaUsuarios[userIndex].email}`);
   }
 }
