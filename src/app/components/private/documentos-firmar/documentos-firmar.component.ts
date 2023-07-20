@@ -123,7 +123,7 @@ export class DocumentosFirmarComponent implements OnInit {
     }
   }
 
-  async obtenerDocumentos(pageOffset:number,pageLimit:number,origen?:string,fecha?:Date) {
+  async obtenerDocumentos(pageOffset:number,pageLimit:number,origen?:number,fecha?:Date) {
     try {
       await this.spinner.show();
       this.documentosService.listarDocumentos(pageOffset,pageLimit,origen,fecha).subscribe(

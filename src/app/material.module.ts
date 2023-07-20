@@ -21,6 +21,7 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @NgModule({
     declarations: [],
@@ -67,7 +68,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
         MatButtonModule,
         MatIconModule,
         FormsModule,
-        MatProgressBarModule
+        MatProgressBarModule,
+        MatBadgeModule
     ]
 })
 

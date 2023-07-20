@@ -15,9 +15,15 @@
         <div class="collapse navbar-collapse justify-content-end d-lg-block d-none" id="navbarSupportedContent">
             <ul class="nav justify-content-end">
                 <li *ngIf="currentUser" style="align-self: center;">
-                    <div>
-                        <img class="px-3" src="../assets/img/mensaje_header.svg">
-                        <img class="px-3" src="../assets/img/user_header.svg">
+                    <div class="d-flex flex-row">
+                        <div class="">
+                            <i matBadge="1" matBadgeSize="small" matBadgePosition="below after" [matBadgeHidden]="hidden" matBadgeColor="warn" (click)="toggleBadgeVisibility()">
+                                <img class="" src="../assets/img/mensaje_header.svg">
+                            </i>
+                        </div>
+                        <div class="mx-4">
+                            <img class="px-" src="../assets/img/user_header.svg">
+                        </div>
                     </div>
                 </li>
                 <li *ngIf="currentUser" style="align-self: center;">
@@ -36,21 +42,3 @@
     </div>
   </nav>
   
-<!--
-<div class="collapse navbar-collapse justify-content-end d-lg-block d-none" id="navbarSupportedContent">
-          <ul class="nav justify-content-end">
-              <li class="nav-item">
-                  <div class="usuario-cabecera">
-                      <img class="px-3" src="../assets/img/mensaje_header.svg">
-                      <img class="px-3" src="../assets/img/user_header.svg">
-                      <span style="margin-left:10px;"><strong>{{userInfo?.firstName}} {{userInfo?.lastName}}</strong></span>
-                      <a (click)="logOut()" data-bs-toggle="tooltip" data-bs-placement="top" title="Salir de Encuestas" style="margin-left:5px;">
-                          <img  class="px-3" src="../assets/img/salir_header.svg">
-                      </a>
-                      <p class="text-center" style="margin-left: -18px !important;">Otic Sofofa</p>
-                  </div>
-              </li>
-          </ul>
-      </div>
-
--->

@@ -1,8 +1,7 @@
 <app-datos-firma *ngIf="currentUser"></app-datos-firma>
 <div class="container col-lg-12" style="background-color: #fafbfc;">
   <!--Titulo según tipo de usuario y vista Por Firmar/Firmados-->
-  <h1 *ngIf="!currentUser">Tus documentos</h1>
-  <div *ngIf="currentUser" class="row py-4">
+  <div *ngIf="!currentUser" class="row py-4">
       <div class="col-6">
               <span class="fw-bold"><img class="pe-2" src="../assets/img/doc-por-firmar.svg">
                   {{tipoTabla === 'firmar' ? "Documentos por firmar": "Documentos firmados"}}</span>

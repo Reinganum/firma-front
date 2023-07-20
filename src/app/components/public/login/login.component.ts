@@ -55,7 +55,8 @@ export class LoginComponent implements OnInit {
               apellidoP: user.lastName,
               apellidoM: 'apellido prueba',
               tipo: 1, // 1 = OTC - 2 = EXTERNO,
-              email: user.email
+              email: user.email,
+              estado:null
             }
           };
           await this.spinner.show();
