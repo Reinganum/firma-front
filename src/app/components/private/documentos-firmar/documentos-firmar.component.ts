@@ -11,6 +11,7 @@ import { dutchRangeLabel } from 'src/app/shared/dutchRangeLabel';
 import { NgxSpinnerService } from "ngx-spinner";
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatFormField } from '@angular/material/form-field';
+import { CorreosService } from 'src/app/services/correos.service';
 
 @Component({
   selector: 'app-documentos-firmar',
@@ -36,7 +37,8 @@ export class DocumentosFirmarComponent implements OnInit {
     private toastrService:ToastrService,
     private router: Router,
     private spinner: NgxSpinnerService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private correosService: CorreosService
 
       ){
         this.filtrosForm = this.formBuilder.group({
@@ -94,14 +96,14 @@ export class DocumentosFirmarComponent implements OnInit {
 
 
   documentosFirmar:any[]=[]
-  
+
   filtrar() {
     this.paginador.firstPage();
     this.paginador.pageSize = this.pageSize;
     console.log(this.filtrosForm.value)
     this.obtenerDocumentos(
-      this.paginador.pageIndex, 
-      this.paginador.pageSize | this.pageSize, 
+      this.paginador.pageIndex,
+      this.paginador.pageSize | this.pageSize,
       this.filtrosForm.value.origen,
       this.filtrosForm.value.fechaDoc);
   }
@@ -172,6 +174,25 @@ export class DocumentosFirmarComponent implements OnInit {
 
       }
     })
+  }
+
+  enviarNotificacion() {
+    console.log(this.currentUser);
+    const datosCorreo = {
+      email: this.currentUser.email,
+      asunto: "Envio Documento Firmado",
+      nombre: `${this.currentUser.firstName} ${this.currentUser.lastName}`
+    }
+    this.correosService.notificarDocFirmado(datosCorreo).subscribe({
+      next: (res) => {
+        console.log(res);
+
+      },
+      error: (error) => {
+        console.log(error);
+
+      }
+    });
   }
 
   documentData:DocumentData[]=[
