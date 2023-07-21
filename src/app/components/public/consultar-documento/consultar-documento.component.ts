@@ -22,7 +22,6 @@ export class ConsultarDocumentoComponent implements OnInit{
   }
   consultarDocumento() {
     console.log(this.formDatosUsuario.value.codigoDoc);
-
     this.router.navigate([`private/vista/${this.formDatosUsuario.value.codigoDoc}`]);
   }
 }

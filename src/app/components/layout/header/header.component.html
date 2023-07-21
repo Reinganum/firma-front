@@ -16,9 +16,9 @@
             <ul class="nav justify-content-end">
                 <li *ngIf="currentUser" style="align-self: center;">
                     <div class="d-flex flex-row">
-                        <div class="">
-                            <i matBadge="1" matBadgeSize="small" matBadgePosition="below after" [matBadgeHidden]="hidden" matBadgeColor="warn" (click)="toggleBadgeVisibility()">
-                                <img class="" src="../assets/img/mensaje_header.svg">
+                        <div (click)="showPendientesModal()">
+                            <img class="" src="../assets/img/mensaje_header.svg">
+                            <i matBadge="1" matBadgeSize="small" matBadgePosition="below after" [ngClass]="{hide:notifications===0}">
                             </i>
                         </div>
                         <div class="mx-4">
@@ -41,4 +41,5 @@
         </div>
     </div>
   </nav>
+
   

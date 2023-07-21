@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
-import { registerLocaleData } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import localeEsCL from '@angular/common/locales/es-CL';
 import { KeycloakService } from './services/keycloak.service';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
@@ -19,6 +19,7 @@ import { MaterialModule } from './material.module';
 import { ToastrModule } from 'ngx-toastr';
 import { ObtenerRutComponent } from './components/modals/obtener-rut/obtener-rut.component';
 import { AuthInterceptor, ErrorInterceptor } from './components/auth/helpers';
+import { DocsPendientesComponent } from './components/modals/docs-pendientes/docs-pendientes.component';
 
 export function kcFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -43,6 +44,7 @@ const CUSTOM_DATE_FORMATS = {
     RechazarFirmaDocumentoComponent,
     ConfirmacionFirmaDocumentoComponent,
     ObtenerRutComponent,
+    DocsPendientesComponent,
   ],
   imports: [
     BrowserModule,

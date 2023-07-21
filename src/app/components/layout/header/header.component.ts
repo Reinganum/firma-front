@@ -1,22 +1,29 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output,ViewChild, TemplateRef  } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { AuthenticationService } from '../../auth/service/authentication.service';
 import { DocumentosService } from 'src/app/services/documentos.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { DocsPendientesComponent } from '../../modals/docs-pendientes/docs-pendientes.component';
+import { PendientesService } from 'src/app/services/pendientes.service';
+
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
+
 export class HeaderComponent {
   @Input() menuVar:any;
   @Output() menuShow = new EventEmitter();
   currentUser!:any
   userId!:any
   newDocs!:any
+  notifications!:any  
+  modalRef!:NgbModalRef
+
 
   constructor(
     private authenticationService:AuthenticationService,
@@ -25,16 +32,14 @@ export class HeaderComponent {
     private toastrService:ToastrService,
     private router: Router,
     private spinner: NgxSpinnerService,
+    private pendientesService:PendientesService,
     ) { }
 
-  hidden=false;
-
+  
   ngOnInit(): void {
     this.currentUser = this.authenticationService.currentUserValue;
     this.userId = localStorage.getItem('userId');
-    console.log(this.userId);
-
-    this.getDocsPendientes(1,634)
+    this.getDocsPendientes(1,63)
   }
 
   menu(){
@@ -44,8 +49,10 @@ export class HeaderComponent {
   logOut(){
     this.authenticationService.logout()
   }
-  toggleBadgeVisibility(){
-    this.hidden = !this.hidden;
+ 
+  showPendientesModal(){
+    this.modalRef=this.modalService.open(DocsPendientesComponent,{backdrop:'static',size:'md'});
+    this.notifications=0
   }
 
   async getDocsPendientes(estado:any, responsable:any) {
@@ -55,7 +62,8 @@ export class HeaderComponent {
         {
           next: async (res:any) => {
               console.log(res);
-              this.newDocs = res;
+              this.pendientesService.setDocPendientes(res.docs)
+              this.notifications=res.docs.length
               await this.spinner.hide();
           },
           error: async (error:any) => {
