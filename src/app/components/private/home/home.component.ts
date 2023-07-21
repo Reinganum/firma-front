@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
     ) { }
  
   async ngOnInit(){
-    this.obtenerDocumentos(1,63)
+    this.obtenerDocumentos(1,65)
   } 
   async obtenerDocumentos(estado:any, responsable:any) {
     try {
@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
         {
           next: async (res:any) => {
               console.log(res);
-              this.documentList = res.documentos;
+              this.documentList = res;
               await this.spinner.hide();
           },
           error: async (error:any) => {
