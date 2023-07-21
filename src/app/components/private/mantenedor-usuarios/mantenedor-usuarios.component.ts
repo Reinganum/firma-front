@@ -25,6 +25,7 @@ export class MantenedorUsuariosComponent implements OnInit {
     {nombre:"ID"},
     {nombre:"RUT"},
     {nombre:"Nombre"},
+    {nombre:"Tipo"},
     {nombre:"Correo"},
     {nombre:"Estado"},
     {nombre:"Opciones"},
@@ -79,17 +80,18 @@ export class MantenedorUsuariosComponent implements OnInit {
 
   entregarAcceso(user:any):void{
     this.spinner.show();
+    user.estado=user.estado===0?1:0
     let datos = {
       tipoEvento: 'put',
       id:user.id,
       usuario: {
-        estado:1
+        estado:user.estado
       }
     };
     this.usuarioService.entregarAcceso(datos).subscribe({
       next: async(res:any) => {
         console.log(res)
-        this.toastrService.success(`se le entregó acceso al usuario ${user.email}`);
+        this.toastrService.success(`Se ha modificado el acceso al usuario ${user.email}`);
         await this.spinner.hide();
         this.listarUsuarios(this.paginador.pageIndex, this.paginador.pageSize | this.pageSize)
       },
