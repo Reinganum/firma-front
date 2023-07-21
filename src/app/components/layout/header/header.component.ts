@@ -32,7 +32,9 @@ export class HeaderComponent {
   ngOnInit(): void {
     this.currentUser = this.authenticationService.currentUserValue;
     this.userId = localStorage.getItem('userId');
-    this.getDocsPendientes(1,63)
+    console.log(this.userId);
+
+    this.getDocsPendientes(1,634)
   }
 
   menu(){
@@ -59,13 +61,7 @@ export class HeaderComponent {
           error: async (error:any) => {
             await this.spinner.hide();
             console.log(error)
-            if (error.status.toString() === '404') {
-              this.toastrService.warning(error.error.message);
-            } else if (['0', '401', '403', '504'].includes(error.status.toString())) {
-              this.toastrService.error("Error de conexión.");
-            } else {
-              this.toastrService.error("Ha ocurrido un error.");
-            }
+            this.toastrService.warning(error);
           }
       });
     } catch (error:any) {
@@ -74,7 +70,7 @@ export class HeaderComponent {
       if (error.status.toString() === '404') {
         this.toastrService.warning(error.error.message);
       } else if (['0', '401', '403', '504'].includes(error.status.toString())) {
-  
+
       } else {
         this.toastrService.error("Ha ocurrido un error");
       }
