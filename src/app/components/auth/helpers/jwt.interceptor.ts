@@ -17,7 +17,11 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const currentUser = this._authenticationService.currentUserValue;
-    const token = this.localStorageService.get('token');
+    const token = currentUser.token;
+    console.log(token);
+    console.log(currentUser.token);
+
+
     const isLoggedIn = currentUser && token;
     // const isApiUrl = req.url.startsWith(environment.APIS.SERVICIOS);
 
