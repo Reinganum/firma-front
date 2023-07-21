@@ -55,17 +55,17 @@ export class LoginComponent implements OnInit {
               estado:null
             }
           };
-          
           await this.spinner.show();
           this.usuarioService.mantenerUsuario(datos).subscribe({
             next: async (res:any) => {
               console.log(res);
               if(res.code===1){
                this._toastrService.success(res.message)
+                console.log( this.authenticationService.currentUser)
                 this.router.navigate(['/private/home']);
               } else if (res.code===2){
                this._toastrService.success(res.message)
-               return 
+                return 
               } else if (res.code===0){
                 this._toastrService.warning(res.message)
                 return 

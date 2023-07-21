@@ -26,6 +26,7 @@ export class MantenedorUsuariosComponent implements OnInit {
     {nombre:"RUT"},
     {nombre:"Nombre"},
     {nombre:"Correo"},
+    {nombre:"Estado"},
     {nombre:"Opciones"},
   ];
 
@@ -75,6 +76,7 @@ export class MantenedorUsuariosComponent implements OnInit {
       }
     });
   }
+
   entregarAcceso(user:any):void{
     this.spinner.show();
     let datos = {
@@ -89,6 +91,7 @@ export class MantenedorUsuariosComponent implements OnInit {
         console.log(res)
         this.toastrService.success(`se le entregó acceso al usuario ${user.email}`);
         await this.spinner.hide();
+        this.listarUsuarios(this.paginador.pageIndex, this.paginador.pageSize | this.pageSize)
       },
       error: async (error:any) =>{
         await this.spinner.hide();
