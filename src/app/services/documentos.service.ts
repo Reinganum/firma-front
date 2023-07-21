@@ -24,4 +24,9 @@ export class DocumentosService {
     const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
     return this.http.post(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/pdfFirma`, body, {headers})
   }
+
+  documentosPendientes(estado:any, responsable:any): Observable<any[]>{
+    console.log(estado,responsable)
+    return this.http.get<any>(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/documentosPendientes?estado=${estado}&responsable=${responsable}`);
+  }
 }
