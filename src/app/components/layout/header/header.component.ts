@@ -77,7 +77,6 @@ export class HeaderComponent {
       console.log(error);
     }
   }
-
 }
 
 
