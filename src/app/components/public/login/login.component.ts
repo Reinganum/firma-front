@@ -40,6 +40,7 @@ export class LoginComponent implements OnInit {
         console.log(user);
         if (user && user.token) {
           console.log('aqio');
+          user.tipo=this.verifyEmail(user.email,"sofofa");
           this.authenticationService.currentUser=user
           localStorage.setItem('currentUser', JSON.stringify(user));
           let datos = {
@@ -50,7 +51,7 @@ export class LoginComponent implements OnInit {
               nombres: user.firstName,
               apellidoP: user.lastName,
               apellidoM: 'apellido prueba',
-              tipo: 1, // 1 = OTC - 2 = EXTERNO,
+              tipo: this.verifyEmail(user.email,"sofofa"), // 1 = OTC - 2 = EXTERNO,
               email: user.email,
               estado:null
             }
@@ -90,4 +91,20 @@ export class LoginComponent implements OnInit {
     console.log("url", url);
     window.location.href = url;
   }
+
+  verifyEmail(email:string,domainToCheck:string) {
+    return this.emailContainsDomain(email, domainToCheck) ? 1 : 2;
+  }
+
+  private emailContainsDomain(email: string, domainToCheck: string): boolean {
+    const regex = /@(.+)/;
+    const match = email.match(regex);
+
+    if (match) {
+      const domain = match[1];
+      return domain.includes(domainToCheck);
+    }
+
+    return false;
+}
 }

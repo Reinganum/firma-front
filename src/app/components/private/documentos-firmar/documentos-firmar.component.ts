@@ -48,14 +48,16 @@ export class DocumentosFirmarComponent implements OnInit {
           fechaComunicacion: [null]
         });
       }
-
-  casosSwitch:number=2;
   currentUser:any;
 
   ngOnInit(): void {
     this.obtenerDocumentos(this.paginador.pageIndex, this.paginador.pageSize | this.pageSize);
     const rutaActual = window.location.pathname;
-    this.currentUser = localStorage.getItem("currentUser");
+    const user=localStorage.getItem("currentUser");
+    if(typeof user === "string"){
+      this.currentUser=JSON.parse(user)
+    }
+    console.log(this.currentUser)
     if (rutaActual?.includes('docsFirmar')) {
       console.log("docsFirmar");
       this.tipoTabla = 'firmar';
@@ -100,12 +102,14 @@ export class DocumentosFirmarComponent implements OnInit {
   filtrar() {
     this.paginador.firstPage();
     this.paginador.pageSize = this.pageSize;
+    const formattedDate=this.convertDateFormat(this.filtrosForm.value.fechaDoc)
+    console.log(formattedDate)
     console.log(this.filtrosForm.value)
     this.obtenerDocumentos(
       this.paginador.pageIndex,
       this.paginador.pageSize | this.pageSize,
       this.filtrosForm.value.origen,
-      this.filtrosForm.value.fechaDoc);
+      formattedDate)
   }
 
   limpiar() {
@@ -126,7 +130,7 @@ export class DocumentosFirmarComponent implements OnInit {
     }
   }
 
-  async obtenerDocumentos(pageOffset:number,pageLimit:number,origen?:number,fecha?:Date) {
+  async obtenerDocumentos(pageOffset:number,pageLimit:number,origen?:number,fecha?:any) {
     try {
       await this.spinner.show();
       this.documentosService.listarDocumentos(pageOffset,pageLimit,origen,fecha).subscribe(
@@ -135,18 +139,13 @@ export class DocumentosFirmarComponent implements OnInit {
               console.log(res);
               this.documentList = res.documentos.data;
               this.totalFilas= res.documentos.total;
+              //this.documentList = res.listaDocs;
+              //this.totalFilas= res.listaDocs.length;
               await this.spinner.hide();
           },
           error: async (error:any) => {
+            console.log(error)
             await this.spinner.hide();
-
-            if (error.status.toString() === '404') {
-              this.toastrService.warning(error.error.message);
-            } else if (['0', '401', '403', '504'].includes(error.status.toString())) {
-              this.toastrService.error("Error de conexión.");
-            } else {
-              this.toastrService.error("Ha ocurrido un error.");
-            }
           }
       });
     } catch (error:any) {
@@ -202,15 +201,6 @@ export class DocumentosFirmarComponent implements OnInit {
     {icon:"../assets/img/opcion_tabla.svg",nombre:"Opciones"}
   ];
 
-
-  // documentList:any[]=[
-  //    {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Firma parcial", medio: 3, id:0},
-  //    {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Rechazado", medio: 2, id:1},
-  //    {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Firmado", medio: 1, id:2},
-  //    {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Firmado", medio: 3, id:3},
-  //    {fecha: new Date("11-04-2023 10:30"), nombreArchivo: "CarlosMirandaPrecontrato.pdf" , estado: "Firma parcial", medio: 2, id:4}
-  //  ];
-
   opcionesOrigen:any[]=[
     {value:0,origen:"Gestión Normativa"},
     {value:1,origen:"Portal Proveedores"},
@@ -218,7 +208,33 @@ export class DocumentosFirmarComponent implements OnInit {
     {value:3,origen:"Otros"},
   ]
 
+  private convertDateFormat(inputDate: string): string {
+    const dateObject = new Date(inputDate);
+    const day = this.addLeadingZero(dateObject.getDate());
+    const month = this.addLeadingZero(dateObject.getMonth() + 1);
+    const year = dateObject.getFullYear();
 
+    return `${day}-${month}-${year}`;
+  }
+
+  private addLeadingZero(value: number): string {
+    return value < 10 ? `0${value}` : value.toString();
+  }
 
    documentList!:any[];
+
+   async firmarSeleccionados(){
+    // falta ver lógica de multifirma
+    await this.spinner.show();
+    this.documentosService.crearPdfFirma({rut:"181154543"}).subscribe({
+      next: async (res) => {
+        console.log(res);
+        await this.spinner.hide();
+      },
+      error: async (error) => {
+        console.log(error);
+        await this.spinner.hide();
+      }
+    });
+   }
 }

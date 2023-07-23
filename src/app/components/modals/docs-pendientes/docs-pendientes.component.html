@@ -1,7 +1,8 @@
 <div class="container">
     <div class="modal-body">
         <div class="d-flex mt-5 flex-column justify-content-center" >
-            <h1>Tienes {{docsPendientes.length}} {{docsPendientes.length>1?"archivos pendientes por firmar":"archivo pendiente por firmar"}}</h1>
+            <h1>Tienes {{docsPendientes.length}} {{docsPendientes.length>1 || 
+                docsPendientes.length===0?"archivos pendientes por firmar":"archivo pendiente por firmar"}}</h1>
             <div style="max-height: 30vh !important;overflow-y: scroll !important;">
                 <ul>
                     <li *ngFor="let doc of docsPendientes" class="card p-1 card-shadow">
@@ -11,8 +12,8 @@
             </div>
             <div class="row justify-content-end py-5">
                 <div class="d-flex flex-row-reverse">
-                    <button class="btn btn-primary btn-main mx-2 py-2" (click)="aceptar()" style="margin-right: -12px !important;background-color: #0B58A4 !important;">
-                        <img class="px-3" src="../../../../assets/img/firma_btn.svg">Ir a firmar</button>
+                    <button class="btn btn-primary btn-main mx-2 py-2" [routerLink]="['/private/docsFirmar']" (click)="activeModal.close({ estado: false})" style="margin-right: -12px !important;background-color: #0B58A4 !important;">
+                        <img class="px-3" src="../../../../assets/img/firma_btn.svg" >Ir a firmar</button>
                     <button class="btn btn-outline-secondary mx-2" style="background-color: transparent !important;" (click)="activeModal.close({ estado: false})">
                         <span class="fw-bold mx-2">X</span>Cancelar</button>
                 </div>

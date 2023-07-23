@@ -7,12 +7,15 @@ import { AuthenticationService } from '../../auth/service/authentication.service
   styleUrls: ['./datos-firma.component.css']
 })
 export class DatosFirmaComponent implements OnInit{
-  userInfo:any={}
+  currentUser:any={}
   user:User={name:"Tania Cortés F.",rut:"15.446.942-5",email:"tcortes@otic.sofofa.cl",phone:"(+56 2) 23362890"}
   constructor(private authenticationService:AuthenticationService){}
   ngOnInit(): void {
-    this.userInfo = this.authenticationService.currentUserValue;
-    console.log(this.userInfo);
+    const user = localStorage.getItem("currentUser");
+    if(typeof user === "string"){
+      this.currentUser=JSON.parse(user)
+    }
+    console.log(this.currentUser);
   }
 }
 

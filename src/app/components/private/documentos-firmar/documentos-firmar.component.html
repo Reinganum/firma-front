@@ -1,154 +1,121 @@
-<app-datos-firma *ngIf="currentUser"></app-datos-firma>
-<div class="container col-lg-12" style="background-color: #fafbfc;">
+
   <!--Titulo según tipo de usuario y vista Por Firmar/Firmados-->
-  <div *ngIf="currentUser" class="row py-4">
-      <div class="col-6">
-            <span class="fw-bold"><img class="pe-2" src="../assets/img/doc-por-firmar.svg">
-                {{tipoTabla === 'firmar' ? "Documentos por firmar": "Documentos firmados"}}</span>
-            <p>{{tipoTabla === 'firmar' ? "Listado de documentos listos para firmar" : "Listado de documentos firmados y listos para gestión"}}</p>
-      </div>
-      <div class="d-flex col-6 justify-content-end">
-        <button class="filter-btn btn me-2" style="border: 1px solid #979ba2;" (click)="flagFiltros = !flagFiltros"><img class="px-3" src="../assets/img/filtro-btn.svg">Filtrar</button>
-        <button *ngIf="tipoTabla === 'firmar'" class="btn-firmar-seleccionados btn btn-primary btn-main"style="background-color: #0B58A4 !important;">Firmar seleccionados</button>
-      </div>
-  </div>
-  <div *ngIf="flagFiltros" class="row my-1" id="verfiltros">
+  <div class="container col-lg-12 mt-5">
+    <h1 class="ms-4" *ngIf="currentUser.tipo===2">Datos de la firma</h1>
     <div class="col-12">
-        <form [formGroup]="filtrosForm" class="row">
-            <div class="card shadow-sm pt-3 pb-2">
-                    <div class="col-12">
-                        <h4 class="fw-bold">FILTRAR EN EL LISTADO</h4>
-                    </div>
-                    <!-- <div class="col-12 col-md-4 col-lg-3 form-group">
-                        <mat-form-field>
-                        <mat-label>Tipo de capacitación</mat-label>
-                        <mat-select formControlName="tipoCapacitacion">
-                            <mat-option *ngFor="let tipo of tiposACFiltro" [value]="tipo.value">{{tipo.nombre}}</mat-option>
-                        </mat-select>
-                        </mat-form-field>
-                    </div>  -->
-                    <!-- <div class="col-12 col-md-4 col-lg-3 form-group">
-                        <mat-form-field>
-                        <mat-label>Agencia</mat-label>
-                        <mat-select formControlName="agencia">
-                            <mat-option *ngFor="let agencia of agencias" [value]="agencia.codigo">{{agencia.nom_agencia}}</mat-option>
-                        </mat-select>
-                        </mat-form-field>
-                    </div> -->
-                    <div class="d-flex justify-content-center">
-                        <div class="d-flex flex-row flex-wrap">
-                            <div class="d-flex form-group mx-1">
-                                <mat-form-field>
-                                    <mat-label>Fecha de recepción</mat-label>
-                                    <input matInput [matDatepicker]="pickerFSolicitud" class="form-control inputs-filter" formControlName="fechaDoc">
-                                    <mat-datepicker-toggle matSuffix [for]="pickerFSolicitud"></mat-datepicker-toggle>
-                                    <mat-datepicker #pickerFSolicitud></mat-datepicker>
-                                </mat-form-field>
-                                <div class="d-flex mx-1 form-group inputs-filter">
-                                    <mat-form-field>
-                                    <mat-label>RUT</mat-label>
-                                    <input type="text" matInput formControlName="RUT" placeholder="Ingresa texto"/>
-                                    </mat-form-field>
-                                </div>
-                                <div class="d-flex mx-1 form-group inputs-filter">
-                                    <mat-form-field>
-                                        <mat-select placeholder="Origen documento" formControlName="origen">
-                                            <mat-option *ngFor="let o of opcionesOrigen" [value]="o.value">{{o.origen}}</mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                </div>
-                            </div>
-                            
-                            <!--
-                            <div class="d-flex mx-1 form-group inputs-filter">
-                                <mat-form-field >
-                                <mat-label>Origen</mat-label>
-                                <input matInput type="text" formControlName="origen">
-                                <mat-datepicker-toggle matSuffix [for]="pickerFInicio"></mat-datepicker-toggle>
-                                <mat-datepicker #pickerFInicio></mat-datepicker>
-                                </mat-form-field>
-                            </div>
-                            <div class="d-flex mx-1 form-group inputs-filter">
-                                <mat-form-field>
-                                <mat-label>Fecha Comunicación</mat-label>
-                                <input matInput [matDatepicker]="pickerComunicacion" formControlName="fechaComunicacion">
-                                <mat-datepicker-toggle matSuffix [for]="pickerComunicacion"></mat-datepicker-toggle>
-                                <mat-datepicker #pickerComunicacion></mat-datepicker>
-                                </mat-form-field>
-                            </div>
-                            -->
-                        </div>
-                    </div>
-                    <!-- <div class="col-12 col-md-4 col-lg-3 form-group">
-                        <mat-form-field>
-                            <mat-label>Estado</mat-label>
-                            <mat-select formControlName="estado">
-                            <mat-option *ngFor="let estado of ESTADOS_INS" [value]="estado.id">{{estado.descripcion}}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div> -->
-                    <!-- <div class="col-12 col-md-4 col-lg-3 form-group">
-                        <mat-form-field>
-                            <mat-label>Sociedad</mat-label>
-                            <mat-select formControlName="sociedad">
-                            <mat-option *ngFor="let sociedad of SOCIEDAD" [value]="sociedad.valor">{{sociedad.nombre}}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div> -->
-                    <div class="col-12 d-flex justify-content-center mt-md-3 mb-2">
-                        <a (click)="exportar()" class="mt-2 btn boton-filtro-gris mx-1" style="background-color: transparent !important;"><img src="../assets/img/excel.png" style="
-                        height: 17px;
-                        ">Exportar</a>
-                        <a (click)="filtrar()" class="mt-2 btn btn-primary mx-1" style="background-color: #0B58A4 !important;">
-                        <img src="../assets/img/aplicar-filtros.svg">Aplicar
-                        filtros</a>
-                        <a (click)="limpiar()" class="mt-2 btn btn-outline-secondary mx-1" style="background-color: transparent !important;"><img
-                        class="mx-1" src="../assets/img/limpiar-filtros.svg">Limpiar Filtros</a>
-                    </div>
+        <app-datos-firma *ngIf="currentUser.tipo===2;else usuarioExterno"></app-datos-firma>
+            <ng-template #usuarioExterno>
+                <div class="row pt-5">
+                    <h4>¡Te damos la bienvenida!</h4>
+                    <h1 class="fw-bold">{{currentUser.firstName + " " + currentUser.lastName}}</h1>
                 </div>
-        </form>
+            </ng-template>
+        <ng-template #externo>
+            <div class="d-flex flex-row pt-4 align-items-center">
+                <h1>Tus documentos</h1>
+                <h5 id="info-documentos" class="px-1 mx-2">Tienes {{totalFilas}} documentos</h5>
+            </div>
+        </ng-template>
     </div>
-  </div>
-  <div class="col-12" style="overflow-x: scroll !important;">
-    <table id="table-container" class="table">
-      <thead class="pt-4 text-center">
-       <tr>
-           <td><input class="form-check-input" style="outline:#1e5180;" type="checkbox" disabled></td>
-           <td  *ngFor="let dataColumn of documentData, let i = index">
-               <span><img class="px-3" [src]=dataColumn.icon>{{dataColumn.nombre}}</span>
-           </td>
-       </tr>
-      </thead>
-      <tbody>
-           <tr *ngFor="let document of documentList, let i = index" class="text-center">
-               <td><input class="form-check-input" [value]=i type="checkbox" (change)="onCheckChange($event)"></td>
-               <td>{{document.fecha | date: "dd-MM-yyyy"}}</td>
-               <td class="text-left">{{document.nombreArchivo}}</td>
-               <td><div class="d-flex flex-row justify-content-center"><div class="mx-2 rounded-circle bg-dark" style="color:white;">GN</div>{{document.medio}}</div></td>
-               <!-- CUANDO SE INTEGRE COLUMNA DE ESTADO-->
-               <td *ngIf="tipoTabla !== 'firmar'">
-                   <span class="fw-bold p-1 rounded"
-                   [ngClass]="{'firmado':document.estado==='Firmado',
-                               'parcial':document.estado==='Firma parcial',
-                               'rechazado':document.estado==='Rechazado'}">
-                               {{document.estadoFirma}}
-                   </span>
-               </td>
-               <td>
-                   <div class="d-flex justify-content-center">
-                     <a (click)="vistaPrevia(document)"><img class="iconos-options rounded p-1" src="../../../../assets/img/lupa_btn.svg" alt="Vista previa" style="margin-left: 1px !important;"></a>
-                     <a (click)="showModal()"><img class="mx-1 iconos-options rounded p-1" src="../../../../assets/img/firma_btn.svg"></a>
-                     <a (click)="showModal()"><img class="mx-1 iconos-options rounded p-1" src="../../../../assets/img/fi_mail.svg"></a>
-                    </div>
-               </td>
-           </tr>
-      </tbody>
-   </table>
-   <mat-paginator #paginadorDocumentos
-       [length]="totalFilas"
-       [pageSize]="pageSize"
-       [pageSizeOptions]="pageSizeOptions"
-   >
-   </mat-paginator>
-  </div>
+    <div class="col-12" style="background-color: #fafbfc; border-radius: 12px;">
+        <div *ngIf="currentUser.tipo===2;else externo" class="row py-4">
+            <div class="col-6">
+                  <span class="fw-bold ms-4"><img class="pe-2" src="../assets/img/doc-por-firmar.svg">
+                      {{tipoTabla === 'firmar' ? "Documentos por firmar": "Documentos firmados"}}</span>
+                  <p class="ps-4">{{tipoTabla === 'firmar' ? "Listado de documentos listos para firmar" : "Listado de documentos firmados y listos para gestión"}}</p>
+            </div>
+            <div class="d-flex col-6 justify-content-end">
+              <button class="filter-btn btn me-2" style="border: 1px solid #979ba2;" (click)="flagFiltros = !flagFiltros"><img class="px-3" src="../assets/img/filtro-btn.svg">Filtrar</button>
+              <button *ngIf="tipoTabla === 'firmar'" class="btn-firmar-seleccionados btn btn-primary btn-main me-3"style="background-color: #0B58A4 !important;"(click)="firmarSeleccionados()">Firmar seleccionados</button>
+            </div>
+        </div>
+        <div class="col-12">
+            <div *ngIf="flagFiltros" class="row my-1" id="verfiltros">
+                <div class="col-12">
+                    <form [formGroup]="filtrosForm" class="row">
+                        <div class="card shadow-sm pt-3 pb-2">
+                                <div class="col-12">
+                                    <h4 class="fw-bold">FILTRAR EN EL LISTADO</h4>
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                    <div class="d-flex flex-row flex-wrap">
+                                        <div class="d-flex flex-wrap form-group mx-1">
+                                            <mat-form-field>
+                                                <mat-label>Fecha de recepción</mat-label>
+                                                <input matInput [matDatepicker]="pickerFSolicitud" class="form-control inputs-filter" formControlName="fechaDoc">
+                                                <mat-datepicker-toggle matSuffix [for]="pickerFSolicitud"></mat-datepicker-toggle>
+                                                <mat-datepicker #pickerFSolicitud></mat-datepicker>
+                                            </mat-form-field>
+                                            <div class="d-flex mx-1 flex-wrap form-group inputs-filter">
+                                                <mat-form-field>
+                                                <mat-label>RUT</mat-label>
+                                                <input type="text" matInput formControlName="RUT" placeholder="Ingresa texto"/>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="d-flex mx-1 flex-wrap form-group inputs-filter">
+                                                <mat-form-field>
+                                                    <mat-select placeholder="Origen documento" formControlName="origen">
+                                                        <mat-option *ngFor="let o of opcionesOrigen" [value]="o.value">{{o.origen}}</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 d-flex justify-content-end mt-md-3 mb-2">
+                                    <a (click)="filtrar()" class="mt-2 btn btn-primary mx-1" style="background-color: #0B58A4 !important;">
+                                    <img src="../assets/img/aplicar-filtros.svg">Aplicar
+                                    filtros</a>
+                                    <a (click)="limpiar()" class="mt-2 btn btn-outline-secondary mx-1" style="background-color: transparent !important;"><img
+                                    class="mx-1" src="../assets/img/limpiar-filtros.svg">Limpiar Filtros</a>
+                                </div>
+                            </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-12" style="overflow-x: scroll !important;">
+                <table id="table-container" class="table">
+                <thead class="pt-4 text-center">
+                <tr>
+                    <td><input class="form-check-input" style="outline:#1e5180;" type="checkbox" disabled></td>
+                    <td  *ngFor="let dataColumn of documentData, let i = index">
+                        <span><img class="px-3" [src]=dataColumn.icon>{{dataColumn.nombre}}</span>
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let document of documentList, let i = index" class="text-center">
+                        <td><input class="form-check-input" [value]=i type="checkbox" (change)="onCheckChange($event)"></td>
+                        <td>{{document.fecha | date: "dd-MM-yyyy"}}</td>
+                        <td class="text-left">{{document.nombreArchivo}}</td>
+                        <td><div class="d-flex flex-row justify-content-center"><div class="mx-2 rounded-circle bg-dark" style="color:white;">GN</div>{{document.medio}}</div></td>
+                        <!-- CUANDO SE INTEGRE COLUMNA DE ESTADO-->
+                        <td *ngIf="tipoTabla !== 'firmar'">
+                            <span class="fw-bold p-1 rounded"
+                            [ngClass]="{'firmado':document.estado==='Firmado',
+                                        'parcial':document.estado==='Firma parcial',
+                                        'rechazado':document.estado==='Rechazado'}">
+                                        {{document.estadoFirma}}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="d-flex justify-content-center">
+                                <a (click)="vistaPrevia(document)"><img class="iconos-options rounded p-1" src="../../../../assets/img/lupa_btn.svg" alt="Vista previa" style="margin-left: 1px !important;"></a>
+                                <a (click)="showModal()"><img class="mx-1 iconos-options rounded p-1" src="../../../../assets/img/firma_btn.svg"></a>
+                                <a (click)="showModal()"><img class="mx-1 iconos-options rounded p-1" src="../../../../assets/img/fi_mail.svg"></a>
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <mat-paginator #paginadorDocumentos
+                [length]="totalFilas"
+                [pageSize]="pageSize"
+                [pageSizeOptions]="pageSizeOptions"
+            >
+            </mat-paginator>
+            </div>
+        </div>
+    </div>
 </div>

@@ -18,7 +18,7 @@
                     <div class="d-flex flex-row">
                         <div (click)="showPendientesModal()">
                             <img class="" src="../assets/img/mensaje_header.svg">
-                            <i matBadge="1" matBadgeSize="small" matBadgePosition="below after" [ngClass]="{hide:notifications===0}">
+                            <i [matBadge]="notifications" matBadgeSize="small" matBadgePosition="below after" [ngClass]="{hide:notifications===0}">
                             </i>
                         </div>
                         <div class="mx-4">

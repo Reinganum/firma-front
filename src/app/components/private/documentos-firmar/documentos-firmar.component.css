@@ -47,6 +47,12 @@ thead{
   background-color: transparent !important;
 }
 
+#info-documentos {
+   color: white;
+   background-color: #328cce;
+   border-radius:12px;
+  }
+
 @media only screen and (min-width: 600px) {
   #table-container{
    overflow-x: scroll hidden;

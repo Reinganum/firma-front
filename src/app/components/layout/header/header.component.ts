@@ -39,7 +39,7 @@ export class HeaderComponent {
   ngOnInit(): void {
     this.currentUser = this.authenticationService.currentUserValue;
     this.userId = localStorage.getItem('userId');
-    this.getDocsPendientes(1,63)
+    this.getDocsPendientes(1,this.userId)
   }
 
   menu(){
