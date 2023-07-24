@@ -92,7 +92,14 @@
                         <td><input class="form-check-input" [value]=i type="checkbox" (change)="onCheckChange($event)"></td>
                         <td>{{convertDateForTable(document.fecha)}}</td><!--| date: "dd-MM-yyyy"-->
                         <td class="text-left">{{document.archivo}}</td>
-                        <td><div class="d-flex flex-row justify-content-center"><div class="mx-2 rounded-circle bg-dark" style="color:white;">GN</div>{{document.medio}}</div></td>
+                        <td>
+                            <div class="d-flex flex-row justify-content-center align-items-center">
+                                <div class="d-flex align-items-center rounded-circle bg-dark justify-content-center" style="color:white; width: 2rem; height:2rem">
+                                    {{extraerIniciales(opcionesOrigen[document.medio-1].origen)}}
+                                </div>
+                                <p style="max-width: 12ch;">{{opcionesOrigen[document.medio-1].origen}}</p>
+                            </div>
+                        </td>
                         <!-- CUANDO SE INTEGRE COLUMNA DE ESTADO-->
                         <td *ngIf="tipoTabla !== 'firmar'">
                             <span class="fw-bold p-1 rounded"

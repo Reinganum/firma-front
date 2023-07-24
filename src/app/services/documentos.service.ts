@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class DocumentosService {
-
+  private docsPendientes: any[] = [];
   constructor(
     private http: HttpClient
   ) { }
@@ -41,5 +41,12 @@ export class DocumentosService {
     const body = JSON.stringify(data);
     const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
     return this.http.post(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/ingresarDocumento`, body, {headers})
+  }
+  setDocPendientes(data: any[]) {
+    this.docsPendientes = data;
+  }
+  
+  getDocsPendientes() {
+    return this.docsPendientes;
   }
 }
