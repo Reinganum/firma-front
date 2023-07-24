@@ -25,12 +25,27 @@ export class HomeComponent implements OnInit {
     private spinner: NgxSpinnerService,) {}
 
   async ngOnInit(){
-    //this.obtenerDocumentos({})
+    this.obtenerDocumentos();
   }
-  async obtenerDocumentos(data:any) {
+  async obtenerDocumentos() {
     try {
       await this.spinner.show();
-      this.documentosService.crearDocumento({}).subscribe(
+      const data = {
+        documento: {
+          archivo:`Cargar/PDFFirmados/${Date.now()}_181154543-firmado.pdf`,
+          archivoFirmado:null,
+          estado:1,
+          firmantes:null,
+          fecha:"20-07-2023",
+          tipoGestion:1,
+          responsable:65,
+          idAc:null,
+          medio:1,
+          fechaFirma:null
+        }
+      }
+        
+      this.documentosService.crearDocumento(data).subscribe(
         {
           next: async (res:any) => {
               console.log(res);

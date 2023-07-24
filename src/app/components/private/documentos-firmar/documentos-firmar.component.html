@@ -1,7 +1,7 @@
 
   <!--Titulo según tipo de usuario y vista Por Firmar/Firmados-->
   <div class="container col-lg-12 mt-5">
-    <h1 class="ms-4" *ngIf="currentUser.tipo===2">Datos de la firma</h1>
+    <h1 class="ms-4" *ngIf="currentUser?.tipo===2">Datos de la firma</h1>
     <div class="col-12">
         <app-datos-firma *ngIf="currentUser.tipo===2;else usuarioExterno"></app-datos-firma>
             <ng-template #usuarioExterno>
@@ -75,7 +75,7 @@
             </div>
 
             <div class="col-12" style="overflow-x: scroll !important;">
-                <table id="table-container" class="table">
+                <table matSort id="table-container" class="table">
                 <thead class="pt-4 text-center">
                 <tr>
                     <td><input class="form-check-input" style="outline:#1e5180;" type="checkbox" disabled></td>
@@ -88,7 +88,7 @@
                     <tr *ngFor="let document of documentList, let i = index" class="text-center">
                         <td><input class="form-check-input" [value]=i type="checkbox" (change)="onCheckChange($event)"></td>
                         <td>{{document.fecha | date: "dd-MM-yyyy"}}</td>
-                        <td class="text-left">{{document.nombreArchivo}}</td>
+                        <td class="text-left">{{document.archivo}}</td>
                         <td><div class="d-flex flex-row justify-content-center"><div class="mx-2 rounded-circle bg-dark" style="color:white;">GN</div>{{document.medio}}</div></td>
                         <!-- CUANDO SE INTEGRE COLUMNA DE ESTADO-->
                         <td *ngIf="tipoTabla !== 'firmar'">
@@ -106,6 +106,9 @@
                                 <a (click)="showModal()"><img class="mx-1 iconos-options rounded p-1" src="../../../../assets/img/fi_mail.svg"></a>
                                 </div>
                         </td>
+                    </tr>
+                    <tr *ngIf="documentList.length == 0">
+                        <td colspan="5" class="mx-3"><strong>No se encontraron documentos.</strong></td>
                     </tr>
                 </tbody>
             </table>

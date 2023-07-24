@@ -12,6 +12,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatFormField } from '@angular/material/form-field';
 import { CorreosService } from 'src/app/services/correos.service';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-documentos-firmar',
@@ -20,6 +21,8 @@ import { CorreosService } from 'src/app/services/correos.service';
 })
 
 export class DocumentosFirmarComponent implements OnInit {
+  @ViewChild(MatSort, { static: false }) sort!: MatSort;
+
   modalRef!:NgbModalRef
   isChecked: boolean = false
   firmaParam:any="firmar"
@@ -50,8 +53,8 @@ export class DocumentosFirmarComponent implements OnInit {
       }
   currentUser:any;
 
-  ngOnInit(): void {
-    this.obtenerDocumentos(this.paginador.pageIndex, this.paginador.pageSize | this.pageSize);
+  ngOnInit():void {
+    this.obtenerDocumentos(null, '', this.paginador.pageIndex, this.paginador.pageSize | this.pageSize);
     const rutaActual = window.location.pathname;
     const user=localStorage.getItem("currentUser");
     if(typeof user === "string"){
@@ -88,8 +91,14 @@ export class DocumentosFirmarComponent implements OnInit {
     this.paginador._intl.previousPageLabel="Página Anterior";
     this.paginador._intl.getRangeLabel=dutchRangeLabel;
     console.log(this.paginador.pageSize)
-    this.paginador.page.subscribe(()=>{
-      this.obtenerDocumentos(this.paginador.pageIndex, this.paginador.pageSize);
+
+    this.sort.sortChange.subscribe(async () => {
+      this.paginador.firstPage();
+      await this.obtenerDocumentos(this.sort.active, this.sort.direction, this.paginador.pageSize, this.paginador.pageIndex);
+    });
+    
+    this.paginador.page.subscribe(async ()=>{
+      await this.obtenerDocumentos(this.sort.active, this.sort.direction, this.paginador.pageSize, this.paginador.pageIndex);
     })
   }
 
@@ -105,11 +114,7 @@ export class DocumentosFirmarComponent implements OnInit {
     const formattedDate=this.convertDateFormat(this.filtrosForm.value.fechaDoc)
     console.log(formattedDate)
     console.log(this.filtrosForm.value)
-    this.obtenerDocumentos(
-      this.paginador.pageIndex,
-      this.paginador.pageSize | this.pageSize,
-      this.filtrosForm.value.origen,
-      formattedDate)
+    this.obtenerDocumentos(null, '', this.paginador.pageIndex, this.paginador.pageSize | this.pageSize);
   }
 
   limpiar() {
@@ -130,21 +135,29 @@ export class DocumentosFirmarComponent implements OnInit {
     }
   }
 
-  async obtenerDocumentos(pageOffset:number,pageLimit:number,origen?:number,fecha?:any) {
+  async obtenerDocumentos(sortField: any, sortDirection: any, pageLimit: any, pageOffset: any) {
     try {
       await this.spinner.show();
-      this.documentosService.listarDocumentos(pageOffset,pageLimit,origen,fecha).subscribe(
+      this.documentosService.obtenerDocumentos(
+        this.filtrosForm.value.origen,
+        this.filtrosForm.value.fechaDoc,
+        sortField, 
+        sortDirection,
+        pageLimit,
+        pageOffset).subscribe(
         {
           next: async (res:any) => {
               console.log(res);
-              this.documentList = res.documentos.data;
-              this.totalFilas= res.documentos.total;
+              this.documentList = res.listaDocs.data;
+              this.totalFilas= res.listaDocs.total;
               //this.documentList = res.listaDocs;
               //this.totalFilas= res.listaDocs.length;
               await this.spinner.hide();
           },
           error: async (error:any) => {
             console.log(error)
+            this.documentList = [];
+            this.totalFilas = 0;
             await this.spinner.hide();
           }
       });
@@ -202,10 +215,9 @@ export class DocumentosFirmarComponent implements OnInit {
   ];
 
   opcionesOrigen:any[]=[
-    {value:0,origen:"Gestión Normativa"},
-    {value:1,origen:"Portal Proveedores"},
-    {value:2,origen:"Gestor Capital Humano"},
-    {value:3,origen:"Otros"},
+    {value:1,origen:"Gestión Normativa"},
+    {value:3,origen:"Portal Proveedores"},
+    {value:2,origen:"Gestor Capital Humano"}
   ]
 
   private convertDateFormat(inputDate: string): string {
