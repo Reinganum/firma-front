@@ -103,18 +103,18 @@
                         <!-- CUANDO SE INTEGRE COLUMNA DE ESTADO-->
                         <td *ngIf="tipoTabla !== 'firmar'">
                             <span class="fw-bold p-1 rounded"
-                            [ngClass]="{'firmado':document.estado==='Firmado',
-                                        'parcial':document.estado==='Firma parcial',
-                                        'rechazado':document.estado==='Rechazado'}">
-                                        {{document.estadoFirma}}
+                            [ngClass]="{'firmado':document.descripcionEstado==='Firmado',
+                                        'parcial':document.descripcionEstado==='Firma parcial',
+                                        'rechazado':document.descripcionEstado==='Rechazado'}">
+                                        {{document.descripcionEstado}}
                             </span>
                         </td>
                         <td>
                             <div class="d-flex justify-content-center">
                                 <a (click)="vistaPrevia(document)"><img class="iconos-options rounded p-1" src="../../../../assets/img/lupa_btn.svg" alt="Vista previa" style="margin-left: 1px !important;"></a>
                                 <a (click)="showModal()"><img class="mx-1 iconos-options rounded p-1" src="../../../../assets/img/firma_btn.svg"></a>
-                                <a (click)="showModal()"><img class="mx-1 iconos-options rounded p-1" src="../../../../assets/img/fi_mail.svg"></a>
-                                </div>
+                                <a (click)="showModalCorreo(document)"><img class="mx-1 iconos-options rounded p-1" src="../../../../assets/img/fi_mail.svg"></a>
+                            </div>
                         </td>
                     </tr>
                     <tr *ngIf="tag">

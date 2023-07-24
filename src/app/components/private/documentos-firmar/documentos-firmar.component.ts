@@ -12,6 +12,8 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CorreosService } from 'src/app/services/correos.service';
 import { MatSort } from '@angular/material/sort';
+import * as moment from 'moment';
+import { EnvioCorreoComponent } from '../../modals/envio-correo/envio-correo.component';
 
 @Component({
   selector: 'app-documentos-firmar',
@@ -112,9 +114,6 @@ export class DocumentosFirmarComponent implements OnInit {
   filtrar() {
     this.paginador.firstPage();
     this.paginador.pageSize = this.pageSize;
-    const formattedDate=this.convertDateForDB(this.filtrosForm.value.fechaDoc)
-    console.log(formattedDate)
-    console.log(this.filtrosForm.value)
     this.obtenerDocumentos(null, '', this.paginador.pageIndex, this.paginador.pageSize | this.pageSize);
   }
 
@@ -188,6 +187,16 @@ export class DocumentosFirmarComponent implements OnInit {
 
   showModal(){
     this.modalRef=this.modalService.open(ConfirmacionFirmaDocumentoComponent,{backdrop:'static',size:'md'});
+    this.modalRef.result.then((res)=>{
+      if(res.estado){
+
+      }
+    })
+  }
+
+  showModalCorreo(documento:any){
+    this.modalRef=this.modalService.open(EnvioCorreoComponent,{backdrop:'static',size:'md'});
+    this.modalRef.componentInstance.documento = documento;
     this.modalRef.result.then((res)=>{
       if(res.estado){
 

@@ -1,0 +1,48 @@
+
+<div class="container">
+    <div class="d-flex mt-5 justify-content-center">
+        <img src="../assets/img/img-modal-confirmar.svg">
+    </div>
+    <div class="modal-body d-flex justify-content-center flex-column">
+        <h1 class="mb-1 fw-bold text-center" id="cardTitle">Envio Documento Firmado</h1>
+        <h4 class="text-center py-2">Selecciona el correo para enviar documento</h4>
+        <div *ngIf="userKnown; else userForm">
+        <div class="row border border-light">
+            <form [formGroup]="formEnvioCorreo">
+                <div class="d-flex mx-1 flex-wrap form-group inputs-filter">
+                    <mat-form-field>
+                        <mat-label>Correos</mat-label>
+                        <mat-select formControlName="correos">
+                            <mat-option *ngFor="let c of correos" [value]="c.value">{{c.correo}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </form>
+        </div> 
+    </div>
+    <ng-template #userForm>
+        <form>
+            <div class="mb-3">
+                <label for="nombreCompleto" class="form-label">NOMBRE COMPLETO</label>
+                <input type="text" placeholder="Escriba su nombre" class="form-control" id="nombreCompleto" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+                <label for="inputRut" class="form-label">RUT</label>
+                <input type="text" placeholder="Escriba su RUT" class="form-control" id="inputRut">
+            </div>
+            <div class="mb-3">
+                <label for="inputEmail" class="form-label">E-MAIL</label>
+                <input type="email" placeholder="Escriba su e-mail" class="form-control" id="inputEmail" aria-describedby="emailHelp">
+                </div>
+            </form>
+    </ng-template>
+    <div class="row justify-content-end py-5">
+        <div class="d-flex flex-row-reverse">
+            <button class="btn btn-primary btn-main mx-2 py-2" (click)="confirmar()" style="margin-right: -12px !important;background-color: #0B58A4 !important;">
+                <img class="px-3" src="../../../../assets/img/firma_btn.svg">Firmar</button>
+            <button class="btn btn-outline-secondary mx-2" style="background-color: transparent !important;" (click)="activeModal.close({ estado: false})">
+                <span class="fw-bold mx-2">X</span>Cancelar</button>
+        </div>
+    </div>
+</div>
+    

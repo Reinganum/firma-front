@@ -20,6 +20,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { ObtenerRutComponent } from './components/modals/obtener-rut/obtener-rut.component';
 import { AuthInterceptor, ErrorInterceptor } from './components/auth/helpers';
 import { DocsPendientesComponent } from './components/modals/docs-pendientes/docs-pendientes.component';
+import { EnvioCorreoComponent } from './components/modals/envio-correo/envio-correo.component';
 
 export function kcFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -45,6 +46,7 @@ const CUSTOM_DATE_FORMATS = {
     ConfirmacionFirmaDocumentoComponent,
     ObtenerRutComponent,
     DocsPendientesComponent,
+    EnvioCorreoComponent
   ],
   imports: [
     BrowserModule,
