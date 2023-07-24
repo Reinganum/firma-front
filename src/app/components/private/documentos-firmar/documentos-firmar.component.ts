@@ -94,11 +94,11 @@ export class DocumentosFirmarComponent implements OnInit {
 
     this.sort.sortChange.subscribe(async () => {
       this.paginador.firstPage();
-      await this.obtenerDocumentos(this.sort.active, this.sort.direction, this.paginador.pageSize, this.paginador.pageIndex);
+      this.obtenerDocumentos(this.sort.active, this.sort.direction, this.paginador.pageSize, this.paginador.pageIndex);
     });
     
     this.paginador.page.subscribe(async ()=>{
-      await this.obtenerDocumentos(this.sort.active, this.sort.direction, this.paginador.pageSize, this.paginador.pageIndex);
+      this.obtenerDocumentos(null, '', this.paginador.pageIndex, this.paginador.pageSize | this.pageSize);
     })
   }
 
@@ -134,15 +134,17 @@ export class DocumentosFirmarComponent implements OnInit {
       console.log(this.documentosFirmar);
     }
   }
-
+  tag:boolean=false;
   async obtenerDocumentos(sortField: any, sortDirection: any, pageLimit: any, pageOffset: any) {
     try {
+      console.log(sortDirection);
+      
       await this.spinner.show();
       this.documentosService.obtenerDocumentos(
         this.filtrosForm.value.origen,
         this.filtrosForm.value.fechaDoc,
         sortField, 
-        sortDirection,
+        sortDirection == '' ? '' : sortDirection,
         pageLimit,
         pageOffset).subscribe(
         {
@@ -150,6 +152,7 @@ export class DocumentosFirmarComponent implements OnInit {
               console.log(res);
               this.documentList = res.listaDocs.data;
               this.totalFilas= res.listaDocs.total;
+              this.tag = false;
               //this.documentList = res.listaDocs;
               //this.totalFilas= res.listaDocs.length;
               await this.spinner.hide();
@@ -158,6 +161,7 @@ export class DocumentosFirmarComponent implements OnInit {
             console.log(error)
             this.documentList = [];
             this.totalFilas = 0;
+            this.tag = true;
             await this.spinner.hide();
           }
       });
@@ -221,27 +225,35 @@ export class DocumentosFirmarComponent implements OnInit {
   ]
 
   private convertDateForDB(inputDate: string): string {
-    const dateObject = new Date(inputDate);
-    const day = this.addLeadingZero(dateObject.getDate());
-    const month = this.addLeadingZero(dateObject.getMonth() + 1);
-    const year = dateObject.getFullYear();
+    if (inputDate) {
+      const dateObject = new Date(inputDate);
+      const day = this.addLeadingZero(dateObject.getDate());
+      const month = this.addLeadingZero(dateObject.getMonth() + 1);
+      const year = dateObject.getFullYear();
+  
+      return `${year}-${month}-${day}`;
 
-    return `${year}-${month}-${day}`;
+    }
+    return '';
   }
 
   public convertDateForTable(inputDate: string): string {
-    const day = inputDate.slice(8,10)
-    const month = inputDate.slice(5,7)
-    const year = inputDate.slice(0,4)
+    if (inputDate) {
+      const day = inputDate.slice(8,10)
+      const month = inputDate.slice(5,7)
+      const year = inputDate.slice(0,4)
+  
+      return `${day}-${month}-${year}`;
+    }
 
-    return `${day}-${month}-${year}`;
+    return '';
   }
 
   private addLeadingZero(value: number): string {
     return value < 10 ? `0${value}` : value.toString();
   }
 
-   documentList!:any[];
+   documentList:any;
 
    async firmarSeleccionados(){
     // falta ver lógica de multifirma
