@@ -13,7 +13,7 @@ import { AppComponent } from './app.component';
 import { NoAutorizadoComponent } from './components/public/no-autorizado/no-autorizado.component';
 import { ConfirmacionFirmaDocumentoComponent } from './components/modals/confirmacion-firma-documento/confirmacion-firma-documento.component';
 import { RechazarFirmaDocumentoComponent } from './components/modals/rechazar-firma-documento/rechazar-firma-documento.component';
-import {CoreDirectivesModule} from "./directives/directives";
+import { CoreDirectivesModule} from "./directives/directives";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MaterialModule } from './material.module';
 import { ToastrModule } from 'ngx-toastr';
@@ -46,7 +46,7 @@ const CUSTOM_DATE_FORMATS = {
     ConfirmacionFirmaDocumentoComponent,
     ObtenerRutComponent,
     DocsPendientesComponent,
-    EnvioCorreoComponent
+    EnvioCorreoComponent,
   ],
   imports: [
     BrowserModule,

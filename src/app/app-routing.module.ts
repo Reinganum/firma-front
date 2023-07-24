@@ -10,6 +10,7 @@ const routes: Routes = [
   {path: '', redirectTo:'login',pathMatch:'full'},
   { path: 'login', loadChildren: () => import('./components/public/login/login.module').then(m => m.LoginModule) },
   { path: 'consulta-documento', loadChildren: () => import('./components/public/consultar-documento/consultar-documento.module').then(m => m.ConsultarDocumentoModule) },
+  { path: 'vista/:id/:token', loadChildren: () => import('./components/public/vista-publica/vista-publica.module').then(m => m.VistaPublicaModule)}
 ];
 
 @NgModule({
