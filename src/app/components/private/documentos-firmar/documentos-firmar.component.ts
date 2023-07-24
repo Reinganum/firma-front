@@ -134,8 +134,8 @@ export class DocumentosFirmarComponent implements OnInit {
       console.log(this.documentosFirmar);
     }
   }
-  tag:boolean=false;
-  async obtenerDocumentos(sortField: any, sortDirection: any, pageLimit: any, pageOffset: any) {
+
+  async obtenerDocumentos(pageOffset:number,pageLimit:number,origen:number=2,fecha:any='2023-07-23') {
     try {
       console.log(sortDirection);
       
@@ -268,5 +268,14 @@ export class DocumentosFirmarComponent implements OnInit {
         await this.spinner.hide();
       }
     });
+   }
+
+   extraerIniciales(origen:string){
+    const strArr=origen.split(' ');
+    if(strArr.length===1){
+      return strArr[0].slice(0,1)
+    } else {
+      return strArr[0].slice(0,1)+strArr[1].slice(0,1)
+    }
    }
 }

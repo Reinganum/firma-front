@@ -6,8 +6,6 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DocsPendientesComponent } from '../../modals/docs-pendientes/docs-pendientes.component';
-import { PendientesService } from 'src/app/services/pendientes.service';
-
 
 @Component({
   selector: 'app-header',
@@ -32,7 +30,6 @@ export class HeaderComponent {
     private toastrService:ToastrService,
     private router: Router,
     private spinner: NgxSpinnerService,
-    private pendientesService:PendientesService,
     ) { }
 
   
@@ -62,7 +59,7 @@ export class HeaderComponent {
         {
           next: async (res:any) => {
               console.log(res);
-              this.pendientesService.setDocPendientes(res.docs)
+              this.documentosService.setDocPendientes(res.docs)
               this.notifications=res.docs.length
               await this.spinner.hide();
           },

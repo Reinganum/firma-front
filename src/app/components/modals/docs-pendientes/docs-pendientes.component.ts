@@ -3,7 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { PendientesService } from 'src/app/services/pendientes.service';
+import { DocumentosService } from 'src/app/services/documentos.service';
+
 
 
 @Component({
@@ -15,14 +16,14 @@ export class DocsPendientesComponent implements OnInit {
   docsPendientes: any[] = [];
   
   constructor(
-    private pendientesService:PendientesService,
+    private documentosService:DocumentosService,
     public activeModal: NgbActiveModal,
     private router:Router,
   ) {}
 
 
   ngOnInit() {
-    this.docsPendientes = this.pendientesService.getDocsPendientes();
+    this.docsPendientes = this.documentosService.getDocsPendientes();
     console.log(this.docsPendientes)
   }
   
