@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmacionFirmaDocumentoComponent } from '../../modals/confirmacion-firma-documento/confirmacion-firma-documento.component';
 import { DocumentData } from '../types';
@@ -10,7 +10,6 @@ import { MatTable } from '@angular/material/table';
 import { dutchRangeLabel } from 'src/app/shared/dutchRangeLabel';
 import { NgxSpinnerService } from "ngx-spinner";
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatFormField } from '@angular/material/form-field';
 import { CorreosService } from 'src/app/services/correos.service';
 import { MatSort } from '@angular/material/sort';
 
@@ -135,7 +134,8 @@ export class DocumentosFirmarComponent implements OnInit {
     }
   }
 
-  async obtenerDocumentos(pageOffset:number,pageLimit:number,origen:number=2,fecha:any='2023-07-23') {
+  tag:boolean=false;
+  async obtenerDocumentos(sortField: any, sortDirection: any, pageLimit: any, pageOffset: any) {
     try {
       console.log(sortDirection);
       
@@ -167,7 +167,7 @@ export class DocumentosFirmarComponent implements OnInit {
       });
     } catch (error:any) {
       await this.spinner.hide();
-      
+      console.log(error)
       if (error.status.toString() === '404') {
         this.toastrService.warning(error.error.message);
       } else if (['0', '401', '403', '504'].includes(error.status.toString())) {
