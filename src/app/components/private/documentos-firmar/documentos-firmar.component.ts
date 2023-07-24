@@ -6,7 +6,7 @@ import { DocumentosService } from 'src/app/services/documentos.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatTable } from '@angular/material/table';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { dutchRangeLabel } from 'src/app/shared/dutchRangeLabel';
 import { NgxSpinnerService } from "ngx-spinner";
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -14,6 +14,7 @@ import { CorreosService } from 'src/app/services/correos.service';
 import { MatSort } from '@angular/material/sort';
 import * as moment from 'moment';
 import { EnvioCorreoComponent } from '../../modals/envio-correo/envio-correo.component';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-documentos-firmar',
@@ -34,6 +35,8 @@ export class DocumentosFirmarComponent implements OnInit {
   tipoTabla:string = '';
   flagFiltros = false;
   filtrosForm!: FormGroup;
+  dataSource:any;
+  columnasFirmados: string[] = ['select','fecha', 'documento', 'origen', 'opciones'];
 
   constructor(
     private modalService:NgbModal,
@@ -51,9 +54,11 @@ export class DocumentosFirmarComponent implements OnInit {
           fechaInicio: [null],
           fechaComunicacion: [null]
         });
+        this.dataSource = new MatTableDataSource();
       }
   currentUser:any;
   estadoDoc!:number;
+  selection = new SelectionModel<any>(true, []);
 
   ngOnInit():void {
     const rutaActual = window.location.pathname;
@@ -121,6 +126,21 @@ export class DocumentosFirmarComponent implements OnInit {
     this.filtrosForm.reset()
   }
 
+  masterToggle() {
+
+    if (this.isAllSelected()) {
+      this.selection.clear() 
+    } else {
+      this.documentList.forEach((row:any) => this.selection.select(row));
+    }      
+  }
+
+  isAllSelected() {        
+    const numSelected = this.selection.selected.length;
+    const numRows = this.documentList.length;
+    return numSelected === numRows;    
+  }
+
   exportar() {
 
   }
@@ -154,6 +174,7 @@ export class DocumentosFirmarComponent implements OnInit {
               console.log(res);
               this.documentList = res.listaDocs.data;
               this.totalFilas= res.listaDocs.total;
+              this.dataSource = new MatTableDataSource(this.documentList);
               this.tag = false;
               //this.documentList = res.listaDocs;
               //this.totalFilas= res.listaDocs.length;
@@ -189,7 +210,7 @@ export class DocumentosFirmarComponent implements OnInit {
     this.modalRef=this.modalService.open(ConfirmacionFirmaDocumentoComponent,{backdrop:'static',size:'md'});
     this.modalRef.result.then((res)=>{
       if(res.estado){
-
+        this.modalRef.close();
       }
     })
   }
@@ -199,7 +220,7 @@ export class DocumentosFirmarComponent implements OnInit {
     this.modalRef.componentInstance.documento = documento;
     this.modalRef.result.then((res)=>{
       if(res.estado){
-
+        this.modalRef.close();
       }
     })
   }

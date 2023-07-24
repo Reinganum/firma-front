@@ -78,10 +78,11 @@
             </div>
 
             <div class="col-12" style="overflow-x: scroll !important;">
+                
                 <table matSort id="table-container" class="table">
                 <thead class="pt-4 text-center">
                 <tr>
-                    <td><input class="form-check-input" style="outline:#1e5180;" type="checkbox" disabled></td>
+                    <td><mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()"></mat-checkbox></td>
                     <td  *ngFor="let dataColumn of documentData, let i = index">
                         <span><img class="px-3" [src]=dataColumn.icon>{{dataColumn.nombre}}</span>
                     </td>
@@ -89,7 +90,7 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let document of documentList, let i = index" class="text-center">
-                        <td><input class="form-check-input" [value]=i type="checkbox" (change)="onCheckChange($event)"></td>
+                        <td><mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(document) : null" [checked]="selection.isSelected(document)"></mat-checkbox></td>
                         <td>{{convertDateForTable(document.fecha)}}</td><!--| date: "dd-MM-yyyy"-->
                         <td class="text-left">{{document.archivo}}</td>
                         <td>

@@ -57,7 +57,7 @@
     <div class="d-flex justify-content-center my-2">
         <button class="btn btn-primary btn-main mx-2 py-2" (click)="modalFirmar()" style="background-color: #0B58A4 !important;">
             <img class="px-3" src="../../../../assets/img/firma_btn.svg">Firmar</button>
-        <button class="btn btn-outline-secondary mx-2" style="background-color: transparent !important;" [routerLink]="['/consulta-documento']">
+        <button class="btn btn-outline-secondary mx-2" style="background-color: transparent !important;" (click)="volver()">
             <span class="fw-bold mx-2">X</span>Cancelar
         </button>
     </div>

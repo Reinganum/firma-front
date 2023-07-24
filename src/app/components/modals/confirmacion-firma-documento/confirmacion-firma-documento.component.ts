@@ -58,6 +58,6 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit{
 
       }
     });
-    // this.activeModal.close({ estado: true});
+    this.activeModal.close({ estado: true});
   }
 }

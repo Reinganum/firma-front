@@ -12,6 +12,7 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { CanvasElement } from 'pdfmake/interfaces';
 import { Firmante } from '../types';
 import { AuthenticationService } from '../../auth/service/authentication.service';
+import { Location } from '@angular/common';
 
 
 
@@ -63,7 +64,8 @@ export class VistaDocumentoComponent implements OnInit {
     private toaster: ToastrService,
     private router: Router,
     private modalService: NgbModal,
-    private authenticationService:AuthenticationService
+    private authenticationService:AuthenticationService,
+    private location: Location
   ) {
     
   }
@@ -76,6 +78,10 @@ export class VistaDocumentoComponent implements OnInit {
       this.idDoc = params["id"];
       this.obtenerPath(this.idDoc);
     })
+  }
+
+  volver() {
+    this.location.back();
   }
 
   rotate():void{
@@ -117,11 +123,17 @@ export class VistaDocumentoComponent implements OnInit {
       key: archivo,
       metodo: 'get'
     }
-    const resultado:any = await this.comunesServices.getSignedUrl(fileData).toPromise();
-    console.log(resultado);
-    this.archivoFirmar = resultado.message;
-    this.toaster.success("Documento cargado correctamente!");
-    await this.spinner.hide();
+    let resultado:any;
+    try {
+      resultado = await this.comunesServices.getSignedUrl(fileData).toPromise();
+      console.log(resultado);
+      this.archivoFirmar = resultado.message;
+      this.toaster.success("Documento cargado correctamente!");
+      await this.spinner.hide();
+    } catch (error:any) {
+      console.log(error);      
+      await this.spinner.hide();
+    }
   }
 
   async descargarArchivo(archivo:any){
