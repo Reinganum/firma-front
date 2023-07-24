@@ -102,7 +102,7 @@ export class DocumentosFirmarComponent implements OnInit {
   filtrar() {
     this.paginador.firstPage();
     this.paginador.pageSize = this.pageSize;
-    const formattedDate=this.convertDateFormat(this.filtrosForm.value.fechaDoc)
+    const formattedDate=this.convertDateForDB(this.filtrosForm.value.fechaDoc)
     console.log(formattedDate)
     console.log(this.filtrosForm.value)
     this.obtenerDocumentos(
@@ -130,27 +130,28 @@ export class DocumentosFirmarComponent implements OnInit {
     }
   }
 
-  async obtenerDocumentos(pageOffset:number,pageLimit:number,origen?:number,fecha?:any) {
+  async obtenerDocumentos(pageOffset:number,pageLimit:number,origen:number=3,fecha:any='2023-07-21') {
     try {
+      console.log(pageOffset, pageLimit , origen , fecha)
       await this.spinner.show();
-      this.documentosService.listarDocumentos(pageOffset,pageLimit,origen,fecha).subscribe(
+      this.documentosService.obtenerDocumentos(pageOffset,pageLimit,origen,fecha).subscribe(
         {
           next: async (res:any) => {
               console.log(res);
-              this.documentList = res.documentos.data;
-              this.totalFilas= res.documentos.total;
-              //this.documentList = res.listaDocs;
-              //this.totalFilas= res.listaDocs.length;
+              // this.documentList = res.documentos.data;
+              // this.totalFilas= res.documentos.total;
+              this.documentList = res.listaDocs;
+              this.totalFilas= res.listaDocs.length;
               await this.spinner.hide();
           },
           error: async (error:any) => {
-            console.log(error)
+            this.toastrService.error("No se encontraron documentos con el filtro seleccionado")
             await this.spinner.hide();
           }
       });
     } catch (error:any) {
       await this.spinner.hide();
-
+      
       if (error.status.toString() === '404') {
         this.toastrService.warning(error.error.message);
       } else if (['0', '401', '403', '504'].includes(error.status.toString())) {
@@ -202,17 +203,25 @@ export class DocumentosFirmarComponent implements OnInit {
   ];
 
   opcionesOrigen:any[]=[
-    {value:0,origen:"Gestión Normativa"},
-    {value:1,origen:"Portal Proveedores"},
-    {value:2,origen:"Gestor Capital Humano"},
-    {value:3,origen:"Otros"},
+    {value:1,origen:"Gestión Normativa"},
+    {value:2,origen:"Portal Proveedores"},
+    {value:3,origen:"Gestor Capital Humano"},
+    {value:4,origen:"Otros"},
   ]
 
-  private convertDateFormat(inputDate: string): string {
+  private convertDateForDB(inputDate: string): string {
     const dateObject = new Date(inputDate);
     const day = this.addLeadingZero(dateObject.getDate());
     const month = this.addLeadingZero(dateObject.getMonth() + 1);
     const year = dateObject.getFullYear();
+
+    return `${year}-${month}-${day}`;
+  }
+
+  public convertDateForTable(inputDate: string): string {
+    const day = inputDate.slice(8,10)
+    const month = inputDate.slice(5,7)
+    const year = inputDate.slice(0,4)
 
     return `${day}-${month}-${year}`;
   }

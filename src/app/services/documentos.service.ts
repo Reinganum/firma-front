@@ -34,24 +34,11 @@ export class DocumentosService {
 
   obtenerDocumentos(pageOffset:any, pageLimit:any,medio?:any,fecha?:any): Observable<any[]>{
     console.log(pageOffset,pageLimit,medio,fecha)
-    return this.http.get<any>(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/listaDocs?pageOffset=${pageOffset}&pageLimit=${pageLimit}&medio=${1}&fecha=${"00-00-0000"}`);
+    return this.http.get<any>(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/listaDocs?pageOffset=${pageOffset}&pageLimit=${pageLimit}&medio=${medio}&fecha=${fecha}`);
   }
 
   crearDocumento(data:any): Observable<any> {
-    const hardcodedData={
-      archivo:`Cargar/PDFFirmados/${Date.now()}_181154543-firmado.pdf`,
-      archivoFirmado:null,
-      estado:1,
-      firmantes:null,
-      fecha:"20-07-2023",
-      tipoGestion:1,
-      responsable:65,
-      idAc:null,
-      medio:1,
-      fechaFirma:null
-    }
-    
-    const body = JSON.stringify(hardcodedData);
+    const body = JSON.stringify(data);
     const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
     return this.http.post(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/ingresarDocumento`, body, {headers})
   }
