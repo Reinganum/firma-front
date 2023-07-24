@@ -20,7 +20,8 @@ const routes: Routes = [
     CommonModule,
     PdfViewerModule,
     RouterModule.forChild(routes),
-    MatIconModule
+    MatIconModule,
+    MaterialModule
   ],
   exports: [
     VistaDocumentoComponent

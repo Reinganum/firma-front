@@ -45,8 +45,7 @@ export class DocumentosFirmarComponent implements OnInit {
     private router: Router,
     private spinner: NgxSpinnerService,
     private formBuilder: FormBuilder,
-    private correosService: CorreosService
-
+    private correosService: CorreosService,
       ){
         this.filtrosForm = this.formBuilder.group({
           fechaDoc: [null],

@@ -2,3 +2,8 @@
   width: 100% !important;
   height: 621px !important;
 }
+
+
+.example-tooltip-uppercase {
+  text-transform: uppercase;
+}

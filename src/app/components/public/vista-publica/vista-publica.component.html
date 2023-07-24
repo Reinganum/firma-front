@@ -33,8 +33,11 @@
               </div>
             </div>
             <div class="col-sm-4 col-md-4 py-1 d-flex d-row align-items-center flex-wrap">
-              <mat-icon class="px-5" (click)="rotate()"><span>text_rotation_down</span></mat-icon>
-              <mat-icon class="px-5" (click)="descargarArchivo(fileName)">cloud_download</mat-icon>
+              <mat-icon class="px-5"  
+              matTooltip="Rotar"
+              matTooltipClass="example-tooltip-uppercase"
+              (click)="rotate()"><span>text_rotation_down</span></mat-icon>
+              <mat-icon class="px-5"  matTooltip="Descargar" (click)="descargarArchivo(fileName)">cloud_download</mat-icon>
               <!--<mat-icon class="px-5" (click)="generatePDF()">cloud_upload</mat-icon>
                   <mat-icon class="px-5" (click)="pasarPagina()">settings_ethernet</mat-icon>
               -->
