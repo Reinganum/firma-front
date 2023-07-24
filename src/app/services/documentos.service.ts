@@ -32,8 +32,8 @@ export class DocumentosService {
 
   // a la nueva db
 
-  obtenerDocumentos(medio:any, fecha:any, sortDirection:any, sortField:any, pageOffset:any, pageLimit:any): Observable<any[]>{
-    return this.http.get<any>(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/listaDocs?medio=${medio}&fecha=${fecha}&sortField=${sortField}&sortDirection=${sortDirection}&pageLimit=${pageLimit}&pageOffset=${pageOffset}`);
+  obtenerDocumentos(estado:any, medio:any, fecha:any, sortDirection:any, sortField:any, pageOffset:any, pageLimit:any): Observable<any[]>{
+    return this.http.get<any>(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/listaDocs?estado=${estado}&medio=${medio}&fecha=${fecha}&sortField=${sortField}&sortDirection=${sortDirection}&pageLimit=${pageLimit}&pageOffset=${pageOffset}`);
   }
 
   crearDocumento(data:any): Observable<any> {    

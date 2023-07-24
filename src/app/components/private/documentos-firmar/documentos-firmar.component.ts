@@ -52,9 +52,9 @@ export class DocumentosFirmarComponent implements OnInit {
         });
       }
   currentUser:any;
+  estadoDoc!:number;
 
   ngOnInit():void {
-    this.obtenerDocumentos(null, '', this.paginador.pageIndex, this.paginador.pageSize | this.pageSize);
     const rutaActual = window.location.pathname;
     const user=localStorage.getItem("currentUser");
     if(typeof user === "string"){
@@ -64,8 +64,9 @@ export class DocumentosFirmarComponent implements OnInit {
     if (rutaActual?.includes('docsFirmar')) {
       console.log("docsFirmar");
       this.tipoTabla = 'firmar';
-
+      this.estadoDoc = 1;
     } else if (rutaActual?.includes('docsFirmados')) {
+      this.estadoDoc = 2;
       console.log("docsFirmados");
       this.tipoTabla = 'firmados';
       this.documentData=[
@@ -76,7 +77,8 @@ export class DocumentosFirmarComponent implements OnInit {
         {icon:"../assets/img/opcion_tabla.svg",nombre:"Opciones"}
       ]
     }
-
+    this.obtenerDocumentos(null, '', this.paginador.pageIndex, this.paginador.pageSize | this.pageSize);
+    
     this.filtrosForm = this.formBuilder.group({
       fechaDoc: [null],
       origen: [null],
@@ -137,10 +139,11 @@ export class DocumentosFirmarComponent implements OnInit {
   tag:boolean=false;
   async obtenerDocumentos(sortField: any, sortDirection: any, pageLimit: any, pageOffset: any) {
     try {
-      console.log(sortDirection);
+      console.log(this.estadoDoc);
       
       await this.spinner.show();
       this.documentosService.obtenerDocumentos(
+        this.estadoDoc,
         this.filtrosForm.value.origen,
         this.filtrosForm.value.fechaDoc,
         sortField, 

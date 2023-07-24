@@ -43,7 +43,7 @@
                                             <div class="d-flex flex-wrap form-group mx-1">
                                                 <mat-form-field>
                                                     <mat-label>Fecha de recepción</mat-label>
-                                                    <input matInput [matDatepicker]="pickerFSolicitud" class="form-control inputs-filter" formControlName="fechaDoc">
+                                                    <input matInput [matDatepicker]="pickerFSolicitud" formControlName="fechaDoc">
                                                     <mat-datepicker-toggle matSuffix [for]="pickerFSolicitud"></mat-datepicker-toggle>
                                                     <mat-datepicker #pickerFSolicitud></mat-datepicker>
                                                 </mat-form-field>
@@ -55,7 +55,8 @@
                                                 </div>
                                                 <div class="d-flex mx-1 flex-wrap form-group inputs-filter">
                                                     <mat-form-field>
-                                                        <mat-select placeholder="Origen documento" formControlName="origen">
+                                                        <mat-label>Origen</mat-label>
+                                                        <mat-select formControlName="origen">
                                                             <mat-option *ngFor="let o of opcionesOrigen" [value]="o.value">{{o.origen}}</mat-option>
                                                         </mat-select>
                                                     </mat-form-field>
