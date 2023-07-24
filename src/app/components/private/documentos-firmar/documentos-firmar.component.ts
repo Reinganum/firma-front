@@ -111,7 +111,7 @@ export class DocumentosFirmarComponent implements OnInit {
   filtrar() {
     this.paginador.firstPage();
     this.paginador.pageSize = this.pageSize;
-    const formattedDate=this.convertDateFormat(this.filtrosForm.value.fechaDoc)
+    const formattedDate=this.convertDateForDB(this.filtrosForm.value.fechaDoc)
     console.log(formattedDate)
     console.log(this.filtrosForm.value)
     this.obtenerDocumentos(null, '', this.paginador.pageIndex, this.paginador.pageSize | this.pageSize);
@@ -163,7 +163,7 @@ export class DocumentosFirmarComponent implements OnInit {
       });
     } catch (error:any) {
       await this.spinner.hide();
-
+      
       if (error.status.toString() === '404') {
         this.toastrService.warning(error.error.message);
       } else if (['0', '401', '403', '504'].includes(error.status.toString())) {
@@ -220,11 +220,19 @@ export class DocumentosFirmarComponent implements OnInit {
     {value:2,origen:"Gestor Capital Humano"}
   ]
 
-  private convertDateFormat(inputDate: string): string {
+  private convertDateForDB(inputDate: string): string {
     const dateObject = new Date(inputDate);
     const day = this.addLeadingZero(dateObject.getDate());
     const month = this.addLeadingZero(dateObject.getMonth() + 1);
     const year = dateObject.getFullYear();
+
+    return `${year}-${month}-${day}`;
+  }
+
+  public convertDateForTable(inputDate: string): string {
+    const day = inputDate.slice(8,10)
+    const month = inputDate.slice(5,7)
+    const year = inputDate.slice(0,4)
 
     return `${day}-${month}-${year}`;
   }
