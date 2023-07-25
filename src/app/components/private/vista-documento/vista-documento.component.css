@@ -2,3 +2,7 @@
   width: 100% !important;
   height: 621px !important;
 }
+
+.btn-outline-secondary:hover{
+  color:black!important ;
+}
