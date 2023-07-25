@@ -155,21 +155,30 @@ export class DocumentosFirmarComponent implements OnInit {
   }
 
   tag:boolean=false;
+
   async obtenerDocumentos(sortField: any, sortDirection: any, pageLimit: any, pageOffset: any) {
     try {
       console.log(this.estadoDoc);
-      
       await this.spinner.show();
       this.documentosService.obtenerDocumentos(
-        this.estadoDoc,
-        this.filtrosForm.value.origen,
-        this.filtrosForm.value.fechaDoc,
-        sortField, 
-        sortDirection == '' ? '' : sortDirection,
-        pageLimit,
-        pageOffset).subscribe(
+      this.estadoDoc,
+      this.filtrosForm.value.origen,
+      this.filtrosForm.value.fechaDoc,
+      sortField, 
+      sortDirection == '' ? '' : sortDirection,
+      pageLimit,
+      pageOffset).subscribe(
         {
           next: async (res:any) => {
+            console.log(
+              "estado : ", this.estadoDoc,
+              "origen : ", this.filtrosForm.value.origen,
+              "fecha : ",this.filtrosForm.value.fechaDoc,
+              "sort : ", sortField, 
+              "Sdirect : ", sortDirection == '' ? '' : sortDirection,
+              "Limit : ", pageLimit,
+              "Offset : ", pageOffset
+            )
               console.log(res);
               this.documentList = res.listaDocs.data;
               this.totalFilas= res.listaDocs.total;

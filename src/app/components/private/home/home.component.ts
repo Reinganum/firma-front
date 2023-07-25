@@ -15,8 +15,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 
 export class HomeComponent implements OnInit {
 
-  documentList!:any
-  totalFilas!:any
+  totalDocs!:number
 
   constructor(
     private documentosService: DocumentosService,
@@ -25,55 +24,35 @@ export class HomeComponent implements OnInit {
     private spinner: NgxSpinnerService,) {}
 
   async ngOnInit(){
-    //this.obtenerDocumentos({})
+    this.obtenerDocumentos()
   }
   async obtenerDocumentos() {
     try {
       await this.spinner.show();
-      const data = {
-        documento: {
-          archivo:`Cargas/PDFFirmados/${Date.now()}_181154543-firmado.pdf`,
-          archivoFirmado:null,
-          estado:2,
-          firmantes:null,
-          fecha:"2023-07-24",
-          tipoGestion:1,
-          responsable:63,
-          idAc:null,
-          medio:1,
-          fechaFirma:null
-        }
-      }
-        
-      this.documentosService.crearDocumento(data).subscribe(
+      this.documentosService.obtenerDocumentos(1,null,null,'','',0,5).subscribe(
         {
           next: async (res:any) => {
               console.log(res);
+              this.totalDocs=res.listaDocs.total
               await this.spinner.hide();
           },
           error: async (error:any) => {
+            console.log(error)
             await this.spinner.hide();
-
-            if (error.status.toString() === '404') {
-              this.toastrService.warning(error.error.message);
-            } else if (['0', '401', '403', '504'].includes(error.status.toString())) {
-              this.toastrService.error("Error de conexión.");
-            } else {
-              this.toastrService.error("Ha ocurrido un error.");
-            }
           }
       });
     } catch (error:any) {
       await this.spinner.hide();
-
+      console.log(error)
       if (error.status.toString() === '404') {
         this.toastrService.warning(error.error.message);
       } else if (['0', '401', '403', '504'].includes(error.status.toString())) {
 
       } else {
-        this.toastrService.error("No se pudo crear documento");
+        this.toastrService.error("Ha ocurrido un error");
       }
       console.log(error);
     }
   }
+  
 }
