@@ -21,6 +21,10 @@
         </div>
         <div class="shadow-bottom"></div>
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+            <li class=" nav-item"><a class="d-flex align-items-center" [routerLink]="['home']">
+                <i [data-feather]="'home'"></i><span class="menu-title text-truncate"
+                    data-i18n="Home">Inicio</span></a>
+            </li> 
             <li  class=" nav-item"><a class="d-flex align-items-center" [routerLink]="['docsFirmar']">
               <i [data-feather]="'file'"></i><span class="menu-title text-truncate"
                   data-i18n="file">Documentos por Firmar</span></a>
