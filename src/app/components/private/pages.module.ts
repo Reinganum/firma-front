@@ -174,7 +174,8 @@ const routes: Routes = [
   ],
   exports: [
     PagesComponent,
-    MenuModule
+    MenuModule,
+    HeaderComponent,
   ]
 })
 

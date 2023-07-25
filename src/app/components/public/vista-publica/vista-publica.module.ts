@@ -8,6 +8,9 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { JwtModule } from "@auth0/angular-jwt";
 
 import { VistaPublicaComponent } from "./vista-publica.component";
+import { HeaderModule } from "../../layout/header/header.module";
+import { HeaderComponent } from "../../layout/header/header.component";
+import { FooterModule } from "../../layout/footer/footer.module";
 
 
 const routes: Routes = [
@@ -24,7 +27,9 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     MatIconModule,
     MaterialModule,
-    JwtModule
+    JwtModule,
+    HeaderModule,
+    FooterModule
   ],
   exports: [
     VistaPublicaComponent

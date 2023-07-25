@@ -1,5 +1,10 @@
 .bg-azul {
     background-color: #0B58A4 !important;
+    margin-bottom: 0!important;
+    padding-bottom: 0!important;
+    margin-top: 15vh;
+    position: fixed;
+    bottom: 0;
   }
 .link-footer{
     color: white;

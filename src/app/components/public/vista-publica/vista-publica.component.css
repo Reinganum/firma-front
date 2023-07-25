@@ -7,3 +7,7 @@
 .example-tooltip-uppercase {
   text-transform: uppercase;
 }
+
+.mat-header-cell {
+  background: red !important;
+}

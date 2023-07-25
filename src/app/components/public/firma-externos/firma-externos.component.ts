@@ -11,31 +11,21 @@ import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { CanvasElement } from 'pdfmake/interfaces';
 import { AuthenticationService } from '../../auth/service/authentication.service';
-import { JwtHelperService, JWT_OPTIONS  } from '@auth0/angular-jwt';
+import { Location } from '@angular/common';
+import { Firmante } from '../../private/types';
+
 
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
-interface Firmante {
-  estado:string,
-  rut:string,
-  nombre:string
-}
-
-
 @Component({
-  selector: 'app-vista-publica',
-  templateUrl: './vista-publica.component.html',
-  styleUrls: ['./vista-publica.component.css'],
-  providers: [
-    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
-    JwtHelperService
-]
+  selector: 'app-firma-externos',
+  templateUrl: './firma-externos.component.html',
+  styleUrls: ['./firma-externos.component.css'],
 })
 
-export class VistaPublicaComponent implements OnInit {
+export class FirmaExternosComponent implements OnInit {
   archivoFirmar:string = '';
   idDoc!:number;
-  token!:string;
   modalRef!: NgbModalRef;
   zoom:number=1
   rotation:number=0
@@ -45,8 +35,26 @@ export class VistaPublicaComponent implements OnInit {
   currentUser:any=""
   page!:any
   pdfMake = pdfFonts.pdfMake.vfs;
-  userName!:string
-  
+  firmantes:Firmante[]=[
+    {
+    nombre: "Juan Pérez",
+    rut: "17.114.423-4",
+    telefono:9328487334,
+    email:"cormoran@hotmail.com"
+  },{
+    nombre: "Joan Baez",
+    rut: "19.112.432-7",
+    telefono:9932928429,
+    email:"galindo@hotmail.com"
+  },
+  {
+    nombre: "Joan Baez",
+    rut: "19.112.432-7",
+    telefono:9932928429,
+    email:"galindo@hotmail.com"
+  }
+]
+
   constructor(
     private comunesServices: ComunesService,
     private route: ActivatedRoute,
@@ -56,31 +64,23 @@ export class VistaPublicaComponent implements OnInit {
     private router: Router,
     private modalService: NgbModal,
     private authenticationService:AuthenticationService,
-    private jwt:JwtHelperService
+    private location: Location
   ) {
     
   }
 
-
   ngOnInit(): void {
     this.currentUser = this.authenticationService.currentUserValue;
     this.route.params.subscribe((params:any) => {
-      this.token=params["token"] || null;
+      console.log(params);
+      console.log(params["id"]);
       this.idDoc = params["id"];
-      localStorage.setItem('tokenUrl', JSON.stringify(this.token));
-      console.log(this.jwt.decodeToken(this.token))
-      try{
-           /*
-          const headers = new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${this.token}`
-          });
-          */ 
-          this.obtenerPath(this.idDoc);
-      } catch (error){
-        console.log(error)
-      }
+      this.obtenerPath(this.idDoc);
     })
+  }
+
+  volver() {
+    this.location.back();
   }
 
   rotate():void{
@@ -101,6 +101,7 @@ export class VistaPublicaComponent implements OnInit {
         console.log(res);
         if (!res.documento) {
           await this.spinner.hide();
+          this.router.navigate(["consulta-documento"]);
           this.toaster.warning("No se encontró el documento.");
           return ;
         }
@@ -110,6 +111,7 @@ export class VistaPublicaComponent implements OnInit {
       error: async (error:any) => {
         await this.spinner.hide();
         console.error(error);
+
       }
     });
   }
@@ -120,11 +122,17 @@ export class VistaPublicaComponent implements OnInit {
       key: archivo,
       metodo: 'get'
     }
-    const resultado:any = await this.comunesServices.getSignedUrl(fileData).toPromise();
-    console.log(resultado);
-    this.archivoFirmar = resultado.message;
-    this.toaster.success("Documento cargado correctamente!");
-    await this.spinner.hide();
+    let resultado:any;
+    try {
+      resultado = await this.comunesServices.getSignedUrl(fileData).toPromise();
+      console.log(resultado);
+      this.archivoFirmar = resultado.message;
+      this.toaster.success("Documento cargado correctamente!");
+      await this.spinner.hide();
+    } catch (error:any) {
+      console.log(error);      
+      await this.spinner.hide();
+    }
   }
 
   async descargarArchivo(archivo:any){
@@ -147,40 +155,46 @@ export class VistaPublicaComponent implements OnInit {
     this.totalPages=pdf._pdfInfo.numPages
     console.log(pdf._pdfInfo.numPages)
  }
+ generatePDF() {  
+  let docDefinition = {  
+    header: {
+      text:'Firmantes del Documento',
+      fontsize:18,
+      bold:true,
+    }, 
+    content: [   
+      {  
+          columns: [  
+              [
+                {text:""},
+              ],
+          ],
+      },
+      {
+          table: {headerRows: 1,  
+          widths: ['*', 'auto', 'auto', 'auto','auto'],  
+          body: [  
+              ['RUT', 'Nombre', 'Teléfono', 'E-mail','Fecha'],    
+              ...this.firmantes.map(p=>([p.rut,p.nombre,p.telefono,p.email, Date.now()]))
+          ]  
+        }
+      },
+      {
+        columns:[
+          [
+          {
+            
+            qr:this.firmantes[0].nombre}
+          ]
+        ]
+      }
+    ],  
+  };  
+  pdfMake.createPdf(docDefinition).open();  
+}  
+
   pasarPagina():void{
     this.currentPage < this.totalPages ? this.currentPage+=1 : this.currentPage=1
   }
-  columns = [
-    {
-      columnDef: 'Estado',
-      header: 'Estado',
-      cell: (element: Firmante) => `${element.estado}`,
-    },
-    {
-      columnDef: 'RUT',
-      header: 'RUT',
-      cell: (element: Firmante) => `${element.rut}`,
-    },
-    {
-      columnDef: 'Nombre',
-      header: 'Nombre',
-      cell: (element: Firmante) => `${element.nombre}`,
-    },
-  ];
-  FIRMANTES_DATA: Firmante[] = [
-    {estado: "Firmado", rut: '19.154.322-4', nombre:"Carlos Valdivieso"},
-    {estado: "Firmado", rut: '19.154.322-4', nombre:"Alonso Pizarro"},
-    {estado: "Firmado", rut: '19.154.322-4', nombre:"Fernando Aravena"},
-    {estado: "Firmado", rut: '19.154.322-4', nombre:"Patricio Durán"},
-    {estado: "Firmado", rut: '19.154.322-4', nombre:"Carlos Valdivieso"},
-    {estado: "Firmado", rut: '19.154.322-4', nombre:"Alonso Pizarro"},
-    {estado: "Firmado", rut: '19.154.322-4', nombre:"Fernando Aravena"},
-    {estado: "Firmado", rut: '19.154.322-4', nombre:"Patricio Durán"},
-    {estado: "Firmado", rut: '19.154.322-4', nombre:"Alonso Pizarro"},
-    {estado: "Firmado", rut: '19.154.322-4', nombre:"Fernando Aravena"},
-    {estado: "Firmado", rut: '19.154.322-4', nombre:"Patricio Durán"},
-  ];
-  dataSource = this.FIRMANTES_DATA;
-  displayedColumns = this.columns.map(c => c.columnDef);
 }
 

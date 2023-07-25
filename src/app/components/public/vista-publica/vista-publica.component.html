@@ -1,68 +1,119 @@
-<div class="container rounded mt-5">
-  <div class="row">
-    <div class="d-flex justify-content-center">
-      <div *ngIf="!currentUser"class="col-12-sm col-md-10">
-        <h4>¡Te damos la bienvenida!</h4>
-        <h1 class="fw-bold">{{"Juan Pérez"}}</h1>
-        <hr>
-      </div>
-    </div>
-  </div>
+<app-header></app-header>
+<div class="container rounded mt-5 flex-grow-1">
   <section>
     <div class="row">
-      <div class="d-flex flex-row justify-content-center align-items-center">
-        <div class="col-12-sm col-md-10">
-          <div class="d-flex flex-row justify-content-center align-items-center">
-            <div class="col-sm-4 col-md-4">
-              <div>
-                <div class="d-flex justify-content-evenly flex-row py-1 flex-wrap align-items-center">
-                  <div class="d-flex flex-row w-50" style="word-break: break-all !important;">
-                    <p class="fw-bold">{{fileName}}</p>
-                  </div>
-                  <div class="w-20">
-                    <p class="fw-bold"><span class="mx-2">{{currentPage}}</span>/<span class="p-2 mx-1" style="background-color: #0B58A4 !important; color: white;">{{totalPages}}</span></p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-4 col-md-2" style="border-inline:solid 1px grey">
-              <div class="d-flex flex-row justify-content-center flex-wrap align-items-center">
-                <mat-icon (click)="zoomOut()">remove</mat-icon>
-                <button class="mx-2 btn btn-main" style="background-color: #0B58A4 !important; color: white; border-radius: 0;">{{ (zoom * 100) | number: '1.0-0' }}%</button>
-                <mat-icon (click)="zoomIn()">add</mat-icon>
-              </div>
-            </div>
-            <div class="col-sm-4 col-md-4 py-1 d-flex d-row align-items-center flex-wrap">
-              <mat-icon class="px-5"  
-              matTooltip="Rotar"
-              matTooltipClass="example-tooltip-uppercase"
-              (click)="rotate()"><span>text_rotation_down</span></mat-icon>
-              <mat-icon class="px-5"  matTooltip="Descargar" (click)="descargarArchivo(fileName)">cloud_download</mat-icon>
-              <!--<mat-icon class="px-5" (click)="generatePDF()">cloud_upload</mat-icon>
-                  <mat-icon class="px-5" (click)="pasarPagina()">settings_ethernet</mat-icon>
-              -->
-            </div>
-          </div>
+      <div class="d-flex">
+        <div *ngIf="currentUser; else desconocido"class="col-12">
+          <h4>¡Te damos la bienvenida!</h4>
+          <h1 class="fw-bold">{{"Juan Pérez"}}</h1>
+          <hr>
         </div>
-     </div>
+      </div>
     </div>
+    <ng-template #desconocido>
+      <div>
+        <h1 class="fw-bold">Bienvenido al portal Firma electrónica OTIC SOFOFA</h1>
+        <p>Para consultar los documentos firmados electrónicamente</p>
+      </div>
+    </ng-template>
   </section>
   <div class="row mt-5">
     <div class="d-flex justify-content-center">
-      <div class="col-10">
-          <div style="background-color: #dedfe2;">
-            <pdf-viewer (click)="pasarPagina()" (after-load-complete)="callBackFn($event)" class="iframeFac" [(page)]="currentPage"  [rotation]="rotation" [src]="archivoFirmar" [show-all]="false" [zoom]="zoom" [original-size]="true"></pdf-viewer>
+      <div class="col-12">
+        <div class="row">
+          <div class="col-sm-12 col-lg-6">
+            <div class="d-flex flex-row">
+              <div>
+                <img src="../../../../assets/img/archivo_tabla.svg">
+              </div>
+              <div class="fw-bold">
+                <h1>Documento: {{"DJ 22602329"}}</h1>
+              </div>
+            </div>
+            <section>
+              <div class="row" style="background-color: #e4ebf5;">
+                <div class="d-flex flex-row justify-content-center align-items-center">
+                  <div class="col-12-sm col-md-10">
+                    <div class="d-flex flex-row justify-content-center align-items-center">
+                      <div class="col-sm-4 col-md-4">
+                        <div>
+                          <div class="d-flex justify-content-evenly flex-row py-1 flex-wrap align-items-center">
+                            <div class="d-flex flex-row w-50" style="word-break: break-all !important;">
+                              <p class="fw-bold">{{fileName}}</p>
+                            </div>
+                            <div class="w-20">
+                              <p class="fw-bold"><span class="mx-2">{{currentPage}}</span>/<span class="p-2 mx-1" style="background-color: #0B58A4 !important; color: white;">{{totalPages}}</span></p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-4 col-md-2" style="border-inline:solid 1px grey">
+                        <div class="d-flex flex-row justify-content-center flex-wrap align-items-center">
+                          <mat-icon (click)="zoomOut()">remove</mat-icon>
+                          <button class="mx-2 btn btn-main" style="background-color: #0B58A4 !important; color: white; border-radius: 0;">{{ (zoom * 100) | number: '1.0-0' }}%</button>
+                          <mat-icon (click)="zoomIn()">add</mat-icon>
+                        </div>
+                      </div>
+                      <div class="col-sm-4 col-md-4 py-1 d-flex d-row align-items-center flex-wrap">
+                        <mat-icon class="px-5"  
+                        matTooltip="Rotar"
+                        matTooltipClass="example-tooltip-uppercase"
+                        (click)="rotate()"><span>text_rotation_down</span></mat-icon>
+                        <mat-icon class="px-5"  matTooltip="Descargar" (click)="descargarArchivo(fileName)">cloud_download</mat-icon>
+                        <!--<mat-icon class="px-5" (click)="generatePDF()">cloud_upload</mat-icon>
+                            <mat-icon class="px-5" (click)="pasarPagina()">settings_ethernet</mat-icon>
+                        -->
+                      </div>
+                    </div>
+                  </div>
+               </div>
+              </div>
+            </section>
+            <div style="background-color: #dedfe2;max-height: 50vh;">
+              <pdf-viewer (click)="pasarPagina()" (after-load-complete)="callBackFn($event)" class="iframeFac" [(page)]="currentPage"  [rotation]="rotation" [src]="archivoFirmar" [show-all]="false" [zoom]="zoom" [original-size]="true"></pdf-viewer>
+            </div>
+            <div class="row justify-content-left">
+              <div class="d-flex justify-content-center my-2">
+                  <button class="btn btn-primary btn-main mx-2 py-2" (click)="modalFirmar()" style="background-color: #0B58A4 !important;">
+                      <img class="px-3" src="../../../../assets/img/firma_btn.svg">Firmar</button>
+                  <button class="btn btn-outline-secondary mx-2" style="background-color: transparent !important;" [routerLink]="['/consulta-documento']">
+                      <span class="fw-bold mx-2">X</span>Cancelar
+                  </button>
+                </div>
+            </div>
+          </div>
+            <div class="col-sm-12 col-lg-6">
+              <div >
+                <div class="d-flex flex-row">
+                  <div>
+                    <img src="../../../../assets/img/user-ok.svg">
+                  </div>
+                  <div>
+                    <h1 class="fw-bold">Firmantes</h1>
+                  </div>
+                </div>
+                <div>
+                  <p></p>
+                </div>
+              </div>
+              <section style="max-height: 60vh;overflow-y: scroll;">
+                <table mat-table [dataSource]="dataSource" class="tabla-firmantes">
+                  <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
+                    <th mat-header-cell style="background-color: #e4ebf5 !important;" *matHeaderCellDef>
+                      {{column.header}}
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                      {{column.cell(row)}}
+                    </td>
+                  </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+              </section>
+            </div>
           </div>
         </div>
       </div>
   </div>
-  <div *ngIf="isValidUser" class="row justify-content-left">
-    <div class="d-flex justify-content-center my-2">
-        <button class="btn btn-primary btn-main mx-2 py-2" (click)="modalFirmar()" style="background-color: #0B58A4 !important;">
-            <img class="px-3" src="../../../../assets/img/firma_btn.svg">Firmar</button>
-        <button class="btn btn-outline-secondary mx-2" style="background-color: transparent !important;" [routerLink]="['/consulta-documento']">
-            <span class="fw-bold mx-2">X</span>Cancelar
-        </button>
-    </div>
 </div>
-</div>
+<app-footer></app-footer>
