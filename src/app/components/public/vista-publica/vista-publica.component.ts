@@ -12,20 +12,25 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { CanvasElement } from 'pdfmake/interfaces';
 import { Firmante } from '../../private/types';
 import { AuthenticationService } from '../../auth/service/authentication.service';
-
-
+import { JwtHelperService, JWT_OPTIONS  } from '@auth0/angular-jwt';
 
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
+
 
 @Component({
   selector: 'app-vista-publica',
   templateUrl: './vista-publica.component.html',
   styleUrls: ['./vista-publica.component.css'],
+  providers: [
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    JwtHelperService
+]
 })
 
 export class VistaPublicaComponent implements OnInit {
   archivoFirmar:string = '';
   idDoc!:number;
+  token!:string;
   modalRef!: NgbModalRef;
   zoom:number=1
   rotation:number=0
@@ -35,25 +40,8 @@ export class VistaPublicaComponent implements OnInit {
   currentUser:any=""
   page!:any
   pdfMake = pdfFonts.pdfMake.vfs;
-  firmantes:Firmante[]=[
-    {
-    nombre: "Juan Pérez",
-    rut: "17.114.423-4",
-    telefono:9328487334,
-    email:"cormoran@hotmail.com"
-  },{
-    nombre: "Joan Baez",
-    rut: "19.112.432-7",
-    telefono:9932928429,
-    email:"galindo@hotmail.com"
-  },
-  {
-    nombre: "Joan Baez",
-    rut: "19.112.432-7",
-    telefono:9932928429,
-    email:"galindo@hotmail.com"
-  }
-]
+  userName!:string
+  isValidUser=false
 
   constructor(
     private comunesServices: ComunesService,
@@ -63,7 +51,8 @@ export class VistaPublicaComponent implements OnInit {
     private toaster: ToastrService,
     private router: Router,
     private modalService: NgbModal,
-    private authenticationService:AuthenticationService
+    private authenticationService:AuthenticationService,
+    private jwt:JwtHelperService
   ) {
     
   }
@@ -71,10 +60,26 @@ export class VistaPublicaComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = this.authenticationService.currentUserValue;
     this.route.params.subscribe((params:any) => {
-      console.log(params);
-      console.log(params["id"]);
+      this.token=params["token"] || null;
       this.idDoc = params["id"];
-      this.obtenerPath(this.idDoc);
+      try{
+        console.log(this.jwt.decodeToken(this.token))
+        if (this.jwt.isTokenExpired(this.token)) {
+          console.log("token expired");
+        } else {
+          console.log("token valid");
+          this.isValidUser=true
+          /*
+          const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.token}`
+          });
+          */ 
+          this.obtenerPath(this.idDoc);
+        }
+      } catch (error){
+        console.log(error)
+      }
     })
   }
 
@@ -96,7 +101,6 @@ export class VistaPublicaComponent implements OnInit {
         console.log(res);
         if (!res.documento) {
           await this.spinner.hide();
-          this.router.navigate(["consulta-documento"]);
           this.toaster.warning("No se encontró el documento.");
           return ;
         }
@@ -106,7 +110,6 @@ export class VistaPublicaComponent implements OnInit {
       error: async (error:any) => {
         await this.spinner.hide();
         console.error(error);
-
       }
     });
   }
@@ -144,44 +147,6 @@ export class VistaPublicaComponent implements OnInit {
     this.totalPages=pdf._pdfInfo.numPages
     console.log(pdf._pdfInfo.numPages)
  }
- generatePDF() {  
-  let docDefinition = {  
-    header: {
-      text:'Firmantes del Documento',
-      fontsize:18,
-      bold:true,
-    }, 
-    content: [   
-      {  
-          columns: [  
-              [
-                {text:""},
-              ],
-          ],
-      },
-      {
-          table: {headerRows: 1,  
-          widths: ['*', 'auto', 'auto', 'auto','auto'],  
-          body: [  
-              ['RUT', 'Nombre', 'Teléfono', 'E-mail','Fecha'],    
-              ...this.firmantes.map(p=>([p.rut,p.nombre,p.telefono,p.email, Date.now()]))
-          ]  
-        }
-      },
-      {
-        columns:[
-          [
-          {
-            
-            qr:this.firmantes[0].nombre}
-          ]
-        ]
-      }
-    ],  
-  };  
-  pdfMake.createPdf(docDefinition).open();  
-}  
-
   pasarPagina():void{
     this.currentPage < this.totalPages ? this.currentPage+=1 : this.currentPage=1
   }

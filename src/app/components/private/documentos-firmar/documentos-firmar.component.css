@@ -95,6 +95,9 @@ thead{
    border-radius:12px;
   }
 
+
+
+
 @media only screen and (min-width: 600px) {
   #table-container{
    overflow-x: scroll hidden;
