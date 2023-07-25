@@ -214,8 +214,9 @@ export class DocumentosFirmarComponent implements OnInit {
     this.router.navigate([`private/vista/${documento.id}`]);
   }
 
-  showModal(){
+  showModal(documento:any){
     this.modalRef=this.modalService.open(ConfirmacionFirmaDocumentoComponent,{backdrop:'static',size:'md'});
+    this.modalRef.componentInstance.documento = documento;
     this.modalRef.result.then((res)=>{
       if(res.estado){
         this.modalRef.close();

@@ -35,25 +35,7 @@ export class FirmaExternosComponent implements OnInit {
   currentUser:any=""
   page!:any
   pdfMake = pdfFonts.pdfMake.vfs;
-  firmantes:Firmante[]=[
-    {
-    nombre: "Juan Pérez",
-    rut: "17.114.423-4",
-    telefono:9328487334,
-    email:"cormoran@hotmail.com"
-  },{
-    nombre: "Joan Baez",
-    rut: "19.112.432-7",
-    telefono:9932928429,
-    email:"galindo@hotmail.com"
-  },
-  {
-    nombre: "Joan Baez",
-    rut: "19.112.432-7",
-    telefono:9932928429,
-    email:"galindo@hotmail.com"
-  }
-]
+  token!:any;
 
   constructor(
     private comunesServices: ComunesService,
@@ -72,10 +54,21 @@ export class FirmaExternosComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = this.authenticationService.currentUserValue;
     this.route.params.subscribe((params:any) => {
-      console.log(params);
-      console.log(params["id"]);
+      this.token=params["token"] || null;
       this.idDoc = params["id"];
-      this.obtenerPath(this.idDoc);
+      console.log(this.token)
+      localStorage.setItem('tokenUrl', JSON.stringify(this.token));
+      try{
+           /*
+          const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.token}`
+          });
+          */ 
+          this.obtenerPath(this.idDoc);
+      } catch (error){
+        console.log(error)
+      }
     })
   }
 
@@ -155,44 +148,6 @@ export class FirmaExternosComponent implements OnInit {
     this.totalPages=pdf._pdfInfo.numPages
     console.log(pdf._pdfInfo.numPages)
  }
- generatePDF() {  
-  let docDefinition = {  
-    header: {
-      text:'Firmantes del Documento',
-      fontsize:18,
-      bold:true,
-    }, 
-    content: [   
-      {  
-          columns: [  
-              [
-                {text:""},
-              ],
-          ],
-      },
-      {
-          table: {headerRows: 1,  
-          widths: ['*', 'auto', 'auto', 'auto','auto'],  
-          body: [  
-              ['RUT', 'Nombre', 'Teléfono', 'E-mail','Fecha'],    
-              ...this.firmantes.map(p=>([p.rut,p.nombre,p.telefono,p.email, Date.now()]))
-          ]  
-        }
-      },
-      {
-        columns:[
-          [
-          {
-            
-            qr:this.firmantes[0].nombre}
-          ]
-        ]
-      }
-    ],  
-  };  
-  pdfMake.createPdf(docDefinition).open();  
-}  
-
   pasarPagina():void{
     this.currentPage < this.totalPages ? this.currentPage+=1 : this.currentPage=1
   }

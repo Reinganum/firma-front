@@ -9,7 +9,7 @@ import { FirmaExternosComponent } from "./firma-externos.component";
 import { MatIconModule } from "@angular/material/icon";
 
 const routes: Routes = [
-  { path: '', outlet: 'pages', component: FirmaExternosComponent }
+  { path: '', component: FirmaExternosComponent }
 ];
 
 @NgModule({
@@ -28,4 +28,4 @@ const routes: Routes = [
   ]
 })
 
-export class VistaDocumentoModule {}
+export class FirmaExternosModule {}

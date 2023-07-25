@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { User } from '../../private/types';
 import { AuthenticationService } from '../../auth/service/authentication.service';
@@ -7,6 +7,9 @@ import { ToastrService } from 'ngx-toastr';
 import { DocumentosService } from 'src/app/services/documentos.service';
 import { ComunesService } from 'src/app/services/comunes.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { CorreosService } from 'src/app/services/correos.service';
+
+
 @Component({
   selector: 'app-confirmacion-firma-documento',
   templateUrl: './confirmacion-firma-documento.component.html',
@@ -21,16 +24,16 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit{
     private toastr: ToastrService,
     private documentosService: DocumentosService,
     private comunesServices: ComunesService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private correosService:CorreosService
     ) {}
 
   userInfo:any={}
-
+  @Input() documento:any;
   userKnown:boolean=true;
 
   ngOnInit(): void {
     this.userInfo = this.authenticationService.currentUserValue;
-
   }
 
   async confirmar(){
@@ -41,6 +44,7 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit{
     //   this.router.navigate(['/consulta-documento']);
     // }
     await this.spinner.show();
+    // this.notificarFirma() NOTIFICACION FUNCIONANDO
     this.documentosService.crearPdfFirma({rut:"23323"}).subscribe({
       next: async (res) => {
         console.log(res);
@@ -59,5 +63,22 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit{
       }
     });
     this.activeModal.close({ estado: true});
+  }
+
+  notificarFirma(){
+    const datos = {
+      email: this.userInfo.email,
+      asunto: 'Nuevo documento firmado',
+      seguimiento: `N° Doc: ${this.documento.id}`
+    }
+    this.correosService.notificarDocFirmado(datos).subscribe({
+      next: (res:any) => {
+        console.log(res);        
+      },
+      error: (error:any) => {
+        console.log(error);
+      }
+    });
+    this.activeModal.close({estado:true});
   }
 }
