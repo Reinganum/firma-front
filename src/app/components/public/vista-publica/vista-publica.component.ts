@@ -21,7 +21,6 @@ interface Firmante {
   nombre:string
 }
 
-
 @Component({
   selector: 'app-vista-publica',
   templateUrl: './vista-publica.component.html',
@@ -60,22 +59,10 @@ export class VistaPublicaComponent implements OnInit {
   ) {
     
   }
-
-
   ngOnInit(): void {
-    this.currentUser = this.authenticationService.currentUserValue;
     this.route.params.subscribe((params:any) => {
-      this.token=params["token"] || null;
       this.idDoc = params["id"];
-      localStorage.setItem('tokenUrl', JSON.stringify(this.token));
-      console.log(this.jwt.decodeToken(this.token))
       try{
-           /*
-          const headers = new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${this.token}`
-          });
-          */ 
           this.obtenerPath(this.idDoc);
       } catch (error){
         console.log(error)
@@ -104,8 +91,8 @@ export class VistaPublicaComponent implements OnInit {
           this.toaster.warning("No se encontró el documento.");
           return ;
         }
-        this.obtenerPathS3(res.documento.nombreArchivo)
-        this.fileName=res.documento.nombreArchivo
+        this.obtenerPathS3(res.documento.archivo)
+        this.fileName=res.documento.archivo
       },
       error: async (error:any) => {
         await this.spinner.hide();

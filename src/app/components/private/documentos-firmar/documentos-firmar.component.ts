@@ -163,7 +163,7 @@ export class DocumentosFirmarComponent implements OnInit {
       this.documentosService.obtenerDocumentos(
       this.estadoDoc,
       this.filtrosForm.value.origen,
-      this.filtrosForm.value.fechaDoc,
+      this.convertDateForDB(this.filtrosForm.value.fechaDoc),
       sortField, 
       sortDirection == '' ? '' : sortDirection,
       pageLimit,
@@ -272,9 +272,8 @@ export class DocumentosFirmarComponent implements OnInit {
       const day = this.addLeadingZero(dateObject.getDate());
       const month = this.addLeadingZero(dateObject.getMonth() + 1);
       const year = dateObject.getFullYear();
-  
-      return `${year}-${month}-${day}`;
 
+      return `${year}-${month}-${day}`;
     }
     return '';
   }
