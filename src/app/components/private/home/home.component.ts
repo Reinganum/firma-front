@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
       await this.spinner.show();
       const data = {
         documento: {
-          archivo:`Cargar/PDFFirmados/${Date.now()}_181154543-firmado.pdf`,
+          archivo:`Cargas/PDFFirmados/${Date.now()}_181154543-firmado.pdf`,
           archivoFirmado:null,
           estado:2,
           firmantes:null,
