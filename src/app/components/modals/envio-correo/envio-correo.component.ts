@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CorreosService } from 'src/app/services/correos.service';
+import { AuthenticationService } from '../../auth/service/authentication.service';
+
 
 @Component({
   selector: 'app-envio-correo',
@@ -10,26 +12,33 @@ import { CorreosService } from 'src/app/services/correos.service';
 })
 export class EnvioCorreoComponent implements OnInit {
   userKnown:boolean=true;
-  userInfo:any={}
+  currentUser:any={}
   formEnvioCorreo!: FormGroup;
   @Input() documento:any;
-  correos = [{value: 1, correo: 'ni.catalmir@gmail.com'},
-    {value: 2, correo: 'ncatalan@nexia.cl'},
-    {value: 3, correo: 'ni.catalmir@gmail.com'}]
+  correos:any;
   
-
+/*
+  [
+    {value: 1, correo: 'ni.catalmir@gmail.com'},
+    {value: 2, correo: 'ncatalan@nexia.cl'},
+    {value: 3, correo: 'ni.catalmir@gmail.com'},
+  ]
+*/
+  
   constructor(
     public activeModal: NgbActiveModal,
     private correosService: CorreosService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private authenticationService:AuthenticationService
   ) {}
 
   ngOnInit(): void {
+    this.currentUser = this.authenticationService.currentUserValue;
+    this.correos=[{value:1, correo: this.currentUser.email}]
     this.formEnvioCorreo = this.formBuilder.group({
       correos: [null]
     });
     console.log(this.documento);
-    
   }
 
   confirmar() {

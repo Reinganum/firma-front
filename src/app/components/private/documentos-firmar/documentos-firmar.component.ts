@@ -58,7 +58,7 @@ export class DocumentosFirmarComponent implements OnInit {
   currentUser:any;
   estadoDoc!:number;
   selection = new SelectionModel<any>(true, []);
-
+  
   ngOnInit():void {
     const rutaActual = window.location.pathname;
     const user=localStorage.getItem("currentUser");
@@ -97,7 +97,6 @@ export class DocumentosFirmarComponent implements OnInit {
     this.paginador._intl.nextPageLabel="Página Siguiente";
     this.paginador._intl.previousPageLabel="Página Anterior";
     this.paginador._intl.getRangeLabel=dutchRangeLabel;
-    console.log(this.paginador.pageSize)
 
     this.sort.sortChange.subscribe(async () => {
       this.paginador.firstPage();
@@ -126,14 +125,13 @@ export class DocumentosFirmarComponent implements OnInit {
   }
 
   masterToggle() {
-
     if (this.isAllSelected()) {
+      console.log(this.selection)
       this.selection.clear() 
     } else {
       this.documentList.forEach((row:any) => this.selection.select(row));
     }      
   }
-
   isAllSelected() {        
     const numSelected = this.selection.selected.length;
     const numRows = this.documentList.length;
@@ -143,17 +141,7 @@ export class DocumentosFirmarComponent implements OnInit {
   exportar() {
 
   }
-
-  onCheckChange($event:any){
-    if($event.target.checked){
-      this.documentosFirmar.push(this.documentList[$event.target.value]);
-      console.log(this.documentosFirmar);
-    } else {
-      this.documentosFirmar.splice($event.target.value,1);
-      console.log(this.documentosFirmar);
-    }
-  }
-
+  
   tag:boolean=false;
 
   async obtenerDocumentos(sortField: any, sortDirection: any, pageLimit: any, pageOffset: any) {
@@ -297,10 +285,13 @@ export class DocumentosFirmarComponent implements OnInit {
    documentList:any;
 
    async firmarSeleccionados(){
-    // falta ver lógica de multifirma
-    await this.spinner.show();
-    this.documentosService.crearPdfFirma({rut:"181154543"}).subscribe({
-      next: async (res) => {
+    if(this.selection.selected.length===0){
+      return
+    }
+    this.selection.selected.forEach((doc)=>{
+        this.spinner.show();
+        this.documentosService.crearPdfFirma({...doc,rut:"193452323"}).subscribe({
+         next: async (res) => {
         console.log(res);
         await this.spinner.hide();
       },
@@ -309,6 +300,7 @@ export class DocumentosFirmarComponent implements OnInit {
         await this.spinner.hide();
       }
     });
+    })
    }
 
    extraerIniciales(origen:string){
