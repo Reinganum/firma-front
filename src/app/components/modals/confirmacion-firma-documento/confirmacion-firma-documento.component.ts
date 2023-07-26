@@ -30,10 +30,19 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit{
 
   userInfo:any={}
   @Input() documento:any;
+  @Input() key:any;
   userKnown:boolean=true;
+
+  firmantes: any[] = [
+    {nombre: 'Nicolas', rut: '', correo: 'nicolas@gmail.com', firmo: false},
+    {nombre: 'Nicolas22', rut: '', correo: 'ncatalan@nexia.cl', firmo: false},
+  ]
 
   ngOnInit(): void {
     this.userInfo = this.authenticationService.currentUserValue;
+    console.log(this.documento);
+    console.log(this.userInfo);
+    
   }
 
   async confirmar(){
@@ -43,9 +52,17 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit{
     // } else {
     //   this.router.navigate(['/consulta-documento']);
     // }
+    this.firmantes.map((firmante:any) => {
+      if (firmante.correo == this.userInfo.email) {
+        firmante.firmo = true;
+      }
+    })
     await this.spinner.show();
     // this.notificarFirma() NOTIFICACION FUNCIONANDO
-    this.documentosService.crearPdfFirma({rut:"23323"}).subscribe({
+    this.documentosService.crearPdfFirma({
+          key: this.key,
+          firmantes: this.firmantes
+      }).subscribe({
       next: async (res) => {
         console.log(res);
         const url:any = await this.comunesServices.getSignedUrl({key: res.nombreArchivo, metodo: 'get'}).toPromise();

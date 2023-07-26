@@ -151,6 +151,7 @@ export class VistaDocumentoComponent implements OnInit {
 
   modalFirmar() {
     this.modalRef = this.modalService.open(ConfirmacionFirmaDocumentoComponent, {backdrop: 'static', size: 'lg'});
+    this.modalRef.componentInstance.key = this.fileName;
   }
   callBackFn(pdf: PDFDocumentProxy) {
     this.totalPages=pdf._pdfInfo.numPages
