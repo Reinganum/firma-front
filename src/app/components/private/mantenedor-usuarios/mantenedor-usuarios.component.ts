@@ -26,6 +26,7 @@ export class MantenedorUsuariosComponent implements OnInit {
     {nombre:"RUT"},
     {nombre:"Nombre"},
     {nombre:"Tipo"},
+    {nombre:"Cargo"},
     {nombre:"Correo"},
     {nombre:"Estado"},
     {nombre:"Opciones"},
@@ -62,6 +63,7 @@ export class MantenedorUsuariosComponent implements OnInit {
       next: async (res:any) => {
         console.log(res);
         this.listaUsuarios = res.usuarios;
+        this.totalFilas = res.usuarios.length;
         await this.spinner.hide();
       },
       error: async (error:any) => {

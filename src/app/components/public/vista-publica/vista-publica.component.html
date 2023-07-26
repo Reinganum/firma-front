@@ -33,10 +33,10 @@
               </div>
             </div>
             <section style="background-color: #e4ebf5 !important; height: 7vh!important;" class="mt-2">
-              <div class="row">
+              <div class="row mt-2">
                 <div class="col-2 col-md-2">
-                  <div class="d-flex justify-content-evenly flex-row py-1 flex-wrap align-items-center" style="width:100%">
-                    <div class="w-100">
+                  <div class="d-flex flex-row py-1 flex-wrap align-items-center" style="width:100%">
+                    <div class="d-flex justify-content-center w-100">
                       <p class="fw-bold"><span class="mx-2">{{currentPage}}</span>/<span class="p-2 mx-1" style="background-color: #0B58A4 !important; color: white;">{{totalPages}}</span></p>
                     </div>
                   </div>
@@ -49,7 +49,7 @@
                   </div>
                 </div>
                 <div class="col-lg-6 col-md-4 col-2">
-                  <div class="d-flex w-100">
+                  <div class="d-flex justify-content-end me-3">
                     <mat-icon matTooltip="Descargar" (click)="descargarArchivo(fileName)">cloud_download</mat-icon>
                    </div>
                 </div>
