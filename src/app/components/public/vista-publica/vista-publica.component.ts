@@ -164,8 +164,8 @@ export class VistaPublicaComponent implements OnInit {
     {estado: "Firmado", rut: '19.154.322-4', nombre:"Fernando Aravena"},
     {estado: "Firmado", rut: '19.154.322-4', nombre:"Patricio Durán"},
     {estado: "Firmado", rut: '19.154.322-4', nombre:"Alonso Pizarro"},
-    {estado: "Firmado", rut: '19.154.322-4', nombre:"Fernando Aravena"},
-    {estado: "Firmado", rut: '19.154.322-4', nombre:"Patricio Durán"},
+    {estado: "Firma parcial", rut: '19.154.322-4', nombre:"Fernando Aravena"},
+    {estado: "Rechazado", rut: '19.154.322-4', nombre:"Patricio Durán"},
   ];
   dataSource = this.FIRMANTES_DATA;
   displayedColumns = this.columns.map(c => c.columnDef);

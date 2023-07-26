@@ -15,3 +15,18 @@ tr.mat-header-row{
 ::ng-deep .mdc-data-table__header-cell {
   border-bottom: #0B58A4;
 }
+.mat-column-Estado .firmado{
+  color: #4dab61;
+  background-color: rgba(236,248,239,255);
+  border-radius: 12px;
+}
+
+.mat-column-Estado .parcial{
+  color: #e0c453;
+  background-color: rgb(253,249,230);
+}
+
+.mat-column-Estado .rechazado{
+  color: #d9605d;
+  background-color: rgb(251,234,235);
+}
