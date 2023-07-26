@@ -1,0 +1,45 @@
+version: 0.2
+env:
+  parameter-store:
+    LLAVE: $NOMBRESISTEMA-$STAGE-LLAVE
+    SECRET: $NOMBRESISTEMA-$STAGE-SECRETO
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+    commands:
+      - git config --global user.email "contacto@catena.cl"
+      - git config --global user.name "Catena Ingenieria y Servicios"
+      - aws configure --profile current set aws_access_key_id $LLAVE
+      - aws configure --profile current set aws_secret_access_key $SECRET
+      - aws configure --profile current set region us-east-2
+      - aws configure --profile current set output json
+      - aws configure --profile remote set aws_access_key_id $LLAVE
+      - aws configure --profile remote set aws_secret_access_key $SECRET
+      - aws configure --profile remote set region us-east-2
+      - aws configure --profile remote set output json
+      - aws configure --profile remote set role_arn arn:aws:iam::244260412200:role/RolAccesoCuentaCatena
+      - aws configure --profile remote set source_profile current
+      - git config --global credential.helper '!aws codecommit --profile remote credential-helper $@'
+      - git config --global credential.UseHttpPath true
+      - git config -l
+  build:
+    commands:
+      - pwd
+      - cd ..
+      - git clone https://git-codecommit.us-east-2.amazonaws.com/v1/repos/$REPO
+      - ls -la
+      - cd $REPO
+      - git status
+      - git fetch --all
+      - git checkout develop
+      - cd ..
+      - cp -r src/* $REPO
+      - cd $REPO
+      - git add . -A
+      - git commit -m "Configuración de front sofofa sofofa."
+      - git push --set-upstream origin develop
+      - git checkout -b main
+      - ls -la
+      - git merge origin/develop
+      - git push --set-upstream origin main

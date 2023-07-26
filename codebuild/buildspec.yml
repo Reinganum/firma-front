@@ -1,0 +1,20 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+    commands:
+#      - apt-get update
+#      - apt-get install -y openjdk-11-jdk
+      - npm install -g @angular/cli
+      - npm install --force
+#  pre_build:
+#    commands:
+#      - npm run sonar-scanner
+  build:
+    commands:
+      - ng build --aot=true --source-map=false --configuration=$AMBIENTE
+      - aws s3 rm s3://$BUCKET_SITIO --recursive
+      - aws s3 cp --recursive --acl public-read dist/firma-front s3://$BUCKET_SITIO
+      - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION --paths /index.html /assets
