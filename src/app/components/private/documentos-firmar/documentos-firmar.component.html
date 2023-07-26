@@ -82,7 +82,7 @@
                 <table matSort id="table-container" class="table">
                 <thead class="pt-4 text-center">
                 <tr>
-                    <td><mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()"></mat-checkbox></td>
+                    <td><mat-checkbox color="primary" (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()"></mat-checkbox></td>
                     <td  *ngFor="let dataColumn of documentData, let i = index">
                         <span><img class="px-3" [src]=dataColumn.icon>{{dataColumn.nombre}}</span>
                     </td>

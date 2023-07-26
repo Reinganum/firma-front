@@ -11,7 +11,7 @@ import { VistaPublicaComponent } from "./vista-publica.component";
 import { HeaderModule } from "../../layout/header/header.module";
 import { HeaderComponent } from "../../layout/header/header.component";
 import { FooterModule } from "../../layout/footer/footer.module";
-
+import {CoreDirectivesModule} from "../../../directives/directives";
 
 const routes: Routes = [
   { path: '', component: VistaPublicaComponent }
@@ -20,16 +20,17 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     VistaPublicaComponent,
+    
   ],
   imports: [
     CommonModule,
     PdfViewerModule,
     RouterModule.forChild(routes),
-    MatIconModule,
     MaterialModule,
     JwtModule,
     HeaderModule,
-    FooterModule
+    FooterModule,
+    CoreDirectivesModule
   ],
   exports: [
     VistaPublicaComponent

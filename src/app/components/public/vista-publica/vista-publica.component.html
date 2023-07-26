@@ -1,82 +1,79 @@
 <app-header></app-header>
-<div class="container rounded mt-5 flex-grow-1">
-  <section>
-    <div class="row">
-      <div class="d-flex">
-        <div *ngIf="currentUser; else desconocido"class="col-12">
-          <h4>¡Te damos la bienvenida!</h4>
-          <h1 class="fw-bold">{{"Juan Pérez"}}</h1>
-          <hr>
+  <div class="container rounded mt-5 flex-grow-1">
+    <div class="d-flex">
+      <section>
+        <div class="row">
+          <div class="d-flex">
+            <div *ngIf="currentUser; else desconocido"class="col-12">
+              <h4>¡Te damos la bienvenida!</h4>
+              <h1 class="fw-bold">{{"Juan Pérez"}}</h1>
+              <hr>
+            </div>
+          </div>
         </div>
-      </div>
+        <ng-template #desconocido>
+          <div class="">
+            <h1 class="fw-bold">Bienvenido al portal Firma electrónica OTIC SOFOFA</h1>
+            <p style="font-size: 1.1rem!important;">Para consultar los documentos firmados electrónicamente</p>
+          </div>
+        </ng-template>
+      </section>
     </div>
-    <ng-template #desconocido>
-      <div>
-        <h1 class="fw-bold">Bienvenido al portal Firma electrónica OTIC SOFOFA</h1>
-        <p>Para consultar los documentos firmados electrónicamente</p>
-      </div>
-    </ng-template>
-  </section>
   <div class="row mt-5">
     <div class="d-flex justify-content-center">
       <div class="col-12">
-        <div class="row">
-          <div class="col-sm-12 col-lg-6">
-            <div class="d-flex flex-row">
-              <div>
-                <img src="../../../../assets/img/archivo_tabla.svg">
+        <div class="row align">
+          <div class="col-sm-12 col-lg-6 gx-5">
+            <div class="d-flex flex-row align-content-center">
+              <div style="background-color: #e4ebf5 !important;" class="p-2 rounded">
+                <i [data-feather]="'file'" [size]="'30'"></i><span class="menu-title text-truncate"></span>
               </div>
-              <div class="fw-bold">
-                <h1>Documento: {{"DJ 22602329"}}</h1>
+              <div class="ms-4">
+                <h1 class="fw-bold">Documento: {{"DJ 22602329"}}</h1>
               </div>
             </div>
-            <section style="background-color: #e4ebf5 !important;">
+            <section style="background-color: #e4ebf5 !important; height: 7vh!important;" class="mt-2">
               <div class="row">
-                <div class="col-2">
+                <div class="col-2 col-md-2">
                   <div class="d-flex justify-content-evenly flex-row py-1 flex-wrap align-items-center" style="width:100%">
                     <div class="w-100">
                       <p class="fw-bold"><span class="mx-2">{{currentPage}}</span>/<span class="p-2 mx-1" style="background-color: #0B58A4 !important; color: white;">{{totalPages}}</span></p>
                     </div>
                   </div>
                 </div>
-                <div class="col-4">
+                <div class="col-6 col-md-4">
                   <div class="d-flex flex-row justify-content-center flex-wrap align-items-center" style="border-inline:solid 1px grey">
                     <mat-icon (click)="zoomOut()">remove</mat-icon>
                     <button class="mx-2 btn btn-main" style="background-color: #0B58A4 !important; color: white; border-radius: 0;">{{ (zoom * 100) | number: '1.0-0' }}%</button>
                     <mat-icon (click)="zoomIn()">add</mat-icon>
                   </div>
                 </div>
-                <div class="col-6">
-                  <mat-icon class="px-5"  
-                  matTooltip="Rotar"
-                  matTooltipClass="example-tooltip-uppercase"
-                  (click)="rotate()"><span>text_rotation_down</span></mat-icon>
-                  <mat-icon class="px-5"  matTooltip="Descargar" (click)="descargarArchivo(fileName)">cloud_download</mat-icon>
-                  <!--<mat-icon class="px-5" (click)="generatePDF()">cloud_upload</mat-icon>
-                      <mat-icon class="px-5" (click)="pasarPagina()">settings_ethernet</mat-icon>
-                  -->
+                <div class="col-lg-6 col-md-4 col-2">
+                  <div class="d-flex w-100">
+                    <mat-icon matTooltip="Descargar" (click)="descargarArchivo(fileName)">cloud_download</mat-icon>
+                   </div>
                 </div>
               </div>
             </section>
-            <div style="background-color: #dedfe2;max-height: 50vh; overflow-y: scroll;">
+            <div style="background-color: #dedfe2;max-height: 43vh; overflow-y: scroll; margin-bottom: 10vh;">
               <pdf-viewer (click)="pasarPagina()" (after-load-complete)="callBackFn($event)" class="iframeFac" [(page)]="currentPage"  [rotation]="rotation" [src]="archivoFirmar" [show-all]="false" [zoom]="zoom" [original-size]="true"></pdf-viewer>
             </div>
           </div>
             <div class="col-sm-12 col-lg-6">
               <div >
                 <div class="d-flex flex-row">
-                  <div>
-                    <img src="../../../../assets/img/user-ok.svg">
+                  <div style="background-color: #e4ebf5 !important;" class="p-2 rounded">
+                    <i [data-feather]="'user'" [size]="'30'"></i><span class="menu-title text-truncate"></span>
                   </div>
                   <div>
-                    <h1 class="fw-bold">Firmantes</h1>
+                    <h1 class="fw-bold ms-4">Firmantes</h1>
                   </div>
                 </div>
                 <div>
                   <p></p>
                 </div>
               </div>
-              <section class="table-container mat-elevation-z8" tabindex="0" style="max-height: 60vh;overflow-y: scroll;">
+              <section class="table-container mat-elevation-z8 mt-2" tabindex="0" style="max-height: 50vh;overflow-y: scroll; margin-bottom: 15vh!important;">
                 <table mat-table [dataSource]="dataSource" class="tabla-firmantes">
                   <ng-container
                     [matColumnDef]="column.columnDef"
@@ -103,37 +100,4 @@
 </div>
 <app-footer></app-footer>
 
-<div class="row">
-  <div class="d-flex flex-row justify-content-center align-items-center">
-    <div class="col-12-sm col-md-12">
-      <div class="d-flex flex-row justify-content-center align-items-center">
-        <div class="col-sm-4 col-md-4">
-          <div>
-            <div class="d-flex justify-content-evenly flex-row py-1 flex-wrap align-items-center" style="width:100%">
-              <div class="w-20">
-                <p class="fw-bold"><span class="mx-2">{{currentPage}}</span>/<span class="p-2 mx-1" style="background-color: #0B58A4 !important; color: white;">{{totalPages}}</span></p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-4 col-md-4" style="border-inline:solid 1px grey">
-          <div class="d-flex flex-row justify-content-center flex-wrap align-items-center">
-            <mat-icon (click)="zoomOut()">remove</mat-icon>
-            <button class="mx-2 btn btn-main" style="background-color: #0B58A4 !important; color: white; border-radius: 0;">{{ (zoom * 100) | number: '1.0-0' }}%</button>
-            <mat-icon (click)="zoomIn()">add</mat-icon>
-          </div>
-        </div>
-        <div class="col-sm-4 col-md-4 py-1 d-flex d-row align-items-center flex-wrap">
-          <mat-icon class="px-5"  
-          matTooltip="Rotar"
-          matTooltipClass="example-tooltip-uppercase"
-          (click)="rotate()"><span>text_rotation_down</span></mat-icon>
-          <mat-icon class="px-5"  matTooltip="Descargar" (click)="descargarArchivo(fileName)">cloud_download</mat-icon>
-          <!--<mat-icon class="px-5" (click)="generatePDF()">cloud_upload</mat-icon>
-              <mat-icon class="px-5" (click)="pasarPagina()">settings_ethernet</mat-icon>
-          -->
-        </div>
-      </div>
-    </div>
- </div>
-</div>
+              
