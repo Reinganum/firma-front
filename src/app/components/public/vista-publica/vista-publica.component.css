@@ -8,6 +8,10 @@
   text-transform: uppercase;
 }
 
-.mat-header-cell {
-  background: red !important;
+tr.mat-header-row{
+  height: 100px !important;
+}
+
+::ng-deep .mdc-data-table__header-cell {
+  border-bottom: #0B58A4;
 }

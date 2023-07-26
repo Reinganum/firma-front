@@ -14,7 +14,6 @@ import { AuthenticationService } from '../../auth/service/authentication.service
 import { Location } from '@angular/common';
 import { Firmante } from '../../private/types';
 
-
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({

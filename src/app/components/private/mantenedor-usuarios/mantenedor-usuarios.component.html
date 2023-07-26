@@ -1,5 +1,4 @@
 <div class="container my-5 col-lg-12" style="background-color: #fafbfc;">
-  <h1>Datos de la firma</h1>
   <div *ngIf="currentUser" class="row py-4">
     <div class="col-6">
             <span class="fw-bold">
@@ -34,7 +33,7 @@
                    <div class="d-flex justify-content-center">
                      <!-- <a (click)="vistaPrevia(document)"><img class="iconos-options rounded p-1" src="../../../../assets/img/lupa_btn.svg" alt="Vista previa" style="margin-left: 1px !important;"></a> -->
                      <!-- <a (click)="showModal()"><img class="mx-1 iconos-options rounded p-1" src="../../../../assets/img/firma_btn.svg"></a> -->
-                     <mat-icon matTooltip='{{document.estado===0?"Activar":"Desactivar"}}' class="rounded-circle" [ngStyle]="{'background-color': document.estado===1 ? 'red' : (document.estado===0 ? '#0B58A4' : null) }" style="color: white;" (click)="entregarAcceso(document)">{{document.estado===0?"person_add":"person_remove"}}</mat-icon>
+                     <mat-icon matTooltip='{{document.estado!==1?"Activar":"Desactivar"}}' class="rounded-circle" [ngStyle]="{'background-color': document.estado===1 ? 'red' : (document.estado===0 ? '#0B58A4' : null) }" style="color: white;" (click)="entregarAcceso(document)">{{document.estado!==1?"person_add":"person_remove"}}</mat-icon>
                    </div>
                </td>
            </tr>

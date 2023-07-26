@@ -12,3 +12,10 @@
 .img-wd {
   width: 50% !important;
 }
+
+.img-container{
+  margin-bottom: 20%;
+}
+a,p {
+  font-size: 1.1rem !important;
+}

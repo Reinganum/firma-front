@@ -76,7 +76,6 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit{
       error: async (error) => {
         console.log(error);
         await this.spinner.hide();
-
       }
     });
     this.activeModal.close({ estado: true});

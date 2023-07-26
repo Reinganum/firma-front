@@ -1,50 +1,20 @@
-<main class="horizontal-layout horizontal-menu blank-page navbar-floating footer-static">
-  <div class="app-content content ">
-    <div class="content-overlay"></div>
-    <div class="header-navbar-shadow"></div>
-    <div class="content-wrapper">
-      <div class="content-body">
-        <div class="auth-cover">
-          <div class="auth-inner row m-0" style="min-height: 100vh;">
-            <!-- <div class="d-none d-lg-flex col-lg-8 align-items-center p-1" style="background:#1D2345!important;">
-              <div class="w-100 px-5">
-                <div class="row">
-                  <img src="assets/img/login_encuestas.svg" class="img-fluid mx-auto col-11 col-sm-8">
-                </div>
-              </div>
-            </div> -->
-            <!-- /Left Text-->
-            <!-- Login-->
-            <div class="d-flex col-12 align-items-center auth-bg px-1 p-lg-2">
-              <div class="col-12 col-sm-8 col-md-6 col-lg-6 px-xl-1 mx-auto card new-width">
-                <div class="mx-5 my-5">
-                  <div class="row mb-5">
-                    <div class="d-lg-flex">
-                      <img class="img-wd img-fluid" src="assets/img/logo-firma-header.svg" alt="Firmas"
-                        style="margin-top:-5px;margin-bottom:-10px;">
-                      <img class="img-wd img-fluid" src="assets/img/logo-otic-sofofa-main.svg" alt="Logo-otic"
-                        style="margin-top:-5px;margin-bottom:-10px;max-height:4rem;">
-                    </div>
-                  </div>
-                  <div class="row text-center">
-                    <div class="col-12 mt-5">
-                    <!-- <h2 class="fw-bold mb-1 d-block d-lg-none mt-2"><b>Bienvenido</b></h2> -->
-                    <!-- <p class="mb-2" style="margin-top:-10px;">Haz click en el siguiente botón para ingresar con tu perfil:</p> -->
-                    <button (click)="login()" class="btn btn-primary btn-main btn-nuevo w-80 mt-4 py-3" tabindex="4"><img
-                        src="assets/img/icon-google.svg">&nbsp;&nbsp;Ingresar con Google</button>
-                  </div>
-                  <div class="row text-center">
-                    <div class="col-12 mt-5">
-                      <p>¿Tiene cuenta?<a class="ms-1 text-primary">Solicite acceso</a></p>
-                    </div>
-                  </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+  <div class="card card-shadow col-sm-12 col-md-8 col-lg-8" style="border-radius: 12px;">
+    <div class="d-flex flex-column align-items-center p-5">
+      <div class="img-container d-flex flex-row justify-content-between w-80">
+        <div class="d-flex">
+          <img class="img-fluid" src="assets/img/logo-firma-header.svg" alt="Firmas" style="margin-top:-5px;margin-bottom:-10px;">
         </div>
+        <div class="d-flex">
+          <img class="img-fluid" src="assets/img/logo-otic-sofofa-main.svg" alt="Logo-otic" style="margin-top:-5px;margin-bottom:-10px;max-height:4rem;">
+        </div>
+      </div>
+      <button (click)="login()" class="btn btn-primary btn-main btn-nuevo fw-bold w-80 mt-4 py-4" style="font-size: 1.1rem !important;" tabindex="4"><img
+        src="assets/img/icon-google.svg" class="px-2">Ingresar con Google</button>
+      <div style="margin-bottom: 10vh !important; margin-top: 5vh;">
+        <p>¿Tiene cuenta?<a class="ms-1 text-primary" style="color: #0B58A4 !important">Solicite acceso</a></p>
       </div>
     </div>
   </div>
-</main>
+</div>
+

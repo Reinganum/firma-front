@@ -82,7 +82,7 @@
                 <table matSort id="table-container" class="table">
                 <thead class="pt-4 text-center">
                 <tr>
-                    <td><mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()"></mat-checkbox></td>
+                    <td><mat-checkbox color="primary" (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()"></mat-checkbox></td>
                     <td  *ngFor="let dataColumn of documentData, let i = index">
                         <span><img class="px-3" [src]=dataColumn.icon>{{dataColumn.nombre}}</span>
                     </td>
@@ -114,7 +114,7 @@
                             <div class="d-flex justify-content-center">
                                 <a (click)="vistaPrevia(document)"><img class="iconos-options rounded p-1" src="../../../../assets/img/lupa_btn.svg" matTooltip="Revisar"  alt="Vista previa" style="margin-left: 1px !important;"></a>
                                 <a (click)="showModal(document)" *ngIf="tipoTabla === 'firmar'"><img class="mx-1 iconos-options rounded p-1" src="../../../../assets/img/firma_btn.svg" matTooltip="Firmar" ></a>
-                                <a (click)="showModalCorreo(document)" matTooltip="Enviar" *ngIf="tipoTabla !== 'firmar'"><img class="mx-1 iconos-options rounded p-1" src="../../../../assets/img/fi_mail.svg"></a>
+                                <a (click)="showModalCorreo(document)" matTooltip="Enviar" *ngIf="tipoTabla !== 'firmar'"><img class="mx-1 iconos-options rounded" style="padding: 0.48em;" src="../../../../assets/img/fi_mail.svg"></a>
                             </div>
                         </td>
                     </tr>
