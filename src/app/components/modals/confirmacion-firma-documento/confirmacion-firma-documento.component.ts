@@ -52,9 +52,17 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit{
     // } else {
     //   this.router.navigate(['/consulta-documento']);
     // }
-    this.firmantes.map((firmante:any) => {
+    let firmantesJson
+    const firmantes = `${this.documento.firmantes.replace(/\[|\]/g, '')}`;
+    try {
+      firmantesJson = JSON.parse(`[${firmantes}]`);
+    } catch (error:any) {
+      console.error('Error al parsear el JSON:', error.message);
+    }
+    firmantesJson.map((firmante:any) => {
       if (firmante.correo == this.userInfo.email) {
         firmante.firmo = true;
+        console.log("usuario si pertenece a la lista de firmantes")
       }
     })
     await this.spinner.show();
