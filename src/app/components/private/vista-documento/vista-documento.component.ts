@@ -108,7 +108,7 @@ export class VistaDocumentoComponent implements OnInit {
         }
         this.obtenerPathS3(`Cargas/Documentos/${res.documento.archivo}`)
         this.fileName=res.documento.archivo
-        console.log(this.fileName)
+        console.log(res)
       },
       error: async (error:any) => {
         await this.spinner.hide();

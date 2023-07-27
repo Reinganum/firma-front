@@ -16,9 +16,9 @@ import { JwtHelperService, JWT_OPTIONS  } from '@auth0/angular-jwt';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 interface Firmante {
-  estado:string,
+  estado:number|string
   rut:string,
-  nombre:string
+  nombres:string
 }
 
 @Component({
@@ -45,7 +45,8 @@ export class VistaPublicaComponent implements OnInit {
   page!:any
   pdfMake = pdfFonts.pdfMake.vfs;
   userName!:string
-  
+  firmantes!:any // res.documento.firmantes
+
   constructor(
     private comunesServices: ComunesService,
     private route: ActivatedRoute,
@@ -93,6 +94,18 @@ export class VistaPublicaComponent implements OnInit {
         }
         this.obtenerPathS3(res.documento.archivo)
         this.fileName=res.documento.archivo
+        let firmantesJson
+        const firmantes = `${res.documento.firmantes.replace(/\[|\]/g, '')}`;
+        try {
+          firmantesJson = JSON.parse(`[${firmantes}]`);
+          this.FIRMANTES_DATA=[]; // solo mientras exista el otro Firmantes data hardcoded
+          firmantesJson.forEach((firmante:Firmante)=>{
+            this.FIRMANTES_DATA.push({
+                estado:firmante.estado===0?"Pendiente":"Firmado",rut:firmante.rut,nombres:firmante.nombres})
+          })
+        } catch (error:any) {
+          console.error('Error al parsear el JSON:', error.message);
+        }
       },
       error: async (error:any) => {
         await this.spinner.hide();
@@ -151,21 +164,21 @@ export class VistaPublicaComponent implements OnInit {
     {
       columnDef: 'Nombre',
       header: 'Nombre',
-      cell: (element: Firmante) => `${element.nombre}`,
+      cell: (element: Firmante) => `${element.nombres}`,
     },
   ];
   FIRMANTES_DATA: Firmante[] = [
-    {estado: "Firmado", rut: '19.154.322-4', nombre:"Carlos Valdivieso"},
-    {estado: "Firmado", rut: '19.154.322-4', nombre:"Alonso Pizarro"},
-    {estado: "Firmado", rut: '19.154.322-4', nombre:"Fernando Aravena"},
-    {estado: "Firmado", rut: '19.154.322-4', nombre:"Patricio Durán"},
-    {estado: "Firmado", rut: '19.154.322-4', nombre:"Carlos Valdivieso"},
-    {estado: "Firmado", rut: '19.154.322-4', nombre:"Alonso Pizarro"},
-    {estado: "Firmado", rut: '19.154.322-4', nombre:"Fernando Aravena"},
-    {estado: "Firmado", rut: '19.154.322-4', nombre:"Patricio Durán"},
-    {estado: "Firmado", rut: '19.154.322-4', nombre:"Alonso Pizarro"},
-    {estado: "Firma parcial", rut: '19.154.322-4', nombre:"Fernando Aravena"},
-    {estado: "Rechazado", rut: '19.154.322-4', nombre:"Patricio Durán"},
+    {estado: "Firmado", rut: '19.154.322-4', nombres:"Carlos Valdivieso"},
+    {estado: "Firmado", rut: '19.154.322-4', nombres:"Alonso Pizarro"},
+    {estado: "Firmado", rut: '19.154.322-4', nombres:"Fernando Aravena"},
+    {estado: "Firmado", rut: '19.154.322-4', nombres:"Patricio Durán"},
+    {estado: "Firmado", rut: '19.154.322-4', nombres:"Carlos Valdivieso"},
+    {estado: "Firmado", rut: '19.154.322-4', nombres:"Alonso Pizarro"},
+    {estado: "Firmado", rut: '19.154.322-4', nombres:"Fernando Aravena"},
+    {estado: "Firmado", rut: '19.154.322-4', nombres:"Patricio Durán"},
+    {estado: "Firmado", rut: '19.154.322-4', nombres:"Alonso Pizarro"},
+    {estado: "Pendiente", rut: '19.154.322-4', nombres:"Fernando Aravena"},
+    {estado: "Rechazado", rut: '19.154.322-4', nombres:"Patricio Durán"},
   ];
   dataSource = this.FIRMANTES_DATA;
   displayedColumns = this.columns.map(c => c.columnDef);

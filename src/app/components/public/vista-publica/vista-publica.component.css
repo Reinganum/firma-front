@@ -21,7 +21,7 @@ tr.mat-header-row{
   border-radius: 12px;
 }
 
-.mat-column-Estado .parcial{
+.mat-column-Estado .pendiente{
   color: #e0c453;
   background-color: rgb(253,249,230);
 }
