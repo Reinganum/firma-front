@@ -1,0 +1,23 @@
+<div class="container my-5 col-lg-12" style="background-color: #fafbfc;">
+    <div *ngIf="currentUser" class="row py-4">
+      <div class="col-6">
+              <span class="fw-bold">
+                  Origenes</span>
+              <p>Acá puedes definir desde que sistema ingresarán los documentos.</p>
+      </div>
+    </div>
+    <div class="col-12" style="overflow-x: scroll !important;">
+      <app-tabla-origenes></app-tabla-origenes>
+    </div>
+    <div class="row py-4">
+        <div class="col-6">
+                <span class="fw-bold">
+                    Tipo Documentos</span>
+                <p>Acá puedes definir que tipos de documentos pueden ingresar al sistema.</p>
+        </div>
+    </div>
+    <div class="col-12" style="overflow-x: scroll !important;">
+    <app-tabla-tipo-doc></app-tabla-tipo-doc>
+    </div>
+  </div>
+  
