@@ -20,8 +20,9 @@ import {MatStepperModule} from '@angular/material/stepper';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatProgressBarModule} from '@angular/material/progress-bar';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatTreeModule } from '@angular/material/tree';
 
 @NgModule({
     declarations: [],
@@ -46,7 +47,8 @@ import { MatBadgeModule } from '@angular/material/badge';
         MatNativeDateModule,
         FormsModule,
         MatProgressBarModule,
-        MatSelectModule
+        MatSelectModule,
+        MatTreeModule
     ],
     exports:[
         ReactiveFormsModule,
@@ -71,6 +73,7 @@ import { MatBadgeModule } from '@angular/material/badge';
         FormsModule,
         MatProgressBarModule,
         MatBadgeModule
+        
     ]
 })
 
