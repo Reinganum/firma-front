@@ -129,8 +129,8 @@ export class VistaPublicaComponent implements OnInit {
 
   async descargarArchivo(archivo:any){
     const fileData:any = {
-      key: archivo,
-      metodo: 'get'
+        key: `Cargas/Documentos/${archivo}`,
+        metodo: 'get'
     }
     const resultado:any = await this.comunesServices.getSignedUrl(fileData).toPromise();
     const link = document.createElement('a');
