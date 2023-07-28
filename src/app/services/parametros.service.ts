@@ -13,7 +13,7 @@ export class ParametrosService {
   ) { }
 
   listaMedios(): Observable<any>{
-    return this.http.get<any>(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/listarMedios`);
+    return this.http.get<any>(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/listarMediosGestion`);
   }
 
   editarMedio(data:any): Observable<any> {        

@@ -28,9 +28,13 @@ export class TablaOrigenesComponent implements OnInit {
       'Contratos': null,
       'Liquidaciones': null,
       'Declaraciones Juradas': null,
+      'Carga DJ OTEC	Activo': null,
+      'Carga Certificado Asistencia': null,
     },
   }; // input con estructura requerida
   
+
+
   constructor(
     private parametrosService: ParametrosService,
     private toastrService: ToastrService,
@@ -57,7 +61,6 @@ export class TablaOrigenesComponent implements OnInit {
         this.toastrService.error(error);
         this.listaOrigen = [];
         this.totalFilas = 0;
-        
       }
     });
   }

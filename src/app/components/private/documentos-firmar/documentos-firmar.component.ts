@@ -296,11 +296,12 @@ export class DocumentosFirmarComponent implements OnInit {
       } catch (error:any) {
         console.error('Error al parsear el JSON:', error.message);
       }
-      firmantesJson.map((firmante:any) => {
+        document.firmantes=firmantesJson.map((firmante:any) => {
         if (firmante.correo == this.userInfo.email) {
           firmante.firmo = true;
           console.log("usuario si pertenece a la lista de firmantes")
         }
+        return firmante
       })
       this.documentosService.crearPdfFirma(document).subscribe({
         next: async (res) => {
@@ -314,7 +315,7 @@ export class DocumentosFirmarComponent implements OnInit {
     });
     })
   }
-
+  
    extraerIniciales(origen:string){
     const strArr=origen.split(' ');
     if(strArr.length===1){

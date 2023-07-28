@@ -1,4 +1,3 @@
-import {SelectionModel} from '@angular/cdk/collections';
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {Component, EventEmitter, Injectable, Output} from '@angular/core';
 import {MatTreeFlatDataSource, MatTreeFlattener, MatTreeModule} from '@angular/material/tree';
@@ -7,7 +6,10 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatButtonModule} from '@angular/material/button';
+import {SelectionModel} from '@angular/cdk/collections';
+
 import {BehaviorSubject} from 'rxjs';
+
 import { DocumentosService } from 'src/app/services/documentos.service';
 
 /** 
@@ -111,8 +113,8 @@ export class ChecklistDatabase {
     MatIconModule,
   ],
 })
-
 export class CheckBoxTree {
+  @Output() selectedOrigins = new EventEmitter<any>();
   /** Map from flat node to nested node. This helps us finding the nested node to be modified */
   flatNodeMap = new Map<TodoItemFlatNode, TodoItemNode>();
 

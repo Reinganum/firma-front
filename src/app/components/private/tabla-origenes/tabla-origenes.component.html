@@ -10,7 +10,11 @@
     <tbody class="text-center">
          <tr *ngFor="let datosOrigen of listaOrigen, let i = index">
              <td>{{datosOrigen.id }}</td>
-             <td><checkbox-tree></checkbox-tree></td>
+             <td>
+                <div class="d-flex w-100 justify-content-center">
+                    <checkbox-tree></checkbox-tree>
+                </div>
+             </td>   
              <td>{{datosOrigen.sigla}}</td>                 
              <td><span class="fw-bold p-1 rounded"
                 [ngClass]="{'activo':datosOrigen.disponible===1,
@@ -33,4 +37,3 @@
      [pageSizeOptions]="pageSizeOptions"
  >
  </mat-paginator>
-<checkbox-tree></checkbox-tree>

@@ -26,6 +26,6 @@
                     [indeterminate]="descendantsPartiallySelected(node)"
                     (change)="todoItemSelectionToggle(node)">{{node.item}}</mat-checkbox>
       <button mat-icon-button (click)="addNewItem(node)"><mat-icon>add</mat-icon></button>
-      <button (click)="showSelected()" class="btn btn-primary">Guardar</button>
+      <a (click)="showSelected()">Guardar</a>
     </mat-tree-node>
   </mat-tree>
