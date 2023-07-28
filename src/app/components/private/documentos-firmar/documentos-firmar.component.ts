@@ -288,19 +288,28 @@ export class DocumentosFirmarComponent implements OnInit {
     if(this.selection.selected.length===0){
       return
     }
-    this.selection.selected.forEach((doc)=>{
-        this.spinner.show();
-        this.documentosService.crearPdfFirma({...doc,rut:"193452323"}).subscribe({
-         next: async (res) => {
-        console.log(res);
-        await this.spinner.hide();
-      },
-      error: async (error) => {
-        console.log(error);
-        await this.spinner.hide();
-      }
-    });
-    })
+    const data = `${this.selection.selected[0].firmantes.replace(/\[|\]/g, '')}`;
+    try {
+      const resultado = JSON.parse(`[${data}]`);
+      console.log(resultado);
+    } catch (error:any) {
+      console.error('Error al parsear el JSON:', error.message);
+    }
+    // console.log(JSON.parse().idFirmante);
+    
+    // this.selection.selected.forEach((doc)=>{
+    //     this.spinner.show();
+    //     this.documentosService.crearPdfFirma({...doc,rut:"193452323"}).subscribe({
+    //      next: async (res) => {
+    //     console.log(res);
+    //     await this.spinner.hide();
+    //   },
+    //   error: async (error) => {
+    //     console.log(error);
+    //     await this.spinner.hide();
+    //   }
+    // });
+    // })
    }
 
    extraerIniciales(origen:string){
