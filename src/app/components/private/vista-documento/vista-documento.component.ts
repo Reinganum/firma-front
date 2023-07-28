@@ -107,7 +107,8 @@ export class VistaDocumentoComponent implements OnInit {
           return ;
         }
         this.obtenerPathS3(`Cargas/Documentos/${res.documento.archivo}`)
-        this.fileName=res.documento.archivo
+        this.fileName=res.documento.archivo;
+        this.documento = res.documento;
         console.log(res)
       },
       error: async (error:any) => {
@@ -116,7 +117,7 @@ export class VistaDocumentoComponent implements OnInit {
       }
     });
   }
-
+  documento:any;
   async obtenerPathS3(archivo:any) {
     console.log(archivo);
     const fileData:any = {
@@ -151,7 +152,8 @@ export class VistaDocumentoComponent implements OnInit {
 
   modalFirmar() {
     this.modalRef = this.modalService.open(ConfirmacionFirmaDocumentoComponent, {backdrop: 'static', size: 'lg'});
-    this.modalRef.componentInstance.key = this.fileName;
+    this.modalRef.componentInstance.key = `Cargas/Documentos/${this.fileName}`;
+    this.modalRef.componentInstance.documento = this.documento;
   }
   callBackFn(pdf: PDFDocumentProxy) {
     this.totalPages=pdf._pdfInfo.numPages

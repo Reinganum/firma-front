@@ -39,7 +39,6 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit{
     this.userInfo = this.authenticationService.currentUserValue;
     console.log(this.documento);
     console.log(this.userInfo);
-    
   }
 
   async confirmar(){
@@ -50,17 +49,17 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit{
     //   this.router.navigate(['/consulta-documento']);
     // }
     let firmantesJson
-    const firmantes = `${this.documento.firmantes.replace(/\[|\]/g, '')}`;
+    const firmantes = `${this.documento?.firmantes.replace(/\[|\]/g, '')}`;
     console.log(firmantes)
     try {
       firmantesJson = JSON.parse(`[${firmantes}]`);
     } catch (error:any) {
       console.error('Error al parsear el JSON:', error.message);
     }
-    this.documento.firmantes=firmantesJson.map((firmante:any) => {
+    this.documento.firmantes=firmantesJson.map((firmante:any, i:any) => {
       if (firmante.correo == this.userInfo.email) {
         firmante.firmo=true;
-        firmante.rut="19.445.878-3"
+        firmante.rut="19.585.125-5"
       }
       return firmante
     })
@@ -73,10 +72,10 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit{
       }).subscribe({
       next: async (res) => {
         console.log(res);
-        const url:any = await this.comunesServices.getSignedUrl({key: res.nombreArchivo, metodo: 'get'}).toPromise();
+        const url:any = await this.comunesServices.getSignedUrl({bucket: 'firma-otic-qa-doc', key: res.key, metodo: 'get'}).toPromise();
         const link = document.createElement('a');
         link.href = url.message;
-        link.download = res.nombreArchivo.split('/')[res.nombreArchivo.split('/').length - 1];
+        link.download = res.key.split('/')[res.key.split('/').length - 1];
         link.target = '_blank';
         link.click();
         await this.spinner.hide();

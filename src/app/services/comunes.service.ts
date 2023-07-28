@@ -14,6 +14,8 @@ export class ComunesService {
 
   getSignedUrl(data: any): Observable<any> {
     const body = JSON.stringify(data);
+    console.log(body);
+    
     const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
     return this.http.post(`${environment.API_DOMAINS.COMUNES}/getSignedUrl`, body, {headers});
   }
