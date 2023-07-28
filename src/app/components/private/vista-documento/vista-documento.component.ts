@@ -138,7 +138,7 @@ export class VistaDocumentoComponent implements OnInit {
 
   async descargarArchivo(archivo:any){
     const fileData:any = {
-      key: archivo,
+      key: `Cargas/Documentos/${archivo}`,
       metodo: 'get'
     }
     const resultado:any = await this.comunesServices.getSignedUrl(fileData).toPromise();

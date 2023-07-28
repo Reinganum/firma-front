@@ -51,7 +51,7 @@ export class TablaOrigenesComponent implements OnInit {
   obtenerListaMedios() {
     this.parametrosService.listaMedios().subscribe({
       next: (res) => {
-        this.listaOrigen = res.listaMedios;
+        this.listaOrigen = res.listaMediosGestion;
         console.log(this.listaOrigen)
         this.totalFilas = this.listaOrigen.length
         this.documentosService.setOrigenes(this.origenes)
