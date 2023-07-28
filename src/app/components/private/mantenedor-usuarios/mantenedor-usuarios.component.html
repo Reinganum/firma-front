@@ -1,22 +1,82 @@
 <div class="container my-5 col-lg-12" style="background-color: #fafbfc;">
   <section class="col-12">
-    <div class="d-flex d-50 ms-3 mb-4 pt-4">
-      <div class="d-flex flex-column">
-        <div class="d-flex flex-row">
-          <div>
-            <img src="../../../../assets/img/mantenedor_usuarios.svg">
+    <div class="d-flex flex-row container-titulo">
+      <div class="d-flex col-5 ms-3 mb-4 pt-4">
+        <div class="d-flex flex-column flex-wrap text-center">
+          <div class="d-flex flex-row subcontainer-titulo">
+            <div class="mt-1">
+              <img src="../../../../assets/img/mantenedor_usuarios.svg">
+            </div>
+            <div>
+              <h1 class="fw-bold mx-2">Mantenedor de usuarios</h1>
+            </div>
           </div>
           <div>
-            <h1 class="fw-bold mx-2">Mantenedor de usuarios</h1>
+            <p style="font-size: 1.1rem!important;">Listado de usuarios para controlar los accesos</p>
           </div>
-        </div>
-        <div>
-          <p style="font-size: 1.1rem!important;">Listado de usuarios para controlar los accesos</p>
         </div>
       </div>
-    </div>
-    <div class="d-flex d-50">
-
+      <div class="d-flex flex-row justify-content-end align-items-end btn-container" style="flex-grow: 1;">
+          <button class="filter-btn btn me-2 mb-3" style="border: 1px solid #979ba2;" (click)="flagFiltros = !flagFiltros"><img class="px-3" src="../assets/img/filtro-btn.svg">Filtrar</button>
+          <button class="btn-firmar-seleccionados btn btn-primary btn-main me-2 p-2 mb-3"style="background-color: #0B58A4 !important;"(click)="agregarUsuario()">Agregar Usuario</button>
+      </div>
+   </div>
+  </section>
+  <section>
+   <div class="col-12">
+    <div *ngIf="flagFiltros" class="row my-1" id="verfiltros">
+        <div class="d-flex justify-content-center">
+            <div class="col-11">
+                <form [formGroup]="filtrosForm" class="row">
+                    <div class="card shadow-sm pt-3 pb-2">
+                            <div class="col-12">
+                                <h4 class="fw-bold">FILTRAR EN EL LISTADO</h4>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <div class="d-flex flex-row flex-wrap">
+                                    <div class="d-flex flex-wrap form-group mx-1">
+                                      <div class="d-flex mx-1 flex-wrap form-group inputs-filter">
+                                        <mat-form-field>
+                                        <mat-label>Nombre</mat-label>
+                                        <input type="text" matInput formControlName="nombre" placeholder="Juan Pérez"/>
+                                        </mat-form-field>
+                                      </div>
+                                      <div class="d-flex mx-1 flex-wrap form-group inputs-filter">
+                                          <mat-form-field>
+                                          <mat-label>RUT</mat-label>
+                                          <input type="text" matInput formControlName="rut" placeholder="19.231.321-3"/>
+                                          </mat-form-field>
+                                      </div>
+                                      <div class="d-flex mx-1 flex-wrap form-group inputs-filter">
+                                        <mat-form-field>
+                                        <mat-label>Mail</mat-label>
+                                        <input type="text" matInput formControlName="mail" placeholder="juan@otic.sofofa.cl"/>
+                                        </mat-form-field>
+                                      </div>
+                                      <div class="d-flex mx-1 flex-wrap form-group inputs-filter">
+                                        <mat-form-field>
+                                          <mat-label>Estado</mat-label>
+                                          <mat-select formControlName="estado">
+                                              <mat-option value="inactivo">Inactivo</mat-option>
+                                              <mat-option value="activo">Activo</mat-option>
+                                          </mat-select>
+                                      </mat-form-field>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 d-flex justify-content-end mt-md-3 mb-2">
+                                <a (click)="filtrar()" class="mt-2 btn btn-primary mx-1" style="background-color: #0B58A4 !important;">
+                                <img src="../assets/img/aplicar-filtros.svg">Aplicar
+                                filtros</a>
+                                <a (click)="limpiar()" class="mt-2 btn btn-outline-secondary mx-1" style="background-color: transparent !important;"><img
+                                class="mx-1" src="../assets/img/limpiar-filtros.svg">Limpiar Filtros</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
   </section>
   <section class="table-container mat-elevation-z8 mt-2" tabindex="0">
@@ -38,8 +98,8 @@
           </ng-container>
           <ng-container *ngSwitchCase="'Opciones'">
             <div class="d-flex w-100 justify-content-center">
-              <img src="../../../../assets/img/eliminar_btn.svg" class="option-icons p-1 mx-1 rounded"/>
-              <img src="../../../../assets/img/editar_btn.svg" class="option-icons p-1 mx-1 rounded"/>
+              <img src="../../../../assets/img/eliminar_btn.svg" matTooltip="Eliminar"  matTooltipClass="custom-tooltip" class="option-icons p-1 mx-1 rounded"/>
+              <img src="../../../../assets/img/editar_btn.svg" matTooltip="Editar" class="option-icons p-1 mx-1 rounded"/>
             </div>
           </ng-container>
           <ng-container *ngSwitchCase="'Estado'">

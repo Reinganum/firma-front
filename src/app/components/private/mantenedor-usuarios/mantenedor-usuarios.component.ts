@@ -17,10 +17,11 @@ export class MantenedorUsuariosComponent implements OnInit {
   documentData:any;
   // documentList:any;
   totalFilas!:number;
-  pageSize = 5;
+  pageSize = 10;
   pageSizeOptions:any;
   tipoTabla:any;
   currentUser:any;
+  flagFiltros = false;
   cabeceras = [
     {nombre:"ID"},
     {nombre:"RUT"},
@@ -33,8 +34,7 @@ export class MantenedorUsuariosComponent implements OnInit {
   ];
   dataSource!:any;
   listaUsuarios!:any;
-  myForm!: FormGroup;
-
+  filtrosForm!: FormGroup;
 
   constructor(
     private usuarioService: UsuariosService,
@@ -46,6 +46,12 @@ export class MantenedorUsuariosComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = localStorage.getItem('currentUser');
     this.listarUsuarios(this.paginador.pageIndex, this.paginador.pageSize | this.pageSize);
+    this.filtrosForm = this.formBuilder.group({
+      nombre: [null],
+      rut: [null],
+      mail: [null],
+      estado: [null]
+    });
   }
 
   ngAfterViewInit(){
@@ -115,6 +121,17 @@ export class MantenedorUsuariosComponent implements OnInit {
     });
   }
 
+  agregarUsuario(){
+
+  }
+
+  filtrar(){
+
+  }
+
+  limpiar(){
+    this.filtrosForm.reset()
+  }
  
   columns = [
     {
