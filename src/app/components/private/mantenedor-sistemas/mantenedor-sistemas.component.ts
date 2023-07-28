@@ -12,6 +12,6 @@ export class MantenedorSistemasComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = localStorage.getItem('currentUser');
   }
-
+  
   
 }

@@ -3,6 +3,7 @@ import { TablaOrigenesComponent } from "./tabla-origenes.component";
 import { CommonModule } from "@angular/common";
 import { MaterialModule } from "src/app/material.module";
 import { CoreDirectivesModule } from "src/app/directives/directives";
+import { CheckBoxTree } from "../checkbox-tree/checkbox-tree.component";
 
 @NgModule({
     declarations: [
@@ -11,7 +12,8 @@ import { CoreDirectivesModule } from "src/app/directives/directives";
     imports: [
       CommonModule,
       MaterialModule,
-      CoreDirectivesModule
+      CoreDirectivesModule,
+      CheckBoxTree
     ],
     exports: [
         TablaOrigenesComponent

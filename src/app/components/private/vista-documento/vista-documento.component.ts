@@ -108,7 +108,7 @@ export class VistaDocumentoComponent implements OnInit {
         }
         this.obtenerPathS3(`Cargas/Documentos/${res.documento.archivo}`)
         this.fileName=res.documento.archivo
-        console.log(this.fileName)
+        console.log(res)
       },
       error: async (error:any) => {
         await this.spinner.hide();
@@ -138,7 +138,7 @@ export class VistaDocumentoComponent implements OnInit {
 
   async descargarArchivo(archivo:any){
     const fileData:any = {
-      key: archivo,
+      key: `Cargas/Documentos/${archivo}`,
       metodo: 'get'
     }
     const resultado:any = await this.comunesServices.getSignedUrl(fileData).toPromise();

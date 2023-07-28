@@ -33,10 +33,7 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit{
   @Input() key:any;
   userKnown:boolean=true;
 
-  firmantes: any[] = [
-    {nombre: 'Nicolas', rut: '', correo: 'nicolas@gmail.com', firmo: false},
-    {nombre: 'Nicolas22', rut: '', correo: 'ncatalan@nexia.cl', firmo: false},
-  ]
+  firmantes: any[] = []
 
   ngOnInit(): void {
     this.userInfo = this.authenticationService.currentUserValue;
@@ -52,16 +49,27 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit{
     // } else {
     //   this.router.navigate(['/consulta-documento']);
     // }
-    this.firmantes.map((firmante:any) => {
+    let firmantesJson
+    const firmantes = `${this.documento.firmantes.replace(/\[|\]/g, '')}`;
+    console.log(firmantes)
+    try {
+      firmantesJson = JSON.parse(`[${firmantes}]`);
+    } catch (error:any) {
+      console.error('Error al parsear el JSON:', error.message);
+    }
+    this.documento.firmantes=firmantesJson.map((firmante:any) => {
       if (firmante.correo == this.userInfo.email) {
-        firmante.firmo = true;
+        firmante.firmo=true;
+        firmante.rut="19.445.878-3"
       }
+      return firmante
     })
+    console.log(this.documento.firmantes)
     await this.spinner.show();
-    // this.notificarFirma() NOTIFICACION FUNCIONANDO
+    this.notificarFirma() 
     this.documentosService.crearPdfFirma({
           key: this.key,
-          firmantes: this.firmantes
+          firmantes: this.documento.firmantes
       }).subscribe({
       next: async (res) => {
         console.log(res);

@@ -288,30 +288,34 @@ export class DocumentosFirmarComponent implements OnInit {
     if(this.selection.selected.length===0){
       return
     }
-    const data = `${this.selection.selected[0].firmantes.replace(/\[|\]/g, '')}`;
-    try {
-      const resultado = JSON.parse(`[${data}]`);
-      console.log(resultado);
-    } catch (error:any) {
-      console.error('Error al parsear el JSON:', error.message);
-    }
-    // console.log(JSON.parse().idFirmante);
-    
-    // this.selection.selected.forEach((doc)=>{
-    //     this.spinner.show();
-    //     this.documentosService.crearPdfFirma({...doc,rut:"193452323"}).subscribe({
-    //      next: async (res) => {
-    //     console.log(res);
-    //     await this.spinner.hide();
-    //   },
-    //   error: async (error) => {
-    //     console.log(error);
-    //     await this.spinner.hide();
-    //   }
-    // });
-    // })
-   }
-
+    this.selection.selected.forEach((document)=>{
+      let firmantesJson
+      const firmantes = `${document.firmantes.replace(/\[|\]/g, '')}`;
+      try {
+        firmantesJson = JSON.parse(`[${firmantes}]`);
+      } catch (error:any) {
+        console.error('Error al parsear el JSON:', error.message);
+      }
+        document.firmantes=firmantesJson.map((firmante:any) => {
+        if (firmante.correo == this.userInfo.email) {
+          firmante.firmo = true;
+          console.log("usuario si pertenece a la lista de firmantes")
+        }
+        return firmante
+      })
+      this.documentosService.crearPdfFirma(document).subscribe({
+        next: async (res) => {
+       console.log(res);
+       await this.spinner.hide();
+      },
+      error: async (error) => {
+        console.log(error);
+        await this.spinner.hide();
+      }
+    });
+    })
+  }
+  
    extraerIniciales(origen:string){
     const strArr=origen.split(' ');
     if(strArr.length===1){

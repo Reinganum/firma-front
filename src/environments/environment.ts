@@ -4,13 +4,23 @@ export const environment = {
 
   API_DOMAINS: {
     // USUARIOS: 'http://localhost:3500/local',
+<<<<<<< HEAD
     //  DOCUMENTOS: 'http://localhost:3400/local',
     //  COMUNES: 'https://au8clsl9fg.execute-api.us-east-1.amazonaws.com/local',
     // CORREOS: 'http://localhost:3200/local',
     USUARIOS: 'https://api-firma-qa.0s.cl/usuarios',
     DOCUMENTOS: 'https://api-firma-qa.0s.cl/documentos',
     COMUNES: 'https://api-firma-qa.0s.cl/comunes',
+=======
+    DOCUMENTOS: 'http://localhost:3400/local',
+    // COMUNES: 'http://localhost:3300/local',
+    // CORREOS: 'http://localhost:3300/local',
+>>>>>>> 8adbd44fa280e0ab4fa634e4a90ccf6957901b9c
     CORREOS: 'https://api-firma-qa.0s.cl/correos',
+    USUARIOS: 'https://api-firma-qa.0s.cl/usuarios',
+    //DOCUMENTOS: 'https://api-firma-qa.0s.cl/documentos',
+    // COMUNES: 'https://api-firma-qa.0s.cl/comunes',
+    COMUNES: 'https://au8clsl9fg.execute-api.us-east-1.amazonaws.com/local'
   },
   URL_SENCE: 'https://eligemejor.sence.cl/BuscarCurso/DetalleCurso?curso=',
   API_MOTORES: {
@@ -27,3 +37,4 @@ export const environment = {
     }
   }
 };
+
