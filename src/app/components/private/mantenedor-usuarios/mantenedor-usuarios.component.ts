@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
@@ -16,11 +17,10 @@ export class MantenedorUsuariosComponent implements OnInit {
   documentData:any;
   // documentList:any;
   totalFilas!:number;
-  pageSize = 10;
+  pageSize = 5;
   pageSizeOptions:any;
   tipoTabla:any;
   currentUser:any;
-
   cabeceras = [
     {nombre:"ID"},
     {nombre:"RUT"},
@@ -31,14 +31,17 @@ export class MantenedorUsuariosComponent implements OnInit {
     {nombre:"Estado"},
     {nombre:"Opciones"},
   ];
-
-  listaUsuarios:any;
+  dataSource!:any;
+  listaUsuarios!:any;
+  myForm!: FormGroup;
 
 
   constructor(
     private usuarioService: UsuariosService,
     private spinner: NgxSpinnerService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private elementRef: ElementRef,
+    private formBuilder: FormBuilder
   ) {}
   ngOnInit(): void {
     this.currentUser = localStorage.getItem('currentUser');
@@ -63,6 +66,7 @@ export class MantenedorUsuariosComponent implements OnInit {
       next: async (res:any) => {
         console.log(res);
         this.listaUsuarios = res.usuarios;
+        this.dataSource=res.usuarios
         this.totalFilas = res.usuarios.length;
         await this.spinner.hide();
       },
@@ -81,6 +85,7 @@ export class MantenedorUsuariosComponent implements OnInit {
   }
 
   entregarAcceso(user:any):void{
+    console.log(user)
     this.spinner.show();
     user.estado=user.estado===0?1:0
     let datos = {
@@ -109,4 +114,59 @@ export class MantenedorUsuariosComponent implements OnInit {
       }
     });
   }
+
+ 
+  columns = [
+    {
+      columnDef: 'Toggle',
+      header: '',
+      cell: (element: any) => ``,
+    },
+    {
+      columnDef: 'Nombres',
+      header: 'Nombre',
+      icon:"../assets/img/user_header.svg",
+      cell: (element: any) => `${element.nombres + ' ' + element.apellidoP}`,
+    },
+    {
+      columnDef: 'RUT',
+      header: 'RUT',
+      icon:"../assets/img/rut_tabla.svg",
+      cell: (element: any) => `${"19.153.293-3"}`,
+    },
+    {
+      columnDef: 'Mail',
+      header: 'Mail',
+      icon:"../assets/img/mail_tabla.svg",
+      cell: (element: any) => `${element.email}`,
+    },
+    {
+      columnDef: 'Cargo',
+      header: 'Cargo',
+      icon:"../assets/img/origen_tabla.svg",
+      cell: (element: any) => `${"Administrativo OTIC"}`,
+    },
+    {
+      columnDef: 'Clave',
+      header: 'Clave',
+      icon:"../assets/img/clave_tabla.svg",
+      cell: (element: any) => `${"Aci829d"}`,
+    },
+    {
+      columnDef: 'Estado',
+      header: 'Estado',
+      icon:"../assets/img/archivo_tabla.svg",
+      cell: (element: any) => `${element.estado!==1?"Inactivo":"Activo"}`,
+    },
+    {
+      columnDef: 'Opciones',
+      header: 'Opciones',
+      icon:"../assets/img/opcion_tabla.svg",
+      cell: (element: any) => `${element.estado}`,
+    },
+  ];
+  displayedColumns = this.columns.map(c => c.columnDef);
 }
+
+
+

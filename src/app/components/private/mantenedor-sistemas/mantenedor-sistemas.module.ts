@@ -6,7 +6,6 @@ import { CoreDirectivesModule } from "src/app/directives/directives";
 import { MantenedorSistemasComponent } from "./mantenedor-sistemas.component";
 import { TablaOrigenesModule } from "../tabla-origenes/tabla-origenes.module";
 import { TablaTipoDocModule } from "../tabla-tipo-doc/tabla-tipo-doc.module";
-import { CheckBoxTree } from "../checkbox-tree/checkbox-tree.component";
 
 
 const routes: Routes = [

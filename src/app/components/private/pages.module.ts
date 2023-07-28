@@ -14,10 +14,8 @@ import { VistaDocumentoModule } from "./vista-documento/vista-documento.module";
 import { MantenedorUsuariosComponent } from './mantenedor-usuarios/mantenedor-usuarios.component';
 import { MantenedorUsuariosModule } from "./mantenedor-usuarios/mantenedor-usuarios.module";
 import { AuthGuard } from "../auth/helpers/auth.guard";
-import { MantenedorDocumentosComponent } from './mantenedor-documentos/mantenedor-documentos.component';
 import { MantenedorSistemasComponent } from './mantenedor-sistemas/mantenedor-sistemas.component';
 import { MantenedorSistemasModule } from "./mantenedor-sistemas/mantenedor-sistemas.module";
-import { MantenedorDocumentosModule } from "./mantenedor-documentos/mantenedor-documentos.module";
 import { TablaOrigenesComponent } from './tabla-origenes/tabla-origenes.component';
 import { TablaOrigenesModule } from "./tabla-origenes/tabla-origenes.module";
 
@@ -52,7 +50,6 @@ const routes: Routes = [
       {path: 'mantenedor', 
       children: [
         {path: 'usuarios',loadChildren: () => import('./mantenedor-usuarios/mantenedor-usuarios.module').then(m => m.MantenedorUsuariosModule)},
-        {path: 'documentos',loadChildren: () => import('./mantenedor-documentos/mantenedor-documentos.module').then(m => m.MantenedorDocumentosModule)},
         {path: 'sistemas',loadChildren: () => import('./mantenedor-sistemas/mantenedor-sistemas.module').then(m => m.MantenedorSistemasModule)},
       ],
         canActivate: [AuthGuard],
@@ -182,8 +179,7 @@ const routes: Routes = [
     FooterModule,
     VistaDocumentoModule,
     MantenedorUsuariosModule,
-    MantenedorSistemasModule,
-    MantenedorDocumentosModule
+    MantenedorSistemasModule
   ],
   exports: [
     PagesComponent,
