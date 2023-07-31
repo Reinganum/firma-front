@@ -48,28 +48,34 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit{
     // } else {
     //   this.router.navigate(['/consulta-documento']);
     // }
-    let firmantesJson
-    console.log(this.documento.firmantes)
-    const firmantes = typeof this.documento.firmantes ==="string" ? `${this.documento?.firmantes.replace(/\[|\]/g, '')}`: this.documento?.firmantes;
-    let esFirmante=false
+    // let firmantesJson
+    // console.log(this.documento.firmantes)
+    // const firmantes = typeof this.documento.firmantes ==="string" ? `${}`: this.documento?.firmantes;
+    // let esFirmante=false
+    let firmantes:any = this.documento?.firmantes.replace(/\[|\]/g, '')
     try {
-      firmantesJson = typeof firmantes === "string" ? JSON.parse(`[${firmantes}]`): firmantes;
+      firmantes = JSON.parse(`[${firmantes}]`)
     } catch (error:any) {
       console.error('Error al parsear el JSON:', error.message);
     }
-    this.documento.firmantes=firmantesJson.map((firmante:any, i:any) => {
-      if (firmante.correo === "asd@gmail.com") {
-        esFirmante=true
+    console.log(firmantes);
+    let firma:boolean;
+    let valida:any =firmantes.map((firmante:any, i:any) => {
+      if (firmante.correo === this.userInfo.email) {
         firmante.firmo=true;
-        firmante.rut="19.585.125-5"
+        firma = true;
+        return true;
       }
-      return firmante
+      return false;
     })
+    console.log(valida);
+    
+    if (!valida[0] && !valida[1]) {
+      this.toastr.warning("No puedes firmar el documento, ya que no estás dentro de los firmantes");
+      return;
+    }
 
-    if(esFirmante===false){
-      this.toastr.warning(`Tu usuario no está registrado para firmar el documento ${this.documento.archivo}`)
-    } else {
-      await this.spinner.show();
+    await this.spinner.show();
       console.log(this.documento)
       this.documentosService.crearPdfFirma({
           key: `Cargas/Documentos/${this.documento.archivo}`,
@@ -92,7 +98,6 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit{
           await this.spinner.hide();
         }
       });
-    }
     this.activeModal.close({ estado: true});
   }
 
