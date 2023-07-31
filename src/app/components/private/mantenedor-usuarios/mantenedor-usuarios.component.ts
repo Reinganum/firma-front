@@ -132,7 +132,7 @@ export class MantenedorUsuariosComponent implements OnInit {
   limpiar(){
     this.filtrosForm.reset()
   }
- 
+
   columns = [
     {
       columnDef: 'Toggle',

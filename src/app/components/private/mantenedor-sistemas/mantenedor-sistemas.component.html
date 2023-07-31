@@ -18,42 +18,53 @@
       </div>
       <div class="d-flex flex-row justify-content-end align-items-end btn-container" style="flex-grow: 1;">
           <button class="filter-btn btn me-2 mb-3" style="border: 1px solid #979ba2;" (click)="flagFiltros = !flagFiltros"><img class="px-3" src="../assets/img/filtro-btn.svg">Filtrar</button>
-          <button class="btn-firmar-seleccionados btn btn-primary btn-main me-2 p-2 mb-3"style="background-color: #0B58A4 !important;"(click)="agregarSistema()">Agregar Usuario</button>
+          <button class="btn-firmar-seleccionados btn btn-primary btn-main me-2 p-2 mb-3"style="background-color: #0B58A4 !important;"(click)="agregarSistema()">Agregar Sistema</button>
       </div>
    </div>
   </section>
-  <section>
-    <mat-accordion>
-      <!-- #docregion basic-panel -->
-      <!-- #docregion hide-toggle -->
-        <mat-expansion-panel hideToggle>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <table mat-table [dataSource]="dataSource" class="tabla-usuarios">
-                <ng-container
-                  [matColumnDef]="column.columnDef"
-                  *ngFor="let column of columns"
-                >
-                  <th mat-header-cell *matHeaderCellDef style="background-color: #e4ebf5 !important;">
-                    {{ column.header }}
-                  </th>
-                  <td mat-cell *matCellDef="let row" [ngSwitch]="column.columnDef">
-                    <ng-container>
-                      {{ column.cell(row) }}
-                    </ng-container>
-                  </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                <tr mat-row *matRowDef="let emprow; columns: displayedColumns"></tr>
-              </table>
-            </mat-panel-title>
-            <mat-panel-description>
-              Currently I am {{panelOpenState ? 'open' : 'closed'}}
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          
-        </mat-expansion-panel>
-      </mat-accordion>
+  <section *ngFor="let medio of medios; let i = index" class="mb-3">
+    <div>
+      <div class="rounded" style="background-color: #e4ebf5 !important;">
+        <div class="d-flex flex-row">
+          <div class="d-flex align-items-center mx-2">
+            <label class="switch" (click)="modificarAcceso()">
+              <input type="checkbox" name="enableSystem" >
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="d-flex flex-row align-content-center">
+             <h3 class="fw-bold">{{medio.me_descripcion}}</h3>
+          </div>
+        </div>
+      </div>
+      <mat-accordion>
+        <!-- #docregion basic-panel -->
+        <!-- #docregion hide-toggle -->
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <table mat-table [dataSource]="medio[i]" class="tabla-sistemas">
+                  <ng-container
+                    [matColumnDef]="column.columnDef"
+                    *ngFor="let column of columns"
+                  >
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ column.header }}
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                      <ng-container>
+                        {{ column.cell(row)}}
+                      </ng-container>
+                    </td>
+                  </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                  <tr mat-row *matRowDef="let emprow; columns: displayedColumns"></tr>
+                </table>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+        </mat-accordion>
+    </div>
   </section>
 </div>
 
