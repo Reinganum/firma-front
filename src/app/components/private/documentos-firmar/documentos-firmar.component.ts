@@ -215,6 +215,8 @@ export class DocumentosFirmarComponent implements OnInit {
   showModalCorreo(documento:any){
     this.modalRef=this.modalService.open(EnvioCorreoComponent,{backdrop:'static',size:'md'});
     this.modalRef.componentInstance.documento = documento;
+    this.modalRef.componentInstance.key = `Cargas/Documentos/${documento.archivo}`;
+    this.modalRef.componentInstance.documento = documento;
     this.modalRef.result.then((res)=>{
       if(res.estado){
         this.modalRef.close();

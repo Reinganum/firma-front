@@ -4,16 +4,17 @@ export const environment = {
 
   API_DOMAINS: {
     // USUARIOS: 'http://localhost:3500/local',
-    //  DOCUMENTOS: 'http://localhost:3400/local',
-    //  COMUNES: 'https://au8clsl9fg.execute-api.us-east-1.amazonaws.com/local',
-    // CORREOS: 'http://localhost:3200/local',
+    DOCUMENTOS: 'http://localhost:3400/local',
+    // COMUNES: 'https://au8clsl9fg.execute-api.us-east-1.amazonaws.com/local',
+    CORREOS: 'http://localhost:3200/local',
     USUARIOS: 'https://api-firma-qa.0s.cl/usuarios',
-    DOCUMENTOS: 'https://api-firma-qa.0s.cl/documentos',
-    COMUNES: 'https://api-firma-qa.0s.cl/comunes',
-    CORREOS: 'https://api-firma-qa.0s.cl/correos',
-    // USUARIOS: 'https://api-firma-qa.0s.cl/usuarios',
-    //DOCUMENTOS: 'https://api-firma-qa.0s.cl/documentos',
+    COMUNES: 'http://localhost:3100/local'
+    // DOCUMENTOS: 'https://api-firma-qa.0s.cl/documentos',
     // COMUNES: 'https://api-firma-qa.0s.cl/comunes',
+    // CORREOS: 'https://api-firma-qa.0s.cl/correos',
+    // USUARIOS: 'https://api-firma-qa.0s.cl/usuarios',
+    // DOCUMENTOS: 'https://api-firma-qa.0s.cl/documentos',
+    //  COMUNES: 'https://api-firma-qa.0s.cl/comunes',
     // COMUNES: 'https://au8clsl9fg.execute-api.us-east-1.amazonaws.com/local'
   },
   URL_SENCE: 'https://eligemejor.sence.cl/BuscarCurso/DetalleCurso?curso=',
