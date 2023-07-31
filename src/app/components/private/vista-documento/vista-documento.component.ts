@@ -106,9 +106,9 @@ export class VistaDocumentoComponent implements OnInit {
           this.toaster.warning("No se encontró el documento.");
           return ;
         }
-        this.obtenerPathS3(`Cargas/Documentos/${res.documento.archivo}`)
-        this.fileName=res.documento.archivo;
-        this.documento = res.documento;
+        this.obtenerPathS3(`Cargas/Documentos/${res.documento.data[0].archivo}`)
+        this.fileName=res.documento.data[0].archivo;
+        this.documento = res.documento.data[0];
         console.log(res)
       },
       error: async (error:any) => {
