@@ -296,23 +296,29 @@ export class DocumentosFirmarComponent implements OnInit {
       } catch (error:any) {
         console.error('Error al parsear el JSON:', error.message);
       }
+        let esFirmante=false;
         document.firmantes=firmantesJson.map((firmante:any) => {
         if (firmante.correo == this.userInfo.email) {
           firmante.firmo = true;
+          esFirmante=true
           console.log("usuario si pertenece a la lista de firmantes")
         }
         return firmante
       })
-      this.documentosService.crearPdfFirma(document).subscribe({
-        next: async (res) => {
-       console.log(res);
-       await this.spinner.hide();
-      },
-      error: async (error) => {
-        console.log(error);
-        await this.spinner.hide();
+      if(esFirmante===false){
+        this.toastrService.warning(`Tu usuario no está registrado para firmar el documento ${document}`)
+      } else {
+        this.documentosService.crearPdfFirma(document).subscribe({
+          next: async (res) => {
+         console.log(res);
+         await this.spinner.hide();
+        },
+        error: async (error) => {
+          console.log(error);
+          await this.spinner.hide();
+        }
+      });
       }
-    });
     })
   }
   

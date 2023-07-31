@@ -1,24 +1,60 @@
 <div class="container my-5 col-lg-12" style="background-color: #fafbfc;">
-    <div *ngIf="currentUser" class="row py-4">
-      <div class="col-6">
-              <span class="fw-bold">
-                  Origenes</span>
-              <p>Acá puedes definir desde que sistema ingresarán los documentos.</p>
-      </div>
-    </div>
-    <div class="col-12" style="overflow-x: scroll !important;">
-      <app-tabla-origenes></app-tabla-origenes>
-    </div>
-    <div class="row py-4">
-        <div class="col-6">
-                <span class="fw-bold">
-                    Tipo Documentos</span>
-                <p>Acá puedes definir que tipos de documentos pueden ingresar al sistema.</p>
+  <section class="col-12">
+    <div class="d-flex flex-row container-titulo">
+      <div class="d-flex col-5 ms-3 mb-4 pt-4">
+        <div class="d-flex flex-column flex-wrap text-center">
+          <div class="d-flex flex-row subcontainer-titulo">
+            <div class="mt-1">
+              <img src="../../../../assets/img/mantenedor_usuarios.svg">
+            </div>
+            <div>
+              <h1 class="fw-bold mx-2">Mantenedor de sistemas</h1>
+            </div>
+          </div>
+          <div>
+            <p style="font-size: 1.1rem!important;">Listado de sistemas dentro de firma electrónica</p>
+          </div>
         </div>
-    </div>
-    <div class="col-12" style="overflow-x: scroll !important;">
-    <app-tabla-tipo-doc></app-tabla-tipo-doc>
-    </div>
-  </div>
-  
+      </div>
+      <div class="d-flex flex-row justify-content-end align-items-end btn-container" style="flex-grow: 1;">
+          <button class="filter-btn btn me-2 mb-3" style="border: 1px solid #979ba2;" (click)="flagFiltros = !flagFiltros"><img class="px-3" src="../assets/img/filtro-btn.svg">Filtrar</button>
+          <button class="btn-firmar-seleccionados btn btn-primary btn-main me-2 p-2 mb-3"style="background-color: #0B58A4 !important;"(click)="agregarSistema()">Agregar Usuario</button>
+      </div>
+   </div>
+  </section>
+  <section>
+    <mat-accordion>
+      <!-- #docregion basic-panel -->
+      <!-- #docregion hide-toggle -->
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <table mat-table [dataSource]="dataSource" class="tabla-usuarios">
+                <ng-container
+                  [matColumnDef]="column.columnDef"
+                  *ngFor="let column of columns"
+                >
+                  <th mat-header-cell *matHeaderCellDef style="background-color: #e4ebf5 !important;">
+                    {{ column.header }}
+                  </th>
+                  <td mat-cell *matCellDef="let row" [ngSwitch]="column.columnDef">
+                    <ng-container>
+                      {{ column.cell(row) }}
+                    </ng-container>
+                  </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let emprow; columns: displayedColumns"></tr>
+              </table>
+            </mat-panel-title>
+            <mat-panel-description>
+              Currently I am {{panelOpenState ? 'open' : 'closed'}}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          
+        </mat-expansion-panel>
+      </mat-accordion>
+  </section>
+</div>
+
   
