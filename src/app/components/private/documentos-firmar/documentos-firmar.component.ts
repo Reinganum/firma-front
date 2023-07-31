@@ -286,9 +286,9 @@ export class DocumentosFirmarComponent implements OnInit {
 
    documentList:any;
 
-   async firmarSeleccionados(){
+   async firmarSeleccionados():Promise<any>{
     if(this.selection.selected.length===0){
-      return
+      return this.toastrService.warning("No hay documentos seleccionados para firmar")
     }
     this.selection.selected.forEach((document)=>{
       let firmantesJson
