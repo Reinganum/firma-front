@@ -58,16 +58,17 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit{
     } catch (error:any) {
       console.error('Error al parsear el JSON:', error.message);
     }
-    console.log(firmantes);
     let firma:boolean;
     let valida:any =firmantes.map((firmante:any, i:any) => {
-      if (firmante.correo === this.userInfo.email) {
+      if (firmante.correo == this.userInfo.email) {
         firmante.firmo=true;
         firma = true;
         return true;
       }
+      firmante.firmo=false;
       return false;
     })
+    console.log(firmantes);
     console.log(valida);
     
     if (!valida[0] && !valida[1]) {
@@ -79,19 +80,14 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit{
       console.log(this.documento)
       this.documentosService.crearPdfFirma({
           key: `Cargas/Documentos/${this.documento.archivo}`,
-          firmantes: this.documento.firmantes
+          firmantes
         }).subscribe({
         next: async (res) => {
           console.log(res);
-          this.notificarFirma()
-          let bucket = window.location.hostname !== "localhost" ? 'firma-otic-qa-doc' : "ofe-local-services"
-          const url:any = await this.comunesServices.getSignedUrl({bucket, key: res.key, metodo: 'get'}).toPromise();
-          const link = document.createElement('a');
-          link.href = url.message;
-          link.download = res.key.split('/')[res.key.split('/').length - 1];
-          link.target = '_blank';
-          link.click();
-          await this.spinner.hide();
+          res.datosTabla
+          res.pdfBase64
+          await this.firmar(res.datosTabla, res.pdfBase64);
+          
         },
         error: async (error) => {
           console.log(error);
@@ -99,6 +95,21 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit{
         }
       });
     this.activeModal.close({ estado: true});
+  }
+
+  async firmar(datosTabla:any, pdfBase64:any) {
+    const firma = await this.comunesServices.firma({datosTabla, pdfBase64}).toPromise();
+    console.log(firma);
+    
+    this.notificarFirma()
+    let bucket = window.location.hostname !== "localhost" ? 'firma-otic-qa-doc' : "ofe-local-services"
+    const url:any = await this.comunesServices.getSignedUrl({bucket, key: firma.key, metodo: 'get'}).toPromise();
+    const link = document.createElement('a');
+    link.href = url.message;
+    link.download = firma.key.split('/')[firma.key.split('/').length - 1];
+    link.target = '_blank';
+    link.click();
+    await this.spinner.hide();
   }
 
   notificarFirma(){
