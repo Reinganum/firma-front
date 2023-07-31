@@ -306,11 +306,12 @@ export class DocumentosFirmarComponent implements OnInit {
         return firmante
       })
       if(esFirmante===false){
-        this.toastrService.warning(`Tu usuario no está registrado para firmar el documento ${document}`)
+        this.toastrService.warning(`Tu usuario no está registrado para firmar el documento ${document.archivo}`)
       } else {
         this.documentosService.crearPdfFirma(document).subscribe({
           next: async (res) => {
          console.log(res);
+         this.enviarNotificacion()
          await this.spinner.hide();
         },
         error: async (error) => {

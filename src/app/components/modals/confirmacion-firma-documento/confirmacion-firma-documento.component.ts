@@ -48,52 +48,60 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit{
     // } else {
     //   this.router.navigate(['/consulta-documento']);
     // }
+    this.notificarFirma()/*
     let firmantesJson
-    const firmantes = `${this.documento?.firmantes.replace(/\[|\]/g, '')}`;
-    console.log(firmantes)
+    console.log(this.documento.firmantes)
+    const firmantes = typeof this.documento.firmantes ==="string" ? `${this.documento?.firmantes.replace(/\[|\]/g, '')}`: this.documento?.firmantes;
+    let esFirmante=false
     try {
-      firmantesJson = JSON.parse(`[${firmantes}]`);
+      firmantesJson = typeof firmantes === "string" ? JSON.parse(`[${firmantes}]`): firmantes;
     } catch (error:any) {
       console.error('Error al parsear el JSON:', error.message);
     }
     this.documento.firmantes=firmantesJson.map((firmante:any, i:any) => {
-      if (firmante.correo == this.userInfo.email) {
+      if (firmante.correo === "ncatalan@nexia.cl") {
+        esFirmante=true
         firmante.firmo=true;
         firmante.rut="19.585.125-5"
       }
       return firmante
     })
-    console.log(this.documento.firmantes)
-    await this.spinner.show();
-    this.notificarFirma() 
-    this.documentosService.crearPdfFirma({
-          key: this.key,
-          firmantes: this.documento.firmantes
-      }).subscribe({
-      next: async (res) => {
-        console.log(res);
-        const url:any = await this.comunesServices.getSignedUrl({bucket: 'firma-otic-qa-doc', key: res.key, metodo: 'get'}).toPromise();
-        const link = document.createElement('a');
-        link.href = url.message;
-        link.download = res.key.split('/')[res.key.split('/').length - 1];
-        link.target = '_blank';
-        link.click();
-        await this.spinner.hide();
-      },
-      error: async (error) => {
-        console.log(error);
-        await this.spinner.hide();
-      }
-    });
+    if(esFirmante===false){
+      this.toastr.warning(`Tu usuario no está registrado para firmar el documento ${this.documento.archivo}`)
+    } else {
+      await this.spinner.show();
+      this.documentosService.crearPdfFirma({
+          key: this.key,
+          firmantes: this.documento.firmantes
+        }).subscribe({
+        next: async (res) => {
+          console.log(res);
+          this.notificarFirma()
+          const url:any = await this.comunesServices.getSignedUrl({bucket: 'firma-otic-qa-doc', key: res.key, metodo: 'get'}).toPromise();
+          const link = document.createElement('a');
+          link.href = url.message;
+          link.download = res.key.split('/')[res.key.split('/').length - 1];
+          link.target = '_blank';
+          link.click();
+          await this.spinner.hide();
+        },
+        error: async (error) => {
+          console.log(error);
+          await this.spinner.hide();
+        }
+      });
+    }*/
     this.activeModal.close({ estado: true});
   }
 
   notificarFirma(){
+    console.log(`se está enviando mail a ${this.userInfo.email}`)
     const datos = {
-      email: this.userInfo.email,
+      email: `${this.userInfo.email}`,
       asunto: 'Nuevo documento firmado',
       seguimiento: `N° Doc: ${this.documento.id}`
     }
+    console.log(datos)
     this.correosService.notificarDocFirmado(datos).subscribe({
       next: (res:any) => {
         console.log(res);        
@@ -105,3 +113,4 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit{
     this.activeModal.close({estado:true});
   }
 }
+
