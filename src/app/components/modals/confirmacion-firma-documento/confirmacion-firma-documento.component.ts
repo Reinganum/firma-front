@@ -98,11 +98,14 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit{
   }
 
   async firmar(datosTabla:any, pdfBase64:any) {
-    const firma = await this.comunesServices.firma({datosTabla, pdfBase64}).toPromise();
+    console.log(datosTabla);
+    console.log(pdfBase64);
+    
+    const firma = await this.comunesServices.firma({datosTabla: [ [ "Nombre", "Rut", "Correo" ], [ "Nicola22s", "", "asd@gmail.com" ] ], pdfBase64}).toPromise();
     console.log(firma);
     
     this.notificarFirma()
-    let bucket = window.location.hostname !== "localhost" ? 'firma-otic-qa-doc' : "ofe-local-services"
+    let bucket = window.location.hostname == "localhost" ? 'firma-otic-qa-doc' : "ofe-local-services"
     const url:any = await this.comunesServices.getSignedUrl({bucket, key: firma.key, metodo: 'get'}).toPromise();
     const link = document.createElement('a');
     link.href = url.message;

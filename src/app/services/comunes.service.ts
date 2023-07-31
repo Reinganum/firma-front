@@ -22,8 +22,8 @@ export class ComunesService {
   firma(data: any): Observable<any> {
     const body = JSON.stringify(data);
     console.log(body);
-    
-    const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+    console.log(data);   
+    const headers = {'Content-Type': 'application/json'};
     return this.http.post(`https://firma-api.0s.cl/firmar-pdf`, body, {headers});
   }
 
