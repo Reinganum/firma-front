@@ -105,7 +105,7 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit{
     console.log(firma);
     
     this.notificarFirma()
-    let bucket = window.location.hostname == "localhost" ? 'firma-otic-qa-doc' : "ofe-local-services"
+    let bucket = window.location.hostname !== "localhost" ? 'firma-otic-qa-doc' : "ofe-local-services"
     const url:any = await this.comunesServices.getSignedUrl({bucket, key: firma.key, metodo: 'get'}).toPromise();
     const link = document.createElement('a');
     link.href = url.message;
