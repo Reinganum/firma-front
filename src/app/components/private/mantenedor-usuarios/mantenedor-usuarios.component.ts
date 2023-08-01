@@ -105,6 +105,7 @@ export class MantenedorUsuariosComponent implements OnInit {
         estado:user.estado
       }
     };
+    console.log(datos)
     this.usuarioService.entregarAcceso(datos).subscribe({
       next: async(res:any) => {
         console.log(res)

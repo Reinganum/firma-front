@@ -18,7 +18,7 @@
       </div>
       <div class="d-flex flex-row justify-content-end align-items-end btn-container" style="flex-grow: 1;">
           <button class="filter-btn btn me-2 mb-3" style="border: 1px solid #979ba2;" (click)="flagFiltros = !flagFiltros"><img class="px-3" src="../assets/img/filtro-btn.svg">Filtrar</button>
-          <button class="btn-firmar-seleccionados btn btn-primary btn-main me-2 p-2 mb-3"style="background-color: #0B58A4 !important;"(click)="agregarSistema()">Agregar </button>
+          <button class="btn-firmar-seleccionados btn btn-primary btn-main me-2 p-2 mb-3"style="background-color: #0B58A4 !important;"(click)="agregarSistema()" >Agregar </button>
       </div>
    </div>
   </section>
@@ -27,8 +27,8 @@
       <div class="rounded" style="background-color: #e4ebf5 !important;">
         <div class="d-flex flex-row">
           <div class="d-flex align-items-center mx-2">
-            <label class="switch" (click)="modificarAcceso()">
-              <input type="checkbox" name="enableSystem" >
+            <label class="switch" (click)="modificarAcceso(medio)">
+              <input type="checkbox" name="enableSystem" [checked]="medio.me_disponible === 1">
               <span class="slider round"></span>
             </label>
           </div>
@@ -42,7 +42,14 @@
             <thead>
               <tr>
                 <th style="font-weight: normal!important;" *ngFor="let column of columns">{{column}}</th>
-                <th>{{medio.me_disponible!==1?"Inactivo":"Activo"}}</th>
+                <th>
+                  <span [ngClass]="{
+                    'inactivo':medio.me_disponible!==1,
+                    'activo':medio.me_disponible===1,
+                    }" class="p-2">
+                    {{medio.me_disponible!==1?"Inactivo":"Activo"}}
+                  </span>
+                </th>
               </tr>
             </thead>
           </table>
@@ -53,33 +60,50 @@
               <!-- #enddocregion hide-toggle -->
                   <mat-expansion-panel-header>
                     <mat-panel-title>
-                    
+                      <tbody>
+                        <tr class="fw-bold">
+                          <td>{{medio.me_disponible}}</td>
+                        </tr>
+                      </tbody>
                     </mat-panel-title>
                   </mat-expansion-panel-header>
                   <div >
                     <div>
                       <table class="table">
                         <thead>
-                          <tr style="background-color: #fafbfc;">
+                          <tr style="background-color: #e4ebf5; border-bottom: 2px solid #0b58a4;">
                             <td>Nombre documento</td>
                             <td>ID</td>
                             <td>Estado</td>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr class="fw-bold">
+                          <tr class="fw-bold" *ngFor="let documento of documentos[i][0]">
                             <td>
-                              <div class="d-flex align-items-center mx-2">
-                                <label class="switch" (click)="modificarAcceso()">
-                                  <input type="checkbox" name="enableSystem" >
+                              <div class="d-flex flex-row align-items-center mx-2">
+                                <label class="switch" (click)="modificarAcceso(documento)">
+                                  <input type="checkbox" name="enableSystem" [checked]="documento.disponible === 1">
                                   <span class="slider round"></span>
                                 </label>
+                                <p class="px-3">{{documento.medio}}</p>
                               </div>
                             </td>
-                          </tr>
+                            <td>{{documento.idMedioGestion}}</td>
+                            <td>
+                              <span [ngClass]="{
+                                'inactivo':documento.disponible!==1,
+                                'activo':documento.disponible===1,
+                                }" class="p-2">
+                                {{ documento.disponible !==1 ? "Inactivo" : "Activo" }}
+                              </span>
+                            </td>
+                          </tr> 
                         </tbody>
                       </table>
-                      <button class="btn-firmar-seleccionados btn btn-primary btn-main me-2 p-2 mb-3"style="background-color: #0B58A4 !important;"(click)="agregarSistema()">Agregar Documento</button>
+                      <div class="d-flex flex-row w-100 py-2">
+                        <input type="text" placeholder="Escribe el nombre del documento">
+                      </div>
+                      <button class="btn-firmar-seleccionados btn btn-primary btn-main me-2 p-2 mb-3"style="background-color: #0B58A4 !important;"(click)="agregarDocumento()">Agregar Documento</button>
                     </div>
                   </div>
                 </mat-expansion-panel>

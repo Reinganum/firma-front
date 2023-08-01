@@ -20,9 +20,7 @@ export class AuthInterceptor implements HttpInterceptor {
     const currentUser = this._authenticationService.currentUserValue ? this._authenticationService.currentUserValue: localStorage.getItem("tokenUrl");
     const token = currentUser.token ? currentUser.token : localStorage.getItem("tokenUrl");
     const isLoggedIn = currentUser && token;
-    isLoggedIn&&console.log("user logged in")
-    console.log(token)
-    console.log(currentUser)
+
     // const isApiUrl = req.url.startsWith(environment.APIS.SERVICIOS);
 
 
