@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup , Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { DocumentosService } from 'src/app/services/documentos.service';
-
-
 
 @Component({
   selector: 'agregar-usuario',
@@ -12,15 +11,27 @@ import { DocumentosService } from 'src/app/services/documentos.service';
   styleUrls: ['./agregar-usuario.component.css'],
 })
 export class AgregarUsuario implements OnInit {
-  docsPendientes: any[] = [];
+  userForm!: FormGroup;
   
   constructor(
     public activeModal: NgbActiveModal,
-    private router:Router,
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit() {
-
+    this.userForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      rut: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      cargo: ['', [Validators.required, Validators.email]],
+      clave: ['', [Validators.required, Validators.email]],
+    })
   }
 
+  onSubmit(){
+    if (this.userForm.valid) {
+      console.log(this.userForm.value);
+      
+    }
+  }
 }

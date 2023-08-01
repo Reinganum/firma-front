@@ -36,8 +36,24 @@ export class MantenedorSistemasComponent implements OnInit {
           next: async (res:any) => {
               console.log(res);
               this.medios=res.listaMediosGestion.data
-              const inputString =this.medios[0].medioGestionData;
-              console.log(JSON.parse(inputString))
+            
+              try{
+                  this.documentos=this.medios.map((medio:any)=>{
+                  const inputString=medio.medioGestionData
+                  const validJsonStr=formatJSONString(inputString)
+                  return JSON.parse(validJsonStr)
+                })
+                function formatJSONString(inputString:string) {
+                  const regex = /([\w]+):[\s]*([\w\s]+),/g;
+                  const formattedString = inputString.replace(regex, '"$1": "$2",');
+                  const finalString = formattedString.replace(/disponible: (\d)/g, '"disponible": $1');
+                  return '[' + finalString + ']';
+                }
+                console.log(this.documentos)
+              }catch(error){
+                console.log(error)
+                await this.spinner.hide();
+              }
               await this.spinner.hide();
           },
           error: async (error:any) => {
