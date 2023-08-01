@@ -3,9 +3,10 @@ export const environment = {
   SW: true,
 
   API_DOMAINS: {
-    USUARIOS: 'https://j42wt568v5.execute-api.us-east-1.amazonaws.com/local',
-    DOCUMENTOS: 'https://vosip7qx50.execute-api.us-east-1.amazonaws.com/local',
-    COMUNES: 'https://au8clsl9fg.execute-api.us-east-1.amazonaws.com/local'
+    USUARIOS: 'https://api-firma-qa.0s.cl/usuarios',
+    DOCUMENTOS: 'https://api-firma-qa.0s.cl/documentos',
+    COMUNES: 'https://api-firma-qa.0s.cl/comunes',
+    CORREOS: 'https://api-firma-qa.0s.cl/correos',
   },
   URL_SENCE: 'https://eligemejor.sence.cl/BuscarCurso/DetalleCurso?curso=',
   API_MOTORES: {

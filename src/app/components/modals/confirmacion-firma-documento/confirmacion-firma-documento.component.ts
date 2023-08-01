@@ -65,7 +65,7 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit{
       }).subscribe({
       next: async (res) => {
         console.log(res);
-        const url:any = await this.comunesServices.getSignedUrl({key: res.nombreArchivo, metodo: 'get'}).toPromise();
+        const url:any = await this.comunesServices.getSignedUrl({key: res.archivo, metodo: 'get'}).toPromise();
         const link = document.createElement('a');
         link.href = url.message;
         link.download = res.nombreArchivo.split('/')[res.nombreArchivo.split('/').length - 1];
