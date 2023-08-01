@@ -21,21 +21,25 @@
         </div>
         <div class="shadow-bottom"></div>
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-            <li class=" nav-item"><a class="d-flex align-items-center" [routerLink]="['home']">
+            <li class="nav-item"><a class="d-flex align-items-center" [routerLink]="['home']" routerLinkActive="activo">
                 <i [data-feather]="'home'"></i><span class="menu-title text-truncate"
                     data-i18n="Home">Inicio</span></a>
             </li> 
-            <li  class=" nav-item"><a class="d-flex align-items-center" [routerLink]="['docsFirmar']">
+            <li  class="nav-item"><a class="d-flex align-items-center" [routerLink]="['docsFirmar']" routerLinkActive="activo">
               <i [data-feather]="'file'"></i><span class="menu-title text-truncate"
                   data-i18n="file">Documentos por Firmar</span></a>
             </li>
-            <li class=" nav-item"><a class="d-flex align-items-center" [routerLink]="['docsFirmados']">
+            <li class="nav-item"><a class="d-flex align-items-center" [routerLink]="['docsFirmados']" routerLinkActive="activo">
               <i [data-feather]="'file-plus'"></i><span class="menu-title text-truncate"
                   data-i18n="Home">Documentos Firmados</span></a>
             </li>
-            <li class=" nav-item"><a class="d-flex align-items-center" [routerLink]="['mantenedor']">
+            <li class="nav-item"><a class="d-flex align-items-center" [routerLink]="['mantenedor/usuarios']" routerLinkActive="activo">
               <i [data-feather]="'user'"></i><span class="menu-title text-truncate"
                   data-i18n="Home">Mantenedor Usuarios</span></a>
+            </li>
+            <li class="nav-item"><a class="d-flex align-items-center" [routerLink]="['mantenedor/sistemas']" routerLinkActive="activo">
+              <i [data-feather]="'hard-drive'"></i><span class="menu-title text-truncate"
+                  data-i18n="Home">Mantenedor Sistemas/Documentos</span></a>
             </li>
             <!-- <li class="nav-item"><a class="d-flex align-items-center" [routerLink]="['disenoPlantillas']">
                 <img class="me-2"  src="../../../../assets/img/salida-sidebar.svg"/><span class="menu-title text-truncate" data-i18n="Home">Documentos firmados</span></a>

@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class DocumentosService {
   private docsPendientes: any[] = [];
+  private origenes!:any;
   constructor(
     private http: HttpClient
   ) { }
@@ -48,5 +49,13 @@ export class DocumentosService {
   
   getDocsPendientes() {
     return this.docsPendientes;
+  }
+
+  setOrigenes(data: any) {
+    this.origenes = data;
+  }
+  
+  getOrigenes() {
+    return this.origenes;
   }
 }

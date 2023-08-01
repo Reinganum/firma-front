@@ -215,6 +215,8 @@ export class DocumentosFirmarComponent implements OnInit {
   showModalCorreo(documento:any){
     this.modalRef=this.modalService.open(EnvioCorreoComponent,{backdrop:'static',size:'md'});
     this.modalRef.componentInstance.documento = documento;
+    this.modalRef.componentInstance.key = `Cargas/Documentos/${documento.archivo}`;
+    this.modalRef.componentInstance.documento = documento;
     this.modalRef.result.then((res)=>{
       if(res.estado){
         this.modalRef.close();
@@ -284,25 +286,49 @@ export class DocumentosFirmarComponent implements OnInit {
 
    documentList:any;
 
-   async firmarSeleccionados(){
+   async firmarSeleccionados():Promise<any>{
     if(this.selection.selected.length===0){
-      return
+      return this.toastrService.warning("No hay documentos seleccionados para firmar")
     }
-    this.selection.selected.forEach((doc)=>{
-        this.spinner.show();
-        this.documentosService.crearPdfFirma({...doc,rut:"193452323"}).subscribe({
-         next: async (res) => {
-        console.log(res);
-        await this.spinner.hide();
-      },
-      error: async (error) => {
-        console.log(error);
-        await this.spinner.hide();
+      this.selection.selected.forEach((document)=>{
+        let firmantesJson
+        if( typeof document.firmantes==="string"){
+        const firmantes =`${document.firmantes.replace(/\[|\]/g, '')}`;
+        try {
+          firmantesJson = JSON.parse(`[${firmantes}]`);
+        } catch (error:any) {
+          console.error('Error al parsear el JSON:', error.message);
+        }
+      } else {
+        firmantesJson=document.firmantes
       }
-    });
+        let esFirmante=false;
+        document.firmantes=firmantesJson.map((firmante:any) => {
+        if (firmante.correo == this.userInfo.email) {
+          firmante.firmo = true;
+          esFirmante=true
+          console.log("usuario si pertenece a la lista de firmantes")
+        }
+        return firmante
+      })
+      if(esFirmante===false){
+        this.toastrService.warning(`Tu usuario no está registrado para firmar el documento ${document.archivo}`)
+      } else {
+        this.documentosService.crearPdfFirma(document).subscribe({
+          next: async (res) => {
+         console.log(res);
+         this.enviarNotificacion()
+         await this.spinner.hide();
+        },
+        error: async (error) => {
+          console.log(error);
+          await this.spinner.hide();
+        }
+      });
+      }
     })
-   }
-
+  }
+  
    extraerIniciales(origen:string){
     const strArr=origen.split(' ');
     if(strArr.length===1){

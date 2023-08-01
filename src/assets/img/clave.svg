@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <g id="Grupo_3659" data-name="Grupo 3659" transform="translate(-12526 -1314)">
+    <rect id="Rectángulo_1715" data-name="Rectángulo 1715" width="40" height="40" rx="4" transform="translate(12526 1314)" fill="#0b58a4"/>
+    <g id="Grupo_3649" data-name="Grupo 3649" transform="translate(337 -2097)">
+      <g id="Rectángulo_1757" data-name="Rectángulo 1757" transform="translate(12211.435 3415.565) rotate(45)" fill="none" stroke="#fff" stroke-width="2">
+        <rect width="19" height="19" rx="3" stroke="none"/>
+        <rect x="1" y="1" width="17" height="17" rx="2" fill="none"/>
+      </g>
+      <g id="Rectángulo_1756" data-name="Rectángulo 1756" transform="translate(12196 3425)" fill="#0b58a4" stroke="#fff" stroke-width="2">
+        <rect width="19" height="19" rx="3" stroke="none"/>
+        <rect x="1" y="1" width="17" height="17" rx="2" fill="none"/>
+      </g>
+      <circle id="Elipse_113" data-name="Elipse 113" cx="1.5" cy="1.5" r="1.5" transform="translate(12201 3430)" fill="#fff"/>
+      <circle id="Elipse_116" data-name="Elipse 116" cx="1.5" cy="1.5" r="1.5" transform="translate(12207 3430)" fill="#fff"/>
+      <circle id="Elipse_114" data-name="Elipse 114" cx="1.5" cy="1.5" r="1.5" transform="translate(12201 3436)" fill="#fff"/>
+      <circle id="Elipse_115" data-name="Elipse 115" cx="1.5" cy="1.5" r="1.5" transform="translate(12207 3436)" fill="#fff"/>
+      <rect id="Rectángulo_1758" data-name="Rectángulo 1758" width="3" height="13" transform="translate(12215 3429)" fill="#0b58a4"/>
+      <rect id="Rectángulo_1759" data-name="Rectángulo 1759" width="3" height="13" transform="translate(12198 3425) rotate(-90)" fill="#0b58a4"/>
+    </g>
+  </g>
+</svg>

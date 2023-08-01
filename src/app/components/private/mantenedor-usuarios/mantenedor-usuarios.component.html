@@ -1,51 +1,131 @@
 <div class="container my-5 col-lg-12" style="background-color: #fafbfc;">
-  <div *ngIf="currentUser" class="row py-4">
-    <div class="col-6">
-            <span class="fw-bold">
-                Usuarios</span>
-            <p>Listado de usuarios del sistema  </p>
+  <section class="col-12">
+    <div class="d-flex flex-row container-titulo">
+      <div class="d-flex col-5 ms-3 mb-4 pt-4">
+        <div class="d-flex flex-column flex-wrap text-center">
+          <div class="d-flex flex-row subcontainer-titulo">
+            <div class="mt-1">
+              <img src="../../../../assets/img/mantenedor_usuarios.svg">
+            </div>
+            <div>
+              <h1 class="fw-bold mx-2">Mantenedor de usuarios</h1>
+            </div>
+          </div>
+          <div>
+            <p style="font-size: 1.1rem!important;">Listado de usuarios para controlar los accesos</p>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex flex-row justify-content-end align-items-end btn-container" style="flex-grow: 1;">
+          <button class="filter-btn btn me-2 mb-3" style="border: 1px solid #979ba2;" (click)="flagFiltros = !flagFiltros"><img class="px-3" src="../assets/img/filtro-btn.svg">Filtrar</button>
+          <button class="btn-firmar-seleccionados btn btn-primary btn-main me-2 p-2 mb-3"style="background-color: #0B58A4 !important;"(click)="agregarUsuario()">Agregar Usuario</button>
+      </div>
+   </div>
+  </section>
+  <section>
+   <div class="col-12">
+    <div *ngIf="flagFiltros" class="row my-1" id="verfiltros">
+        <div class="d-flex justify-content-center">
+            <div class="col-11">
+                <form [formGroup]="filtrosForm" class="row">
+                    <div class="card shadow-sm pt-3 pb-2">
+                            <div class="col-12">
+                                <h4 class="fw-bold">FILTRAR EN EL LISTADO</h4>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <div class="d-flex flex-row flex-wrap">
+                                    <div class="d-flex flex-wrap form-group mx-1">
+                                      <div class="d-flex mx-1 flex-wrap form-group inputs-filter">
+                                        <mat-form-field>
+                                        <mat-label>Nombre</mat-label>
+                                        <input type="text" matInput formControlName="nombre" placeholder="Juan Pérez"/>
+                                        </mat-form-field>
+                                      </div>
+                                      <div class="d-flex mx-1 flex-wrap form-group inputs-filter">
+                                          <mat-form-field>
+                                          <mat-label>RUT</mat-label>
+                                          <input type="text" matInput formControlName="rut" placeholder="19.231.321-3"/>
+                                          </mat-form-field>
+                                      </div>
+                                      <div class="d-flex mx-1 flex-wrap form-group inputs-filter">
+                                        <mat-form-field>
+                                        <mat-label>Mail</mat-label>
+                                        <input type="text" matInput formControlName="mail" placeholder="juan@otic.sofofa.cl"/>
+                                        </mat-form-field>
+                                      </div>
+                                      <div class="d-flex mx-1 flex-wrap form-group inputs-filter">
+                                        <mat-form-field>
+                                          <mat-label>Estado</mat-label>
+                                          <mat-select formControlName="estado">
+                                              <mat-option value="inactivo">Inactivo</mat-option>
+                                              <mat-option value="activo">Activo</mat-option>
+                                          </mat-select>
+                                      </mat-form-field>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 d-flex justify-content-end mt-md-3 mb-2">
+                                <a (click)="filtrar()" class="mt-2 btn btn-primary mx-1" style="background-color: #0B58A4 !important;">
+                                <img src="../assets/img/aplicar-filtros.svg">Aplicar
+                                filtros</a>
+                                <a (click)="limpiar()" class="mt-2 btn btn-outline-secondary mx-1" style="background-color: transparent !important;"><img
+                                class="mx-1" src="../assets/img/limpiar-filtros.svg">Limpiar Filtros</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="d-flex col-6 justify-content-end">
-      <!-- <button class="filter-btn btn me-2" style="border: 1px solid #979ba2;" (click)="flagFiltros = !flagFiltros"><img class="px-3" src="../assets/img/filtro-btn.svg">Filtrar</button> -->
-      <!-- <button *ngIf="tipoTabla === 'firmar'" class="btn-firmar-seleccionados btn btn-primary btn-main"style="background-color: #0B58A4 !important;">Firmar seleccionados</button> -->
-    </div>
-  </div>
-  <div class="col-12" style="overflow-x: scroll !important;">
-    <table class="table">
-      <thead class="pt-4 text-center fw-bold">
-       <tr>
-           <!-- <td><input class="form-check-input" style="outline:#1e5180;" type="checkbox" disabled></td> -->
-           <td  *ngFor="let dataColumn of cabeceras, let i = index">
-               <span>{{dataColumn.nombre}}</span>
-           </td>
-       </tr>
-      </thead>
-      <tbody class="text-center">
-           <tr *ngFor="let document of listaUsuarios, let i = index">
-               <!-- <td><input class="form-check-input" [value]=i type="checkbox" (change)="onCheckChange($event)"></td> -->
-               <td>{{document.id }}</td>
-               <td>{{document.rut + document.dv}}</td>
-               <td>{{document.nombres + ' ' + document.apellidoP}}</td>
-               <td>{{document.tipo===1?"Usuario OTIC":"Usuario/a Externo"}}</td>
-               <td>{{document.cargo}}</td>
-               <td>{{document.email}}</td>
-               <td>{{document.estado===1?"Habilitado":"Esperando acceso"}}</td>
-               <td>
-                   <div class="d-flex justify-content-center">
-                     <!-- <a (click)="vistaPrevia(document)"><img class="iconos-options rounded p-1" src="../../../../assets/img/lupa_btn.svg" alt="Vista previa" style="margin-left: 1px !important;"></a> -->
-                     <!-- <a (click)="showModal()"><img class="mx-1 iconos-options rounded p-1" src="../../../../assets/img/firma_btn.svg"></a> -->
-                     <mat-icon matTooltip='{{document.estado!==1?"Activar":"Desactivar"}}' class="rounded-circle" [ngStyle]="{'background-color': document.estado===1 ? 'red' : (document.estado===0 ? '#0B58A4' : null) }" style="color: white;" (click)="entregarAcceso(document)">{{document.estado!==1?"person_add":"person_remove"}}</mat-icon>
-                   </div>
-               </td>
-           </tr>
-      </tbody>
-   </table>
-   <mat-paginator #paginadorDocumentos
-       [length]="totalFilas"
-       [pageSize]="pageSize"
-       [pageSizeOptions]="pageSizeOptions"
-   >
-   </mat-paginator>
-  </div>
-
+  </section>
+  <section class="table-container mat-elevation-z8 mt-2" tabindex="0">
+    <table mat-table [dataSource]="dataSource" class="tabla-usuarios">
+      <ng-container
+        [matColumnDef]="column.columnDef"
+        *ngFor="let column of columns"
+      >
+        <th mat-header-cell *matHeaderCellDef style="background-color: #e4ebf5 !important;">
+          <img class="px-3" [src]=column.icon>
+          {{ column.header }}
+        </th>
+        <td mat-cell *matCellDef="let row" [ngSwitch]="column.columnDef">
+          <ng-container *ngSwitchCase="'Toggle'">
+            <label class="switch" (click)="entregarAcceso(row) ">
+              <input type="checkbox" name="enableUser" [checked]="row.estado === 1">
+              <span class="slider round"></span>
+            </label>
+          </ng-container>
+          <ng-container *ngSwitchCase="'Opciones'">
+            <div class="d-flex w-100 justify-content-center">
+              <img src="../../../../assets/img/eliminar_btn.svg" matTooltip="Eliminar"  matTooltipClass="custom-tooltip" class="option-icons p-1 mx-1 rounded"/>
+              <img src="../../../../assets/img/editar_btn.svg" matTooltip="Editar" class="option-icons p-1 mx-1 rounded"/>
+            </div>
+          </ng-container>
+          <ng-container *ngSwitchCase="'Estado'">
+            <div class="d-flex w-100 justify-content-center">
+              <span class="fw-bold p-1 rounded"
+                [ngClass]="{
+                  'inactivo':row.estado!==1,
+                  'activo':row.estado===1,
+                  }">
+                  {{column.cell(row)}}
+              </span>
+            </div>
+          </ng-container>
+          <ng-container *ngSwitchDefault>
+            {{ column.cell(row) }}
+          </ng-container>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let emprow; columns: displayedColumns"></tr>
+    </table>
+    <mat-paginator #paginadorUsuarios
+      [length]="totalFilas"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions"
+        >
+      </mat-paginator>
+  </section>
 </div>

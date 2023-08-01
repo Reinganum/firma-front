@@ -106,9 +106,10 @@ export class VistaDocumentoComponent implements OnInit {
           this.toaster.warning("No se encontró el documento.");
           return ;
         }
-        this.obtenerPathS3(res.documento.archivo)
-        this.fileName=res.documento.archivo
-        console.log(this.fileName)
+        this.obtenerPathS3(`Cargas/Documentos/${res.documento.data[0].archivo}`)
+        this.fileName=res.documento.data[0].archivo;
+        this.documento = res.documento.data[0];
+        console.log(res)
       },
       error: async (error:any) => {
         await this.spinner.hide();
@@ -116,7 +117,7 @@ export class VistaDocumentoComponent implements OnInit {
       }
     });
   }
-
+  documento:any;
   async obtenerPathS3(archivo:any) {
     console.log(archivo);
     const fileData:any = {
@@ -138,7 +139,7 @@ export class VistaDocumentoComponent implements OnInit {
 
   async descargarArchivo(archivo:any){
     const fileData:any = {
-      key: archivo,
+      key: `Cargas/Documentos/${archivo}`,
       metodo: 'get'
     }
     const resultado:any = await this.comunesServices.getSignedUrl(fileData).toPromise();
@@ -151,7 +152,8 @@ export class VistaDocumentoComponent implements OnInit {
 
   modalFirmar() {
     this.modalRef = this.modalService.open(ConfirmacionFirmaDocumentoComponent, {backdrop: 'static', size: 'lg'});
-    this.modalRef.componentInstance.key = this.fileName;
+    this.modalRef.componentInstance.key = `Cargas/Documentos/${this.fileName}`;
+    this.modalRef.componentInstance.documento = this.documento;
   }
   callBackFn(pdf: PDFDocumentProxy) {
     this.totalPages=pdf._pdfInfo.numPages

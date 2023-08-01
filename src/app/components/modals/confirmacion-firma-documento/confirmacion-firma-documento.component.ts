@@ -33,16 +33,12 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit{
   @Input() key:any;
   userKnown:boolean=true;
 
-  firmantes: any[] = [
-    {nombre: 'Nicolas', rut: '', correo: 'nicolas@gmail.com', firmo: false},
-    {nombre: 'Nicolas22', rut: '', correo: 'ncatalan@nexia.cl', firmo: false},
-  ]
+  firmantes: any[] = []
 
   ngOnInit(): void {
     this.userInfo = this.authenticationService.currentUserValue;
     console.log(this.documento);
     console.log(this.userInfo);
-    
   }
 
   async confirmar(){
@@ -52,41 +48,81 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit{
     // } else {
     //   this.router.navigate(['/consulta-documento']);
     // }
-    this.firmantes.map((firmante:any) => {
+    // let firmantesJson
+    // console.log(this.documento.firmantes)
+    // const firmantes = typeof this.documento.firmantes ==="string" ? `${}`: this.documento?.firmantes;
+    // let esFirmante=false
+    let firmantes:any = this.documento?.firmantes.replace(/\[|\]/g, '')
+    try {
+      firmantes = JSON.parse(`[${firmantes}]`)
+    } catch (error:any) {
+      console.error('Error al parsear el JSON:', error.message);
+    }
+    let firma:boolean;
+    let valida:any =firmantes.map((firmante:any, i:any) => {
       if (firmante.correo == this.userInfo.email) {
-        firmante.firmo = true;
+        firmante.firmo=true;
+        firma = true;
+        return true;
       }
+      firmante.firmo=false;
+      return false;
     })
+    console.log(firmantes);
+    console.log(valida);
+    
+    if (!valida[0] && !valida[1]) {
+      this.toastr.warning("No puedes firmar el documento, ya que no estás dentro de los firmantes");
+      return;
+    }
+
     await this.spinner.show();
-    // this.notificarFirma() NOTIFICACION FUNCIONANDO
-    this.documentosService.crearPdfFirma({
-          key: this.key,
-          firmantes: this.firmantes
-      }).subscribe({
-      next: async (res) => {
-        console.log(res);
-        const url:any = await this.comunesServices.getSignedUrl({key: res.archivo, metodo: 'get'}).toPromise();
-        const link = document.createElement('a');
-        link.href = url.message;
-        link.download = res.nombreArchivo.split('/')[res.nombreArchivo.split('/').length - 1];
-        link.target = '_blank';
-        link.click();
-        await this.spinner.hide();
-      },
-      error: async (error) => {
-        console.log(error);
-        await this.spinner.hide();
-      }
-    });
+      console.log(this.documento)
+      this.documentosService.crearPdfFirma({
+          key: `Cargas/Documentos/${this.documento.archivo}`,
+          firmantes
+        }).subscribe({
+        next: async (res) => {
+          console.log(res);
+          res.datosTabla
+          res.pdfBase64
+          await this.firmar(res.datosTabla, res.pdfBase64);
+          
+        },
+        error: async (error) => {
+          console.log(error);
+          await this.spinner.hide();
+        }
+      });
     this.activeModal.close({ estado: true});
   }
 
+  async firmar(datosTabla:any, pdfBase64:any) {
+    console.log(datosTabla);
+    console.log(pdfBase64);
+    
+    const firma = await this.comunesServices.firma({datosTabla: [ [ "Nombre", "Rut", "Correo" ], [ "Nicola22s", "", "asd@gmail.com" ] ], pdfBase64}).toPromise();
+    console.log(firma);
+    
+    this.notificarFirma()
+    let bucket = window.location.hostname !== "localhost" ? 'firma-otic-qa-doc' : "ofe-local-services"
+    const url:any = await this.comunesServices.getSignedUrl({bucket, key: firma.key, metodo: 'get'}).toPromise();
+    const link = document.createElement('a');
+    link.href = url.message;
+    link.download = firma.key.split('/')[firma.key.split('/').length - 1];
+    link.target = '_blank';
+    link.click();
+    await this.spinner.hide();
+  }
+
   notificarFirma(){
+    console.log(`se está enviando mail a ${this.userInfo.email}`)
     const datos = {
-      email: this.userInfo.email,
+      email: `${this.userInfo.email}`,
       asunto: 'Nuevo documento firmado',
       seguimiento: `N° Doc: ${this.documento.id}`
     }
+    console.log(datos)
     this.correosService.notificarDocFirmado(datos).subscribe({
       next: (res:any) => {
         console.log(res);        
@@ -98,3 +134,4 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit{
     this.activeModal.close({estado:true});
   }
 }
+

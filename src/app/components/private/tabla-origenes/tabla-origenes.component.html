@@ -1,0 +1,39 @@
+<table class="table">
+    <thead class="pt-4 text-center fw-bold">
+     <tr>
+         <!-- <td><input class="form-check-input" style="outline:#1e5180;" type="checkbox" disabled></td> -->
+         <td  *ngFor="let dataColumn of cabeceras, let i = index">
+             <span>{{dataColumn.nombre}}</span>
+         </td>
+     </tr>
+    </thead>
+    <tbody class="text-center">
+         <tr *ngFor="let datosOrigen of listaOrigen, let i = index">
+             <td>{{datosOrigen.id }}</td>
+             <td>
+                <div class="d-flex w-100 justify-content-center">
+                    
+                </div>
+             </td>   
+             <td>{{datosOrigen.sigla}}</td>                 
+             <td><span class="fw-bold p-1 rounded"
+                [ngClass]="{'activo':datosOrigen.disponible===1,
+                            'inactivo':datosOrigen.disponible===0}">
+                            {{datosOrigen.disponible == 1 ? 'Activo': 'Inactivo'}}
+                </span></td>     
+             <td>
+                <div class="d-flex justify-content-center">
+                  <!-- <a (click)="vistaPrevia(document)"><img class="iconos-options rounded p-1" src="../../../../assets/img/lupa_btn.svg" alt="Vista previa" style="margin-left: 1px !important;"></a> -->
+                  <!-- <a (click)="showModal()"><img class="mx-1 iconos-options rounded p-1" src="../../../../assets/img/firma_btn.svg"></a> -->
+                  <mat-icon matTooltip='{{datosOrigen.disponible==1?"Desactivar":"Activar"}}' class="rounded-circle pointer" [ngStyle]="{'background-color': datosOrigen.disponible===1 ? 'red' : (datosOrigen.disponible===0 ? '#0B58A4' : null) }" style="color: white;" (click)="changeDisp(datosOrigen)">{{datosOrigen.disponible!==1?"":""}}</mat-icon>
+                </div>
+            </td>            
+         </tr>
+    </tbody>
+ </table>
+ <mat-paginator #paginadorDocumentos
+     [length]="totalFilas"
+     [pageSize]="pageSize"
+     [pageSizeOptions]="pageSizeOptions"
+ >
+ </mat-paginator>

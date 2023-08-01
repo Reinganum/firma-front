@@ -83,7 +83,7 @@
                     <td mat-cell *matCellDef="let row">
                       <span class="fw-bold p-1 rounded"
                       [ngClass]="{'firmado':row.estado==='Firmado',
-                                  'parcial':row.estado==='Firma parcial',
+                                  'pendiente':row.estado==='Pendiente',
                                   'rechazado':row.estado==='Rechazado'}">
                           {{column.cell(row)}}
                       </span>

@@ -14,6 +14,10 @@ import { VistaDocumentoModule } from "./vista-documento/vista-documento.module";
 import { MantenedorUsuariosComponent } from './mantenedor-usuarios/mantenedor-usuarios.component';
 import { MantenedorUsuariosModule } from "./mantenedor-usuarios/mantenedor-usuarios.module";
 import { AuthGuard } from "../auth/helpers/auth.guard";
+import { MantenedorSistemasComponent } from './mantenedor-sistemas/mantenedor-sistemas.component';
+import { MantenedorSistemasModule } from "./mantenedor-sistemas/mantenedor-sistemas.module";
+import { TablaOrigenesComponent } from './tabla-origenes/tabla-origenes.component';
+import { TablaOrigenesModule } from "./tabla-origenes/tabla-origenes.module";
 
 // routing
 const routes: Routes = [
@@ -43,10 +47,14 @@ const routes: Routes = [
         canLoad: [AuthGuard],
         data: {animation: 'docsFirmar'}
       },
-      {path: 'mantenedor', loadChildren: () => import('./mantenedor-usuarios/mantenedor-usuarios.module').then(m => m.MantenedorUsuariosModule),
+      {path: 'mantenedor', 
+      children: [
+        {path: 'usuarios',loadChildren: () => import('./mantenedor-usuarios/mantenedor-usuarios.module').then(m => m.MantenedorUsuariosModule)},
+        {path: 'sistemas',loadChildren: () => import('./mantenedor-sistemas/mantenedor-sistemas.module').then(m => m.MantenedorSistemasModule)},
+      ],
         canActivate: [AuthGuard],
         canLoad: [AuthGuard],
-        data: {animation: 'mantenedor'}
+        data: {animation: 'mantenedor'},
       },
       // {
       //   path: 'bancoPreguntas', loadChildren: () => import('./bancoPreguntas/banco-preguntas/banco-preguntas.module').then(m => m.BancoPreguntasModule),
@@ -161,7 +169,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    PagesComponent
+    PagesComponent,
   ],
   imports: [
     CommonModule,
@@ -170,7 +178,8 @@ const routes: Routes = [
     MenuModule,
     FooterModule,
     VistaDocumentoModule,
-    MantenedorUsuariosModule
+    MantenedorUsuariosModule,
+    MantenedorSistemasModule
   ],
   exports: [
     PagesComponent,

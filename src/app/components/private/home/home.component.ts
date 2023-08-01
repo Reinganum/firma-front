@@ -21,11 +21,12 @@ export class HomeComponent implements OnInit {
     private documentosService: DocumentosService,
     private toastrService:ToastrService,
     private router: Router,
-    private spinner: NgxSpinnerService,) {}
+    private spinner: NgxSpinnerService) {}
 
   async ngOnInit(){
     this.obtenerDocumentos()
   }
+  
   async obtenerDocumentos() {
     try {
       await this.spinner.show();

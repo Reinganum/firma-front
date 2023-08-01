@@ -1,0 +1,17 @@
+thead{
+    background-color:#e4eaf5 !important;
+}
+.activo{
+    color: #4dab61;
+    background-color: rgba(236,248,239,255);
+    border-radius: 12px;
+}
+
+.inactivo{
+    color: #d9605d;
+    background-color: rgb(251,234,235);
+}
+
+.pointer:hover {
+    cursor:pointer !important;
+}

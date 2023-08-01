@@ -80,11 +80,11 @@
             <div class="col-12" style="overflow-x: scroll !important;">
                 
                 <table matSort id="table-container" class="table">
-                <thead class="pt-4 text-center">
+                <thead class="pt-4 text-center" style="border-bottom:2px solid #0B58A4;">
                 <tr>
-                    <td><mat-checkbox color="primary" (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()"></mat-checkbox></td>
+                    <td><mat-checkbox color="accent" (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()"></mat-checkbox></td>
                     <td  *ngFor="let dataColumn of documentData, let i = index">
-                        <span><img class="px-3" [src]=dataColumn.icon>{{dataColumn.nombre}}</span>
+                        <img class="px-3" style="width:50px;height: 50px;" [src]=dataColumn.icon>{{dataColumn.nombre}}
                     </td>
                 </tr>
                 </thead>
@@ -96,9 +96,9 @@
                         <td>
                             <div class="d-flex flex-row justify-content-center align-items-center">
                                 <div class="d-flex align-items-center rounded-circle bg-dark justify-content-center" style="color:white; width: 2rem; height:2rem">
-                                    {{extraerIniciales(opcionesOrigen[document.medio-1].origen)}}
+                                    {{document.siglaOrigen}}
                                 </div>
-                                <p style="max-width: 12ch;">{{opcionesOrigen[document.medio-1].origen}}</p>
+                                <p style="max-width: 12ch;">{{document.descripcionOrigen}}</p>
                             </div>
                         </td>
                         <!-- CUANDO SE INTEGRE COLUMNA DE ESTADO-->

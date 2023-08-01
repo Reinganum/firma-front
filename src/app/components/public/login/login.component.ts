@@ -62,6 +62,7 @@ export class LoginComponent implements OnInit {
               console.log(res);
               if(res.code===1){
                this._toastrService.success(res.message)
+                console.log(res.usuario.id)
                 localStorage.setItem('userId', JSON.stringify(res.usuario.id));
                 this.router.navigate(['/private/home']);
               } else if (res.code===2){

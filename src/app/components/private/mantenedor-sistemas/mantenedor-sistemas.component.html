@@ -1,0 +1,92 @@
+<div class="container my-5 col-lg-12" style="background-color: #fafbfc;">
+  <section class="col-12">
+    <div class="d-flex flex-row container-titulo pb-5">
+      <div class="d-flex col-5 ms-3 mb-4 pt-4">
+        <div class="d-flex flex-column flex-wrap text-center">
+          <div class="d-flex flex-row subcontainer-titulo">
+            <div class="mt-1">
+              <img src="../../../../assets/img/mantenedor_usuarios.svg">
+            </div>
+            <div>
+              <h1 class="fw-bold mx-2">Mantenedor de sistemas</h1>
+            </div>
+          </div>
+          <div>
+            <p style="font-size: 1.1rem!important;">Listado de sistemas dentro de firma electrónica</p>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex flex-row justify-content-end align-items-end btn-container" style="flex-grow: 1;">
+          <button class="filter-btn btn me-2 mb-3" style="border: 1px solid #979ba2;" (click)="flagFiltros = !flagFiltros"><img class="px-3" src="../assets/img/filtro-btn.svg">Filtrar</button>
+          <button class="btn-firmar-seleccionados btn btn-primary btn-main me-2 p-2 mb-3"style="background-color: #0B58A4 !important;"(click)="agregarSistema()">Agregar </button>
+      </div>
+   </div>
+  </section>
+  <section *ngFor="let medio of medios; let i = index" class="mb-3" class="card shadow">
+    <div>
+      <div class="rounded" style="background-color: #e4ebf5 !important;">
+        <div class="d-flex flex-row">
+          <div class="d-flex align-items-center mx-2">
+            <label class="switch" (click)="modificarAcceso()">
+              <input type="checkbox" name="enableSystem" >
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="d-flex flex-row align-content-center">
+             <h3 class="fw-bold">{{medio.me_descripcion}}</h3>
+          </div>
+        </div>
+      </div>
+        <div>
+          <table class="table table-borderless mt-3 py-5">
+            <thead>
+              <tr>
+                <th style="font-weight: normal!important;" *ngFor="let column of columns">{{column}}</th>
+                <th>{{medio.me_disponible!==1?"Inactivo":"Activo"}}</th>
+              </tr>
+            </thead>
+          </table>
+            <mat-accordion>
+              <!-- #docregion basic-panel -->
+              <!-- #docregion hide-toggle -->
+                <mat-expansion-panel hideToggle>
+              <!-- #enddocregion hide-toggle -->
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                    
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div >
+                    <div>
+                      <table class="table">
+                        <thead>
+                          <tr style="background-color: #fafbfc;">
+                            <td>Nombre documento</td>
+                            <td>ID</td>
+                            <td>Estado</td>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr class="fw-bold">
+                            <td>
+                              <div class="d-flex align-items-center mx-2">
+                                <label class="switch" (click)="modificarAcceso()">
+                                  <input type="checkbox" name="enableSystem" >
+                                  <span class="slider round"></span>
+                                </label>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <button class="btn-firmar-seleccionados btn btn-primary btn-main me-2 p-2 mb-3"style="background-color: #0B58A4 !important;"(click)="agregarSistema()">Agregar Documento</button>
+                    </div>
+                  </div>
+                </mat-expansion-panel>
+              </mat-accordion>
+        </div>
+    </div>
+  </section>
+</div>
+
+  

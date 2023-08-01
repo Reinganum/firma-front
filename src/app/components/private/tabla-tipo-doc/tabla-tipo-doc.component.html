@@ -1,0 +1,34 @@
+<table class="table">
+    <thead class="pt-4 text-center fw-bold">
+     <tr>
+         <!-- <td><input class="form-check-input" style="outline:#1e5180;" type="checkbox" disabled></td> -->
+         <td  *ngFor="let dataColumn of cabeceras, let i = index">
+             <span>{{dataColumn.nombre}}</span>
+         </td>
+     </tr>
+    </thead>
+    <tbody class="text-center">
+         <tr *ngFor="let tipo of listaTipoDocs, let i = index">
+             <td>{{tipo.id }}</td>
+             <td>{{tipo.descripcion}}</td>             
+             <td><span class="fw-bold p-1 rounded"
+                [ngClass]="{'activo':tipo.disponible===1,
+                            'inactivo':tipo.disponible===0}">
+                            {{tipo.disponible == 1 ? 'Activo': 'Inactivo'}}
+                </span></td>     
+             <td>
+                <div class="d-flex justify-content-center">
+                  <!-- <a (click)="vistaPrevia(document)"><img class="iconos-options rounded p-1" src="../../../../assets/img/lupa_btn.svg" alt="Vista previa" style="margin-left: 1px !important;"></a> -->
+                  <!-- <a (click)="showModal()"><img class="mx-1 iconos-options rounded p-1" src="../../../../assets/img/firma_btn.svg"></a> -->
+                  <mat-icon matTooltip='{{tipo.disponible==1?"Desactivar":"Activar"}}' class="rounded-circle pointer" [ngStyle]="{'background-color': tipo.disponible===1 ? 'red' : (tipo.disponible===0 ? '#0B58A4' : null) }" style="color: white;" (click)="changeDisp(tipo)">{{tipo.disponible!==1?"":""}}</mat-icon>
+                </div>
+            </td>            
+         </tr>
+    </tbody>
+ </table>
+ <mat-paginator #paginadorDocumentos
+     [length]="totalFilas"
+     [pageSize]="pageSize"
+     [pageSizeOptions]="pageSizeOptions"
+ >
+ </mat-paginator>
