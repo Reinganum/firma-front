@@ -81,7 +81,7 @@
                           <tr class="fw-bold" *ngFor="let documento of documentos[i][0]">
                             <td>
                               <div class="d-flex flex-row align-items-center mx-2">
-                                <label class="switch" (click)="modificarAcceso(documento)">
+                                <label class="switch" (click)="modificarAccesoDoc(documento)">
                                   <input type="checkbox" name="enableSystem" [checked]="documento.disponible === 1">
                                   <span class="slider round"></span>
                                 </label>

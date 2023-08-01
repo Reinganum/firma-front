@@ -20,7 +20,7 @@ export class AgregarSistema implements OnInit {
 
   ngOnInit() {
     this.systemForm = this.formBuilder.group({
-      name: ['', Validators.required],
+      nombre: ['', Validators.required],
       url: ['', Validators.required],
       api: ['', [Validators.required]],
       clave: ['', [Validators.required]],

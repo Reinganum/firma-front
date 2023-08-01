@@ -95,28 +95,50 @@ export class MantenedorSistemasComponent implements OnInit {
   columns = ["ID","URL","API","Clave Aleatoria"];
 
   modificarAcceso(medio:any):void{
-    console.log(medio)
+    let estado=medio.me_disponible===1?0:1;
+    let data = {
+      medio: {
+        disponible:estado
+      },
+      id: medio.me_id
+    }
     this.spinner.show();
-    medio.estado=medio.estado===0?1:0
-    let datos={
-
-    }}/*
-    this.parametrosService.editarMedio(datos).subscribe({
+    this.parametrosService.editarMedio(data).subscribe({
       next: async(res:any) => {
         console.log(res)
         this.toastrService.success(`${res.message}`);
+        this.obtenerMedios();
         await this.spinner.hide();
-
       },
       error: async (error:any) =>{
         await this.spinner.hide();
-        if (error.status.toString() === '404') {
-          this.toastrService.warning(error.error.message);
-        } else if (['0', '401', '403', '504'].includes(error.status.toString())) {
-          this.toastrService.error("Error de conexión.");
-        } else {
-          this.toastrService.error("Ha ocurrido un error.");
-        }
+        console.log(error)
       }
-    });*/
+    })
+  };
+
+  modificarAccesoDoc(documento:any){
+    console.log(documento)
+    let estado=documento.disponible===1?0:1;
+    let data = {
+      medioGestion: {
+        disponible:estado
+      },
+      idMedioGestion: documento.idMedioGestion
+    }
+    this.spinner.show();
+    this.parametrosService.editarTipoDocumento(data).subscribe({
+      next: async(res:any) => {
+        console.log(res)
+        this.toastrService.success(`${res.message}`);
+        this.obtenerMedios();
+        await this.spinner.hide();
+      },
+      error: async (error:any) =>{
+        await this.spinner.hide();
+        console.log(error)
+      }
+    })
+  }
+
 }
