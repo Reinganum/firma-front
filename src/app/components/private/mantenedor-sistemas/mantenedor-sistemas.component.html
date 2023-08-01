@@ -54,10 +54,7 @@
             </thead>
           </table>
             <mat-accordion>
-              <!-- #docregion basic-panel -->
-              <!-- #docregion hide-toggle -->
                 <mat-expansion-panel hideToggle>
-              <!-- #enddocregion hide-toggle -->
                   <mat-expansion-panel-header>
                     <mat-panel-title>
                       <tbody>
@@ -81,29 +78,31 @@
                           <tr class="fw-bold" *ngFor="let documento of documentos[i][0]">
                             <td>
                               <div class="d-flex flex-row align-items-center mx-2">
-                                <label class="switch" (click)="modificarAccesoDoc(documento)">
-                                  <input type="checkbox" name="enableSystem" [checked]="documento.disponible === 1">
+                                <label class="switch" (click)="modificarAccesoDoc(documento,medio)">
+                                  <input type="checkbox" name="enableSystem" [disabled]="medio.me_disponible === 0" [checked]="(medio.me_disponible === 1 && documento.disponible === 1)">
                                   <span class="slider round"></span>
                                 </label>
                                 <p class="px-3">{{documento.medio}}</p>
                               </div>
                             </td>
                             <td>{{documento.idMedioGestion}}</td>
-                            <td>
+                            <td >
                               <span [ngClass]="{
-                                'inactivo':documento.disponible!==1,
-                                'activo':documento.disponible===1,
+                                'inactivo':!(medio.me_disponible === 1 && documento.disponible===1),
+                                'activo':(medio.me_disponible === 1 && documento.disponible===1),
                                 }" class="p-2">
-                                {{ documento.disponible !==1 ? "Inactivo" : "Activo" }}
+                                {{  (medio.me_disponible === 1 && documento.disponible===1) ? "Activo" : "Inactivo" }}
                               </span>
                             </td>
                           </tr> 
                         </tbody>
                       </table>
-                      <div class="d-flex flex-row w-100 py-2">
+                      <div class="d-flex flex-row w-100 py-2" *ngIf="hiddenInput[i].visible">
                         <input type="text" placeholder="Escribe el nombre del documento">
-                      </div>
-                      <button class="btn-firmar-seleccionados btn btn-primary btn-main me-2 p-2 mb-3"style="background-color: #0B58A4 !important;"(click)="agregarDocumento()">Agregar Documento</button>
+                      </div> 
+                      <button class="btn btn-primary btn-main add-btn" style="background-color: #0B58A4 !important;" (click)="agregarDocumento(i)">
+                        <mat-icon>add</mat-icon>Agregar Documento
+                      </button>
                     </div>
                   </div>
                 </mat-expansion-panel>

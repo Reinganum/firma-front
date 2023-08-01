@@ -115,6 +115,7 @@ export class DocumentosFirmarComponent implements OnInit {
   documentosFirmar:any[]=[]
 
   filtrar() {
+    console.log(this.convertDateForDB(this.filtrosForm.value.fechaDoc))
     this.paginador.firstPage();
     this.paginador.pageSize = this.pageSize;
     this.obtenerDocumentos(null, '', this.paginador.pageIndex, this.paginador.pageSize | this.pageSize);
@@ -276,7 +277,6 @@ export class DocumentosFirmarComponent implements OnInit {
   
       return `${day}-${month}-${year}`;
     }
-
     return '';
   }
 

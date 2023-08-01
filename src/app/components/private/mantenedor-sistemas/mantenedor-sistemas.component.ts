@@ -19,6 +19,7 @@ export class MantenedorSistemasComponent implements OnInit {
   medios!:any
   documentos!:any
   modalRef!:NgbModalRef
+  hiddenInput!:any[]
   constructor( 
     private authenticationService:AuthenticationService,
     private parametrosService:ParametrosService,
@@ -38,9 +39,9 @@ export class MantenedorSistemasComponent implements OnInit {
       this.parametrosService.listaMedios().subscribe(
         {
           next: async (res:any) => {
-              console.log(res);
               this.medios=res.listaMediosGestion.data
-            
+              this.hiddenInput=[]
+              this.medios.forEach(()=>this.hiddenInput.push({visible:false}))
               try{
                   this.documentos=this.medios.map((medio:any)=>{
                   const inputString=medio.medioGestionData
@@ -79,8 +80,8 @@ export class MantenedorSistemasComponent implements OnInit {
     }
   }
 
-  agregarDocumento(){
-
+  agregarDocumento(index:any){
+    this.hiddenInput[index].visible=this.hiddenInput[index].visible===true?false:true;
   }
 
   agregarSistema(){
@@ -117,8 +118,8 @@ export class MantenedorSistemasComponent implements OnInit {
     })
   };
 
-  modificarAccesoDoc(documento:any){
-    console.log(documento)
+  modificarAccesoDoc(documento:any,medio:any){
+    if (medio.me_disponible === 0) return 
     let estado=documento.disponible===1?0:1;
     let data = {
       medioGestion: {
@@ -132,7 +133,6 @@ export class MantenedorSistemasComponent implements OnInit {
         console.log(res)
         this.toastrService.success(`${res.message}`);
         this.obtenerMedios();
-        await this.spinner.hide();
       },
       error: async (error:any) =>{
         await this.spinner.hide();

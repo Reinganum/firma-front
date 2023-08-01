@@ -91,3 +91,23 @@ thead{
   background-color: rgb(251,234,235);
   border-radius: 12px;
 }
+
+.add-btn{
+  display: inline-flex!important;
+  align-items: center!important;
+}
+
+@media (max-width: 475px) {
+  .container-titulo {
+    flex-direction: column!important;
+  }
+  .subcontainer-titulo{
+    width: 75vw!important;
+    justify-content: center!important;
+    text-align: center!important;
+    flex-direction: column!important;
+  }
+  .btn-container{
+    justify-content: center!important;
+  }
+}
