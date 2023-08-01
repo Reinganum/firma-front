@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
+import { NgbModal,NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { dutchRangeLabel } from 'src/app/shared/dutchRangeLabel';
+import { AgregarUsuario } from '../../modals/agregar-usuario/agregar-usuario.component';
 
 @Component({
   selector: 'app-mantenedor-usuarios',
@@ -19,6 +21,7 @@ export class MantenedorUsuariosComponent implements OnInit {
   totalFilas!:number;
   pageSize = 10;
   pageSizeOptions:any;
+  modalRef!:NgbModalRef
   tipoTabla:any;
   currentUser:any;
   flagFiltros = false;
@@ -41,7 +44,8 @@ export class MantenedorUsuariosComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private toastrService: ToastrService,
     private elementRef: ElementRef,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private modalService:NgbModal,
   ) {}
   ngOnInit(): void {
     this.currentUser = localStorage.getItem('currentUser');
@@ -122,7 +126,12 @@ export class MantenedorUsuariosComponent implements OnInit {
   }
 
   agregarUsuario(){
-
+    this.modalRef=this.modalService.open(AgregarUsuario,{backdrop:'static',size:'md'});
+    this.modalRef.result.then((res)=>{
+      if(res.estado){
+        this.modalRef.close();
+      }
+    })
   }
 
   filtrar(){

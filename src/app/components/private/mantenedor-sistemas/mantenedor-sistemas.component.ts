@@ -12,9 +12,10 @@ import { ToastrService } from 'ngx-toastr';
 export class MantenedorSistemasComponent implements OnInit {
   currentUser:any;
   dataSource!:any;
-  flagFiltros = false;
+  flagFiltros =false;
   panelOpenState = false;
   medios!:any
+  documentos!:any
   constructor( 
     private authenticationService:AuthenticationService,
     private parametrosService:ParametrosService,
@@ -35,6 +36,8 @@ export class MantenedorSistemasComponent implements OnInit {
           next: async (res:any) => {
               console.log(res);
               this.medios=res.listaMediosGestion.data
+              const inputString =this.medios[0].medioGestionData;
+              console.log(JSON.parse(inputString))
               await this.spinner.hide();
           },
           error: async (error:any) => {
@@ -60,39 +63,7 @@ export class MantenedorSistemasComponent implements OnInit {
 
   }
 
-  columns = [
-    {
-      columnDef: 'Toggle',
-      header: '',
-      cell: (element: any) => element.me_descripcion
-    },
-    {
-      columnDef: 'ID',
-      header: 'ID',
-      cell: (element: any) => element,
-    },
-    {
-      columnDef: 'URL',
-      header: 'URL',
-      cell: (element: any) => element,
-    },
-    {
-      columnDef: 'API',
-      header: 'API',
-      cell: (element: any) => element,
-    },
-    {
-      columnDef: 'Clave Aleatoria',
-      header: 'Clave Aleatoria',
-      cell: (element: any) => element,
-    },
-    {
-      columnDef: 'Estado',
-      header: 'Estado',
-      cell: (element: any) => element,
-    }
-  ];
-  displayedColumns = this.columns.map(c => c.columnDef);
+  columns = ["ID","URL","API","Clave Aleatoria"];
 
   modificarAcceso(){
 

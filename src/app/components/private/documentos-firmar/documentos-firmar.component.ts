@@ -290,13 +290,17 @@ export class DocumentosFirmarComponent implements OnInit {
     if(this.selection.selected.length===0){
       return this.toastrService.warning("No hay documentos seleccionados para firmar")
     }
-    this.selection.selected.forEach((document)=>{
-      let firmantesJson
-      const firmantes = `${document.firmantes.replace(/\[|\]/g, '')}`;
-      try {
-        firmantesJson = JSON.parse(`[${firmantes}]`);
-      } catch (error:any) {
-        console.error('Error al parsear el JSON:', error.message);
+      this.selection.selected.forEach((document)=>{
+        let firmantesJson
+        if( typeof document.firmantes==="string"){
+        const firmantes =`${document.firmantes.replace(/\[|\]/g, '')}`;
+        try {
+          firmantesJson = JSON.parse(`[${firmantes}]`);
+        } catch (error:any) {
+          console.error('Error al parsear el JSON:', error.message);
+        }
+      } else {
+        firmantesJson=document.firmantes
       }
         let esFirmante=false;
         document.firmantes=firmantesJson.map((firmante:any) => {

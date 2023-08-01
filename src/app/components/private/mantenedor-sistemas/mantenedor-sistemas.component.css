@@ -1,5 +1,5 @@
 thead{
-    background-color:#e4eaf5 !important;
+    background-color:white !important;
 }
 .activo{
     color: #4dab61;
@@ -74,3 +74,8 @@ thead{
   .slider.round:before {
     border-radius: 50%;
   }
+
+  .iconos-options{
+    background-color: #0B58A4 !important;
+    stroke: white!important;
+}
