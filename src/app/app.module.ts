@@ -21,6 +21,7 @@ import { ObtenerRutComponent } from './components/modals/obtener-rut/obtener-rut
 import { AuthInterceptor, ErrorInterceptor } from './components/auth/helpers';
 import { DocsPendientesComponent } from './components/modals/docs-pendientes/docs-pendientes.component';
 import { EnvioCorreoComponent } from './components/modals/envio-correo/envio-correo.component';
+import { AgregarUsuario } from './components/modals/agregar-usuario/agregar-usuario.component';
 
 export function kcFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -47,6 +48,7 @@ const CUSTOM_DATE_FORMATS = {
     ObtenerRutComponent,
     DocsPendientesComponent,
     EnvioCorreoComponent,
+    AgregarUsuario
   ],
   imports: [
     BrowserModule,
