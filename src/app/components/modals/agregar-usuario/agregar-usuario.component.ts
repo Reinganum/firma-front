@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup , Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { DocumentosService } from 'src/app/services/documentos.service';
+
 
 @Component({
   selector: 'agregar-usuario',
@@ -21,6 +21,8 @@ export class AgregarUsuario implements OnInit {
   ngOnInit() {
     this.userForm = this.formBuilder.group({
       name: ['', Validators.required],
+      apellidoP: ['', Validators.required],
+      apellidoM: ['', Validators.required],
       rut: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       cargo: ['', [Validators.required]],

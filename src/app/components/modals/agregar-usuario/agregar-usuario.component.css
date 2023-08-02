@@ -1,3 +1,11 @@
 .btn-outline-secondary:hover{
     color: black!important;
 }
+
+.small-input {
+    width: 47.5%;
+}
+
+.mr-5 {
+    margin-right: 5%;
+}
