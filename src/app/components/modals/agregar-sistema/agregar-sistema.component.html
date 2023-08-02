@@ -5,20 +5,20 @@
     <h1 class="text-center">Agregar nuevo Sistema</h1>
     <form [formGroup]="systemForm" (ngSubmit)="onSubmit()">
         <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Nombre Sistema</label>
+        <label for="nombre" class="form-label">Nombre Sistema</label>
         <input type="text" formControlName="nombre" class="form-control">
         </div>
         <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">URL</label>
-            <input type="email" class="form-control" formControlName="url">
+            <label for="url" class="form-label">URL</label>
+            <input type="url" class="form-control" formControlName="url">
         </div>
         <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">API</label>
-            <input type="email" class="form-control" formControlName="api">
+            <label for="url" class="form-label">Sigla</label>
+            <input type="text" class="form-control" formControlName="sigla">
         </div>
-        <label for="exampleInputPassword1" class="form-label">Clave</label>
+        <label for="clave" class="form-label">Clave</label>
         <div class="mb-3 d-flex flex-row pb-3">
-        <input type="password" class="form-control w-90" formControlName="clave"><img class="ps-3" matTooltip="Crear clave" src="../../../../assets/img/clave.svg">
+        <input type="text" class="form-control w-90" formControlName="clave"><img class="ps-3" matTooltip="Crear clave" src="../../../../assets/img/clave.svg">
         </div>
         <div class="d-flex flex-row-reverse">
             <button class="btn btn-primary btn-main mx-2 py-2" (click)="activeModal.close({ estado: false})" type="submit" style="display: inline-flex; align-items:center; margin-right: -12px !important;background-color: #0B58A4 !important;">

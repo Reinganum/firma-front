@@ -38,11 +38,17 @@ export class DocumentosService {
   }
 
   crearDocumento(data:any): Observable<any> {    
-    
     const body = JSON.stringify(data);
     const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
     return this.http.post(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/ingresarDocumento`, body, {headers})
   }
+
+  editarDocumento(data:any): Observable<any> {    
+    const body = JSON.stringify(data);
+    const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+    return this.http.post(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/editarDocumento`, body, {headers})
+  }
+  
   setDocPendientes(data: any[]) {
     this.docsPendientes = data;
   }

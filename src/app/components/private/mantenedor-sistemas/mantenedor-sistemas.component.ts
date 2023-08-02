@@ -44,13 +44,15 @@ export class MantenedorSistemasComponent implements OnInit {
               this.medios=res.listaMediosGestion.data
               this.hiddenInput=[]
               this.medios.forEach(()=>this.hiddenInput.push({visible:false}))
+              console.log(this.medios)
               try{
                   this.documentos=this.medios.map((medio:any)=>{
+                  if(medio.medioGestionData===null) return null
                   const inputString=medio.medioGestionData
                   const validJsonStr=formatJSONString(inputString)
                   return JSON.parse(validJsonStr)
                 })
-                function formatJSONString(inputString:string) {
+                  function formatJSONString(inputString:string) {
                   const regex = /([\w]+):[\s]*([\w\s]+),/g;
                   const formattedString = inputString.replace(regex, '"$1": "$2",');
                   const finalString = formattedString.replace(/disponible: (\d)/g, '"disponible": $1');
@@ -82,8 +84,41 @@ export class MantenedorSistemasComponent implements OnInit {
     }
   }
 
-  onEnterDoc(event:any){
+  async onEnterDoc(event:any, id:any){
     console.log(event.target.value)
+    console.log(id)
+    const data = {
+      tipoDoc: {
+        descripcion:event.target.value,
+        disponible:1
+      }
+    }
+    try {
+      await this.spinner.show();
+      this.parametrosService.crearTipoDocumento(data).subscribe(
+        {
+          next: async (res: any) => {
+            console.log(res);
+            await this.spinner.hide();
+          },
+          error: async (error: any) => {
+            await this.spinner.hide();
+            console.log(error)
+            this.toastrService.warning(error);
+          }
+        });
+    } catch (error: any) {
+      await this.spinner.hide();
+      console.log(error)
+      if (error.status.toString() === '404') {
+        this.toastrService.warning(error.error.message);
+      } else if (['0', '401', '403', '504'].includes(error.status.toString())) {
+
+      } else {
+        this.toastrService.error("Ha ocurrido un error");
+      }
+      console.log(error);
+    }
   }
 
   agregarDocumento(index:any){

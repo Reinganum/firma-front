@@ -37,4 +37,10 @@ export class ParametrosService {
     const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
     return this.http.post(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/editarTipoDoc`, body, {headers})
   }
+
+  crearTipoDocumento(data:any): Observable<any> {    
+    const body = JSON.stringify(data);
+    const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+    return this.http.post(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/crearMedio`, body, {headers})
+  }
 }
