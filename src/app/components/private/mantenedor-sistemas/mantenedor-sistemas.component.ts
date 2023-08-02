@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AuthenticationService } from '../../auth/service/authentication.service';
 import { ParametrosService } from 'src/app/services/parametros.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -20,6 +20,7 @@ export class MantenedorSistemasComponent implements OnInit {
   documentos!:any
   modalRef!:NgbModalRef
   hiddenInput!:any[]
+
   constructor( 
     private authenticationService:AuthenticationService,
     private parametrosService:ParametrosService,
@@ -28,6 +29,7 @@ export class MantenedorSistemasComponent implements OnInit {
     private modalService:NgbModal
     ) {}
 
+  @ViewChild('docInput') docInput!: ElementRef;
   ngOnInit(): void {
     this.currentUser = this.authenticationService.currentUserValue;
     this.obtenerMedios()
@@ -80,8 +82,16 @@ export class MantenedorSistemasComponent implements OnInit {
     }
   }
 
+  onEnterDoc(event:any){
+    console.log(event.target.value)
+  }
+
   agregarDocumento(index:any){
     this.hiddenInput[index].visible=this.hiddenInput[index].visible===true?false:true;
+    if (this.docInput) {
+      const inputValue = this.docInput.nativeElement.value;
+      console.log(inputValue);
+    }
   }
 
   agregarSistema(){

@@ -13,7 +13,7 @@
             <input type="email" class="form-control" formControlName="url">
         </div>
         <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Email</label>
+            <label for="exampleInputEmail1" class="form-label">API</label>
             <input type="email" class="form-control" formControlName="api">
         </div>
         <label for="exampleInputPassword1" class="form-label">Clave</label>
@@ -21,8 +21,8 @@
         <input type="password" class="form-control w-90" formControlName="clave"><img class="ps-3" matTooltip="Crear clave" src="../../../../assets/img/clave.svg">
         </div>
         <div class="d-flex flex-row-reverse">
-            <button class="btn btn-primary btn-main mx-2 py-2" (click)="activeModal.close({ estado: false})" type="submit" style="margin-right: -12px !important;background-color: #0B58A4 !important;">
-                <img class="px-3">Agregar</button>
+            <button class="btn btn-primary btn-main mx-2 py-2" (click)="activeModal.close({ estado: false})" type="submit" style="display: inline-flex; align-items:center; margin-right: -12px !important;background-color: #0B58A4 !important;">
+                <mat-icon>add</mat-icon>Agregar Sistema</button>
             <button class="btn btn-outline-secondary mx-2" style="background-color: transparent !important;" (click)="activeModal.close({ estado: false})">
             <span class="fw-bold mx-2">X</span>Cancelar</button>
         </div>

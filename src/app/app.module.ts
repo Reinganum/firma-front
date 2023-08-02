@@ -1,4 +1,4 @@
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { NgModule, APP_INITIALIZER, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -23,6 +23,7 @@ import { DocsPendientesComponent } from './components/modals/docs-pendientes/doc
 import { EnvioCorreoComponent } from './components/modals/envio-correo/envio-correo.component';
 import { AgregarUsuario } from './components/modals/agregar-usuario/agregar-usuario.component';
 import { AgregarSistema } from './components/modals/agregar-sistema/agregar-sistema.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 export function kcFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -65,7 +66,13 @@ const CUSTOM_DATE_FORMATS = {
       positionClass: 'toast-top-center',
       preventDuplicates: true,
       closeButton: true
-  })
+  }),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'es-CL' },
