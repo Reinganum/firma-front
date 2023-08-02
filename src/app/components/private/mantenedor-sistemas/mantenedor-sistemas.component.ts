@@ -3,6 +3,8 @@ import { AuthenticationService } from '../../auth/service/authentication.service
 import { ParametrosService } from 'src/app/services/parametros.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { NgbModal,NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { AgregarSistema } from '../../modals/agregar-sistema/agregar-sistema.component';
 
 @Component({
   selector: 'app-mantenedor-sistemas',
@@ -16,11 +18,14 @@ export class MantenedorSistemasComponent implements OnInit {
   panelOpenState = false;
   medios!:any
   documentos!:any
+  modalRef!:NgbModalRef
+  hiddenInput!:any[]
   constructor( 
     private authenticationService:AuthenticationService,
     private parametrosService:ParametrosService,
     private spinner: NgxSpinnerService,
-    private toastrService:ToastrService
+    private toastrService:ToastrService,
+    private modalService:NgbModal
     ) {}
 
   ngOnInit(): void {
@@ -34,9 +39,9 @@ export class MantenedorSistemasComponent implements OnInit {
       this.parametrosService.listaMedios().subscribe(
         {
           next: async (res:any) => {
-              console.log(res);
               this.medios=res.listaMediosGestion.data
-            
+              this.hiddenInput=[]
+              this.medios.forEach(()=>this.hiddenInput.push({visible:false}))
               try{
                   this.documentos=this.medios.map((medio:any)=>{
                   const inputString=medio.medioGestionData
@@ -75,14 +80,65 @@ export class MantenedorSistemasComponent implements OnInit {
     }
   }
 
-  agregarSistema(){
+  agregarDocumento(index:any){
+    this.hiddenInput[index].visible=this.hiddenInput[index].visible===true?false:true;
+  }
 
+  agregarSistema(){
+    this.modalRef=this.modalService.open(AgregarSistema,{size:'md'});
+    this.modalRef.result.then((res)=>{
+      if(res.estado){
+        this.modalRef.close();
+      }
+    })
   }
 
   columns = ["ID","URL","API","Clave Aleatoria"];
 
-  modificarAcceso(){
+  modificarAcceso(medio:any):void{
+    let estado=medio.me_disponible===1?0:1;
+    let data = {
+      medio: {
+        disponible:estado
+      },
+      id: medio.me_id
+    }
+    this.spinner.show();
+    this.parametrosService.editarMedio(data).subscribe({
+      next: async(res:any) => {
+        console.log(res)
+        this.toastrService.success(`${res.message}`);
+        this.obtenerMedios();
+        await this.spinner.hide();
+      },
+      error: async (error:any) =>{
+        await this.spinner.hide();
+        console.log(error)
+      }
+    })
+  };
 
+  modificarAccesoDoc(documento:any,medio:any){
+    if (medio.me_disponible === 0) return 
+    let estado=documento.disponible===1?0:1;
+    let data = {
+      medioGestion: {
+        disponible:estado
+      },
+      idMedioGestion: documento.idMedioGestion
+    }
+    this.spinner.show();
+    this.parametrosService.editarTipoDocumento(data).subscribe({
+      next: async(res:any) => {
+        console.log(res)
+        this.toastrService.success(`${res.message}`);
+        this.obtenerMedios();
+      },
+      error: async (error:any) =>{
+        await this.spinner.hide();
+        console.log(error)
+      }
+    })
   }
-  
+
 }

@@ -6,12 +6,12 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { DocumentosService } from 'src/app/services/documentos.service';
 
 @Component({
-  selector: 'agregar-usuario',
-  templateUrl: './agregar-usuario.component.html',
-  styleUrls: ['./agregar-usuario.component.css'],
+  selector: 'agregar-sistema',
+  templateUrl: './agregar-sistema.component.html',
+  styleUrls: ['./agregar-sistema.component.css'],
 })
-export class AgregarUsuario implements OnInit {
-  userForm!: FormGroup;
+export class AgregarSistema implements OnInit {
+  systemForm!: FormGroup;
   
   constructor(
     public activeModal: NgbActiveModal,
@@ -19,18 +19,17 @@ export class AgregarUsuario implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.userForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      rut: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      cargo: ['', [Validators.required]],
+    this.systemForm = this.formBuilder.group({
+      nombre: ['', Validators.required],
+      url: ['', Validators.required],
+      api: ['', [Validators.required]],
       clave: ['', [Validators.required]],
     })
   }
 
   onSubmit(){
-    if (this.userForm.valid) {
-      console.log(this.userForm.value);
+    if (this.systemForm.valid) {
+      console.log(this.systemForm.value);
       
     }
   }
