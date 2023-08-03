@@ -199,10 +199,6 @@ export class DocumentosFirmarComponent implements OnInit {
     }
   }
 
-  cambiarEstadoFirma(){
-
-  }
-
   vistaPrevia(documento:any) {
     this.router.navigate([`private/vista/${documento.id}`]);
   }
@@ -308,7 +304,7 @@ export class DocumentosFirmarComponent implements OnInit {
       }
         let esFirmante=false;
         document.firmantes=firmantesJson.map((firmante:any) => {
-        if (firmante.correo == this.currentUser.email) {
+        if (firmante.correo == 'asd@gmail.com') { // En duro 'asd@gmail.com'
           firmante.firmo = true;
           esFirmante=true
           console.log("usuario si pertenece a la lista de firmantes")
@@ -318,6 +314,9 @@ export class DocumentosFirmarComponent implements OnInit {
       if(esFirmante===false){
         this.toastrService.warning(`Tu usuario no está registrado para firmar el documento ${document.archivo}`)
       } else {
+        let estadoDoc=this.setEstadoDoc(firmantesJson)
+        this.editarEstadoFirma(document,estadoDoc)
+        /*
         this.documentosService.crearPdfFirma(document).subscribe({
           next: async (res) => {
          console.log(res);
@@ -329,6 +328,7 @@ export class DocumentosFirmarComponent implements OnInit {
           await this.spinner.hide();
         }
       });
+      */
       }
     })
   }
@@ -341,4 +341,39 @@ export class DocumentosFirmarComponent implements OnInit {
       return strArr[0].slice(0,1)+strArr[1].slice(0,1)
     }
    }
+
+   editarEstadoFirma(documento:any,estadoDoc:number) {
+    const datos = {
+      documento: {
+        estado: estadoDoc,
+        id: documento.id
+      }
+    }
+    this.spinner.show();
+    this.documentosService.editarDocumento(datos).subscribe({
+      next: (res: any) => {
+        console.log(res);
+        this.spinner.hide();
+        this.enviarNotificacion()
+      },
+      error: (error: any) => {
+        console.log(error);
+        this.spinner.hide();
+      }
+    });
+  }
+  
+  setEstadoDoc(firmantes:any){
+    if (firmantes.length===1)return 4;
+    let countFalse = 0;
+    for (let firmante of firmantes) {
+        if ( firmante.firmo === false) {
+            countFalse++;
+            if (countFalse > 1) {
+                return 3;
+            }
+        }
+    }
+    return 4;
+  }
 }

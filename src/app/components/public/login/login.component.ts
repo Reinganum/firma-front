@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
               nombres: user.firstName,
               apellidoP: user.lastName,
               apellidoM: 'apellido prueba',
-              tipo: this.verifyEmail(user.email,"sofofa"), // 1 = OTC - 2 = EXTERNO,
+              tipo: this.verifyEmail(user.email,"sofofa"), // 1 = OTIC - 2 = EXTERNO,
               email: user.email,
               estado:null
             }

@@ -33,25 +33,11 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
   @Input() key: any;
   userKnown: boolean = true;
 
-  firmantes: any[] = []
-
   ngOnInit(): void {
     this.userInfo = this.authenticationService.currentUserValue;
-    console.log(this.documento);
-    console.log(this.userInfo);
   }
 
   async confirmar() {
-    // if (localStorage.getItem('currentUser')) {
-    //   this.router.navigate(['/private/docsFirmados']);
-    //   this.toastr.success("Documento firmado correctamente")
-    // } else {
-    //   this.router.navigate(['/consulta-documento']);
-    // }
-    // let firmantesJson
-    // console.log(this.documento.firmantes)
-    // const firmantes = typeof this.documento.firmantes ==="string" ? `${}`: this.documento?.firmantes;
-    // let esFirmante=false
     let firmantes: any = this.documento?.firmantes.replace(/\[|\]/g, '')
     try {
       firmantes = JSON.parse(`[${firmantes}]`)
@@ -60,7 +46,7 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
     }
     let firma: boolean;
     let valida: any = firmantes.map((firmante: any, i: any) => {
-      if (firmante.correo == "asd@gmail.com") { // AQUI TIENE QUE IR this.userInfo.email
+      if (firmante.correo == 'asd@gmail.com') { // En duro 'asd@gmail.com' sino this.userInfo.email
         firmante.firmo = true;
         firma = true;
         return true;
@@ -68,14 +54,13 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
       firmante.firmo = false;
       return false;
     })
-    console.log(firmantes);
-    console.log(valida);
-
-    if (!valida[0] && !valida[1]) {
+    if (valida.indexOf(true)===-1) {
       this.toastr.warning("No puedes firmar el documento, ya que no estás dentro de los firmantes");
       return;
     }
-
+    let estadoDoc=this.setEstadoDoc(firmantes)
+    this.editarEstadoFirma(estadoDoc)
+    /*
     await this.spinner.show();
     console.log(this.documento)
     this.documentosService.crearPdfFirma({
@@ -93,20 +78,18 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
         console.log(error);
         await this.spinner.hide();
       }
-    });
+    });*/
     this.activeModal.close({ estado: true });
   }
 
   async firmar(datosTabla: any, pdfBase64: any) {
 
-    this.editarEstadoFirma()
     console.log(datosTabla);
     console.log(pdfBase64);
 
-    const firma = await this.comunesServices.firma({ datosTabla: [["Nombre", "Rut", "Correo"], ["Nicola22s", "", "asd@gmail.com"]], pdfBase64 }).toPromise();
-    console.log(firma);
-
-    this.notificarFirma()/*
+    //const firma = await this.comunesServices.firma({ datosTabla: [["Nombre", "Rut", "Correo"], ["Nicola22s", "", "asd@gmail.com"]], pdfBase64 }).toPromise();
+    //console.log(firma);
+    /*
     let bucket = window.location.hostname !== "localhost" ? 'firma-otic-qa-doc' : "ofe-local-services"
     const url:any = await this.comunesServices.getSignedUrl({bucket, key: firma.key, metodo: 'get'}).toPromise();
     const link = document.createElement('a');
@@ -118,20 +101,23 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
     await this.spinner.hide();
   }
 
-  editarEstadoFirma() {
+  async editarEstadoFirma(estadoDoc:number) {
     const datos = {
       documento: {
-        estado: 2,
+        estado: estadoDoc,
         id: this.documento.id
       }
     }
-    console.log(datos)
+    this.spinner.show();
     this.documentosService.editarDocumento(datos).subscribe({
       next: (res: any) => {
         console.log(res);
+         this.spinner.hide();
+         this.notificarFirma()
       },
       error: (error: any) => {
         console.log(error);
+        this.spinner.hide();
       }
     });
     this.activeModal.close({ estado: true });
@@ -144,7 +130,7 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
       asunto: 'Nuevo documento firmado',
       seguimiento: `N° Doc: ${this.documento.id}`
     }
-    
+
     this.correosService.notificarDocFirmado(datos).subscribe({
       next: (res: any) => {
         console.log(res);
@@ -154,6 +140,20 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
       }
     });
     this.activeModal.close({ estado: true });
+  }
+
+  setEstadoDoc(firmantes:any){
+    if (firmantes.length===1)return 4;
+    let countFalse = 0;
+    for (let firmante of firmantes) {
+        if ( firmante.firmo === false) {
+            countFalse++;
+            if (countFalse > 1) {
+                return 3;
+            }
+        }
+    }
+    return 4;
   }
 }
 
