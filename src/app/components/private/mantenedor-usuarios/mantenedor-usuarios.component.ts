@@ -25,6 +25,7 @@ export class MantenedorUsuariosComponent implements OnInit {
   tipoTabla:any;
   currentUser:any;
   flagFiltros = false;
+
   cabeceras = [
     {nombre:"ID"},
     {nombre:"RUT"},
@@ -136,7 +137,7 @@ export class MantenedorUsuariosComponent implements OnInit {
   }
 
   filtrar(){
-
+    console.log(this.filtrosForm.value)
   }
 
   limpiar(){

@@ -199,6 +199,10 @@ export class DocumentosFirmarComponent implements OnInit {
     }
   }
 
+  cambiarEstadoFirma(){
+
+  }
+
   vistaPrevia(documento:any) {
     this.router.navigate([`private/vista/${documento.id}`]);
   }
@@ -304,7 +308,7 @@ export class DocumentosFirmarComponent implements OnInit {
       }
         let esFirmante=false;
         document.firmantes=firmantesJson.map((firmante:any) => {
-        if (firmante.correo == this.userInfo.email) {
+        if (firmante.correo == this.currentUser.email) {
           firmante.firmo = true;
           esFirmante=true
           console.log("usuario si pertenece a la lista de firmantes")

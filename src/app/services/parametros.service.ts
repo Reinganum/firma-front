@@ -21,6 +21,13 @@ export class ParametrosService {
     const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
     return this.http.post(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/editarMedio`, body, {headers})
   }
+
+  crearMedio(data:any): Observable<any> {    
+    const body = JSON.stringify(data);
+    const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+    return this.http.post(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/crearMedio`, body, {headers})
+  }
+
   listaTipoDocumentos(): Observable<any>{
     return this.http.get<any>(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/listarTipoDoc`);
   }
@@ -29,5 +36,11 @@ export class ParametrosService {
     const body = JSON.stringify(data);
     const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
     return this.http.post(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/editarTipoDoc`, body, {headers})
+  }
+
+  crearTipoDocumento(data:any): Observable<any> {    
+    const body = JSON.stringify(data);
+    const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+    return this.http.post(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/crearMedio`, body, {headers})
   }
 }

@@ -39,74 +39,81 @@
       </div>
         <div>
           <table class="table table-borderless mt-3 py-5">
-            <thead>
+            <thead class="px-5">
               <tr>
                 <th style="font-weight: normal!important;" *ngFor="let column of columns">{{column}}</th>
                 <th>
-                  <span [ngClass]="{
-                    'inactivo':medio.me_disponible!==1,
-                    'activo':medio.me_disponible===1,
-                    }" class="p-2">
-                    {{medio.me_disponible!==1?"Inactivo":"Activo"}}
-                  </span>
+                  <div class="d-flex flex-row w-100 justify-content-end">
+                    <div>
+                      <span [ngClass]="{
+                        'inactivo':medio.me_disponible!==1,
+                        'activo':medio.me_disponible===1,
+                        }" class="p-2">
+                        {{medio.me_disponible!==1?"Inactivo":"Activo"}}
+                      </span>
+                    </div>
+                  </div>
                 </th>
               </tr>
             </thead>
           </table>
-            <mat-accordion>
-                <mat-expansion-panel hideToggle>
-                  <mat-expansion-panel-header>
-                    <mat-panel-title>
-                      <tbody>
-                        <tr class="fw-bold">
-                          <td>{{medio.me_disponible}}</td>
+          <mat-accordion>
+              <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <tbody>
+                      <tr>
+                        <td>
+                          {{medio.me_id}}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div>
+                  <div>
+                    <table class="table" >
+                      <thead>
+                        <tr style="background-color: #e4ebf5; border-bottom: 2px solid #0b58a4;">
+                          <td>Nombre documento</td>
+                          <td>ID</td>
+                          <td>Estado</td>
                         </tr>
+                      </thead>
+                      <tbody *ngIf="medio.medioGestionData!==null">
+                        <tr class="fw-bold" *ngFor="let documento of documentos[i][0]">
+                          <td>
+                            <div class="d-flex flex-row align-items-center mx-2">
+                              <label class="switch" (click)="modificarAccesoDoc(documento,medio)">
+                                <input type="checkbox" name="enableSystem" [disabled]="medio.me_disponible === 0" [checked]="(medio.me_disponible === 1 && documento.disponible === 1)">
+                                <span class="slider round"></span>
+                              </label>
+                              <p class="px-3">{{documento.medio}}</p>
+                            </div>
+                          </td>
+                          <td>{{documento.idMedioGestion}}</td>
+                          <td>
+                            <span [ngClass]="{
+                              'inactivo':!(medio.me_disponible === 1 && documento.disponible===1),
+                              'activo':(medio.me_disponible === 1 && documento.disponible===1),
+                              }" class="p-2">
+                              {{  (medio.me_disponible === 1 && documento.disponible===1) ? "Activo" : "Inactivo" }}
+                            </span>
+                          </td>
+                        </tr> 
                       </tbody>
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <div >
-                    <div>
-                      <table class="table">
-                        <thead>
-                          <tr style="background-color: #e4ebf5; border-bottom: 2px solid #0b58a4;">
-                            <td>Nombre documento</td>
-                            <td>ID</td>
-                            <td>Estado</td>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr class="fw-bold" *ngFor="let documento of documentos[i][0]">
-                            <td>
-                              <div class="d-flex flex-row align-items-center mx-2">
-                                <label class="switch" (click)="modificarAccesoDoc(documento,medio)">
-                                  <input type="checkbox" name="enableSystem" [disabled]="medio.me_disponible === 0" [checked]="(medio.me_disponible === 1 && documento.disponible === 1)">
-                                  <span class="slider round"></span>
-                                </label>
-                                <p class="px-3">{{documento.medio}}</p>
-                              </div>
-                            </td>
-                            <td>{{documento.idMedioGestion}}</td>
-                            <td >
-                              <span [ngClass]="{
-                                'inactivo':!(medio.me_disponible === 1 && documento.disponible===1),
-                                'activo':(medio.me_disponible === 1 && documento.disponible===1),
-                                }" class="p-2">
-                                {{  (medio.me_disponible === 1 && documento.disponible===1) ? "Activo" : "Inactivo" }}
-                              </span>
-                            </td>
-                          </tr> 
-                        </tbody>
-                      </table>
-                      <div class="d-flex flex-row w-100 py-2" *ngIf="hiddenInput[i].visible">
-                        <input type="text" placeholder="Escribe el nombre del documento">
-                      </div> 
-                      <button class="btn btn-primary btn-main add-btn" style="background-color: #0B58A4 !important;" (click)="agregarDocumento(i)">
-                        <mat-icon>add</mat-icon>Agregar Documento
-                      </button>
-                    </div>
+                    </table>
+                    <div class="d-flex flex-row w-100 py-2" *ngIf="hiddenInput[i].visible">
+                      <input #docInput (keyup.enter)="onEnterDoc($event,medio.me_id)" type="text" placeholder="Escribe el nombre del documento">
+                    </div> 
+                    <button class="btn btn-primary btn-main add-btn" style="background-color: #0B58A4 !important;" (click)="agregarDocumento(i)">
+                      <mat-icon>add</mat-icon>Agregar Documento
+                    </button>
                   </div>
-                </mat-expansion-panel>
-              </mat-accordion>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+            
         </div>
     </div>
   </section>

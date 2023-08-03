@@ -1,4 +1,4 @@
-import { Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { User } from '../../private/types';
 import { AuthenticationService } from '../../auth/service/authentication.service';
@@ -15,23 +15,23 @@ import { CorreosService } from 'src/app/services/correos.service';
   templateUrl: './confirmacion-firma-documento.component.html',
   styleUrls: ['./confirmacion-firma-documento.component.css']
 })
-export class ConfirmacionFirmaDocumentoComponent implements OnInit{
+export class ConfirmacionFirmaDocumentoComponent implements OnInit {
   constructor(
     public activeModal: NgbActiveModal,
-    private authenticationService:AuthenticationService,
+    private authenticationService: AuthenticationService,
     private route: ActivatedRoute,
     private router: Router,
     private toastr: ToastrService,
     private documentosService: DocumentosService,
     private comunesServices: ComunesService,
     private spinner: NgxSpinnerService,
-    private correosService:CorreosService
-    ) {}
+    private correosService: CorreosService
+  ) { }
 
-  userInfo:any={}
-  @Input() documento:any;
-  @Input() key:any;
-  userKnown:boolean=true;
+  userInfo: any = {}
+  @Input() documento: any;
+  @Input() key: any;
+  userKnown: boolean = true;
 
   firmantes: any[] = []
 
@@ -41,7 +41,7 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit{
     console.log(this.userInfo);
   }
 
-  async confirmar(){
+  async confirmar() {
     // if (localStorage.getItem('currentUser')) {
     //   this.router.navigate(['/private/docsFirmados']);
     //   this.toastr.success("Documento firmado correctamente")
@@ -52,59 +52,61 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit{
     // console.log(this.documento.firmantes)
     // const firmantes = typeof this.documento.firmantes ==="string" ? `${}`: this.documento?.firmantes;
     // let esFirmante=false
-    let firmantes:any = this.documento?.firmantes.replace(/\[|\]/g, '')
+    let firmantes: any = this.documento?.firmantes.replace(/\[|\]/g, '')
     try {
       firmantes = JSON.parse(`[${firmantes}]`)
-    } catch (error:any) {
+    } catch (error: any) {
       console.error('Error al parsear el JSON:', error.message);
     }
-    let firma:boolean;
-    let valida:any =firmantes.map((firmante:any, i:any) => {
-      if (firmante.correo == this.userInfo.email) {
-        firmante.firmo=true;
+    let firma: boolean;
+    let valida: any = firmantes.map((firmante: any, i: any) => {
+      if (firmante.correo == "asd@gmail.com") { // AQUI TIENE QUE IR this.userInfo.email
+        firmante.firmo = true;
         firma = true;
         return true;
       }
-      firmante.firmo=false;
+      firmante.firmo = false;
       return false;
     })
     console.log(firmantes);
     console.log(valida);
-    
+
     if (!valida[0] && !valida[1]) {
       this.toastr.warning("No puedes firmar el documento, ya que no estás dentro de los firmantes");
       return;
     }
 
     await this.spinner.show();
-      console.log(this.documento)
-      this.documentosService.crearPdfFirma({
-          key: `Cargas/Documentos/${this.documento.archivo}`,
-          firmantes
-        }).subscribe({
-        next: async (res) => {
-          console.log(res);
-          res.datosTabla
-          res.pdfBase64
-          await this.firmar(res.datosTabla, res.pdfBase64);
-          
-        },
-        error: async (error) => {
-          console.log(error);
-          await this.spinner.hide();
-        }
-      });
-    this.activeModal.close({ estado: true});
+    console.log(this.documento)
+    this.documentosService.crearPdfFirma({
+      key: `Cargas/Documentos/${this.documento.archivo}`,
+      firmantes
+    }).subscribe({
+      next: async (res) => {
+        console.log(res);
+        res.datosTabla
+        res.pdfBase64
+        await this.firmar(res.datosTabla, res.pdfBase64);
+
+      },
+      error: async (error) => {
+        console.log(error);
+        await this.spinner.hide();
+      }
+    });
+    this.activeModal.close({ estado: true });
   }
 
-  async firmar(datosTabla:any, pdfBase64:any) {
+  async firmar(datosTabla: any, pdfBase64: any) {
+
+    this.editarEstadoFirma()
     console.log(datosTabla);
     console.log(pdfBase64);
-    
-    const firma = await this.comunesServices.firma({datosTabla: [ [ "Nombre", "Rut", "Correo" ], [ "Nicola22s", "", "asd@gmail.com" ] ], pdfBase64}).toPromise();
+
+    const firma = await this.comunesServices.firma({ datosTabla: [["Nombre", "Rut", "Correo"], ["Nicola22s", "", "asd@gmail.com"]], pdfBase64 }).toPromise();
     console.log(firma);
-    
-    this.notificarFirma()
+
+    this.notificarFirma()/*
     let bucket = window.location.hostname !== "localhost" ? 'firma-otic-qa-doc' : "ofe-local-services"
     const url:any = await this.comunesServices.getSignedUrl({bucket, key: firma.key, metodo: 'get'}).toPromise();
     const link = document.createElement('a');
@@ -112,26 +114,46 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit{
     link.download = firma.key.split('/')[firma.key.split('/').length - 1];
     link.target = '_blank';
     link.click();
+    */
     await this.spinner.hide();
   }
 
-  notificarFirma(){
+  editarEstadoFirma() {
+    const datos = {
+      documento: {
+        estado: 2,
+        id: this.documento.id
+      }
+    }
+    console.log(datos)
+    this.documentosService.editarDocumento(datos).subscribe({
+      next: (res: any) => {
+        console.log(res);
+      },
+      error: (error: any) => {
+        console.log(error);
+      }
+    });
+    this.activeModal.close({ estado: true });
+  }
+
+  notificarFirma() {
     console.log(`se está enviando mail a ${this.userInfo.email}`)
     const datos = {
       email: `${this.userInfo.email}`,
       asunto: 'Nuevo documento firmado',
       seguimiento: `N° Doc: ${this.documento.id}`
     }
-    console.log(datos)
+    
     this.correosService.notificarDocFirmado(datos).subscribe({
-      next: (res:any) => {
-        console.log(res);        
+      next: (res: any) => {
+        console.log(res);
       },
-      error: (error:any) => {
+      error: (error: any) => {
         console.log(error);
       }
     });
-    this.activeModal.close({estado:true});
+    this.activeModal.close({ estado: true });
   }
 }
 
