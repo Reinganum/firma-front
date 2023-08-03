@@ -33,6 +33,20 @@
             <input type="password" class="form-control w-90" formControlName="clave"><img class="ps-3"
                 matTooltip="Crear clave" src="../../../../assets/img/clave.svg">
         </div>
+        <div class="mb-3 w-100">
+            <label for="cargo" class="form-label">Tipo de usuario</label>
+            <select name="tipo" id="tipo" class="form-control" formControlName="tipo">
+                <option value="1">Usuario interno</option>
+                <option value="2">Usuario externo</option>
+            </select>
+        </div>
+        <div class="mb-3 w-100">
+            <label for="user-estado" class="w-100">Permisos para el usuario</label>
+            <label class="switch">
+                <input type="checkbox" name="user-estado" formControlName="estado">
+                <span class="slider round"></span>
+            </label> 
+        </div>
         <div class="d-flex flex-row-reverse">
             <button class="btn btn-primary btn-main mx-2 py-2" (click)="activeModal.close({ estado: false})" type="submit" style="display: inline-flex; align-items:center; margin-right: -12px !important;background-color: #0B58A4 !important;">
                 <mat-icon>add</mat-icon>Agregar Usuario

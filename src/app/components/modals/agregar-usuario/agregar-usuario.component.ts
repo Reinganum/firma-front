@@ -27,6 +27,8 @@ export class AgregarUsuario implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       cargo: ['', [Validators.required]],
       clave: ['', [Validators.required]],
+      tipo: ['', [Validators.required]],
+      estado: ['', [Validators.required]],
     })
   }
 
