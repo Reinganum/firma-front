@@ -84,13 +84,14 @@ export class MantenedorSistemasComponent implements OnInit {
     }
   }
 
-  async onEnterDoc(event:any, id:any){
+  async onEnterDoc(event:any, idMedio:any){
     console.log(event.target.value)
-    console.log(id)
+    console.log(idMedio)
     const data = {
       tipoDoc: {
         descripcion:event.target.value,
-        disponible:1
+        disponible:1,
+        id:idMedio
       }
     }
     try {
@@ -100,6 +101,7 @@ export class MantenedorSistemasComponent implements OnInit {
           next: async (res: any) => {
             console.log(res);
             await this.spinner.hide();
+            this.obtenerMedios();
           },
           error: async (error: any) => {
             await this.spinner.hide();
@@ -140,7 +142,7 @@ export class MantenedorSistemasComponent implements OnInit {
 
   columns = ["ID","URL","API","Clave Aleatoria"];
 
-  modificarAcceso(medio:any):void{
+  modificarAccesoSis(medio:any):void{
     let estado=medio.me_disponible===1?0:1;
     let data = {
       medio: {

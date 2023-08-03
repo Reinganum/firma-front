@@ -81,32 +81,24 @@ export class MantenedorUsuariosComponent implements OnInit {
         this.totalFilas = res.usuarios.length;
         await this.spinner.hide();
       },
-      error: async (error:any) => {
-        await this.spinner.hide();
-
-            if (error.status.toString() === '404') {
-              this.toastrService.warning(error.error.message);
-            } else if (['0', '401', '403', '504'].includes(error.status.toString())) {
-              this.toastrService.error("Error de conexión.");
-            } else {
-              this.toastrService.error("Ha ocurrido un error.");
-            }
+      error: (error: any) => {
+        console.log(error);
+        this.spinner.hide();
       }
     });
   }
 
   entregarAcceso(user:any):void{
     console.log(user)
-    this.spinner.show();
-    user.estado=user.estado===0?1:0
     let datos = {
       tipoEvento: 'put',
       id:user.id,
       usuario: {
-        estado:user.estado
+        estado:(user.estado==0?1:0)
       }
     };
     console.log(datos)
+    this.spinner.show();
     this.usuarioService.entregarAcceso(datos).subscribe({
       next: async(res:any) => {
         console.log(res)
@@ -114,15 +106,9 @@ export class MantenedorUsuariosComponent implements OnInit {
         await this.spinner.hide();
         this.listarUsuarios(this.paginador.pageIndex, this.paginador.pageSize | this.pageSize)
       },
-      error: async (error:any) =>{
-        await this.spinner.hide();
-        if (error.status.toString() === '404') {
-          this.toastrService.warning(error.error.message);
-        } else if (['0', '401', '403', '504'].includes(error.status.toString())) {
-          this.toastrService.error("Error de conexión.");
-        } else {
-          this.toastrService.error("Ha ocurrido un error.");
-        }
+      error: (error: any) => {
+        console.log(error);
+        this.spinner.hide();
       }
     });
   }

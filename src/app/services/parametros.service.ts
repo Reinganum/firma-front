@@ -41,6 +41,6 @@ export class ParametrosService {
   crearTipoDocumento(data:any): Observable<any> {    
     const body = JSON.stringify(data);
     const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
-    return this.http.post(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/crearMedio`, body, {headers})
+    return this.http.post(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/crearTipoDoc`, body, {headers})
   }
 }
