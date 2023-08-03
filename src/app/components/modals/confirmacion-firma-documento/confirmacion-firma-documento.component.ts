@@ -38,6 +38,7 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
   }
 
   async confirmar() {
+    console.log(this.documento?.firmantes)
     let firmantes: any = this.documento?.firmantes.replace(/\[|\]/g, '')
     try {
       firmantes = JSON.parse(`[${firmantes}]`)
@@ -60,7 +61,6 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
     }
     let estadoDoc=this.setEstadoDoc(firmantes)
     this.editarEstadoFirma(estadoDoc)
-
     await this.spinner.show();
     console.log(this.documento)
     this.documentosService.crearPdfFirma({
@@ -89,7 +89,6 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
 
     const firma = await this.comunesServices.firma({ datosTabla: [["Nombre", "Rut", "Correo"], ["Nicola22s", "", "asd@gmail.com"]], pdfBase64 }).toPromise();
     console.log(firma);
-
     let bucket = window.location.hostname !== "localhost" ? 'firma-otic-qa-doc' : "ofe-local-services"
     const url:any = await this.comunesServices.getSignedUrl({bucket, key: firma.key, metodo: 'get'}).toPromise();
     const link = document.createElement('a');
@@ -97,7 +96,6 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
     link.download = firma.key.split('/')[firma.key.split('/').length - 1];
     link.target = '_blank';
     link.click();
-
     await this.spinner.hide();
   }
 
@@ -114,6 +112,7 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
         console.log(res);
          this.spinner.hide();
          this.notificarFirma()
+         this.router.navigate([`private/docsFirmados`]);
       },
       error: (error: any) => {
         console.log(error);

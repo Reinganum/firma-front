@@ -69,7 +69,7 @@ export class KeycloakService {
     });
   }
 
-
+  
   logout() {
     const logout= this.keycloakAuth.createLogoutUrl({redirectUri:`${window.location.protocol}//${window.location.host}/login`});
     console.log('logout',logout);

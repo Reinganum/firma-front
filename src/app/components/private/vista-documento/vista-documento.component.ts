@@ -159,43 +159,6 @@ export class VistaDocumentoComponent implements OnInit {
     this.totalPages=pdf._pdfInfo.numPages
     console.log(pdf._pdfInfo.numPages)
  }
- generatePDF() {  
-  let docDefinition = {  
-    header: {
-      text:'Firmantes del Documento',
-      fontsize:18,
-      bold:true,
-    }, 
-    content: [   
-      {  
-          columns: [  
-              [
-                {text:""},
-              ],
-          ],
-      },
-      {
-          table: {headerRows: 1,  
-          widths: ['*', 'auto', 'auto', 'auto','auto'],  
-          body: [  
-              ['RUT', 'Nombre', 'Teléfono', 'E-mail','Fecha'],    
-              ...this.firmantes.map(p=>([p.rut,p.nombre,p.telefono,p.email, Date.now()]))
-          ]  
-        }
-      },
-      {
-        columns:[
-          [
-          {
-            
-            qr:this.firmantes[0].nombre}
-          ]
-        ]
-      }
-    ],  
-  };  
-  pdfMake.createPdf(docDefinition).open();  
-}  
 
   pasarPagina():void{
     this.currentPage < this.totalPages ? this.currentPage+=1 : this.currentPage=1
