@@ -46,7 +46,7 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
     }
     let firma: boolean;
     let valida: any = firmantes.map((firmante: any, i: any) => {
-      if (firmante.correo == 'asd@gmail.com') { // En duro 'asd@gmail.com' sino this.userInfo.email
+      if (firmante.correo == this.userInfo.email ) { // En duro 'asd@gmail.com' sino this.userInfo.email
         firmante.firmo = true;
         firma = true;
         return true;
@@ -60,7 +60,7 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
     }
     let estadoDoc=this.setEstadoDoc(firmantes)
     this.editarEstadoFirma(estadoDoc)
-    /*
+
     await this.spinner.show();
     console.log(this.documento)
     this.documentosService.crearPdfFirma({
@@ -78,7 +78,7 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
         console.log(error);
         await this.spinner.hide();
       }
-    });*/
+    });
     this.activeModal.close({ estado: true });
   }
 
@@ -87,9 +87,9 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
     console.log(datosTabla);
     console.log(pdfBase64);
 
-    //const firma = await this.comunesServices.firma({ datosTabla: [["Nombre", "Rut", "Correo"], ["Nicola22s", "", "asd@gmail.com"]], pdfBase64 }).toPromise();
-    //console.log(firma);
-    /*
+    const firma = await this.comunesServices.firma({ datosTabla: [["Nombre", "Rut", "Correo"], ["Nicola22s", "", "asd@gmail.com"]], pdfBase64 }).toPromise();
+    console.log(firma);
+
     let bucket = window.location.hostname !== "localhost" ? 'firma-otic-qa-doc' : "ofe-local-services"
     const url:any = await this.comunesServices.getSignedUrl({bucket, key: firma.key, metodo: 'get'}).toPromise();
     const link = document.createElement('a');
@@ -97,7 +97,7 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
     link.download = firma.key.split('/')[firma.key.split('/').length - 1];
     link.target = '_blank';
     link.click();
-    */
+
     await this.spinner.hide();
   }
 
