@@ -24,6 +24,7 @@ import { EnvioCorreoComponent } from './components/modals/envio-correo/envio-cor
 import { AgregarUsuario } from './components/modals/agregar-usuario/agregar-usuario.component';
 import { AgregarSistema } from './components/modals/agregar-sistema/agregar-sistema.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { ErroresFormularioComponent } from './public/errores-formulario/errores-formulario.component';
 
 export function kcFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -51,7 +52,8 @@ const CUSTOM_DATE_FORMATS = {
     DocsPendientesComponent,
     EnvioCorreoComponent,
     AgregarUsuario,
-    AgregarSistema
+    AgregarSistema,
+    ErroresFormularioComponent
   ],
   imports: [
     BrowserModule,

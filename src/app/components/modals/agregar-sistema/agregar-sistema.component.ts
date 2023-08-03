@@ -65,7 +65,6 @@ export class AgregarSistema implements OnInit {
         } else {
           this.toastrService.error("Ha ocurrido un error");
         }
-        console.log(error);
       }
     }
   }

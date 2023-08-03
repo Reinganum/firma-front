@@ -304,7 +304,7 @@ export class DocumentosFirmarComponent implements OnInit {
       }
         let esFirmante=false;
         document.firmantes=firmantesJson.map((firmante:any) => {
-        if (firmante.correo == 'asd@gmail.com') { // En duro 'asd@gmail.com'
+        if (firmante.correo == 'asd@gmail.com') { // En duro 'asd@gmail.com' sino this.currentUser.email
           firmante.firmo = true;
           esFirmante=true
           console.log("usuario si pertenece a la lista de firmantes")

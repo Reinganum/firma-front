@@ -7,6 +7,10 @@
         <div class="mb-3 w-100">
             <label for="name" class="form-label">Nombres</label>
             <input type="text" formControlName="name" class="form-control">
+            <mat-error *ngIf="errores.length > 0">
+                <app-errores-formulario [errores]="errores"
+                                        [atributo]="'name'"></app-errores-formulario>
+            </mat-error>
         </div>
         <div class="mb-3 small-input mr-5">
             <label for="name" class="form-label">Apellido paterno</label>
