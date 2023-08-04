@@ -38,10 +38,9 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
   }
 
   async confirmar() {
-    console.log(this.documento?.firmantes)
     let firmantes: any = this.documento?.firmantes.replace(/\[|\]/g, '')
     try {
-      firmantes = JSON.parse(`[${firmantes}]`)
+      firmantes = JSON.parse(`[${firmantes}]`);
     } catch (error: any) {
       console.error('Error al parsear el JSON:', error.message);
     }

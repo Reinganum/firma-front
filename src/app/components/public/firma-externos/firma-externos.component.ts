@@ -23,18 +23,18 @@ import { Firmante } from '../../private/types';
 })
 
 export class FirmaExternosComponent implements OnInit {
-  archivoFirmar:string = '';
-  idDoc!:number;
+  archivoFirmar: string = '';
+  idDoc!: number;
   modalRef!: NgbModalRef;
-  zoom:number=1
-  rotation:number=0
-  currentPage:number=1
-  totalPages:number=1
-  fileName:string=""
-  currentUser:any=""
-  page!:any
+  zoom: number = 1
+  rotation: number = 0
+  currentPage: number = 1
+  totalPages: number = 1
+  fileName: string = ""
+  currentUser: any = ""
+  page!: any
   pdfMake = pdfFonts.pdfMake.vfs;
-  token!:any;
+  token!: any;
 
   constructor(
     private comunesServices: ComunesService,
@@ -44,28 +44,22 @@ export class FirmaExternosComponent implements OnInit {
     private toaster: ToastrService,
     private router: Router,
     private modalService: NgbModal,
-    private authenticationService:AuthenticationService,
+    private authenticationService: AuthenticationService,
     private location: Location
   ) {
-    
+
   }
 
   ngOnInit(): void {
     this.currentUser = this.authenticationService.currentUserValue;
-    this.route.params.subscribe((params:any) => {
-      this.token=params["token"] || null;
+    this.route.params.subscribe((params: any) => {
+      this.token = params["token"] || null;
       this.idDoc = params["id"];
       console.log(this.token)
-      localStorage.setItem('tokenUrl', JSON.stringify(this.token));
-      try{
-           /*
-          const headers = new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${this.token}`
-          });
-          */ 
-          this.obtenerPath(this.idDoc);
-      } catch (error){
+      localStorage.setItem('tokenUrl', this.token);
+      try {
+        this.obtenerPath(this.idDoc);
+      } catch (error) {
         console.log(error)
       }
     })
@@ -75,32 +69,32 @@ export class FirmaExternosComponent implements OnInit {
     this.location.back();
   }
 
-  rotate():void{
-    this.rotation+=90
+  rotate(): void {
+    this.rotation += 90
   }
 
-  zoomIn():void{
+  zoomIn(): void {
     this.zoom += 0.25
   }
 
-  zoomOut():void{
+  zoomOut(): void {
     this.zoom > 0.25 ? this.zoom -= 0.25 : this.zoom;
   }
-  async obtenerPath(id:number) {
+  async obtenerPath(id: number) {
     await this.spinner.show();
     this.documentosService.listaDocId(id).subscribe({
-      next: async (res:any) => {
+      next: async (res: any) => {
         console.log(res);
         if (!res.documento) {
           await this.spinner.hide();
           this.router.navigate(["consulta-documento"]);
           this.toaster.warning("No se encontró el documento.");
-          return ;
+          return;
         }
-        this.obtenerPathS3(res.documento.archivo)
-        this.fileName=res.documento.archivo
+        this.obtenerPathS3(`Cargas/Documentos/${res.documento.data[0].archivo}`)
+        this.fileName = res.documento.archivo
       },
-      error: async (error:any) => {
+      error: async (error: any) => {
         await this.spinner.hide();
         console.error(error);
 
@@ -108,31 +102,36 @@ export class FirmaExternosComponent implements OnInit {
     });
   }
 
-  async obtenerPathS3(archivo:any) {
+  async obtenerPathS3(archivo: any) {
     console.log(archivo);
-    const fileData:any = {
+    const fileData: any = {
       key: archivo,
       metodo: 'get'
     }
-    let resultado:any;
+    let resultado: any;
     try {
+      if (this.authenticationService.isTokenNoValid()) {
+        this.toaster.show("El token es inválido, no puedes entrar :c");
+        localStorage.clear();
+        return;
+      }
       resultado = await this.comunesServices.getSignedUrl(fileData).toPromise();
       console.log(resultado);
       this.archivoFirmar = resultado.message;
       this.toaster.success("Documento cargado correctamente!");
       await this.spinner.hide();
-    } catch (error:any) {
-      console.log(error);      
+    } catch (error: any) {
+      console.log(error);
       await this.spinner.hide();
     }
   }
 
-  async descargarArchivo(archivo:any){
-    const fileData:any = {
+  async descargarArchivo(archivo: any) {
+    const fileData: any = {
       key: archivo,
       metodo: 'get'
     }
-    const resultado:any = await this.comunesServices.getSignedUrl(fileData).toPromise();
+    const resultado: any = await this.comunesServices.getSignedUrl(fileData).toPromise();
     const link = document.createElement('a');
     link.href = resultado.message;
     link.download = fileData.key.split('/')[fileData.key.split('/').length - 1];
@@ -141,14 +140,14 @@ export class FirmaExternosComponent implements OnInit {
   }
 
   modalFirmar() {
-    this.modalRef = this.modalService.open(ConfirmacionFirmaDocumentoComponent, {backdrop: 'static', size: 'lg'});
+    this.modalRef = this.modalService.open(ConfirmacionFirmaDocumentoComponent, { backdrop: 'static', size: 'lg' });
   }
   callBackFn(pdf: PDFDocumentProxy) {
-    this.totalPages=pdf._pdfInfo.numPages
+    this.totalPages = pdf._pdfInfo.numPages
     console.log(pdf._pdfInfo.numPages)
- }
-  pasarPagina():void{
-    this.currentPage < this.totalPages ? this.currentPage+=1 : this.currentPage=1
+  }
+  pasarPagina(): void {
+    this.currentPage < this.totalPages ? this.currentPage += 1 : this.currentPage = 1
   }
 }
 
