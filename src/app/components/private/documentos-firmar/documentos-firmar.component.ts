@@ -331,7 +331,7 @@ export class DocumentosFirmarComponent implements OnInit {
       }
     })
   }
-
+  
    extraerIniciales(origen:string){
     const strArr=origen.split(' ');
     if(strArr.length===1){
@@ -362,8 +362,6 @@ export class DocumentosFirmarComponent implements OnInit {
     });
   }
 
-<<<<<<< HEAD
-=======
   crearNotificacion(document:any) {
     const datos = {
       responsable: document.responsable,
@@ -382,7 +380,6 @@ export class DocumentosFirmarComponent implements OnInit {
   }
   
   
->>>>>>> cfea065 (cambios notifiaciones)
   setEstadoDoc(firmantes:any){
     if (firmantes.length===1)return 4;
     let countFalse = 0;
