@@ -24,8 +24,8 @@ export class ComunesService {
     console.log(body);
     console.log(data);
     const headers = {'Content-Type': 'application/json'};
-    // return this.http.post(`https://firma-api.0s.cl/firmar-pdf`, data, {headers});
-    return this.http.post(`http://localhost:3000/firmar-pdf`, data, {headers});
+    return this.http.post(`https://firma-api.0s.cl/firmar-pdf`, data, {headers});
+    // return this.http.post(`http://localhost:3000/firmar-pdf`, data, {headers});
   }
 
 
