@@ -83,18 +83,20 @@ thead{
 .activo{
   color: #4dab61;
   background-color: rgba(236,248,239,255);
-  border-radius: 12px;
 }
 
 .inactivo{
   color: #d9605d;
   background-color: rgb(251,234,235);
-  border-radius: 12px;
 }
 
 .add-btn{
   display: inline-flex!important;
   align-items: center!important;
+}
+
+.titulo-medio{
+  font-size: 1.1rem!important;
 }
 
 @media (max-width: 475px) {

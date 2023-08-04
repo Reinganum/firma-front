@@ -21,6 +21,7 @@ export class MantenedorSistemasComponent implements OnInit {
   modalRef!:NgbModalRef
   hiddenInput!:any[]
 
+
   constructor( 
     private authenticationService:AuthenticationService,
     private parametrosService:ParametrosService,
