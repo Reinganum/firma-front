@@ -33,26 +33,26 @@ export class DocumentosService {
 
   // a la nueva db
 
-  obtenerDocumentos(estado:any, medio:any, fecha:any, sortDirection:any, sortField:any, pageOffset:any, pageLimit:any): Observable<any[]>{
-    return this.http.get<any>(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/listaDocs?estado=${estado}&medio=${medio}&fecha=${fecha}&sortField=${sortField}&sortDirection=${sortDirection}&pageLimit=${pageLimit}&pageOffset=${pageOffset}`);
+  obtenerDocumentos(responsable:any, estado:any, medio:any, fecha:any, sortDirection:any, sortField:any, pageOffset:any, pageLimit:any): Observable<any[]>{
+    return this.http.get<any>(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/listaDocs?responsable=${responsable}&estado=${estado}&medio=${medio}&fecha=${fecha}&sortField=${sortField}&sortDirection=${sortDirection}&pageLimit=${pageLimit}&pageOffset=${pageOffset}`);
   }
 
-  crearDocumento(data:any): Observable<any> {    
+  crearDocumento(data:any): Observable<any> {
     const body = JSON.stringify(data);
     const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
     return this.http.post(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/ingresarDocumento`, body, {headers})
   }
 
-  editarDocumento(data:any): Observable<any> {    
+  editarDocumento(data:any): Observable<any> {
     const body = JSON.stringify(data);
     const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
     return this.http.post(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/editarDocumento`, body, {headers})
   }
-  
+
   setDocPendientes(data: any[]) {
     this.docsPendientes = data;
   }
-  
+
   getDocsPendientes() {
     return this.docsPendientes;
   }
@@ -60,7 +60,7 @@ export class DocumentosService {
   setOrigenes(data: any) {
     this.origenes = data;
   }
-  
+
   getOrigenes() {
     return this.origenes;
   }

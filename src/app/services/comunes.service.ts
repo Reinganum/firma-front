@@ -15,16 +15,17 @@ export class ComunesService {
   getSignedUrl(data: any): Observable<any> {
     const body = JSON.stringify(data);
     console.log(body);
-    
+
     const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
     return this.http.post(`${environment.API_DOMAINS.COMUNES}/getSignedUrl`, body, {headers});
   }
   firma(data: any): Observable<any> {
     const body = JSON.stringify(data);
     console.log(body);
-    console.log(data);   
+    console.log(data);
     const headers = {'Content-Type': 'application/json'};
-    return this.http.post(`https://firma-api.0s.cl/firmar-pdf`, body, {headers});
+    // return this.http.post(`https://firma-api.0s.cl/firmar-pdf`, data, {headers});
+    return this.http.post(`http://localhost:3000/firmar-pdf`, data, {headers});
   }
 
 

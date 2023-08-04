@@ -58,7 +58,7 @@ export class DocumentosFirmarComponent implements OnInit {
   currentUser:any;
   estadoDoc!:number;
   selection = new SelectionModel<any>(true, []);
-  
+
   ngOnInit():void {
     const rutaActual = window.location.pathname;
     const user=localStorage.getItem("currentUser");
@@ -83,7 +83,7 @@ export class DocumentosFirmarComponent implements OnInit {
       ]
     }
     this.obtenerDocumentos(null, '', this.paginador.pageIndex, this.paginador.pageSize | this.pageSize);
-    
+
     this.filtrosForm = this.formBuilder.group({
       fechaDoc: [null],
       origen: [null],
@@ -102,7 +102,7 @@ export class DocumentosFirmarComponent implements OnInit {
       this.paginador.firstPage();
       this.obtenerDocumentos(this.sort.active, this.sort.direction, this.paginador.pageSize, this.paginador.pageIndex);
     });
-    
+
     this.paginador.page.subscribe(async ()=>{
       this.obtenerDocumentos(null, '', this.paginador.pageIndex, this.paginador.pageSize | this.pageSize);
     })
@@ -128,21 +128,21 @@ export class DocumentosFirmarComponent implements OnInit {
   masterToggle() {
     if (this.isAllSelected()) {
       console.log(this.selection)
-      this.selection.clear() 
+      this.selection.clear()
     } else {
       this.documentList.forEach((row:any) => this.selection.select(row));
-    }      
+    }
   }
-  isAllSelected() {        
+  isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.documentList.length;
-    return numSelected === numRows;    
+    return numSelected === numRows;
   }
 
   exportar() {
 
   }
-  
+
   tag:boolean=false;
 
   async obtenerDocumentos(sortField: any, sortDirection: any, pageLimit: any, pageOffset: any) {
@@ -150,10 +150,11 @@ export class DocumentosFirmarComponent implements OnInit {
       console.log(this.estadoDoc);
       await this.spinner.show();
       this.documentosService.obtenerDocumentos(
+      this.currentUser.email,
       this.estadoDoc,
       this.filtrosForm.value.origen,
       this.convertDateForDB(this.filtrosForm.value.fechaDoc),
-      sortField, 
+      sortField,
       sortDirection == '' ? '' : sortDirection,
       pageLimit,
       pageOffset).subscribe(
@@ -163,7 +164,7 @@ export class DocumentosFirmarComponent implements OnInit {
               "estado : ", this.estadoDoc,
               "origen : ", this.filtrosForm.value.origen,
               "fecha : ",this.filtrosForm.value.fechaDoc,
-              "sort : ", sortField, 
+              "sort : ", sortField,
               "Sdirect : ", sortDirection == '' ? '' : sortDirection,
               "Limit : ", pageLimit,
               "Offset : ", pageOffset
@@ -274,7 +275,7 @@ export class DocumentosFirmarComponent implements OnInit {
       const day = inputDate.slice(8,10)
       const month = inputDate.slice(5,7)
       const year = inputDate.slice(0,4)
-  
+
       return `${day}-${month}-${year}`;
     }
     return '';
@@ -332,7 +333,7 @@ export class DocumentosFirmarComponent implements OnInit {
       }
     })
   }
-  
+
    extraerIniciales(origen:string){
     const strArr=origen.split(' ');
     if(strArr.length===1){
@@ -362,7 +363,7 @@ export class DocumentosFirmarComponent implements OnInit {
       }
     });
   }
-  
+
   setEstadoDoc(firmantes:any){
     if (firmantes.length===1)return 4;
     let countFalse = 0;
