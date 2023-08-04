@@ -46,24 +46,11 @@ export class MantenedorSistemasComponent implements OnInit {
               this.hiddenInput=[]
               this.medios.forEach(()=>this.hiddenInput.push({visible:false}))
               console.log(this.medios)
-              try{
-                  this.documentos=this.medios.map((medio:any)=>{
-                  if(medio.medioGestionData===null) return null
-                  const inputString=medio.medioGestionData
-                  const validJsonStr=formatJSONString(inputString)
-                  return JSON.parse(validJsonStr)
-                })
-                  function formatJSONString(inputString:string) {
-                  const regex = /([\w]+):[\s]*([\w\s]+),/g;
-                  const formattedString = inputString.replace(regex, '"$1": "$2",');
-                  const finalString = formattedString.replace(/disponible: (\d)/g, '"disponible": $1');
-                  return '[' + finalString + ']';
-                }
-                console.log(this.documentos)
-              }catch(error){
-                console.log(error)
-                await this.spinner.hide();
-              }
+              this.documentos=this.medios.map((medio:any)=>{
+              if(medio.medioGestionData===null) return null
+              return medio.medioGestionData
+              })
+              console.log(this.documentos)
               await this.spinner.hide();
           },
           error: async (error:any) => {

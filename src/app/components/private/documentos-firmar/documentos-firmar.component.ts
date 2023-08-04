@@ -174,8 +174,6 @@ export class DocumentosFirmarComponent implements OnInit {
               this.totalFilas= res.listaDocs.total;
               this.dataSource = new MatTableDataSource(this.documentList);
               this.tag = false;
-              //this.documentList = res.listaDocs;
-              //this.totalFilas= res.listaDocs.length;
               await this.spinner.hide();
           },
           error: async (error:any) => {
@@ -305,10 +303,10 @@ export class DocumentosFirmarComponent implements OnInit {
       }
         let esFirmante=false;
         document.firmantes=firmantesJson.map((firmante:any) => {
-        if (firmante.correo == 'asd@gmail.com') { // En duro 'asd@gmail.com' sino this.currentUser.email
+        if (firmante.correo == this.currentUser.email) { // En duro 'asd@gmail.com' sino this.currentUser.email
           firmante.firmo = true;
           esFirmante=true
-          console.log("usuario si pertenece a la lista de firmantes")
+          console.log("Usuario si pertenece a la lista de firmantes")
         }
         return firmante
       })
@@ -317,10 +315,11 @@ export class DocumentosFirmarComponent implements OnInit {
       } else {
         let estadoDoc=this.setEstadoDoc(firmantesJson)
         this.editarEstadoFirma(document,estadoDoc)
-        /*
+      
         this.documentosService.crearPdfFirma(document).subscribe({
           next: async (res) => {
          console.log(res);
+         this.crearNotificacion(document)
          this.enviarNotificacion()
          await this.spinner.hide();
         },
@@ -329,11 +328,10 @@ export class DocumentosFirmarComponent implements OnInit {
           await this.spinner.hide();
         }
       });
-      */
       }
     })
   }
-
+  
    extraerIniciales(origen:string){
     const strArr=origen.split(' ');
     if(strArr.length===1){
@@ -364,6 +362,24 @@ export class DocumentosFirmarComponent implements OnInit {
     });
   }
 
+  crearNotificacion(document:any) {
+    const datos = {
+      responsable: document.responsable,
+      firmante: this.currentUser.email,
+      docFirmado: document.archivo
+    }
+    this.spinner.show();
+    this.documentosService.crearNotificacion(datos).subscribe({
+      next: (res: any) => {
+        console.log(res);
+      },
+      error: (error: any) => {
+        console.log(error);
+      }
+    });
+  }
+  
+  
   setEstadoDoc(firmantes:any){
     if (firmantes.length===1)return 4;
     let countFalse = 0;

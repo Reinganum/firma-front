@@ -49,6 +49,16 @@ export class DocumentosService {
     return this.http.post(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/editarDocumento`, body, {headers})
   }
 
+  getNotificaciones(responsable:any){
+    return this.http.get<any>(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/notificaciones?responsable="${responsable}"`);
+  }
+
+  crearNotificacion(data:any): Observable<any> {    
+    const body = JSON.stringify(data);
+    const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+    return this.http.post(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/crearNotificacion`, body, {headers})
+  }
+  
   setDocPendientes(data: any[]) {
     this.docsPendientes = data;
   }

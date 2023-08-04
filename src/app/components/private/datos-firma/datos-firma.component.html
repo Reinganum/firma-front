@@ -12,7 +12,7 @@
             </div> 
             <div class="fw-bold d-flex flex-column justify-content-center py-1" id="user-data"  style="margin-top: 1%;margin-left:10%; height:80% !important" >
                 <p>{{currentUser.firstName + " " + currentUser.lastName}}</p>
-                <p>{{user.rut}}</p>
+                <p>{{currentUser.rut?currentUser.rut:"20.232.132-3"}}</p>
                 <p>{{currentUser.email}}</p>
                 <p>{{user.phone}}</p>
             </div>

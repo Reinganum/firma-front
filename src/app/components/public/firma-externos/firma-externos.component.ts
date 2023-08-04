@@ -96,7 +96,8 @@ export class FirmaExternosComponent implements OnInit {
   zoomOut(): void {
     this.zoom > 0.25 ? this.zoom -= 0.25 : this.zoom;
   }
-  async obtenerPath(id: number) {
+
+  async obtenerPath(id:number) {
     await this.spinner.show();
     this.documentosService.listaDocId(id).subscribe({
       next: async (res: any) => {
@@ -107,19 +108,19 @@ export class FirmaExternosComponent implements OnInit {
           return;
         }
         this.obtenerPathS3(`Cargas/Documentos/${res.documento.data[0].archivo}`)
-        this.fileName = res.documento.archivo
+        this.fileName=res.documento.data[0].archivo;
+        this.documento = res.documento.data[0];
+        console.log(res)
       },
       error: async (error: any) => {
         await this.spinner.hide();
         console.error(error);
-
       }
     });
   }
-
-  async obtenerPathS3(archivo: any) {
-    console.log(archivo);
-    const fileData: any = {
+  documento:any;
+  async obtenerPathS3(archivo:any) {
+    const fileData:any = {
       key: archivo,
       metodo: 'get'
     }
@@ -135,9 +136,9 @@ export class FirmaExternosComponent implements OnInit {
     }
   }
 
-  async descargarArchivo(archivo: any) {
-    const fileData: any = {
-      key: archivo,
+  async descargarArchivo(archivo:any){
+    const fileData:any = {
+      key: `Cargas/Documentos/${archivo}`,
       metodo: 'get'
     }
     const resultado: any = await this.comunesServices.getSignedUrl(fileData).toPromise();
@@ -148,9 +149,16 @@ export class FirmaExternosComponent implements OnInit {
     link.click();
   }
 
-  modalFirmar() {
-    this.modalRef = this.modalService.open(ConfirmacionFirmaDocumentoComponent, { backdrop: 'static', size: 'lg' });
+  modalFirmar(){
+    this.modalRef=this.modalService.open(ConfirmacionFirmaDocumentoComponent,{backdrop:'static',size:'md'});
+    this.modalRef.componentInstance.documento = this.idDoc;
+    this.modalRef.result.then((res)=>{
+      if(res.estado){
+        this.modalRef.close();
+      }
+    })
   }
+  
   callBackFn(pdf: PDFDocumentProxy) {
     this.totalPages = pdf._pdfInfo.numPages
   }

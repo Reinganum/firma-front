@@ -61,11 +61,11 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
       return;
     }
     let estadoDoc=this.setEstadoDoc(firmantes)
-    this.editarEstadoFirma(estadoDoc)
     await this.spinner.show();
     console.log(this.documento)
     console.log(firmantes)
 
+    this.editarEstadoFirma(estadoDoc)
     this.documentosService.crearPdfFirma({
       key: `Cargas/Documentos/${this.documento.archivo}`,
       firmantes
@@ -120,10 +120,12 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
     this.spinner.show();
     this.documentosService.editarDocumento(datos).subscribe({
       next: (res: any) => {
+        this.toastr.success("Documento firmado exitosamente")
+        this.crearNotificacion(this.documento)
         console.log(res);
-         this.spinner.hide();
-         this.notificarFirma()
-         this.router.navigate([`private/docsFirmados`]);
+        this.spinner.hide();
+        this.notificarFirma()
+        this.router.navigate([`private/docsFirmados`]);
       },
       error: (error: any) => {
         console.log(error);
@@ -151,6 +153,24 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
     });
     this.activeModal.close({ estado: true });
   }
+
+  crearNotificacion(document:any) {
+    const datos = {
+      responsable: document.responsable,
+      firmante: this.userInfo.email,
+      docFirmado: document.archivo
+    }
+    this.spinner.show();
+    this.documentosService.crearNotificacion(datos).subscribe({
+      next: (res: any) => {
+        console.log(res);
+      },
+      error: (error: any) => {
+        console.log(error);
+      }
+    });
+  }
+  
 
   setEstadoDoc(firmantes:any){
     if (firmantes.length===1)return 4;
