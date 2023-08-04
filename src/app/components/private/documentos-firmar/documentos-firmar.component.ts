@@ -378,7 +378,7 @@ export class DocumentosFirmarComponent implements OnInit {
       }
     });
   }
-  
+
   
   setEstadoDoc(firmantes:any){
     if (firmantes.length===1)return 4;

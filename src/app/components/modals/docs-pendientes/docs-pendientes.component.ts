@@ -25,7 +25,9 @@ export class DocsPendientesComponent implements OnInit {
 
   ngOnInit() {
     this.docsPendientes = this.documentosService.getDocsPendientes();
+    console.log(this.notificaciones)
     this.mensajesNotificacion=this.notificaciones.map((noti:any)=>{
+      if(noti.mail_firmante==="1")return `Se ha cargado el nuevo documento ${noti.doc_firmado} en el que figuras como firmante`
       return `Su documento "${noti.doc_firmado}" ha sido firmado por el usuario ${noti.mail_firmante}`
     })
   }
