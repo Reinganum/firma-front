@@ -35,6 +35,8 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
 
   ngOnInit(): void {
     this.userInfo = this.authenticationService.currentUserValue;
+    console.log(this.documento);
+
   }
 
   async confirmar() {
@@ -62,6 +64,8 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
     this.editarEstadoFirma(estadoDoc)
     await this.spinner.show();
     console.log(this.documento)
+    console.log(firmantes)
+
     this.documentosService.crearPdfFirma({
       key: `Cargas/Documentos/${this.documento.archivo}`,
       firmantes
@@ -70,7 +74,13 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
         console.log(res);
         res.datosTabla
         res.pdfBase64
-        await this.firmar(res.datosTabla, res.pdfBase64);
+        let listaNueva:any =[];
+        res.datosTabla.map((datos:any) => {
+          listaNueva.push(datos)
+        });
+        console.log(listaNueva);
+
+        await this.firmar(listaNueva, res.pdfBase64);
 
       },
       error: async (error) => {
@@ -85,8 +95,10 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
 
     console.log(datosTabla);
     console.log(pdfBase64);
+    const newDatos = JSON.stringify(datosTabla).replace("'", '"');
+    console.log(JSON.parse(newDatos));
 
-    const firma = await this.comunesServices.firma({ datosTabla: [["Nombre", "Rut", "Correo"], ["Nicola22s", "", "asd@gmail.com"]], pdfBase64 }).toPromise();
+    const firma = await this.comunesServices.firma({ datosTabla, pdfBase64 }).toPromise();
     console.log(firma);
     let bucket = window.location.hostname !== "localhost" ? 'firma-otic-qa-doc' : "ofe-local-services"
     const url:any = await this.comunesServices.getSignedUrl({bucket, key: firma.key, metodo: 'get'}).toPromise();
