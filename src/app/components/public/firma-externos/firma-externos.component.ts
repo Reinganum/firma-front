@@ -5,6 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ComunesService } from 'src/app/services/comunes.service';
 import { DocumentosService } from 'src/app/services/documentos.service';
+import { UsuariosService } from 'src/app/services/usuarios.service';
 import { ConfirmacionFirmaDocumentoComponent } from '../../modals/confirmacion-firma-documento/confirmacion-firma-documento.component';
 import { PDFDocumentProxy } from 'ng2-pdf-viewer';
 import * as pdfMake from 'pdfmake/build/pdfmake';
@@ -40,6 +41,7 @@ export class FirmaExternosComponent implements OnInit {
     private comunesServices: ComunesService,
     private route: ActivatedRoute,
     private documentosService: DocumentosService,
+    private userService: UsuariosService,
     private spinner: NgxSpinnerService,
     private toaster: ToastrService,
     private router: Router,
@@ -55,12 +57,26 @@ export class FirmaExternosComponent implements OnInit {
     this.route.params.subscribe((params: any) => {
       this.token = params["token"] || null;
       this.idDoc = params["id"];
-      console.log(this.token)
       localStorage.setItem('tokenUrl', this.token);
+
       try {
-        this.obtenerPath(this.idDoc);
+        this.userService.verificarToken(this.token).subscribe({
+          next: async (res: any) => {
+            try {
+              this.obtenerPath(this.idDoc);
+            } catch (error) {
+              this.toaster.show("El token es inválido o ya expiró");
+              return ;
+            }
+          },
+          error: async (error: any) => {
+            this.toaster.show("El token es inválido o ya expiró");
+            console.error(error);
+          }
+        })
       } catch (error) {
-        console.log(error)
+        console.log(error);
+        return;
       }
     })
   }
@@ -84,7 +100,6 @@ export class FirmaExternosComponent implements OnInit {
     await this.spinner.show();
     this.documentosService.listaDocId(id).subscribe({
       next: async (res: any) => {
-        console.log(res);
         if (!res.documento) {
           await this.spinner.hide();
           this.router.navigate(["consulta-documento"]);
@@ -110,13 +125,7 @@ export class FirmaExternosComponent implements OnInit {
     }
     let resultado: any;
     try {
-      if (this.authenticationService.isTokenNoValid()) {
-        this.toaster.show("El token es inválido, no puedes entrar :c");
-        localStorage.clear();
-        return;
-      }
       resultado = await this.comunesServices.getSignedUrl(fileData).toPromise();
-      console.log(resultado);
       this.archivoFirmar = resultado.message;
       this.toaster.success("Documento cargado correctamente!");
       await this.spinner.hide();
@@ -144,7 +153,6 @@ export class FirmaExternosComponent implements OnInit {
   }
   callBackFn(pdf: PDFDocumentProxy) {
     this.totalPages = pdf._pdfInfo.numPages
-    console.log(pdf._pdfInfo.numPages)
   }
   pasarPagina(): void {
     this.currentPage < this.totalPages ? this.currentPage += 1 : this.currentPage = 1

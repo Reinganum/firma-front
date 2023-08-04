@@ -32,4 +32,10 @@ export class UsuariosService {
     console.log(data)
     return this.http.post(`${environment.API_DOMAINS.USUARIOS}/usuarios/mantenerUsuario`, body, { headers })
   }
+
+  verificarToken(token: any): Observable<any> {
+    const body = JSON.stringify(token);
+    const headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
+    return this.http.post(`${environment.API_DOMAINS.USUARIOS}/usuarios/verificarToken`, body, { headers })
+  }
 }
