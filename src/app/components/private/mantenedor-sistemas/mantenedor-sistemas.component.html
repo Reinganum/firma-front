@@ -96,7 +96,7 @@
                         </tr>
                       </thead>
                       <tbody *ngIf="medio.medioGestionData!==null">
-                        <tr class="fw-bold" *ngFor="let documento of documentos[i][0]">
+                        <tr class="fw-bold" *ngFor="let documento of documentos[i]">
                           <td>
                             <div class="d-flex flex-row align-items-center mx-2">
                               <label class="switch" (click)="modificarAccesoDoc(documento,medio)">

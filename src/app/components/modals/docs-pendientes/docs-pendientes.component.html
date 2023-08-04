@@ -1,12 +1,23 @@
 <div class="container">
     <div class="modal-body">
         <div class="d-flex mt-5 flex-column justify-content-center" >
-            <h1>Tienes {{docsPendientes.length}} {{docsPendientes.length>1 || 
-                docsPendientes.length===0?"archivos pendientes por firmar":"archivo pendiente por firmar"}}</h1>
+            <h3 class="fw-bold">Tiene {{docsPendientes.length}} {{docsPendientes.length>1 || 
+                docsPendientes.length===0?"archivos pendientes por firmar":"archivo pendiente por firmar"}}</h3>
             <div style="max-height: 30vh !important;overflow-y: scroll !important;">
                 <ul>
                     <li *ngFor="let doc of docsPendientes" class="card p-1 card-shadow">
                         {{doc.archivo}}
+                    </li>
+                </ul>
+            </div>
+            <h3 *ngIf="mensajesNotificacion.length>0;else noNotis" class="fw-bold">Sus últimas notificaciones:</h3>
+            <ng-template #noNotis>
+                <h3 class="fw-bold">No tiene nuevas notificaciones</h3>
+            </ng-template>
+            <div style="max-height: 20vh !important;overflow-y: scroll !important;">
+                <ul>
+                    <li *ngFor="let mensaje of mensajesNotificacion" class="card p-1 card-shadow">
+                        <p>{{mensaje}}</p>
                     </li>
                 </ul>
             </div>

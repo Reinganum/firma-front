@@ -19,8 +19,9 @@ export class HeaderComponent {
   currentUser!:any
   userId!:any
   newDocs!:any
-  notifications!:any  
+  notifications=0
   modalRef!:NgbModalRef
+  newNotifications!:any // luego modificar nombres 
 
 
   constructor(
@@ -37,7 +38,8 @@ export class HeaderComponent {
     this.currentUser = this.authenticationService.currentUserValue;
     this.userId = localStorage.getItem('userId');
     console.log(this.userId)
-    this.getDocsPendientes(1,this.userId)
+    this.getDocsPendientes(1,this.currentUser.email)
+    this.getNotificaciones(this.currentUser.email)
   }
 
   menu(){
@@ -51,6 +53,12 @@ export class HeaderComponent {
   showPendientesModal(){
     this.modalRef=this.modalService.open(DocsPendientesComponent,{backdrop:'static',size:'md'});
     this.notifications=0
+    this.modalRef.componentInstance.notificaciones = this.newNotifications
+    this.modalRef.result.then((res)=>{
+      if(res.estado){
+        this.modalRef.close();
+      }
+    })
   }
 
   async getDocsPendientes(estado:any, responsable:any) {
@@ -61,7 +69,7 @@ export class HeaderComponent {
           next: async (res:any) => {
               console.log(res);
               this.documentosService.setDocPendientes(res.docs)
-              this.notifications=res.docs.length
+              this.notifications+=res.docs.length
               await this.spinner.hide();
           },
           error: async (error:any) => {
@@ -83,6 +91,38 @@ export class HeaderComponent {
       console.log(error);
     }
   }
+
+  async getNotificaciones(responsable:any){
+    try {
+      await this.spinner.show();
+      this.documentosService.getNotificaciones(responsable).subscribe(
+        {
+          next: async (res:any) => {
+              console.log(res);
+              this.newNotifications=res.notis
+              this.notifications+=res.notis.length
+              await this.spinner.hide();
+          },
+          error: async (error:any) => {
+            await this.spinner.hide();
+            console.log(error)
+            this.toastrService.warning(error);
+          }
+      });
+    } catch (error:any) {
+      await this.spinner.hide();
+      console.log(error)
+      if (error.status.toString() === '404') {
+        this.toastrService.warning(error.error.message);
+      } else if (['0', '401', '403', '504'].includes(error.status.toString())) {
+
+      } else {
+        this.toastrService.error("Ha ocurrido un error");
+      }
+      console.log(error);
+    }
+  }
+
 }
 
 

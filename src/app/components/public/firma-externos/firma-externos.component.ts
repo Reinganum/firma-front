@@ -56,6 +56,7 @@ export class FirmaExternosComponent implements OnInit {
       this.token=params["token"] || null;
       this.idDoc = params["id"];
       console.log(this.token)
+      console.log(this.idDoc)
       localStorage.setItem('tokenUrl', JSON.stringify(this.token));
       try{
            /*
@@ -86,6 +87,7 @@ export class FirmaExternosComponent implements OnInit {
   zoomOut():void{
     this.zoom > 0.25 ? this.zoom -= 0.25 : this.zoom;
   }
+
   async obtenerPath(id:number) {
     await this.spinner.show();
     this.documentosService.listaDocId(id).subscribe({
@@ -97,19 +99,19 @@ export class FirmaExternosComponent implements OnInit {
           this.toaster.warning("No se encontró el documento.");
           return ;
         }
-        this.obtenerPathS3(res.documento.archivo)
-        this.fileName=res.documento.archivo
+        this.obtenerPathS3(`Cargas/Documentos/${res.documento.data[0].archivo}`)
+        this.fileName=res.documento.data[0].archivo;
+        this.documento = res.documento.data[0];
+        console.log(res)
       },
       error: async (error:any) => {
         await this.spinner.hide();
         console.error(error);
-
       }
     });
   }
-
+  documento:any;
   async obtenerPathS3(archivo:any) {
-    console.log(archivo);
     const fileData:any = {
       key: archivo,
       metodo: 'get'
@@ -129,7 +131,7 @@ export class FirmaExternosComponent implements OnInit {
 
   async descargarArchivo(archivo:any){
     const fileData:any = {
-      key: archivo,
+      key: `Cargas/Documentos/${archivo}`,
       metodo: 'get'
     }
     const resultado:any = await this.comunesServices.getSignedUrl(fileData).toPromise();
@@ -140,9 +142,16 @@ export class FirmaExternosComponent implements OnInit {
     link.click();
   }
 
-  modalFirmar() {
-    this.modalRef = this.modalService.open(ConfirmacionFirmaDocumentoComponent, {backdrop: 'static', size: 'lg'});
+  modalFirmar(){
+    this.modalRef=this.modalService.open(ConfirmacionFirmaDocumentoComponent,{backdrop:'static',size:'md'});
+    this.modalRef.componentInstance.documento = this.idDoc;
+    this.modalRef.result.then((res)=>{
+      if(res.estado){
+        this.modalRef.close();
+      }
+    })
   }
+  
   callBackFn(pdf: PDFDocumentProxy) {
     this.totalPages=pdf._pdfInfo.numPages
     console.log(pdf._pdfInfo.numPages)
