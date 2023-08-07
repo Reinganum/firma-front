@@ -43,8 +43,8 @@ export class EnvioCorreoComponent implements OnInit {
 
   confirmar() {
     const datos = {
-      email: this.formEnvioCorreo.value.correos,
-      asunto: 'PRUEBA DESDE EL FRONT',
+      email: this.formEnvioCorreo.value.correos.correo,
+      asunto: 'Aviso de documento',
       seguimiento: `N° Doc: ${this.documento.id}`
     }
     this.correosService.notificarDocFirmado(datos).subscribe({

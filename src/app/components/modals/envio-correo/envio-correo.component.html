@@ -13,7 +13,7 @@
                     <mat-form-field>
                         <mat-label>Correos</mat-label>
                         <mat-select formControlName="correos">
-                            <mat-option *ngFor="let c of correos" [value]="c.value">{{c.correo}}</mat-option>
+                            <mat-option *ngFor="let c of correos" [value]="c">{{c.correo}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
