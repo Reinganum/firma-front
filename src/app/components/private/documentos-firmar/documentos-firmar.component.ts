@@ -149,7 +149,7 @@ export class DocumentosFirmarComponent implements OnInit {
       console.log(this.estadoDoc);
       await this.spinner.show();
       this.documentosService.obtenerDocumentos(
-      this.currentUser.email,
+      "ncatalan@nexia.cl", // this.currentUser.email
       this.estadoDoc,
       this.filtrosForm.value.origen,
       this.convertDateForDB(this.filtrosForm.value.fechaDoc),
@@ -170,6 +170,7 @@ export class DocumentosFirmarComponent implements OnInit {
             )
               console.log(res);
               this.documentList = res.listaDocs.data;
+              console.log(this.documentList);
               this.totalFilas= res.listaDocs.total;
               this.dataSource = new MatTableDataSource(this.documentList);
               this.tag = false;
