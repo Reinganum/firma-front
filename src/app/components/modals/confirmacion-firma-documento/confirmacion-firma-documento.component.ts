@@ -40,7 +40,7 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
   }
 
   async confirmar() {
-    let firmantes: any = this.documento?.firmantes.replace(/\[|\]/g, '')
+    let firmantes: any = this.documento?.firmantes;
     try {
       firmantes = JSON.parse(`[${firmantes}]`);
     } catch (error: any) {
