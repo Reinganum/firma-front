@@ -41,11 +41,11 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
 
   async confirmar() {
     let firmantes: any = this.documento?.firmantes;
-    try {
-      firmantes = JSON.parse(`[${firmantes}]`);
-    } catch (error: any) {
-      console.error('Error al parsear el JSON:', error.message);
-    }
+    // try {
+    //   firmantes = JSON.parse(`[${firmantes}]`);
+    // } catch (error: any) {
+    //   console.error('Error al parsear el JSON:', error.message);
+    // }
     let firma: boolean;
     let valida: any = firmantes.map((firmante: any, i: any) => {
       if (firmante.correo == this.userInfo.email ) { // En duro 'asd@gmail.com' sino this.userInfo.email
@@ -97,10 +97,9 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
     console.log(pdfBase64);
     const newDatos = JSON.stringify(datosTabla).replace("'", '"');
     console.log(JSON.parse(newDatos));
-
-    const firma = await this.comunesServices.firma({ datosTabla, pdfBase64 }).toPromise();
+    const firma = await this.comunesServices.firma({ datosTabla, pdfBase64, hash: this.documento.hashDoc }).toPromise();
     console.log(firma);
-    let bucket = window.location.hostname !== "localhost" ? 'firma-otic-qa-doc' : "ofe-local-services"
+    let bucket = window.location.hostname == "localhost" ? 'firma-otic-qa-doc' : "ofe-local-services"
     const url:any = await this.comunesServices.getSignedUrl({bucket, key: firma.key, metodo: 'get'}).toPromise();
     const link = document.createElement('a');
     link.href = url.message;
