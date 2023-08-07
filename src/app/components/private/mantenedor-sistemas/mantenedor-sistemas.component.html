@@ -37,68 +37,68 @@
           </div>
         </div>
       </div>
-        <div>
-          <table class="table table-borderless mt-3 py-5">
-            <thead class="px-5">
-              <tr>
-                <th style="font-weight: normal!important;" *ngFor="let column of columns">{{column}}</th>
-                <th>
-                  <div class="d-flex flex-row w-100 justify-content-end">
-                    <div>
-                      <span [ngClass]="{
-                        'inactivo':medio.me_disponible!==1,
-                        'activo':medio.me_disponible===1,
-                        }" class="p-2">
-                        {{medio.me_disponible!==1?"Inactivo":"Activo"}}
-                      </span>
+          <div class="table-responsive">
+            <table class="table table-borderless mt-3 py-5">
+              <thead class="px-5">
+                <tr>
+                  <th style="font-weight: normal!important;" *ngFor="let column of columns">{{column}}</th>
+                  <th>
+                    <div class="d-flex flex-row flex-wrap justify-content-end">
+                      <div>
+                        <span [ngClass]="{
+                          'inactivo':medio.me_disponible!==1,
+                          'activo':medio.me_disponible===1,
+                          }" class="p-2">
+                          {{medio.me_disponible!==1?"Inactivo":"Activo"}}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                </th>
-              </tr>
-            </thead>
-            <tbody class="fw-bold">
-              <tr>
-                <td>
-                  {{medio.me_id}}
-                </td>
-                <td>
-                  {{medio.url?medio.url:"https://gn.vir.0s.cl"}}
-                </td>
-                <td>
-                  {{medio.api?medio.api:"desarrollo.c4wryyw566zb.us-east-1.rds.amazonaws.co"}}
-                </td>
-                <td>
-                  {{medio.clave?medio.clave:"EDRF12"}}
-                </td>
-                <td>
-                  <div class="d-flex flex-row w-100 justify-content-end">
-                    <img src="../../../../assets/img/archivo_tabla.svg" class="iconos-options mx-1 p-1 rounded">
-                    <img src="../../../../assets/img/archivo_tabla.svg" class="iconos-options mx-1 p-1 rounded">
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <mat-accordion>
-              <mat-expansion-panel hideToggle>
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="fw-bold">
+                <tr>
+                  <td>
+                    {{medio.me_id}}
+                  </td>
+                  <td>
+                    {{medio.url?medio.url:"https://gn.vir.0s.cl"}}
+                  </td>
+                  <td>
+                    {{medio.api?medio.api:"desarrollo.c4wryyw566zb.us-east-1.rds.amazonaws.co"}}
+                  </td>
+                  <td>
+                    {{medio.clave?medio.clave:"EDRF12"}}
+                  </td>
+                  <td>
+                    <div class="d-flex flex-row w-100 justify-content-end">
+                      <img src="../../../../assets/img/archivo_tabla.svg" (click)="switchToggle(i)" matTooltip="Ver documentos" class="iconos-options mx-1 p-1 rounded">
+                      <img src="../../../../assets/img/editar.svg" class="iconos-options mx-1 p-1 rounded">
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <mat-accordion>
+              <mat-expansion-panel hideToggle="false" [expanded]="hiddenInput[i].expanded">
                 <mat-expansion-panel-header>
                   <mat-panel-title>
                   </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div>
                   <div>
-                    <table class="table" >
+                    <table class="table doc-table" >
                       <thead>
                         <tr style="background-color: #e4ebf5; border-bottom: 2px solid #0b58a4;">
                           <td>Nombre documento</td>
                           <td>ID</td>
-                          <td>Estado</td>
+                          <td class="text-center">Estado</td>
                         </tr>
                       </thead>
-                      <tbody *ngIf="medio.medioGestionData!==null">
+                      <tbody *ngIf="medio.medioGestionData!==null" class="doc-table-body">
                         <tr class="fw-bold" *ngFor="let documento of documentos[i]">
                           <td>
-                            <div class="d-flex flex-row align-items-center mx-2">
+                            <div class="mx-2 d-flex flex-row doc-td">
                               <label class="switch" (click)="modificarAccesoDoc(documento,medio)">
                                 <input type="checkbox" name="enableSystem" [disabled]="medio.me_disponible === 0" [checked]="(medio.me_disponible === 1 && documento.disponible === 1)">
                                 <span class="slider round"></span>
@@ -106,20 +106,26 @@
                               <p class="px-3">{{documento.medio}}</p>
                             </div>
                           </td>
-                          <td>{{documento.idMedioGestion}}</td>
+                          <td><div class="d-flex flex-row doc-td">{{documento.idMedioGestion}}</div></td>
                           <td>
-                            <span [ngClass]="{
-                              'inactivo':!(medio.me_disponible === 1 && documento.disponible===1),
-                              'activo':(medio.me_disponible === 1 && documento.disponible===1),
-                              }" class="p-2">
-                              {{  (medio.me_disponible === 1 && documento.disponible===1) ? "Activo" : "Inactivo" }}
-                            </span>
+                            <div class="d-flex flex-row w-100 justify-content-center">
+                              <span [ngClass]="{
+                                'inactivo':!(medio.me_disponible === 1 && documento.disponible===1),
+                                'activo':(medio.me_disponible === 1 && documento.disponible===1),
+                                }" class="p-2 fondo-activo">
+                                {{  (medio.me_disponible === 1 && documento.disponible===1) ? "Activo" : "Inactivo" }}
+                              </span>
+                            </div>
                           </td>
                         </tr> 
                       </tbody>
                     </table>
-                    <div class="d-flex flex-row w-100 py-2" *ngIf="hiddenInput[i].visible">
-                      <input #docInput (keyup.enter)="onEnterDoc($event,medio.me_id)" type="text" placeholder="Escribe el nombre del documento">
+                    <div class="d-flex w-100" style="height: 50px;" *ngIf="hiddenInput[i].visible">
+                        <input class="doc-input my-2" #docInput (keyup.enter)="onEnterDoc($event,medio.me_id)" type="text" placeholder="Escribe el nombre del documento">
+                          <button class="btn btn-primary btn-main mx-4 my-2" (click)="onEnterDoc($event,medio.me_id)" type="submit">
+                            <mat-icon>add</mat-icon>Confirmar</button>
+                          <button class="btn btn-outline-secondary mx-4 my-2" style="background-color: transparent !important;">
+                          <span class="fw-bold mx-2">X</span>Cancelar</button>
                     </div> 
                     <button class="btn btn-primary btn-main add-btn" style="background-color: #0B58A4 !important;" (click)="agregarDocumento(i)">
                       <mat-icon>add</mat-icon>Agregar Documento
@@ -128,10 +134,11 @@
                 </div>
               </mat-expansion-panel>
             </mat-accordion>
-            
         </div>
     </div>
   </section>
 </div>
+
+
 
   

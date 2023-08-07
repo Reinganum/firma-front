@@ -20,6 +20,7 @@ export class MantenedorSistemasComponent implements OnInit {
   documentos!:any
   modalRef!:NgbModalRef
   hiddenInput!:any[]
+  hideToggle:boolean=false
 
 
   constructor( 
@@ -44,7 +45,7 @@ export class MantenedorSistemasComponent implements OnInit {
           next: async (res:any) => {
               this.medios=res.listaMediosGestion.data
               this.hiddenInput=[]
-              this.medios.forEach(()=>this.hiddenInput.push({visible:false}))
+              this.medios.forEach(()=>this.hiddenInput.push({visible:false, expanded:false}))
               console.log(this.medios)
               this.documentos=this.medios.map((medio:any)=>{
               if(medio.medioGestionData===null) return null
@@ -174,6 +175,11 @@ export class MantenedorSistemasComponent implements OnInit {
         console.log(error)
       }
     })
+  }
+
+  switchToggle(index:any){
+    this.hiddenInput[index].expanded=this.hiddenInput[index].expanded===true?false:true;
+    console.log(this.hideToggle)
   }
 
 }

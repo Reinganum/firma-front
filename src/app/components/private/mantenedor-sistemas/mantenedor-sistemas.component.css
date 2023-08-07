@@ -87,7 +87,15 @@ thead{
 
 .inactivo{
   color: #d9605d;
+  width: 5rem;
   background-color: rgb(251,234,235);
+  border-radius: 12px;
+}
+
+.fondo-activo{
+  display: block;
+  width: 5rem;
+  text-align: center;
 }
 
 .add-btn{
@@ -112,4 +120,28 @@ thead{
   .btn-container{
     justify-content: center!important;
   }
+}
+.system-table{
+  width: 80vw;
+  margin-left: 3vw;
+}
+
+.doc-td {
+  height: 2.5rem;
+  align-items: center;
+}
+
+.btn-main{
+display: inline-flex;
+ align-items:center; 
+ margin-right: -12px !important;
+ background-color: #0B58A4 !important;
+}
+
+.doc-input{
+  width: 80%;
+}
+
+.btn-outline-secondary:hover{
+  color: black!important;
 }

@@ -73,6 +73,8 @@ thead{
 
 .iconos-options{
     background-color: #0B58A4 !important;
+    height: 2vw;
+    width: 2vw;
 }
 .formulario {
   width: 100%;
@@ -112,3 +114,23 @@ thead{
   }
 }
 
+.col-icon{
+  height: 1.5rem!important;
+}
+
+.col-head{
+  height: 2.5rem;
+  align-items: center;
+}
+
+.td-origen{
+  margin-left: 3rem;
+}
+
+.circulo-origen{
+ color:white; 
+ width: 2vw; 
+ height:2vw;
+ min-width: 2rem;
+ min-height: 2rem;
+}

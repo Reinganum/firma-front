@@ -82,9 +82,16 @@
                 <table matSort id="table-container" class="table">
                 <thead class="pt-4 text-center" style="border-bottom:2px solid #0B58A4;">
                 <tr>
-                    <td><mat-checkbox color="accent" (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()"></mat-checkbox></td>
+                    <td>
+                        <div class="d-flex flex-row col-head w-100 justify-content-center">
+                            <mat-checkbox color="accent" (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()"></mat-checkbox>
+                        </div>
+                    </td>
                     <td  *ngFor="let dataColumn of documentData, let i = index">
-                        <img class="px-3" style="width:50px;height: 50px;" [src]=dataColumn.icon>{{dataColumn.nombre}}
+                        <div class="d-flex flex-row col-head w-100 justify-content-center">
+                            <img class="px-3 col-icon" style="width:50px;height: 50px;" [src]=dataColumn.icon>
+                            <p class="fw-bold">{{dataColumn.nombre}}</p>
+                        </div>
                     </td>
                 </tr>
                 </thead>
@@ -94,8 +101,8 @@
                         <td>{{convertDateForTable(document.fecha)}}</td><!--| date: "dd-MM-yyyy"-->
                         <td class="text-left">{{document.archivo}}</td>
                         <td>
-                            <div class="d-flex flex-row justify-content-center align-items-center">
-                                <div class="d-flex align-items-center rounded-circle bg-dark justify-content-center" style="color:white; width: 2rem; height:2rem">
+                            <div class="d-flex flex-row justify-content-center align-items-center td-origen">
+                                <div class="d-flex align-items-center rounded-circle bg-dark justify-content-center circulo-origen">
                                     {{document.siglaOrigen}}
                                 </div>
                                 <p style="max-width: 12ch;">{{document.descripcionOrigen}}</p>
