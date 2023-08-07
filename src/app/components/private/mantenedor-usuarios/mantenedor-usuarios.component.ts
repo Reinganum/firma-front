@@ -27,6 +27,7 @@ export class MantenedorUsuariosComponent implements OnInit {
   flagFiltros = false;
   editingRowId!:any;
   editForm!:any
+  selected=1
 
   cabeceras = [
     {nombre:"ID"},
@@ -152,14 +153,21 @@ export class MantenedorUsuariosComponent implements OnInit {
   }
 
   filtrar(){
-    let nombre=this.filtrosForm.value.nombre;
-    let rut=this.filtrosForm.value.rut;
-    let email=this.filtrosForm.value.mail;
-    let estado=this.filtrosForm.value.estado;
+    let data ={
+      pageOffset:this.paginador.pageIndex,
+      pageLimit:(this.paginador.pageSize | this.pageSize),
+      nombre:this.filtrosForm.value.nombre.toLowerCase(),
+      rut:this.filtrosForm.value.rut,
+      email:this.filtrosForm.value.mail,
+      estado:this.filtrosForm.value.estado!==null?this.filtrosForm.value.estado:"1"
+    }
+    console.log(data)
     this.spinner.show()
-    this.usuarioService.filtrarUsuarios(this.paginador.pageIndex, this.paginador.pageSize | this.pageSize, nombre,rut,email,estado).subscribe({
+    this.usuarioService.filtrarUsuarios(data).subscribe({
       next: async(res:any) => {
         console.log(res)
+        this.dataSource=res.usuarios.data
+        console.log(this.dataSource)
         await this.spinner.hide();
       },
       error: (error: any) => {
@@ -171,6 +179,7 @@ export class MantenedorUsuariosComponent implements OnInit {
 
   limpiar(){
     this.filtrosForm.reset()
+    this.listarUsuarios(this.paginador.pageIndex, this.paginador.pageSize)
   }
 
   columns = [
