@@ -25,6 +25,8 @@ export class MantenedorUsuariosComponent implements OnInit {
   tipoTabla:any;
   currentUser:any;
   flagFiltros = false;
+  editingRowId!:any;
+  editForm!:any
 
   cabeceras = [
     {nombre:"ID"},
@@ -57,6 +59,13 @@ export class MantenedorUsuariosComponent implements OnInit {
       mail: [null],
       estado: [null]
     });
+    this.editForm=this.formBuilder.group({
+      Nombres: [null],
+      RUT: [null],
+      Mail: [null],
+      Cargo: [null],
+      Clave: [null]
+    })
   }
 
   ngAfterViewInit(){
@@ -113,6 +122,26 @@ export class MantenedorUsuariosComponent implements OnInit {
     });
   }
 
+  showEdit(row:any){
+    console.log(row)
+    this.editingRowId=row.id
+  }
+
+  deleteUser(row:any){
+    this.usuarioService.eliminarUsuario(row.id).subscribe({
+      next: async(res:any) => {
+        console.log(res)
+        this.toastrService.success(`Se ha eliminado el usuario ${row.nombres} ${row.apelidoP}`);
+        await this.spinner.hide();
+        this.listarUsuarios(this.paginador.pageIndex, this.paginador.pageSize | this.pageSize)
+      },
+      error: (error: any) => {
+        console.log(error);
+        this.spinner.hide();
+      }
+    });
+  }
+
   agregarUsuario(){
     this.modalRef=this.modalService.open(AgregarUsuario,{backdrop:'static',size:'md'});
     this.modalRef.result.then((res)=>{
@@ -123,7 +152,21 @@ export class MantenedorUsuariosComponent implements OnInit {
   }
 
   filtrar(){
-    console.log(this.filtrosForm.value)
+    let nombre=this.filtrosForm.value.nombre;
+    let rut=this.filtrosForm.value.rut;
+    let email=this.filtrosForm.value.mail;
+    let estado=this.filtrosForm.value.estado;
+    this.spinner.show()
+    this.usuarioService.filtrarUsuarios(this.paginador.pageIndex, this.paginador.pageSize | this.pageSize, nombre,rut,email,estado).subscribe({
+      next: async(res:any) => {
+        console.log(res)
+        await this.spinner.hide();
+      },
+      error: (error: any) => {
+        console.log(error);
+        this.spinner.hide();
+      }
+    });
   }
 
   limpiar(){
@@ -140,13 +183,13 @@ export class MantenedorUsuariosComponent implements OnInit {
       columnDef: 'Nombres',
       header: 'Nombre',
       icon:"../assets/img/user_header.svg",
-      cell: (element: any) => `${element.nombres + ' ' + element.apellidoP}`,
+      cell: (element: any) => `${element.nombres + ' ' + element.apellidoP + ' ' + element.apellidoM}`,
     },
     {
       columnDef: 'RUT',
       header: 'RUT',
       icon:"../assets/img/rut_tabla.svg",
-      cell: (element: any) => `${"19.153.293-3"}`,
+      cell: (element: any) => `${element.rut}`,
     },
     {
       columnDef: 'Mail',
@@ -158,13 +201,13 @@ export class MantenedorUsuariosComponent implements OnInit {
       columnDef: 'Cargo',
       header: 'Cargo',
       icon:"../assets/img/origen_tabla.svg",
-      cell: (element: any) => `${"Administrativo OTIC"}`,
+      cell: (element: any) => `${element.cargo}`,
     },
     {
       columnDef: 'Clave',
       header: 'Clave',
       icon:"../assets/img/clave_tabla.svg",
-      cell: (element: any) => `${"Aci829d"}`,
+      cell: (element: any) => `${element.clave}`,
     },
     {
       columnDef: 'Estado',
@@ -180,6 +223,10 @@ export class MantenedorUsuariosComponent implements OnInit {
     },
   ];
   displayedColumns = this.columns.map(c => c.columnDef);
+
+  inputClick(event:any){
+    
+  }
 }
 
 

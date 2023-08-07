@@ -38,4 +38,13 @@ export class UsuariosService {
     const headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
     return this.http.post(`${environment.API_DOMAINS.USUARIOS}/usuarios/verificarToken`, body, { headers })
   }
+
+  eliminarUsuario(userId:any){
+    return this.http.delete<any>(`${environment.API_DOMAINS.USUARIOS}/usuarios/eliminarUsuario?userId=${userId}`);
+  }
+  
+  filtrarUsuarios(pageOffset: any, pageLimit: any,rut:any,nombre:any,email:any,estado:any){
+    console.log(rut, nombre, email, estado)
+    return this.http.get<any>(`${environment.API_DOMAINS.USUARIOS}/usuarios/filtrarUsuarios?pageOffset=${pageOffset}&pageLimit=${pageLimit}&nombre=${nombre}&email=${email}&rut=${rut}&estado=${estado}`);
+  }
 }

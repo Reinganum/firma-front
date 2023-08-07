@@ -87,7 +87,6 @@ export class DocumentosFirmarComponent implements OnInit {
     this.filtrosForm = this.formBuilder.group({
       fechaDoc: [null],
       origen: [null],
-      RUT: [null],
       fechaComunicacion: [null],
     });
   }
@@ -150,7 +149,7 @@ export class DocumentosFirmarComponent implements OnInit {
       console.log(this.estadoDoc);
       await this.spinner.show();
       this.documentosService.obtenerDocumentos(
-      this.currentUser.email,
+      "63", // this.currentUser.email
       this.estadoDoc,
       this.filtrosForm.value.origen,
       this.convertDateForDB(this.filtrosForm.value.fechaDoc),

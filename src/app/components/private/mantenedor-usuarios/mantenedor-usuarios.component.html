@@ -57,8 +57,8 @@
                                         <mat-form-field>
                                           <mat-label>Estado</mat-label>
                                           <mat-select formControlName="estado">
-                                              <mat-option value="inactivo">Inactivo</mat-option>
-                                              <mat-option value="activo">Activo</mat-option>
+                                              <mat-option value="0">Inactivo</mat-option>
+                                              <mat-option value="1">Activo</mat-option>
                                           </mat-select>
                                       </mat-form-field>
                                       </div>
@@ -98,8 +98,8 @@
           </ng-container>
           <ng-container *ngSwitchCase="'Opciones'">
             <div class="d-flex w-100 justify-content-center">
-              <img src="../../../../assets/img/eliminar_btn.svg" matTooltip="Eliminar"  matTooltipClass="custom-tooltip" class="option-icons p-1 mx-1 rounded"/>
-              <img src="../../../../assets/img/editar_btn.svg" matTooltip="Editar" class="option-icons p-1 mx-1 rounded"/>
+              <img src="../../../../assets/img/eliminar_btn.svg" matTooltip="Eliminar" (click)="deleteUser(row)" matTooltipClass="custom-tooltip" class="option-icons p-1 mx-1 rounded"/>
+              <img src="../../../../assets/img/editar_btn.svg" matTooltip="Editar" (click)="showEdit(row)" class="option-icons p-1 mx-1 rounded"/>
             </div>
           </ng-container>
           <ng-container *ngSwitchCase="'Estado'">
@@ -114,7 +114,12 @@
             </div>
           </ng-container>
           <ng-container *ngSwitchDefault>
-            {{ column.cell(row) }}
+            <div *ngIf="editingRowId != row.id; else editMode">
+              {{ column.cell(row) }}
+            </div>
+            <ng-template #editMode>
+              <input type="text" name={{column.columnDef}}  (click)="inputClick($event)" [formControl]="editForm[column.columnDef]">
+            </ng-template>
           </ng-container>
         </td>
       </ng-container>

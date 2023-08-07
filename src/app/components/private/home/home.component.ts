@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
   async obtenerDocumentos() {
     try {
       await this.spinner.show();
-      this.documentosService.obtenerDocumentos('',1,null,null,'','',0,5).subscribe(
+      this.documentosService.obtenerDocumentos('',1,null,null,'','', 0 , 5).subscribe(
         {
           next: async (res:any) => {
               console.log(res);
