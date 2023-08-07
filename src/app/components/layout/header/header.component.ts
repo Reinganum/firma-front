@@ -71,6 +71,7 @@ export class HeaderComponent {
               this.documentosService.setDocPendientes(res.docs)
               this.notifications+=res.docs.length
               await this.spinner.hide();
+              this.toastrService.warning(`Tienes un total de ${res.docs.length} documentos pendientes por firmar`);
           },
           error: async (error:any) => {
             await this.spinner.hide();

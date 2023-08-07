@@ -149,7 +149,7 @@ export class DocumentosFirmarComponent implements OnInit {
       console.log(this.estadoDoc);
       await this.spinner.show();
       this.documentosService.obtenerDocumentos(
-      "ncatalan@nexia.cl", // this.currentUser.email
+      this.currentUser.email,
       this.estadoDoc,
       this.filtrosForm.value.origen,
       this.convertDateForDB(this.filtrosForm.value.fechaDoc),
