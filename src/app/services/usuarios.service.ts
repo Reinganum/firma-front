@@ -43,8 +43,7 @@ export class UsuariosService {
     return this.http.delete<any>(`${environment.API_DOMAINS.USUARIOS}/usuarios/eliminarUsuario?userId=${userId}`);
   }
   
-  filtrarUsuarios(pageOffset: any, pageLimit: any,rut:any,nombre:any,email:any,estado:any){
-    console.log(rut, nombre, email, estado)
-    return this.http.get<any>(`${environment.API_DOMAINS.USUARIOS}/usuarios/filtrarUsuarios?pageOffset=${pageOffset}&pageLimit=${pageLimit}&nombre=${nombre}&email=${email}&rut=${rut}&estado=${estado}`);
+  filtrarUsuarios(data:any){
+    return this.http.get<any>(`${environment.API_DOMAINS.USUARIOS}/usuarios/filtrarUsuarios?pageOffset=${data.pageOffset}&pageLimit=${data.pageLimit}&nombre=${data.nombre}&email=${data.email}&rut=${data.rut}&estado=${data.estado}`);
   }
 }

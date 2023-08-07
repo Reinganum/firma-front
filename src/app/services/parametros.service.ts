@@ -43,4 +43,8 @@ export class ParametrosService {
     const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
     return this.http.post(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/crearTipoDoc`, body, {headers})
   }
+
+  filtrarMedios(data:any){
+    return this.http.get<any>(`${environment.API_DOMAINS.USUARIOS}/documentos/filtrarMedios?nombre=${data.nombre}&estado=${data.estado}`);
+  }
 }

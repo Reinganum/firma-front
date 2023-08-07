@@ -5,6 +5,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModal,NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { AgregarSistema } from '../../modals/agregar-sistema/agregar-sistema.component';
+import { FormBuilder } from '@angular/forms';
+
 
 @Component({
   selector: 'app-mantenedor-sistemas',
@@ -21,20 +23,25 @@ export class MantenedorSistemasComponent implements OnInit {
   modalRef!:NgbModalRef
   hiddenInput!:any[]
   hideToggle:boolean=false
-
+  filtrosForm!:any
 
   constructor( 
     private authenticationService:AuthenticationService,
     private parametrosService:ParametrosService,
     private spinner: NgxSpinnerService,
     private toastrService:ToastrService,
-    private modalService:NgbModal
+    private modalService:NgbModal,
+    private formBuilder: FormBuilder
     ) {}
 
   @ViewChild('docInput') docInput!: ElementRef;
   ngOnInit(): void {
     this.currentUser = this.authenticationService.currentUserValue;
     this.obtenerMedios()
+    this.filtrosForm = this.formBuilder.group({
+      nombre: [null],
+      estado: [null]
+    });
   }
   
   async obtenerMedios() {
@@ -182,4 +189,27 @@ export class MantenedorSistemasComponent implements OnInit {
     console.log(this.hideToggle)
   }
 
+  filtrar(){
+    let data ={
+      nombre:this.filtrosForm.value.nombre.toLowerCase(),
+      estado:this.filtrosForm.value.estado!==null?this.filtrosForm.value.estado:"1"
+    }
+    console.log(data)
+    this.spinner.show()
+    this.parametrosService.filtrarMedios(data).subscribe({
+      next: async(res:any) => {
+        console.log(res)
+        await this.spinner.hide();
+      },
+      error: (error: any) => {
+        console.log(error);
+        this.spinner.hide();
+      }
+    })
+  }
+
+  limpiar(){
+    this.filtrosForm.reset();
+    this.obtenerMedios();
+  }
 }
