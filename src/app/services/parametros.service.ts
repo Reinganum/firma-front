@@ -45,6 +45,7 @@ export class ParametrosService {
   }
 
   filtrarMedios(data:any){
-    return this.http.get<any>(`${environment.API_DOMAINS.USUARIOS}/documentos/filtrarMedios?nombre=${data.nombre}&estado=${data.estado}`);
+    console.log(data)
+    return this.http.get<any>(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/filtrarMedios?nombre=${data.nombre}&estado=${data.estado}`);
   }
 }

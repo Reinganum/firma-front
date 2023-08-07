@@ -118,7 +118,7 @@
               {{ column.cell(row) }}
             </div>
             <ng-template #editMode>
-              <input type="text" name={{column.columnDef}}  (click)="inputClick($event)" [formControl]="editForm[column.columnDef]">
+              <input type="text" name={{column.columnDef}}  (click)="inputClick($event)">
             </ng-template>
           </ng-container>
         </td>

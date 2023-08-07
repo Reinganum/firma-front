@@ -199,6 +199,7 @@ export class MantenedorSistemasComponent implements OnInit {
     this.parametrosService.filtrarMedios(data).subscribe({
       next: async(res:any) => {
         console.log(res)
+        this.medios=res.medios.data
         await this.spinner.hide();
       },
       error: (error: any) => {

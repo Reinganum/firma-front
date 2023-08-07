@@ -124,8 +124,7 @@ export class MantenedorUsuariosComponent implements OnInit {
   }
 
   showEdit(row:any){
-    console.log(row)
-    this.editingRowId=row.id
+    this.editingRowId=this.editingRowId===row.id?false:row.id;
   }
 
   deleteUser(row:any){
@@ -156,7 +155,7 @@ export class MantenedorUsuariosComponent implements OnInit {
     let data ={
       pageOffset:this.paginador.pageIndex,
       pageLimit:(this.paginador.pageSize | this.pageSize),
-      nombre:this.filtrosForm.value.nombre.toLowerCase(),
+      nombre:this.filtrosForm.value.nombre!==null?this.filtrosForm.value.nombre.toLowerCase():null,
       rut:this.filtrosForm.value.rut,
       email:this.filtrosForm.value.mail,
       estado:this.filtrosForm.value.estado!==null?this.filtrosForm.value.estado:"1"
