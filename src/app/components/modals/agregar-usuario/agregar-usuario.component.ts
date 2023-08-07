@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup , Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -16,9 +16,10 @@ import { Data } from 'src/app/interfaces/data';
 	templateUrl: './agregar-usuario.component.html',
 	styleUrls: ['./agregar-usuario.component.css'],
 })
+
 export class AgregarUsuario implements OnInit {
 	userForm!: FormGroup;
-
+  @Input() usuario: any;
 	constructor(
 		public activeModal: NgbActiveModal,
 		private formBuilder: FormBuilder,
@@ -42,6 +43,7 @@ export class AgregarUsuario implements OnInit {
 			tipo: ['', [Validators.required]],
 			estado: [''],
 		})
+    console.log(this.usuario)
 	}
 
 	async onSubmit() {
@@ -130,4 +132,21 @@ export class AgregarUsuario implements OnInit {
             */
     }
 	}
+
+  onSubmitEdicion(){
+  let data = {
+    usuario: {
+      rut: this.userForm.value.rut,
+      nombres: this.userForm.value.name,
+      apellidoP: this.userForm.value.apellidoP,
+      apellidoM: this.userForm.value.apellidoM,
+      tipo: this.userForm.value.tipo,
+      email: this.userForm.value.email,
+      estado: this.userForm.value.estado,
+      cargo: this.userForm.value.cargo,
+      clave: this.userForm.value.clave,
+    }
+  }
+    console.log(data)
+  }
 }

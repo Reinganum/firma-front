@@ -113,7 +113,7 @@
                     {{medio.api?medio.api:"desarrollo.c4wryyw566zb.us-east-1.rds.amazonaws.co"}}
                   </td>
                   <td>
-                    {{medio.clave?medio.clave:"EDRF12"}}
+                    {{medio.sigla?medio.sigla:extraerIniciales(medio.me_descripcion)}}
                   </td>
                   <td>
                     <div class="d-flex flex-row w-100 justify-content-end">

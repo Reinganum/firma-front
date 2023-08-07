@@ -2,11 +2,17 @@
     <div class="d-flex flex-row justify-content-center ">
         <img class="p-3 rounded" src="../../../../assets/img/user_header.svg" style="background-color: #c9ddf3;">
     </div>
-    <h1 class="text-center">Agregar nuevo usuario</h1>
-    <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="d-flex flex-row flex-wrap">
+    <h1 *ngIf="!this.usuario;else editar" class="text-center">Agregar nuevo usuario</h1>
+    <ng-template #editar>
+        <h1 class="text-center">Editar usuario</h1>
+    </ng-template>
+    <form *ngIf="!this.usuario;else editForm" [formGroup]="userForm" (ngSubmit)="onSubmit()" class="d-flex flex-row flex-wrap">
         <div class="mb-3 w-100">
             <label for="name" class="form-label">Nombres</label>
             <input type="text" formControlName="name" class="form-control">
+            <ng-template>
+                <input type="text" formControlName="name" class="form-control">
+            </ng-template>
             <mat-error *ngIf="errores.length > 0">
                 <app-errores-formulario [errores]="errores"
                                         [atributo]="'name'"></app-errores-formulario>
@@ -60,4 +66,66 @@
             </button>
         </div>
     </form>
+    <ng-template #editForm>
+        <form [formGroup]="userForm" (ngSubmit)="onSubmitEdicion()" class="d-flex flex-row flex-wrap">
+            <div class="mb-3 w-100">
+                <label for="name" class="form-label">Nombres</label>
+                <input type="text" [placeholder]="this.usuario.nombres" formControlName="name" class="form-control">
+                <ng-template>
+                    <input type="text" formControlName="name" class="form-control">
+                </ng-template>
+                <mat-error *ngIf="errores.length > 0">
+                    <app-errores-formulario [errores]="errores"
+                                            [atributo]="'name'"></app-errores-formulario>
+                </mat-error>
+            </div>
+            <div class="mb-3 small-input mr-5">
+                <label for="name" class="form-label">Apellido paterno</label>
+                <input type="text" [placeholder]="this.usuario.apellidoP" formControlName="apellidoP" class="form-control">
+            </div>
+            <div class="mb-3 small-input">
+                <label for="name" class="form-label">Apellido materno</label>
+                <input type="text" [placeholder]="this.usuario.apellidoM" formControlName="apellidoM" class="form-control">
+            </div>
+            <div class="mb-3 w-100">
+                <label for="rut" class="form-label">RUT</label>
+                <input type="text" [placeholder]="this.usuario.rut" class="form-control" formControlName="rut">
+            </div>
+            <div class="mb-3 w-100">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" [placeholder]="this.usuario.email" class="form-control" formControlName="email">
+            </div>
+            <div class="mb-3 w-100">
+                <label for="cargo" class="form-label">Cargo</label>
+                <input type="text" [placeholder]="this.usuario.cargo" class="form-control" formControlName="cargo">
+            </div>
+            <label for="exampleInputPassword" class="form-label w-100">Clave</label>
+            <div class="mb-3 d-flex flex-row pb-3 w-100">
+                <input type="password" class="form-control w-90" formControlName="clave"><img class="ps-3"
+                    matTooltip="Crear clave" src="../../../../assets/img/clave.svg">
+            </div>
+            <div class="mb-3 w-100">
+                <label for="cargo" class="form-label">Tipo de usuario</label>
+                <select name="tipo" id="tipo" class="form-control" formControlName="tipo">
+                    <option value="1">Usuario interno</option>
+                    <option value="2">Usuario externo</option>
+                </select>
+            </div>
+            <div class="mb-3 w-100">
+                <label for="user-estado" class="w-100">Permisos para el usuario</label>
+                <label class="switch">
+                    <input type="checkbox" name="user-estado" formControlName="estado">
+                    <span class="slider round"></span>
+                </label> 
+            </div>
+            <div class="d-flex flex-row-reverse">
+                <button class="btn btn-primary btn-main mx-2 py-2" (click)="activeModal.close({ estado: false})" type="submit" style="display: inline-flex; align-items:center; margin-right: -12px !important;background-color: #0B58A4 !important;">
+                    <mat-icon>add</mat-icon>Editar usuario
+                </button>
+                <button class="btn btn-outline-secondary mx-2" style="background-color: transparent !important;" (click)="activeModal.close({ estado: false})">
+                    <span class="fw-bold mx-2">X</span>Cancelar
+                </button>
+            </div>
+        </form>
+    </ng-template>
 </div>
