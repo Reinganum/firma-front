@@ -152,11 +152,10 @@ export class MantenedorSistemasComponent implements OnInit {
 
   modificarAccesoSis(medio:any):void{
     let estado=medio.me_disponible===1?0:1;
-    let data = {
-      medio: {
-        disponible:estado
-      },
-      id: medio.me_id
+    let data = { medio: {
+        disponible:estado,
+        id: medio.me_id
+      }
     }
     this.spinner.show();
     this.parametrosService.editarMedio(data).subscribe({
