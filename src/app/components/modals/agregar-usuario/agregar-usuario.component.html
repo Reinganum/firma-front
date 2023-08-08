@@ -9,10 +9,7 @@
     <form *ngIf="!this.usuario;else editForm" [formGroup]="userForm" (ngSubmit)="onSubmit()" class="d-flex flex-row flex-wrap">
         <div class="mb-3 w-100">
             <label for="name" class="form-label">Nombres</label>
-            <input type="text" formControlName="name" class="form-control">
-            <ng-template>
-                <input type="text" formControlName="name" class="form-control">
-            </ng-template>
+            <input type="text" formControlName="nombres" class="form-control">
             <mat-error *ngIf="errores.length > 0">
                 <app-errores-formulario [errores]="errores"
                                         [atributo]="'name'"></app-errores-formulario>
@@ -70,10 +67,7 @@
         <form [formGroup]="userForm" (ngSubmit)="onSubmitEdicion()" class="d-flex flex-row flex-wrap">
             <div class="mb-3 w-100">
                 <label for="name" class="form-label">Nombres</label>
-                <input type="text" [placeholder]="this.usuario.nombres" formControlName="name" class="form-control">
-                <ng-template>
-                    <input type="text" formControlName="name" class="form-control">
-                </ng-template>
+                <input type="text" [placeholder]="this.usuario.nombres" formControlName="nombres" class="form-control">
                 <mat-error *ngIf="errores.length > 0">
                     <app-errores-formulario [errores]="errores"
                                             [atributo]="'name'"></app-errores-formulario>

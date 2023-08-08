@@ -33,7 +33,7 @@ export class AgregarUsuario implements OnInit {
 
 	ngOnInit() {
 		this.userForm = this.formBuilder.group({
-			name: ['', Validators.required],
+			nombres: ['', Validators.required],
 			apellidoP: ['', Validators.required],
 			apellidoM: ['', Validators.required],
 			rut: ['', Validators.required],
@@ -50,7 +50,7 @@ export class AgregarUsuario implements OnInit {
     this.errores=[]
     const data:Data[]=[]
     data.push({
-      nombreCampo: 'name',
+      nombreCampo: 'nombres',
       valor: this.userForm.value.name,
       validaciones: [{
           tipo: EnumTipoValidacion.CAMPOREQUERIDO
@@ -69,7 +69,7 @@ export class AgregarUsuario implements OnInit {
           let data = {
             usuario: {
               rut: this.userForm.value.rut,
-              nombres: this.userForm.value.name,
+              nombres: this.userForm.value.nombres,
               apellidoP: this.userForm.value.apellidoP,
               apellidoM: this.userForm.value.apellidoM,
               tipo: this.userForm.value.tipo,
@@ -133,20 +133,37 @@ export class AgregarUsuario implements OnInit {
     }
 	}
 
-  onSubmitEdicion(){
-  let data = {
-    usuario: {
-      rut: this.userForm.value.rut,
-      nombres: this.userForm.value.name,
-      apellidoP: this.userForm.value.apellidoP,
-      apellidoM: this.userForm.value.apellidoM,
-      tipo: this.userForm.value.tipo,
-      email: this.userForm.value.email,
-      estado: this.userForm.value.estado,
-      cargo: this.userForm.value.cargo,
-      clave: this.userForm.value.clave,
+  async onSubmitEdicion(){
+    let usuario=this.removeEmptyValues(this.userForm.value)
+    usuario.id=this.usuario.id
+      await this.spinner.show();
+    let data={
+      usuario
     }
-  }
     console.log(data)
+      this.userService.editarUsuario(data).subscribe(
+        {
+        next: async (res: any) => {
+          await this.spinner.hide();
+          console.log(res)
+          this.toastrService.success(res.message);
+        },
+        error: async (error: any) => {
+          await this.spinner.hide();
+          console.log(error)
+          this.toastrService.warning(error);
+        }
+        });
+  }
+
+  removeEmptyValues(obj: any): any {
+    const data: any = {};
+  
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key) && obj[key] !== '') {
+        data[key] = obj[key];
+      }
+    }
+    return data;
   }
 }

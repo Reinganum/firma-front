@@ -18,7 +18,7 @@
       </div>
       <div class="d-flex flex-row justify-content-end align-items-end btn-container" style="flex-grow: 1;">
           <button class="filter-btn btn me-2 mb-3" style="border: 1px solid #979ba2;" (click)="flagFiltros = !flagFiltros"><img class="px-3" src="../assets/img/filtro-btn.svg">Filtrar</button>
-          <button class="btn-firmar-seleccionados btn btn-primary btn-main me-2 p-2 mb-3"style="background-color: #0B58A4 !important;"(click)="agregarSistema()" >Agregar </button>
+          <button class="btn btn-primary btn-main me-2 p-2 mb-3"style="background-color: #0B58A4 !important;"(click)="agregarSistema()" >Agregar </button>
       </div>
    </div>
   </section>
@@ -113,12 +113,12 @@
                     {{medio.api?medio.api:"desarrollo.c4wryyw566zb.us-east-1.rds.amazonaws.co"}}
                   </td>
                   <td>
-                    {{medio.sigla?medio.sigla:extraerIniciales(medio.me_descripcion)}}
+                    {{medio.me_sigla?medio.me_sigla:extraerIniciales(medio.me_descripcion)}}
                   </td>
                   <td>
                     <div class="d-flex flex-row w-100 justify-content-end">
                       <img src="../../../../assets/img/archivo_blanco.svg" (click)="switchToggle(i)" matTooltip="Ver documentos" class="iconos-options mx-1 p-1 rounded">
-                      <img src="../../../../assets/img/editar_btn.svg" class="iconos-options mx-1 p-1 rounded">
+                      <img src="../../../../assets/img/editar_btn.svg" class="iconos-options mx-1 p-1 rounded" (click)="showEditModal(medio)">
                     </div>
                   </td>
                 </tr>

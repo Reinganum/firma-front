@@ -136,6 +136,16 @@ export class MantenedorSistemasComponent implements OnInit {
     })
   }
 
+  showEditModal(sistema:any){
+    this.modalRef=this.modalService.open(AgregarSistema,{backdrop:'static',size:'md'});
+    this.modalRef.componentInstance.sistema = sistema
+    this.modalRef.result.then((res)=>{
+      if(res.estado){
+        this.modalRef.close();
+      }
+    })
+  }
+
   columns = ["ID","URL","API","Sigla"];
 
   modificarAccesoSis(medio:any):void{
@@ -213,13 +223,12 @@ export class MantenedorSistemasComponent implements OnInit {
     this.filtrosForm.reset();
     this.obtenerMedios();
   }
-
   extraerIniciales(origen:string){
     const strArr=origen.split(' ');
     if(strArr.length===1){
-      return strArr[0].slice(0,1).toUpperCase()
+      return strArr[0].slice(0,1)
     } else {
-      return strArr[0].slice(0,1)+strArr[1].slice(0,1).toUpperCase()
+      return strArr[0].slice(0,1)+strArr[1].slice(0,1)
     }
    }
 }
