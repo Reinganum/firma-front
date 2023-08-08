@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , Input} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -12,7 +12,7 @@ import { ParametrosService } from 'src/app/services/parametros.service';
 })
 export class AgregarSistema implements OnInit {
   systemForm!: FormGroup;
-
+  @Input() sistema: any;
   constructor(
     public activeModal: NgbActiveModal,
     private formBuilder: FormBuilder,
@@ -20,13 +20,13 @@ export class AgregarSistema implements OnInit {
     private spinner: NgxSpinnerService,
     private toastrService: ToastrService
   ) { }
-
+  
   ngOnInit() {
     this.systemForm = this.formBuilder.group({
-      nombre: ['', Validators.required],
+      descripcion: ['', Validators.required],
       url: ['', Validators.required],
       sigla: ['', [Validators.required]],
-      clave: [''],
+      disponible: [''],
     })
   }
 

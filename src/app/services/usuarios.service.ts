@@ -46,4 +46,10 @@ export class UsuariosService {
   filtrarUsuarios(data:any){
     return this.http.get<any>(`${environment.API_DOMAINS.USUARIOS}/usuarios/filtrarUsuarios?pageOffset=${data.pageOffset}&pageLimit=${data.pageLimit}&nombre=${data.nombre}&email=${data.email}&rut=${data.rut}&estado=${data.estado}`);
   }
+  
+  editarUsuario(data: any): Observable<any> {
+    const body = JSON.stringify(data);
+    const headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
+    return this.http.put(`${environment.API_DOMAINS.USUARIOS}/usuarios/editarUsuario`, body, { headers })
+  }
 }

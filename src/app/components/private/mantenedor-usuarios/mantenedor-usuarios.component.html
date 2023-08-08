@@ -99,7 +99,7 @@
           <ng-container *ngSwitchCase="'Opciones'">
             <div class="d-flex w-100 justify-content-center">
               <img src="../../../../assets/img/eliminar_btn.svg" matTooltip="Eliminar" (click)="deleteUser(row)" matTooltipClass="custom-tooltip" class="option-icons p-1 mx-1 rounded"/>
-              <img src="../../../../assets/img/editar_btn.svg" matTooltip="Editar" (click)="showEdit(row)" class="option-icons p-1 mx-1 rounded"/>
+              <img src="../../../../assets/img/editar_btn.svg" matTooltip="Editar" (click)="showEditModal(row)" class="option-icons p-1 mx-1 rounded"/>
             </div>
           </ng-container>
           <ng-container *ngSwitchCase="'Estado'">
@@ -118,7 +118,7 @@
               {{ column.cell(row) }}
             </div>
             <ng-template #editMode>
-              <input type="text" name={{column.columnDef}}  (click)="inputClick($event)" [formControl]="editForm[column.columnDef]">
+              <input type="text" (click)="inputClick($event)">
             </ng-template>
           </ng-container>
         </td>

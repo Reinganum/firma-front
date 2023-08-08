@@ -1,4 +1,4 @@
-<div class="p-5">
+<div class="p-5" *ngIf="!this.sistema; else editarSistema">
     <div class="d-flex flex-row justify-content-center " >
         <img class="p-3 rounded" src="../../../../assets/img/engrane-sidebar-activo.svg" style="background-color: #c9ddf3;">
     </div>
@@ -16,9 +16,12 @@
             <label for="url" class="form-label">Sigla</label>
             <input type="text" class="form-control" formControlName="sigla">
         </div>
-        <label for="clave" class="form-label">Clave</label>
-        <div class="mb-3 d-flex flex-row pb-3">
-        <input type="text" class="form-control w-90" formControlName="clave"><img class="ps-3" matTooltip="Crear clave" src="../../../../assets/img/clave.svg">
+        <div class="mb-3 w-100">
+            <label for="user-estado" class="w-100">Permisos para el sistema</label>
+            <label class="switch">
+                <input type="checkbox" name="user-estado" formControlName="disponible">
+                <span class="slider round"></span>
+            </label> 
         </div>
         <div class="d-flex flex-row-reverse">
             <button class="btn btn-primary btn-main mx-2 py-2" (click)="activeModal.close({ estado: false})" type="submit" style="display: inline-flex; align-items:center; margin-right: -12px !important;background-color: #0B58A4 !important;">
@@ -28,3 +31,38 @@
         </div>
     </form>
 </div>
+<ng-template #editarSistema>
+    <div class="p-5" *ngIf="this.sistema; else editarSistema">
+        <div class="d-flex flex-row justify-content-center " >
+            <img class="p-3 rounded" src="../../../../assets/img/engrane-sidebar-activo.svg" style="background-color: #c9ddf3;">
+        </div>
+        <h1 class="text-center">Editar sistema</h1>
+        <form [formGroup]="systemForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre Sistema</label>
+            <input type="text" [placeholder]="this.sistema.me_descripcion" formControlName="descripcion" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="url" class="form-label">URL</label>
+                <input type="url" [placeholder]="this.sistema.me_url" class="form-control" formControlName="url">
+            </div>
+            <div class="mb-3">
+                <label for="url" class="form-label">Sigla</label>
+                <input type="text" class="form-control" formControlName="sigla">
+            </div>
+            <div class="mb-3 w-100">
+                <label for="user-estado" class="w-100">Permisos para el sistema</label>
+                <label class="switch">
+                    <input type="checkbox" name="user-estado" formControlName="disponible">
+                    <span class="slider round"></span>
+                </label> 
+            </div>
+            <div class="d-flex flex-row-reverse">
+                <button class="btn btn-primary btn-main mx-2 py-2" (click)="activeModal.close({ estado: false})" type="submit" style="display: inline-flex; align-items:center; margin-right: -12px !important;background-color: #0B58A4 !important;">
+                    <mat-icon>add</mat-icon>Agregar Sistema</button>
+                <button class="btn btn-outline-secondary mx-2" style="background-color: transparent !important;" (click)="activeModal.close({ estado: false})">
+                <span class="fw-bold mx-2">X</span>Cancelar</button>
+            </div>
+        </form>
+    </div>
+</ng-template>

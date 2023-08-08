@@ -136,7 +136,17 @@ export class MantenedorSistemasComponent implements OnInit {
     })
   }
 
-  columns = ["ID","URL","API","Clave Aleatoria"];
+  showEditModal(sistema:any){
+    this.modalRef=this.modalService.open(AgregarSistema,{backdrop:'static',size:'md'});
+    this.modalRef.componentInstance.sistema = sistema
+    this.modalRef.result.then((res)=>{
+      if(res.estado){
+        this.modalRef.close();
+      }
+    })
+  }
+
+  columns = ["ID","URL","API","Sigla"];
 
   modificarAccesoSis(medio:any):void{
     let estado=medio.me_disponible===1?0:1;
@@ -199,6 +209,7 @@ export class MantenedorSistemasComponent implements OnInit {
     this.parametrosService.filtrarMedios(data).subscribe({
       next: async(res:any) => {
         console.log(res)
+        this.medios=res.medios.data
         await this.spinner.hide();
       },
       error: (error: any) => {
@@ -212,4 +223,12 @@ export class MantenedorSistemasComponent implements OnInit {
     this.filtrosForm.reset();
     this.obtenerMedios();
   }
+  extraerIniciales(origen:string){
+    const strArr=origen.split(' ');
+    if(strArr.length===1){
+      return strArr[0].slice(0,1)
+    } else {
+      return strArr[0].slice(0,1)+strArr[1].slice(0,1)
+    }
+   }
 }
