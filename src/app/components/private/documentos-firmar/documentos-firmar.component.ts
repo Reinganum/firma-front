@@ -149,7 +149,7 @@ export class DocumentosFirmarComponent implements OnInit {
       console.log(this.convertDateForDB(this.filtrosForm.value.fechaDoc))
       await this.spinner.show();
       this.documentosService.obtenerDocumentos(
-      "ncatalan@nexia.cl", // dato duro borrar
+      this.currentUser.email,
       this.estadoDoc,
       this.filtrosForm.value.origen,
       this.convertDateForDB(this.filtrosForm.value.fechaDoc),
