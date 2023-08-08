@@ -23,7 +23,7 @@ export class AgregarSistema implements OnInit {
   
   ngOnInit() {
     this.systemForm = this.formBuilder.group({
-      descripcion: ['', Validators.required],
+      nombre: ['', Validators.required],
       url: ['', Validators.required],
       sigla: ['', [Validators.required]],
       disponible: [''],
@@ -67,6 +67,38 @@ export class AgregarSistema implements OnInit {
         }
       }
     }
+  }
+  async onSubmitEdicion(){
+    let sistema=this.removeEmptyValues(this.systemForm.value)
+    sistema.id=this.sistema.me_id
+      await this.spinner.show();
+    let data={
+      sistema
+    }
+    console.log(data)
+      this.parametrosService.editarMedio(data).subscribe(
+        {
+        next: async (res: any) => {
+          await this.spinner.hide();
+          console.log(res)
+          this.toastrService.success(res.message);
+        },
+        error: async (error: any) => {
+          await this.spinner.hide();
+          console.log(error)
+          this.toastrService.warning(error);
+        }
+        });
+  }
+  removeEmptyValues(obj: any): any {
+    const data: any = {};
+  
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key) && obj[key] !== '') {
+        data[key] = obj[key];
+      }
+    }
+    return data;
   }
 }
 

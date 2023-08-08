@@ -65,7 +65,6 @@ export class DocumentosFirmarComponent implements OnInit {
     if(typeof user === "string"){
       this.currentUser=JSON.parse(user)
     }
-    console.log(this.currentUser)
     if (rutaActual?.includes('docsFirmar')) {
       console.log("docsFirmar");
       this.tipoTabla = 'firmar';
@@ -122,6 +121,7 @@ export class DocumentosFirmarComponent implements OnInit {
 
   limpiar() {
     this.filtrosForm.reset()
+    this.obtenerDocumentos(null, '', this.paginador.pageIndex, this.paginador.pageSize | this.pageSize)
   }
 
   masterToggle() {
@@ -146,7 +146,7 @@ export class DocumentosFirmarComponent implements OnInit {
 
   async obtenerDocumentos(sortField: any, sortDirection: any, pageLimit: any, pageOffset: any) {
     try {
-      console.log(this.estadoDoc);
+      console.log(this.convertDateForDB(this.filtrosForm.value.fechaDoc))
       await this.spinner.show();
       this.documentosService.obtenerDocumentos(
       "ncatalan@nexia.cl", // this.currentUser.email
@@ -159,7 +159,7 @@ export class DocumentosFirmarComponent implements OnInit {
       pageOffset).subscribe(
         {
           next: async (res:any) => {
-            console.log(
+            /*console.log(
               "estado : ", this.estadoDoc,
               "origen : ", this.filtrosForm.value.origen,
               "fecha : ",this.filtrosForm.value.fechaDoc,
@@ -167,7 +167,7 @@ export class DocumentosFirmarComponent implements OnInit {
               "Sdirect : ", sortDirection == '' ? '' : sortDirection,
               "Limit : ", pageLimit,
               "Offset : ", pageOffset
-            )
+            )*/
               console.log(res);
               this.documentList = res.listaDocs.data;
               console.log(this.documentList);
