@@ -48,6 +48,7 @@ export class AgregarSistema implements OnInit {
             next: async (res: any) => {
               console.log(res);
               await this.spinner.hide();
+              this.activeModal.close({estado:true});
             },
             error: async (error: any) => {
               await this.spinner.hide();
