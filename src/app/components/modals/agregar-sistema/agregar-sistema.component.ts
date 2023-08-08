@@ -47,7 +47,9 @@ export class AgregarSistema implements OnInit {
           {
             next: async (res: any) => {
               console.log(res);
+              this.activeModal.close({estado:true})
               await this.spinner.hide();
+              this.activeModal.close({estado:true});
             },
             error: async (error: any) => {
               await this.spinner.hide();
@@ -69,18 +71,25 @@ export class AgregarSistema implements OnInit {
     }
   }
   async onSubmitEdicion(){
-    let sistema=this.removeEmptyValues(this.systemForm.value)
-    sistema.id=this.sistema.me_id
+    let formData={
+      descripcion:this.systemForm.value.nombre,
+      sigla:this.systemForm.value.sigla,
+      disponible:(this.systemForm.value.disponible===true?1:0),
+      url:this.systemForm.value.url
+    }
+    let medio=this.removeEmptyValues(formData)
+    medio.id=this.sistema.me_id
       await this.spinner.show();
     let data={
-      sistema
+      medio
     }
-    console.log(data)
+    console.log(medio)
       this.parametrosService.editarMedio(data).subscribe(
         {
         next: async (res: any) => {
           await this.spinner.hide();
           console.log(res)
+          this.activeModal.close({estado:true})
           this.toastrService.success(res.message);
         },
         error: async (error: any) => {
@@ -101,5 +110,6 @@ export class AgregarSistema implements OnInit {
     return data;
   }
 }
+
 
 

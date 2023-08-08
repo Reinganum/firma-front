@@ -135,6 +135,7 @@ export class MantenedorUsuariosComponent implements OnInit {
   }
 
   deleteUser(row:any){
+    this.spinner.show();
     this.usuarioService.eliminarUsuario(row.id).subscribe({
       next: async(res:any) => {
         console.log(res)
@@ -154,6 +155,7 @@ export class MantenedorUsuariosComponent implements OnInit {
     this.modalRef.result.then((res)=>{
       if(res.estado){
         this.listarUsuarios(this.paginador.pageIndex, this.paginador.pageSize | this.pageSize);
+        this.modalRef.close()
       }
     })
   }

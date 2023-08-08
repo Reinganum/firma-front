@@ -4,6 +4,7 @@ import { AuthenticationService } from '../../auth/service/authentication.service
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { UsuariosService } from 'src/app/services/usuarios.service';
+import { SwPush } from '@angular/service-worker';
 
 @Component({
   selector: 'app-login',
@@ -12,12 +13,15 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 })
 export class LoginComponent implements OnInit {
 
+  permisosPush!:any
+
   constructor(
     private router:Router,
     private authenticationService: AuthenticationService,
     private _toastrService:ToastrService,
     private spinner: NgxSpinnerService,
-    private usuarioService: UsuariosService
+    private usuarioService: UsuariosService,
+    private swPush:SwPush
     ){}
 
     async ngOnInit() {
@@ -108,4 +112,13 @@ export class LoginComponent implements OnInit {
 
     return false;
 }
+  subscribeToNotifications(){
+    this.swPush.requestSubscription({serverPublicKey:""})
+    .then(res=>{
+      this.permisosPush=res
+    })
+    .catch(error=>{
+      this.permisosPush=error
+    })
+  }
 }

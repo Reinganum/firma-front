@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DocsPendientesComponent } from '../../modals/docs-pendientes/docs-pendientes.component';
+import { SwUpdate } from '@angular/service-worker';
 
 @Component({
   selector: 'app-header',
@@ -31,6 +32,8 @@ export class HeaderComponent {
     private toastrService:ToastrService,
     private router: Router,
     private spinner: NgxSpinnerService,
+    private swUpdate:SwUpdate
+    
     ) { }
 
   
@@ -40,6 +43,13 @@ export class HeaderComponent {
     console.log(this.userId)
     this.getDocsPendientes(1,this.currentUser.email)
     this.getNotificaciones(this.currentUser.email)
+    if (this.swUpdate.isEnabled) {
+      this.swUpdate.available.subscribe(() => {
+        if (confirm("Existe una nueva versión del sistema. Aceptar para actualizar")) {
+          window.location.reload();
+        }
+      });
+    }
   }
 
   menu(){
