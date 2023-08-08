@@ -142,6 +142,7 @@ export class MantenedorSistemasComponent implements OnInit {
     this.modalRef.result.then((res)=>{
       if(res.estado){
         this.modalRef.close();
+        this.obtenerMedios();
       }
     })
   }

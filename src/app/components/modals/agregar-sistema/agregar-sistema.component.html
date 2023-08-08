@@ -37,10 +37,10 @@
             <img class="p-3 rounded" src="../../../../assets/img/engrane-sidebar-activo.svg" style="background-color: #c9ddf3;">
         </div>
         <h1 class="text-center">Editar sistema</h1>
-        <form [formGroup]="systemForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="systemForm" (ngSubmit)="onSubmitEdicion()">
             <div class="mb-3">
             <label for="nombre" class="form-label">Nombre Sistema</label>
-            <input type="text" [placeholder]="this.sistema.me_descripcion" formControlName="descripcion" class="form-control">
+            <input type="text" [placeholder]="this.sistema.me_descripcion" formControlName="nombre" class="form-control">
             </div>
             <div class="mb-3">
                 <label for="url" class="form-label">URL</label>
@@ -53,7 +53,7 @@
             <div class="mb-3 w-100">
                 <label for="user-estado" class="w-100">Permisos para el sistema</label>
                 <label class="switch">
-                    <input type="checkbox" name="user-estado" formControlName="disponible">
+                    <input type="checkbox" name="medio-estado" formControlName="disponible">
                     <span class="slider round"></span>
                 </label> 
             </div>

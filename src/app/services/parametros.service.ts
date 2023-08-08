@@ -19,7 +19,7 @@ export class ParametrosService {
   editarMedio(data:any): Observable<any> {        
     const body = JSON.stringify(data);
     const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
-    return this.http.post(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/editarMedio`, body, {headers})
+    return this.http.put(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/editarMedio`, body, {headers})
   }
 
   crearMedio(data:any): Observable<any> {    

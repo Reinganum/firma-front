@@ -128,6 +128,7 @@ export class MantenedorUsuariosComponent implements OnInit {
     this.modalRef.componentInstance.usuario = usuario
     this.modalRef.result.then((res)=>{
       if(res.estado){
+        this.listarUsuarios(this.paginador.pageIndex, this.paginador.pageSize | this.pageSize)
         this.modalRef.close();
       }
     })
@@ -152,7 +153,7 @@ export class MantenedorUsuariosComponent implements OnInit {
     this.modalRef=this.modalService.open(AgregarUsuario,{backdrop:'static',size:'md'});
     this.modalRef.result.then((res)=>{
       if(res.estado){
-        this.modalRef.close();
+        this.listarUsuarios(this.paginador.pageIndex, this.paginador.pageSize | this.pageSize);
       }
     })
   }
