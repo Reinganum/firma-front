@@ -8,6 +8,7 @@ import { DocumentosService } from 'src/app/services/documentos.service';
 import { ComunesService } from 'src/app/services/comunes.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CorreosService } from 'src/app/services/correos.service';
+import { FirmantesService } from 'src/app/services/firmantes.service';
 
 
 @Component({
@@ -25,7 +26,8 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
     private documentosService: DocumentosService,
     private comunesServices: ComunesService,
     private spinner: NgxSpinnerService,
-    private correosService: CorreosService
+    private correosService: CorreosService,
+    private firmantesService: FirmantesService
   ) { }
 
   userInfo: any = {}
@@ -48,7 +50,7 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
     // }
     let firma: boolean;
     let valida: any = firmantes.map((firmante: any, i: any) => {
-      if (firmante.correo == this.userInfo.email ) { // En duro 'asd@gmail.com' sino this.userInfo.email
+      if (firmante.correo == this.userInfo.email) {
         firmante.firmo = true;
         firma = true;
         return true;
@@ -56,17 +58,27 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
       firmante.firmo = false;
       return false;
     })
-    if (valida.indexOf(true)===-1) {
+    if (valida.indexOf(true) === -1) {
       this.toastr.warning("No puedes firmar el documento, ya que no estás dentro de los firmantes");
       return;
     }
-    let estadoDoc=this.setEstadoDoc(firmantes)
-    
+    let estadoDoc = this.setEstadoDoc(firmantes)
+    console.log(valida)
+    let datosFirmante = firmantes.filter((firmante: any) => {
+      return firmante.correo == this.userInfo.email
+    })
+    console.log(datosFirmante)
+    const dataFirmante = {
+      firmante: {
+        id: datosFirmante[0].idFirmante,
+        firmo: 1
+      }
+    }
     await this.spinner.show();
+    this.editarFirmante(dataFirmante)
     console.log(this.documento)
     console.log(firmantes)
 
-    
     this.documentosService.crearPdfFirma({
       key: `Cargas/Documentos/${this.documento.archivo}`,
       firmantes
@@ -75,8 +87,8 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
         console.log(res);
         res.datosTabla
         res.pdfBase64
-        let listaNueva:any =[];
-        res.datosTabla.map((datos:any) => {
+        let listaNueva: any = [];
+        res.datosTabla.map((datos: any) => {
           listaNueva.push(datos)
         });
         console.log(listaNueva);
@@ -92,6 +104,19 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
     this.activeModal.close({ estado: true });
   }
 
+  editarFirmante(data: any) {
+    this.firmantesService.editarFirmante(data).subscribe({
+      next: async (res) => {
+        console.log(res);
+        await this.spinner.hide();
+      },
+      error: async (error) => {
+        console.log(error);
+        await this.spinner.hide();
+      }
+    });
+  }
+
   async firmar(datosTabla: any, pdfBase64: any) {
 
     console.log(datosTabla);
@@ -101,20 +126,20 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
     const firma = await this.comunesServices.firma({ datosTabla, pdfBase64, hash: this.documento.hashDoc }).toPromise();
     console.log(firma);
     let bucket = window.location.hostname !== "localhost" ? 'firma-otic-qa-doc' : "ofe-local-services"
-    const url:any = await this.comunesServices.getSignedUrl({bucket, key: firma.key, metodo: 'get'}).toPromise();
+    const url: any = await this.comunesServices.getSignedUrl({ bucket, key: firma.key, metodo: 'get' }).toPromise();
     const link = document.createElement('a');
     console.log(url.message);
-    
+
     link.href = url.message;
     link.download = firma.key.split('/')[firma.key.split('/').length - 1];
     link.target = '_blank';
     link.click();
-    let estadoDoc=this.setEstadoDoc(this.documento?.firmantes);
+    let estadoDoc = this.setEstadoDoc(this.documento?.firmantes);
     this.editarEstadoFirma(estadoDoc, firma.key);
     await this.spinner.hide();
   }
 
-  async editarEstadoFirma(estadoDoc:number, url:any) {
+  async editarEstadoFirma(estadoDoc: number, url: any) {
     const datos = {
       documento: {
         estado: estadoDoc,
@@ -159,7 +184,7 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
     this.activeModal.close({ estado: true });
   }
 
-  crearNotificacion(document:any) {
+  crearNotificacion(document: any) {
     const datos = {
       responsable: document.responsable,
       firmante: this.userInfo.email,
@@ -175,18 +200,18 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
       }
     });
   }
-  
 
-  setEstadoDoc(firmantes:any){
-    if (firmantes.length===1)return 4;
+
+  setEstadoDoc(firmantes: any) {
+    if (firmantes.length === 1) return 4;
     let countFalse = 0;
     for (let firmante of firmantes) {
-        if ( firmante.firmo === false) {
-            countFalse++;
-            if (countFalse > 1) {
-                return 3;
-            }
+      if (firmante.firmo === false) {
+        countFalse++;
+        if (countFalse > 1) {
+          return 3;
         }
+      }
     }
     return 4;
   }

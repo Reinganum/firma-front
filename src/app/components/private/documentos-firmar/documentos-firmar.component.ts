@@ -15,6 +15,7 @@ import { MatSort } from '@angular/material/sort';
 import * as moment from 'moment';
 import { EnvioCorreoComponent } from '../../modals/envio-correo/envio-correo.component';
 import { SelectionModel } from '@angular/cdk/collections';
+import { FirmantesService } from 'src/app/services/firmantes.service';
 
 @Component({
   selector: 'app-documentos-firmar',
@@ -46,6 +47,7 @@ export class DocumentosFirmarComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private formBuilder: FormBuilder,
     private correosService: CorreosService,
+    private firmantesService:FirmantesService
       ){
         this.filtrosForm = this.formBuilder.group({
           fechaDoc: [null],
@@ -304,7 +306,7 @@ export class DocumentosFirmarComponent implements OnInit {
       }
         let esFirmante=false;
         document.firmantes=firmantesJson.map((firmante:any) => {
-        if (firmante.correo == this.currentUser.email) { // En duro 'asd@gmail.com' sino this.currentUser.email
+        if (firmante.correo == this.currentUser.email) {
           firmante.firmo = true;
           esFirmante=true
           console.log("Usuario si pertenece a la lista de firmantes")
@@ -314,6 +316,16 @@ export class DocumentosFirmarComponent implements OnInit {
       if(esFirmante===false){
         this.toastrService.warning(`Tu usuario no está registrado para firmar el documento ${document.archivo}`)
       } else {
+        let firmante=document.firmantes.filter((firmante:any)=>{
+          return firmante.correo == this.currentUser.email
+        })
+        const dataFirmante={
+          firmante: {
+            id: firmante[0].idFirmante,
+            firmo: 1
+          }
+        }
+        this.editarFirmante(dataFirmante)
         let estadoDoc=this.setEstadoDoc(firmantesJson)
         this.editarEstadoFirma(document,estadoDoc)
       
@@ -332,7 +344,20 @@ export class DocumentosFirmarComponent implements OnInit {
       }
     })
   }
-  
+
+  editarFirmante(data:any){
+    this.firmantesService.editarFirmante(data).subscribe({
+      next: async (res) => {
+     console.log(res);
+     await this.spinner.hide();
+    },
+    error: async (error) => {
+      console.log(error);
+      await this.spinner.hide();
+    }
+    });
+  }
+
    extraerIniciales(origen:string){
     const strArr=origen.split(' ');
     if(strArr.length===1){
