@@ -34,11 +34,13 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
   @Input() documento: any;
   @Input() key: any;
   userKnown: boolean = true;
+  infoFirmante!:any
 
   ngOnInit(): void {
     this.userInfo = this.authenticationService.currentUserValue;
     console.log(this.documento);
-
+    this.infoFirmante=this.documento.firmantes.filter((firmante:any)=>firmante.correo===this.userInfo.email)[0]
+    console.log(this.infoFirmante)
   }
 
   async confirmar() {

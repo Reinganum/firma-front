@@ -3,7 +3,27 @@
   <div class="container col-lg-12 mt-5">
     <h1 class="ms-4" *ngIf="currentUser?.tipo===2">Datos de la firma</h1>
     <div class="col-12">
-        <app-datos-firma *ngIf="currentUser.tipo===2;else usuarioExterno"></app-datos-firma>
+        <div class="col-12 mb-5">
+            <div *ngIf="currentUser.tipo===2;else usuarioExterno">
+                <div class="d-flex flex-row" style="background-color: #fafbfc; border-radius: 12px;">
+                    <div class="d-flex py-2 justify-content-center align-items-center" id="#img-firmar" style="margin-left: 2.5vw !important;">
+                        <img class="" id="img-firmar"src="../assets/img/img-firma-resumen.svg">
+                    </div> 
+                    <div class="mx-5 d-flex flex-column justify-content-center" style="margin-top: 1%;border-left: 5px solid #e38c48; padding-left:5%;height:80% !important" >
+                        <p>Nombre:</p>
+                        <p>RUT:</p>
+                        <p>Email:</p>
+                        <p>Teléfono:</p>
+                    </div> 
+                    <div class="fw-bold d-flex flex-column justify-content-center py-1" id="user-data"  style="margin-top: 1%;margin-left:10%; height:80% !important" >
+                        <p>{{currentUser.firstName + " " + currentUser.lastName}}</p>
+                        <p>{{datosFirmante?.rut?datosFirmante.rut:"Sin registro"}}</p>
+                        <p>{{currentUser?.email}}</p>
+                        <p>{{datosFirmante?.telefono?datosFirmante.telefono:"Sin registro"}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
             <ng-template #usuarioExterno>
                 <div class="row pt-5">
                     <h4>¡Te damos la bienvenida!</h4>
@@ -92,11 +112,19 @@
                 <tbody>
                     <tr *ngFor="let document of documentList, let i = index" class="text-center">
                         <td><mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(document) : null" [checked]="selection.isSelected(document)"></mat-checkbox></td>
-                        <td>{{convertDateForTable(document.fecha)}}</td><!--| date: "dd-MM-yyyy"-->
-                        <td class="text-left">{{document.archivo}}</td>
+                        <td>
+                            <div class="d-flex flex-row justify-content-center align-items-center" style="margin-top: 0.5rem;">
+                                {{convertDateForTable(document.fecha)}}
+                            </div>
+                        </td>
+                        <td class="text-left">
+                            <div class="d-flex flex-row justify-content-center align-items-center" style="margin-top: 0.5rem;">
+                                {{document.archivo}}
+                            </div>
+                        </td>
                         <td>
                             <div class="d-flex flex-row justify-content-center align-items-center td-origen">
-                                <div class="d-flex align-items-center rounded-circle bg-dark justify-content-center circulo-origen">
+                                <div class="d-flex align-items-center rounded-circle bg-dark justify-content-center circulo-origen mx-2">
                                     {{document.siglaOrigen}}
                                 </div>
                                 <p style="max-width: 12ch;">{{document.descripcionOrigen}}</p>

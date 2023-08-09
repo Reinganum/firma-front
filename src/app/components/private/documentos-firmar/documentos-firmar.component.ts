@@ -38,6 +38,7 @@ export class DocumentosFirmarComponent implements OnInit {
   filtrosForm!: FormGroup;
   dataSource:any;
   columnasFirmados: string[] = ['select','fecha', 'documento', 'origen', 'opciones'];
+  datosFirmante!:any
 
   constructor(
     private modalService:NgbModal,
@@ -83,8 +84,8 @@ export class DocumentosFirmarComponent implements OnInit {
         {icon:"../assets/img/opcion_tabla.svg",nombre:"Opciones"}
       ]
     }
-    this.obtenerDocumentos(null, '', this.paginador.pageIndex, this.paginador.pageSize | this.pageSize);
-
+    let documentos=this.obtenerDocumentos(null, '', this.paginador.pageIndex, this.paginador.pageSize | this.pageSize);
+    console.log(documentos)
     this.filtrosForm = this.formBuilder.group({
       fechaDoc: [null],
       origen: [null],
@@ -173,6 +174,7 @@ export class DocumentosFirmarComponent implements OnInit {
             )*/
               console.log(res);
               this.documentList = res.listaDocs.data;
+              this.datosFirmante=this.documentList[0].firmantes.filter((firmante:any)=>firmante.correo===this.currentUser.email)[0]
               console.log(this.documentList);
               this.totalFilas= res.listaDocs.total;
               this.dataSource = new MatTableDataSource(this.documentList);
