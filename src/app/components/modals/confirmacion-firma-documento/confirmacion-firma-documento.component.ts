@@ -120,7 +120,9 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
   }
 
   async firmar(datosTabla: any, pdfBase64: any) {
-
+    let estadoDoc = this.setEstadoDoc(this.documento?.firmantes);
+    console.log(estadoDoc)
+    
     console.log(datosTabla);
     console.log(pdfBase64);
     const newDatos = JSON.stringify(datosTabla).replace("'", '"');
@@ -136,7 +138,7 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
     link.download = firma.key.split('/')[firma.key.split('/').length - 1];
     link.target = '_blank';
     link.click();
-    let estadoDoc = this.setEstadoDoc(this.documento?.firmantes);
+
     this.editarEstadoFirma(estadoDoc, firma.key);
     await this.spinner.hide();
   }
@@ -208,9 +210,9 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
     if (firmantes.length === 1) return 4;
     let countFalse = 0;
     for (let firmante of firmantes) {
-      if (firmante.firmo === false) {
+      if (firmante.firmo === false || firmante.firmo === null || firmante.firmo === 0) {
         countFalse++;
-        if (countFalse > 1) {
+        if (countFalse >= 1) {
           return 3;
         }
       }

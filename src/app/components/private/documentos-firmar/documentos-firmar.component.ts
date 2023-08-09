@@ -408,16 +408,16 @@ export class DocumentosFirmarComponent implements OnInit {
   }
 
   
-  setEstadoDoc(firmantes:any){
-    if (firmantes.length===1)return 4;
+  setEstadoDoc(firmantes: any) {
+    if (firmantes.length === 1) return 4;
     let countFalse = 0;
     for (let firmante of firmantes) {
-        if ( firmante.firmo === false) {
-            countFalse++;
-            if (countFalse > 1) {
-                return 3;
-            }
+      if (firmante.firmo === false || firmante.firmo === null || firmante.firmo === 0) {
+        countFalse++;
+        if (countFalse >= 1) {
+          return 3;
         }
+      }
     }
     return 4;
   }
