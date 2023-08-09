@@ -37,8 +37,10 @@
                                     <div class="d-flex flex-wrap form-group mx-1">
                                       <div class="d-flex mx-1 flex-wrap form-group inputs-filter">
                                         <mat-form-field>
-                                        <mat-label>Nombre</mat-label>
-                                        <input type="text" matInput formControlName="nombre" placeholder="Juan Pérez"/>
+                                            <mat-label>Nombre</mat-label>
+                                            <mat-select formControlName="nombre">
+                                                <mat-option *ngFor="let o of dataSource" [value]="o.nombres">{{o.nombres}}</mat-option>
+                                            </mat-select>
                                         </mat-form-field>
                                       </div>
                                       <div class="d-flex mx-1 flex-wrap form-group inputs-filter">

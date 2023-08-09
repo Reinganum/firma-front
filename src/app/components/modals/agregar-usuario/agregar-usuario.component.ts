@@ -85,6 +85,7 @@ export class AgregarUsuario implements OnInit {
               {
               next: async (res: any) => {
                 await this.spinner.hide();
+                this.activeModal.close({estado:true})
                 this.toastrService.success(res.message);
               },
               error: async (error: any) => {
