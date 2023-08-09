@@ -61,11 +61,12 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
       return;
     }
     let estadoDoc=this.setEstadoDoc(firmantes)
+    
     await this.spinner.show();
     console.log(this.documento)
     console.log(firmantes)
 
-    this.editarEstadoFirma(estadoDoc)
+    
     this.documentosService.crearPdfFirma({
       key: `Cargas/Documentos/${this.documento.archivo}`,
       firmantes
@@ -99,21 +100,26 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
     console.log(JSON.parse(newDatos));
     const firma = await this.comunesServices.firma({ datosTabla, pdfBase64, hash: this.documento.hashDoc }).toPromise();
     console.log(firma);
-    let bucket = window.location.hostname !== "localhost" ? 'firma-otic-qa-doc' : "ofe-local-services"
+    let bucket = window.location.hostname == "localhost" ? 'firma-otic-qa-doc' : "ofe-local-services"
     const url:any = await this.comunesServices.getSignedUrl({bucket, key: firma.key, metodo: 'get'}).toPromise();
     const link = document.createElement('a');
+    console.log(url.message);
+    
     link.href = url.message;
     link.download = firma.key.split('/')[firma.key.split('/').length - 1];
     link.target = '_blank';
     link.click();
+    let estadoDoc=this.setEstadoDoc(this.documento?.firmantes);
+    this.editarEstadoFirma(estadoDoc, url.message);
     await this.spinner.hide();
   }
 
-  async editarEstadoFirma(estadoDoc:number) {
+  async editarEstadoFirma(estadoDoc:number, url:any) {
     const datos = {
       documento: {
         estado: estadoDoc,
-        id: this.documento.id
+        id: this.documento.id,
+        archivoFirmado: url
       }
     }
     this.spinner.show();
