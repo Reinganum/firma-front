@@ -67,7 +67,7 @@ export class VistaDocumentoComponent implements OnInit {
     private authenticationService:AuthenticationService,
     private location: Location
   ) {
-    
+
   }
 
   ngOnInit(): void {
@@ -106,10 +106,14 @@ export class VistaDocumentoComponent implements OnInit {
           this.toaster.warning("No se encontró el documento.");
           return ;
         }
-        this.obtenerPathS3(`Cargas/Documentos/${res.documento.data[0].archivo}`)
-        this.fileName=res.documento.data[0].archivo;
-        this.documento = res.documento.data[0];
-        console.log(res)
+        if (res.documento.data[0].estado == 1 && !res.documento.data[0].archivoFirmado) {
+          this.fileName=res.documento.data[0].archivo;
+          this.documento = res.documento.data[0];
+          this.obtenerPathS3(`Cargas/Documentos/${res.documento.data[0].archivo}`)
+
+        } else {
+          this.archivoFirmar = res.documento.data[0].archivoFirmado;
+        }
       },
       error: async (error:any) => {
         await this.spinner.hide();
@@ -132,7 +136,7 @@ export class VistaDocumentoComponent implements OnInit {
       this.toaster.success("Documento cargado correctamente!");
       await this.spinner.hide();
     } catch (error:any) {
-      console.log(error);      
+      console.log(error);
       await this.spinner.hide();
     }
   }
