@@ -120,9 +120,6 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
   }
 
   async firmar(datosTabla: any, pdfBase64: any) {
-    let estadoDoc = this.setEstadoDoc(this.documento?.firmantes);
-    console.log(estadoDoc)
-    
     console.log(datosTabla);
     console.log(pdfBase64);
     const newDatos = JSON.stringify(datosTabla).replace("'", '"');
@@ -139,6 +136,8 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
     link.target = '_blank';
     link.click();
 
+    let estadoDoc = this.setEstadoDoc(this.documento?.firmantes);
+    console.log(estadoDoc)
     this.editarEstadoFirma(estadoDoc, firma.key);
     await this.spinner.hide();
   }
