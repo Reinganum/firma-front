@@ -39,16 +39,18 @@ export class HeaderComponent {
   
   ngOnInit(): void {
     this.currentUser = this.authenticationService.currentUserValue;
-    this.userId = localStorage.getItem('userId');
-    console.log(this.userId)
-    this.getDocsPendientes(1,this.currentUser.email)
-    this.getNotificaciones(this.currentUser.email)
-    if (this.swUpdate.isEnabled) {
-      this.swUpdate.available.subscribe(() => {
-        if (confirm("Existe una nueva versión del sistema. Aceptar para actualizar")) {
-          window.location.reload();
-        }
-      });
+    if (this.currentUser) {
+      this.userId = localStorage.getItem('userId');
+      console.log(this.userId)
+      this.getDocsPendientes(1,this.currentUser.email)
+      this.getNotificaciones(this.currentUser.email)
+      if (this.swUpdate.isEnabled) {
+        this.swUpdate.available.subscribe(() => {
+          if (confirm("Existe una nueva versión del sistema. Aceptar para actualizar")) {
+            window.location.reload();
+          }
+        });
+      }
     }
   }
 

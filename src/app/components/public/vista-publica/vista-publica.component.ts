@@ -96,7 +96,7 @@ export class VistaPublicaComponent implements OnInit {
 					this.toaster.warning("No se encontró el documento.");
 					return;
 				}
-				this.obtenerPathS3(res.documento.data[0].archivo)
+				this.obtenerPathS3(`Cargas/Documentos/${res.documento.data[0].archivo}`)
 				this.fileName = res.documento.data[0].archivo;
 				let firmantes = res.documento.data[0].firmantes;
 				console.log(firmantes)

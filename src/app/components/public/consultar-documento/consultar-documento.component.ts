@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-consultar-documento',
@@ -13,7 +13,7 @@ export class ConsultarDocumentoComponent implements OnInit{
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-
+    private route: ActivatedRoute
   ) {}
   ngOnInit(): void {
     this.formDatosUsuario = this.formBuilder.group({
@@ -22,6 +22,6 @@ export class ConsultarDocumentoComponent implements OnInit{
   }
   consultarDocumento() {
     console.log(this.formDatosUsuario.value.codigoDoc);
-    this.router.navigate([`/vista/${this.formDatosUsuario.value.codigoDoc}/1`]);
+    this.router.navigate([`/vista-publica/${this.formDatosUsuario.value.codigoDoc}`]);
   }
 }
