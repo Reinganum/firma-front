@@ -92,9 +92,9 @@ export class VistaDocumentoComponent implements OnInit {
           this.obtenerPathS3(`Cargas/Documentos/${res.documento.data[0].archivo}`)
           this.firmante=this.documento.firmantes.filter((f:any)=>f.correo===this.currentUser.email)[0]
           console.log(this.firmante)
-
+          
         } else {
-          this.archivoFirmar = res.documento.data[0].archivoFirmado;
+          this.obtenerPathS3(res.documento.data[0].archivoFirmado);
         }
 
       },

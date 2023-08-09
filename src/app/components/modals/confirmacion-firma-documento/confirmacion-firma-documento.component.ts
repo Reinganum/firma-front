@@ -110,7 +110,7 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
     link.target = '_blank';
     link.click();
     let estadoDoc=this.setEstadoDoc(this.documento?.firmantes);
-    this.editarEstadoFirma(estadoDoc, url.message);
+    this.editarEstadoFirma(estadoDoc, firma.key);
     await this.spinner.hide();
   }
 
