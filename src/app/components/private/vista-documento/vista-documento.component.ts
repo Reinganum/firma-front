@@ -9,12 +9,8 @@ import { ConfirmacionFirmaDocumentoComponent } from '../../modals/confirmacion-f
 import { PDFDocumentProxy } from 'ng2-pdf-viewer';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import { CanvasElement } from 'pdfmake/interfaces';
-import { Firmante } from '../types';
 import { AuthenticationService } from '../../auth/service/authentication.service';
 import { Location } from '@angular/common';
-
-
 
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
@@ -23,6 +19,8 @@ import { Location } from '@angular/common';
   templateUrl: './vista-documento.component.html',
   styleUrls: ['./vista-documento.component.css'],
 })
+
+
 
 export class VistaDocumentoComponent implements OnInit {
   archivoFirmar:string = '';
@@ -36,25 +34,7 @@ export class VistaDocumentoComponent implements OnInit {
   currentUser:any=""
   page!:any
   pdfMake = pdfFonts.pdfMake.vfs;
-  firmantes:Firmante[]=[
-    {
-    nombre: "Juan Pérez",
-    rut: "17.114.423-4",
-    telefono:9328487334,
-    email:"cormoran@hotmail.com"
-  },{
-    nombre: "Joan Baez",
-    rut: "19.112.432-7",
-    telefono:9932928429,
-    email:"galindo@hotmail.com"
-  },
-  {
-    nombre: "Joan Baez",
-    rut: "19.112.432-7",
-    telefono:9932928429,
-    email:"galindo@hotmail.com"
-  }
-]
+  firmante:any;
 
   constructor(
     private comunesServices: ComunesService,
@@ -67,7 +47,7 @@ export class VistaDocumentoComponent implements OnInit {
     private authenticationService:AuthenticationService,
     private location: Location
   ) {
-    
+
   }
 
   ngOnInit(): void {
@@ -106,10 +86,17 @@ export class VistaDocumentoComponent implements OnInit {
           this.toaster.warning("No se encontró el documento.");
           return ;
         }
-        this.obtenerPathS3(`Cargas/Documentos/${res.documento.data[0].archivo}`)
-        this.fileName=res.documento.data[0].archivo;
-        this.documento = res.documento.data[0];
-        console.log(res)
+        if (res.documento.data[0].estado == 1 && !res.documento.data[0].archivoFirmado) {
+          this.fileName=res.documento.data[0].archivo;
+          this.documento = res.documento.data[0];
+          this.obtenerPathS3(`Cargas/Documentos/${res.documento.data[0].archivo}`)
+          this.firmante=this.documento.firmantes.filter((f:any)=>f.correo===this.currentUser.email)[0]
+          console.log(this.firmante)
+
+        } else {
+          this.archivoFirmar = res.documento.data[0].archivoFirmado;
+        }
+
       },
       error: async (error:any) => {
         await this.spinner.hide();
@@ -132,7 +119,7 @@ export class VistaDocumentoComponent implements OnInit {
       this.toaster.success("Documento cargado correctamente!");
       await this.spinner.hide();
     } catch (error:any) {
-      console.log(error);      
+      console.log(error);
       await this.spinner.hide();
     }
   }

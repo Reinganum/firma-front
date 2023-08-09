@@ -5,6 +5,7 @@ import { DocumentosService } from 'src/app/services/documentos.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { AuthenticationService } from '../../auth/service/authentication.service';
 
 
 @Component({
@@ -14,35 +15,37 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 
 export class HomeComponent implements OnInit {
-
-  totalDocs!:number
+  currentUser!: any
+  totalDocs!: number
 
   constructor(
     private documentosService: DocumentosService,
-    private toastrService:ToastrService,
+    private toastrService: ToastrService,
     private router: Router,
-    private spinner: NgxSpinnerService) {}
+    private authenticationService: AuthenticationService,
+    private spinner: NgxSpinnerService) { }
 
-  async ngOnInit(){
+  async ngOnInit() {
     this.obtenerDocumentos()
+    this.currentUser = this.authenticationService.currentUserValue;
   }
 
   async obtenerDocumentos() {
     try {
       await this.spinner.show();
-      this.documentosService.obtenerDocumentos('',1,null,null,'','', 0 , 5).subscribe(
+      this.documentosService.obtenerDocumentos(this.currentUser.email, 1, null, null, '', '', 0, 5).subscribe(
         {
-          next: async (res:any) => {
-              console.log(res);
-              this.totalDocs=res.listaDocs.total
-              await this.spinner.hide();
+          next: async (res: any) => {
+            console.log(res);
+            this.totalDocs = res.listaDocs.total
+            await this.spinner.hide();
           },
-          error: async (error:any) => {
+          error: async (error: any) => {
             console.log(error)
             await this.spinner.hide();
           }
-      });
-    } catch (error:any) {
+        });
+    } catch (error: any) {
       await this.spinner.hide();
       console.log(error)
       if (error.status.toString() === '404') {
@@ -55,5 +58,4 @@ export class HomeComponent implements OnInit {
       console.log(error);
     }
   }
-
 }
