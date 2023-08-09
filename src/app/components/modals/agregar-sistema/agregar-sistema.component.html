@@ -44,11 +44,11 @@
             </div>
             <div class="mb-3">
                 <label for="url" class="form-label">URL</label>
-                <input type="url" [placeholder]="this.sistema.me_url" class="form-control" formControlName="url">
+                <input type="url" [placeholder]="this.sistema.me_url?this.sistema.me_url:''" class="form-control" formControlName="url">
             </div>
             <div class="mb-3">
                 <label for="url" class="form-label">Sigla</label>
-                <input type="text" class="form-control" formControlName="sigla">
+                <input type="text" class="form-control" [placeholder]="this.sistema.me_sigla?this.sistema.me_sigla:''" formControlName="sigla">
             </div>
             <div class="mb-3 w-100">
                 <label for="user-estado" class="w-100">Permisos para el sistema</label>
