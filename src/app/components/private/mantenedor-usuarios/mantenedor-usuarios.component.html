@@ -39,7 +39,7 @@
                                         <mat-form-field>
                                             <mat-label>Nombre</mat-label>
                                             <mat-select formControlName="nombre">
-                                                <mat-option *ngFor="let o of dataSource" [value]="o.nombres">{{o.nombres}}</mat-option>
+                                                <mat-option *ngFor="let n of uniqueNames" [value]="n">{{n}}</mat-option>
                                             </mat-select>
                                         </mat-form-field>
                                       </div>
@@ -51,14 +51,16 @@
                                       </div>
                                       <div class="d-flex mx-1 flex-wrap form-group inputs-filter">
                                         <mat-form-field>
-                                        <mat-label>Mail</mat-label>
-                                        <input type="text" matInput formControlName="mail" placeholder="juan@otic.sofofa.cl"/>
+                                            <mat-label>Mail</mat-label>
+                                            <mat-select formControlName="nombre">
+                                                <mat-option *ngFor="let u of dataSource" [value]="u.mail">{{u.email}}</mat-option>
+                                            </mat-select>
                                         </mat-form-field>
                                       </div>
                                       <div class="d-flex mx-1 flex-wrap form-group inputs-filter">
                                         <mat-form-field>
                                           <mat-label>Estado</mat-label>
-                                          <mat-select formControlName="estado" [(value)]="selected">
+                                          <mat-select formControlName="estado" [(value)]="selected" placeholder="Activo">
                                               <mat-option value="0">Inactivo</mat-option>
                                               <mat-option value="1">Activo</mat-option>
                                           </mat-select>

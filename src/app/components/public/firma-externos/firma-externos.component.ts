@@ -36,6 +36,7 @@ export class FirmaExternosComponent implements OnInit {
   page!: any
   pdfMake = pdfFonts.pdfMake.vfs;
   token!: any;
+  esFirmante=false;
 
   constructor(
     private comunesServices: ComunesService,
@@ -58,11 +59,11 @@ export class FirmaExternosComponent implements OnInit {
       this.token = params["token"] || null;
       this.idDoc = params["id"];
       localStorage.setItem('tokenUrl', this.token);
-
       try {
         this.userService.verificarToken(this.token).subscribe({
           next: async (res: any) => {
             try {
+              this.esFirmante=true
               this.obtenerPath(this.idDoc);
             } catch (error) {
               this.toaster.show("El token es inválido o ya expiró");

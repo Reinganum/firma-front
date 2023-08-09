@@ -27,7 +27,8 @@ export class MantenedorUsuariosComponent implements OnInit {
   flagFiltros = false;
   editingRowId!:any;
   editForm!:any
-  selected=1
+  selected="Activo"
+  uniqueNames!:any
 
   cabeceras = [
     {nombre:"ID"},
@@ -88,6 +89,8 @@ export class MantenedorUsuariosComponent implements OnInit {
         console.log(res);
         this.listaUsuarios = res.usuarios;
         this.dataSource=res.usuarios
+        let namesArr=this.dataSource.map((user:any)=>user.nombres)
+        this.uniqueNames=[...new Set(namesArr)]
         this.totalFilas = res.usuarios.length;
         await this.spinner.hide();
       },
