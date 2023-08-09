@@ -45,7 +45,7 @@ export class EnvioCorreoComponent implements OnInit {
     const datos = {
       email: this.formEnvioCorreo.value.correos.correo,
       asunto: 'Aviso de documento',
-      seguimiento: `N° Doc: ${this.documento.hashDoc}`
+      seguimiento: `${this.documento.hashDoc}`
     }
     this.correosService.notificarDocFirmado(datos).subscribe({
       next: (res:any) => {

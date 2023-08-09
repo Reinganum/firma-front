@@ -139,7 +139,7 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
     const datos = {
       email: `${this.userInfo.email}`,
       asunto: 'Nuevo documento firmado',
-      seguimiento: `N° Doc: ${this.documento.id}`
+      seguimiento: `${this.documento.hashDoc}`
     }
 
     this.correosService.notificarDocFirmado(datos).subscribe({
