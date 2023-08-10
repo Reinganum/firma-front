@@ -13,14 +13,15 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { CanvasElement } from 'pdfmake/interfaces';
 import { AuthenticationService } from '../../auth/service/authentication.service';
 import { Location } from '@angular/common';
-import { Firmante } from '../../private/types';
+import { JwtHelperService } from '@auth0/angular-jwt';
+
 
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'app-firma-externos',
   templateUrl: './firma-externos.component.html',
-  styleUrls: ['./firma-externos.component.css'],
+  styleUrls: ['./firma-externos.component.css']
 })
 
 export class FirmaExternosComponent implements OnInit {
@@ -37,6 +38,10 @@ export class FirmaExternosComponent implements OnInit {
   pdfMake = pdfFonts.pdfMake.vfs;
   token!: any;
   esFirmante=false;
+  nombre=""
+  rut!:any
+ 
+  estadoFirmante=[{firmo:0}]
 
   constructor(
     private comunesServices: ComunesService,
@@ -48,16 +53,21 @@ export class FirmaExternosComponent implements OnInit {
     private router: Router,
     private modalService: NgbModal,
     private authenticationService: AuthenticationService,
-    private location: Location
+    private location: Location,
+    private jwtHelper: JwtHelperService
   ) {
 
   }
 
   ngOnInit(): void {
+    
     this.currentUser = this.authenticationService.currentUserValue;
     this.route.params.subscribe((params: any) => {
       this.token = params["token"] || null;
       this.idDoc = params["id"];
+      const token=this.jwtHelper.decodeToken(this.token)
+      this.nombre=token.data.nombre
+      this.rut=token.data.rut
       localStorage.setItem('tokenUrl', this.token);
       try {
         this.userService.verificarToken(this.token).subscribe({
@@ -111,6 +121,7 @@ export class FirmaExternosComponent implements OnInit {
         this.obtenerPathS3(`Cargas/Documentos/${res.documento.data[0].archivo}`)
         this.fileName=res.documento.data[0].archivo;
         this.documento = res.documento.data[0];
+        // this.estadoFirmante=this.documento.firmantes.filter((f:any)=>f.rut==this.rut)
         console.log(res)
       },
       error: async (error: any) => {

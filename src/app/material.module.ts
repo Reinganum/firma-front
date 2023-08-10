@@ -23,6 +23,7 @@ import {MatIconModule} from "@angular/material/icon";
 import { MatProgressBarModule} from '@angular/material/progress-bar';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTreeModule } from '@angular/material/tree';
+import { JwtModule } from '@auth0/angular-jwt';
 
 @NgModule({
     declarations: [],
@@ -48,7 +49,7 @@ import { MatTreeModule } from '@angular/material/tree';
         FormsModule,
         MatProgressBarModule,
         MatSelectModule,
-        MatTreeModule
+        MatTreeModule,
     ],
     exports:[
         ReactiveFormsModule,
@@ -73,7 +74,6 @@ import { MatTreeModule } from '@angular/material/tree';
         FormsModule,
         MatProgressBarModule,
         MatBadgeModule
-        
     ]
 })
 

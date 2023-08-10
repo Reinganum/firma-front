@@ -74,13 +74,11 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
       firmante: {
         id: datosFirmante[0].idFirmante,
         firmo: 1
-      }
+      },
+      docId:this.documento.id
     }
     await this.spinner.show();
     this.editarFirmante(dataFirmante)
-    console.log(this.documento)
-    console.log(firmantes)
-
     this.documentosService.crearPdfFirma({
       key: `Cargas/Documentos/${this.documento.archivo}`,
       firmantes

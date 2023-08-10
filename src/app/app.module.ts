@@ -25,6 +25,7 @@ import { AgregarUsuario } from './components/modals/agregar-usuario/agregar-usua
 import { AgregarSistema } from './components/modals/agregar-sistema/agregar-sistema.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { ErroresFormularioComponent } from './public/errores-formulario/errores-formulario.component';
+import { JwtModule } from '@auth0/angular-jwt';
 
 export function kcFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -62,8 +63,14 @@ const CUSTOM_DATE_FORMATS = {
     CoreDirectivesModule,
     NgbModule,
     MaterialModule,
-    HttpClientModule,
     NgxSpinnerModule,
+    HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        allowedDomains: ["example.com"],
+        disallowedRoutes: ["http://example.com/examplebadroute/"],
+      },
+    }),
     ToastrModule.forRoot({
       positionClass: 'toast-top-center',
       preventDuplicates: true,

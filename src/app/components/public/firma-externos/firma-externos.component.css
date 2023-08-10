@@ -2,3 +2,19 @@
   width: 100% !important;
   height: 621px !important;
 }
+
+.btn-cancelar{
+  background-color: transparent;
+}
+
+@media screen and (max-width: 450px) {
+  .zoom{
+    flex-direction: column!important;
+  }
+  .rotate{
+    flex-direction: column!important;
+  }
+  .paginado{
+    padding-right: 8vw;
+  }
+}

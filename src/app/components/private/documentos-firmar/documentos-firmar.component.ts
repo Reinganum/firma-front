@@ -321,11 +321,12 @@ export class DocumentosFirmarComponent implements OnInit {
         let firmante=document.firmantes.filter((firmante:any)=>{
           return firmante.correo == this.currentUser.email
         })
-        const dataFirmante={
+        const dataFirmante = {
           firmante: {
             id: firmante[0].idFirmante,
             firmo: 1
-          }
+          },
+          docId:document.id
         }
         this.editarFirmante(dataFirmante)
         let estadoDoc=this.setEstadoDoc(firmantesJson)
@@ -370,7 +371,7 @@ export class DocumentosFirmarComponent implements OnInit {
    }
 
    editarEstadoFirma(documento:any,estadoDoc:number) {
-    const datos = {
+    let datos = {
       documento: {
         estado: estadoDoc,
         id: documento.id

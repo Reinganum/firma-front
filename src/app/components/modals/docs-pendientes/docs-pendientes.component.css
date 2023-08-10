@@ -1,3 +1,7 @@
 .btn-outline-secondary:hover{
     color: black!important;
 }
+
+.container-notificacion{
+    flex-grow:1;
+}
