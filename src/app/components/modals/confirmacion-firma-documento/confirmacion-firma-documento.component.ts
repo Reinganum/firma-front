@@ -141,13 +141,17 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
   }
 
   async editarEstadoFirma(estadoDoc: number, url: any) {
-    const datos = {
+    const datos:any = {
       documento: {
         estado: estadoDoc,
         id: this.documento.id,
-        archivoFirmado: url
+        archivoFirmado: url,
       }
     }
+    if(estadoDoc===4){
+      datos.documento.fechaFirma="2023-08-10"
+    }
+    console.log(datos)
     this.spinner.show();
     this.documentosService.editarDocumento(datos).subscribe({
       next: (res: any) => {
@@ -204,12 +208,14 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
 
 
   setEstadoDoc(firmantes: any) {
+    console.log("FIRMANTES EN SET ESTADO DOC")
+    console.log(firmantes)
     if (firmantes.length === 1) return 4;
     let countFalse = 0;
     for (let firmante of firmantes) {
       if (firmante.firmo === false || firmante.firmo === null || firmante.firmo === 0) {
         countFalse++;
-        if (countFalse >= 1) {
+        if (countFalse > 1) {
           return 3;
         }
       }

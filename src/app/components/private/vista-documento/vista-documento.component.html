@@ -13,9 +13,9 @@
       <div class="d-flex flex-row justify-content-center align-items-center">
         <div class="col-12-sm col-md-10">
           <div class="d-flex flex-row justify-content-center align-items-center">
-            <div class="col-sm-4 col-md-4">
+            <div class="col-4 col-sm-4 col-md-4">
               <div>
-                <div class="d-flex justify-content-evenly flex-row py-1 flex-wrap align-items-center">
+                <div class="d-flex justify-content-evenly flex-row py-1 flex-wrap align-items-center paginado">
                   <div class="d-flex flex-row w-50" style="word-break: break-all !important;">
                     <p class="fw-bold">{{fileName}}</p>
                   </div>
@@ -25,19 +25,16 @@
                 </div>
               </div>
             </div>
-            <div class="col-sm-4 col-md-2" style="border-inline:solid 1px grey">
-              <div class="d-flex flex-row justify-content-center flex-wrap align-items-center">
+            <div class="col-4 col-sm-4 col-md-2" style="border-inline:solid 1px grey">
+              <div class="d-flex flex-row justify-content-center flex-wrap align-items-center zoom">
                 <mat-icon (click)="zoomOut()">remove</mat-icon>
                 <button class="mx-2 btn btn-main" style="background-color: #0B58A4 !important; color: white; border-radius: 0;">{{ (zoom * 100) | number: '1.0-0' }}%</button>
                 <mat-icon (click)="zoomIn()">add</mat-icon>
               </div>
             </div>
-            <div class="col-sm-4 col-md-4 py-1 d-flex d-row align-items-center flex-wrap">
+            <div class="col-4 col-sm-4 col-md-4 py-1 d-flex d-row align-items-center flex-wrap rotate">
               <mat-icon class="px-5" matTooltip="Rotar" (click)="rotate()"><span>text_rotation_down</span></mat-icon>
               <mat-icon class="px-5" matTooltip="Descargar" (click)="descargarArchivo(fileName)">cloud_download</mat-icon>
-              <!--<mat-icon class="px-5" (click)="generatePDF()">cloud_upload</mat-icon>
-                  <mat-icon class="px-5" (click)="pasarPagina()">settings_ethernet</mat-icon>
-              -->
             </div>
           </div>
         </div>
@@ -61,7 +58,7 @@
               <span class="fw-bold mx-2">X</span>Cancelar
           </button>
       </div>
-      <div *ngIf="(!firmante || firmante.firmo===true)" class="text-center mb-4">
+      <div *ngIf="(!firmante || firmante.firmo===1)" class="text-center mb-4">
         <div>
           <h1>{{!firmante ? "No figuras en la lista de firmantes":"Ya has firmado este documento."}}</h1>
         </div>

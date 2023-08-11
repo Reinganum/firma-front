@@ -131,7 +131,7 @@
                             </div>
                         </td>
                         <!-- CUANDO SE INTEGRE COLUMNA DE ESTADO-->
-                        <td *ngIf="tipoTabla !== 'firmar'">
+                        <td *ngIf="tipoTabla === 'firmar'">
                             <span class="fw-bold p-1 rounded"
                             [ngClass]="{'firmado':document.descripcionEstado==='Firmado',
                                         'parcial':document.descripcionEstado==='Firma parcial',

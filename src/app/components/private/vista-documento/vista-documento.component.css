@@ -6,3 +6,15 @@
 .btn-outline-secondary:hover{
   color:black!important ;
 }
+
+@media screen and (max-width: 768px) {
+  .zoom{
+    flex-direction: column!important;
+  }
+  .rotate{
+    flex-direction: column!important;
+  }
+  .paginado{
+    padding-right: 8vw;
+  }  
+}

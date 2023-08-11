@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CorreosService } from 'src/app/services/correos.service';
 import { AuthenticationService } from '../../auth/service/authentication.service';
-
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-envio-correo',
@@ -29,7 +30,9 @@ export class EnvioCorreoComponent implements OnInit {
     public activeModal: NgbActiveModal,
     private correosService: CorreosService,
     private formBuilder: FormBuilder,
-    private authenticationService:AuthenticationService
+    private authenticationService:AuthenticationService,
+    private spinner: NgxSpinnerService,
+    private toaster: ToastrService,
   ) {}
 
   ngOnInit(): void {
@@ -47,13 +50,15 @@ export class EnvioCorreoComponent implements OnInit {
       asunto: 'Aviso de documento',
       seguimiento: `${this.documento.hashDoc}`
     }
+    this.spinner.show();
     this.correosService.notificarDocFirmado(datos).subscribe({
       next: (res:any) => {
-        console.log(res);        
+        this.toaster.warning("El correo se envió exitosamente.");
+        this.spinner.hide()        
       },
       error: (error:any) => {
-        console.log(error);
-
+        this.toaster.warning("Hubo un error en el envío del correo.");
+        this.spinner.hide()  
       }
     });
     this.activeModal.close({estado:true});

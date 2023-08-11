@@ -21,20 +21,19 @@ import { Location } from '@angular/common';
 })
 
 
-
 export class VistaDocumentoComponent implements OnInit {
-  archivoFirmar:string = '';
-  idDoc!:number;
+  archivoFirmar: string = '';
+  idDoc!: number;
   modalRef!: NgbModalRef;
-  zoom:number=1
-  rotation:number=0
-  currentPage:number=1
-  totalPages:number=1
-  fileName:string=""
-  currentUser:any=""
-  page!:any
+  zoom: number = 1
+  rotation: number = 0
+  currentPage: number = 1
+  totalPages: number = 1
+  fileName: string = ""
+  currentUser: any = ""
+  page!: any
   pdfMake = pdfFonts.pdfMake.vfs;
-  firmante:any;
+  firmante:any
 
   constructor(
     private comunesServices: ComunesService,
@@ -44,7 +43,7 @@ export class VistaDocumentoComponent implements OnInit {
     private toaster: ToastrService,
     private router: Router,
     private modalService: NgbModal,
-    private authenticationService:AuthenticationService,
+    private authenticationService: AuthenticationService,
     private location: Location
   ) {
 
@@ -52,7 +51,7 @@ export class VistaDocumentoComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.authenticationService.currentUserValue;
-    this.route.params.subscribe((params:any) => {
+    this.route.params.subscribe((params: any) => {
       console.log(params);
       console.log(params["id"]);
       this.idDoc = params["id"];
@@ -64,72 +63,71 @@ export class VistaDocumentoComponent implements OnInit {
     this.location.back();
   }
 
-  rotate():void{
-    this.rotation+=90
+  rotate(): void {
+    this.rotation += 90
   }
 
-  zoomIn():void{
+  zoomIn(): void {
     this.zoom += 0.25
   }
 
-  zoomOut():void{
+  zoomOut(): void {
     this.zoom > 0.25 ? this.zoom -= 0.25 : this.zoom;
   }
-  async obtenerPath(id:number) {
+  async obtenerPath(id: number) {
     await this.spinner.show();
     this.documentosService.listaDocId(id).subscribe({
-      next: async (res:any) => {
+      next: async (res: any) => {
         console.log(res);
         if (!res.documento) {
           await this.spinner.hide();
           this.router.navigate(["consulta-documento"]);
           this.toaster.warning("No se encontró el documento.");
-          return ;
+          return;
         }
-        if (res.documento.data[0].estado == 1 && !res.documento.data[0].archivoFirmado) {
-          this.fileName=res.documento.data[0].archivo;
+        this.firmante = res.documento.data[0].firmantes?.filter((f: any) => f.correo === this.currentUser.email)
+        console.log(this.firmante)
+        if (res.documento.data[0].estado === 1  && !res.documento.data[0].archivoFirmado) {
+          this.fileName = res.documento.data[0].archivo;
           this.documento = res.documento.data[0];
           this.obtenerPathS3(`Cargas/Documentos/${res.documento.data[0].archivo}`)
-          this.firmante=this.documento.firmantes.filter((f:any)=>f.correo===this.currentUser.email)[0]
-          console.log(this.firmante)
-          
         } else {
+          this.documento = res.documento.data[0];
           this.obtenerPathS3(res.documento.data[0].archivoFirmado);
         }
-
       },
-      error: async (error:any) => {
+      error: async (error: any) => {
         await this.spinner.hide();
         console.error(error);
       }
     });
   }
-  documento:any;
-  async obtenerPathS3(archivo:any) {
+  documento: any;
+  async obtenerPathS3(archivo: any) {
     console.log(archivo);
-    const fileData:any = {
+    const fileData: any = {
       key: archivo,
       metodo: 'get'
     }
-    let resultado:any;
+    let resultado: any;
     try {
       resultado = await this.comunesServices.getSignedUrl(fileData).toPromise();
       console.log(resultado);
       this.archivoFirmar = resultado.message;
       this.toaster.success("Documento cargado correctamente!");
       await this.spinner.hide();
-    } catch (error:any) {
+    } catch (error: any) {
       console.log(error);
       await this.spinner.hide();
     }
   }
 
-  async descargarArchivo(archivo:any){
-    const fileData:any = {
+  async descargarArchivo(archivo: any) {
+    const fileData: any = {
       key: `Cargas/Documentos/${archivo}`,
       metodo: 'get'
     }
-    const resultado:any = await this.comunesServices.getSignedUrl(fileData).toPromise();
+    const resultado: any = await this.comunesServices.getSignedUrl(fileData).toPromise();
     const link = document.createElement('a');
     link.href = resultado.message;
     link.download = fileData.key.split('/')[fileData.key.split('/').length - 1];
@@ -138,17 +136,17 @@ export class VistaDocumentoComponent implements OnInit {
   }
 
   modalFirmar() {
-    this.modalRef = this.modalService.open(ConfirmacionFirmaDocumentoComponent, {backdrop: 'static', size: 'lg'});
+    this.modalRef = this.modalService.open(ConfirmacionFirmaDocumentoComponent, { backdrop: 'static', size: 'lg' });
     this.modalRef.componentInstance.key = `Cargas/Documentos/${this.fileName}`;
     this.modalRef.componentInstance.documento = this.documento;
   }
   callBackFn(pdf: PDFDocumentProxy) {
-    this.totalPages=pdf._pdfInfo.numPages
+    this.totalPages = pdf._pdfInfo.numPages
     console.log(pdf._pdfInfo.numPages)
- }
+  }
 
-  pasarPagina():void{
-    this.currentPage < this.totalPages ? this.currentPage+=1 : this.currentPage=1
+  pasarPagina(): void {
+    this.currentPage < this.totalPages ? this.currentPage += 1 : this.currentPage = 1
   }
 }
 
