@@ -28,8 +28,11 @@ export class DocumentosService {
 
   documentosPendientes(estado:any, responsable:any): Observable<any[]>{
     console.log(estado,responsable)
-    return this.http.get<any>(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/documentosPendientes?estado=${estado}&responsable=${responsable}`);
+    return this.http.get<any>(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/pendientes?responsable=${responsable}`);
   }
+  
+
+
 
   // a la nueva db
 
