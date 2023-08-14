@@ -24,7 +24,6 @@ export class HeaderComponent {
   modalRef!:NgbModalRef
   newNotifications!:any // luego modificar nombres 
 
-
   constructor(
     private authenticationService:AuthenticationService,
     private modalService:NgbModal,
@@ -80,8 +79,8 @@ export class HeaderComponent {
         {
           next: async (res:any) => {
               console.log(res);
-              this.documentosService.setDocPendientes(res.docs.data)
-              this.notifications+=res.docs.data.length
+              this.documentosService.setDocPendientes(res.docs)
+              this.notifications+=res.docs.length
               await this.spinner.hide();
               this.toastrService.warning(`Tienes un total de ${res.docs.total} documentos pendientes por firmar`);
           },

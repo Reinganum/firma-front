@@ -9,7 +9,7 @@ import { ComunesService } from 'src/app/services/comunes.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CorreosService } from 'src/app/services/correos.service';
 import { FirmantesService } from 'src/app/services/firmantes.service';
-
+import { UsuariosService } from 'src/app/services/usuarios.service';
 
 @Component({
   selector: 'app-confirmacion-firma-documento',
@@ -33,19 +33,27 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
   userInfo: any = {}
   @Input() documento: any;
   @Input() key: any;
-  @Input() firmanteExterno: any;
+  @Input() datosFirmante: any;
   userKnown: boolean = true;
   infoFirmante:any={}
 
   ngOnInit(): void {
-    if(this.authenticationService.currentUserValue){
-      this.userInfo = this.authenticationService.currentUserValue;
-      this.infoFirmante=this.documento.firmantes.filter((firmante:any)=>firmante.correo===this.userInfo.email)[0]
-    } else {
-      this.infoFirmante.firstName=this.firmanteExterno[0].nombres
-      this.infoFirmante.rut=this.firmanteExterno[0].rut
-      this.infoFirmante.email=this.firmanteExterno[0].correo
-    }
+    console.log(this.datosFirmante)
+    console.log(this.documento)
+  }
+
+  async getFirmante(){
+    this.spinner.show()
+    this.firmantesService.getFirmante(this.authenticationService.currentUserValue.email).subscribe({
+      next: async (res) => {
+        console.log(res);
+        await this.spinner.hide();
+      },
+      error: async (error) => {
+        console.log(error);
+        await this.spinner.hide();
+      }
+    });
   }
 
   async confirmar() {
@@ -53,7 +61,7 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
     console.log(firmantes)
     let firma: boolean;
     let valida: any = firmantes.map((firmante: any, i: any) => {
-      if (firmante.correo == this.userInfo.email) {
+      if (firmante.correo == this.datosFirmante.correo) {
         firmante.firmo = true;
         firma = true;
         return true;
@@ -68,15 +76,15 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
     let estadoDoc = this.setEstadoDoc(firmantes)
     console.log(valida)
     let datosFirmante = firmantes.filter((firmante: any) => {
-      return firmante.correo == this.userInfo.email
+      return firmante.correo == this.datosFirmante.correo
     })
     console.log(datosFirmante)
     const dataFirmante = {
       firmante: {
         firmo: 1
       },
-      idDoc:this.documento.id,
-      idFir: datosFirmante[0].idFirmante
+      idDoc:this.documento.idDoc?this.documento.idDoc:this.documento.id,
+      idFir: this.datosFirmante.id
     }
     await this.spinner.show();
     console.log(dataFirmante);
@@ -208,7 +216,6 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
       }
     });
   }
-
 
   setEstadoDoc(firmantes: any) {
     console.log(firmantes)

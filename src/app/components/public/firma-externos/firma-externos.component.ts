@@ -14,6 +14,7 @@ import { CanvasElement } from 'pdfmake/interfaces';
 import { AuthenticationService } from '../../auth/service/authentication.service';
 import { Location } from '@angular/common';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { FirmantesService } from 'src/app/services/firmantes.service';
 
 
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
@@ -39,8 +40,8 @@ export class FirmaExternosComponent implements OnInit {
   token!: any;
   esFirmante=false;
   nombre=""
-  rut!:any
- 
+  email!:any
+  datosFirmante!:any
   firmanteExterno=[{firmo:0}]
 
   constructor(
@@ -54,7 +55,8 @@ export class FirmaExternosComponent implements OnInit {
     private modalService: NgbModal,
     private authenticationService: AuthenticationService,
     private location: Location,
-    private jwtHelper: JwtHelperService
+    private jwtHelper: JwtHelperService,
+    private firmantesService:FirmantesService
   ) {
 
   }
@@ -67,7 +69,8 @@ export class FirmaExternosComponent implements OnInit {
       this.idDoc = params["id"];
       const token=this.jwtHelper.decodeToken(this.token)
       this.nombre=token.data.nombre
-      this.rut=token.data.rut
+      this.email=token.data.email
+      this.getFirmante(this.email)
       localStorage.setItem('tokenUrl', this.token);
       try {
         this.userService.verificarToken(this.token).subscribe({
@@ -90,6 +93,21 @@ export class FirmaExternosComponent implements OnInit {
         return;
       }
     })
+  }
+
+  getFirmante(email:any) {
+    this.spinner.show()
+    this.firmantesService.getFirmante(email).subscribe({
+      next: (res:any) => {
+        console.log(res.firmante);
+        this.datosFirmante=res.firmante
+        this.spinner.hide()
+      },
+      error: (error) => {
+        console.log(error);
+        this.spinner.hide()
+      }
+    });
   }
 
   volver() {
@@ -121,7 +139,7 @@ export class FirmaExternosComponent implements OnInit {
         this.obtenerPathS3(`Cargas/Documentos/${res.documento.data[0].archivo}`)
         this.fileName=res.documento.data[0].archivo;
         this.documento = res.documento.data[0];
-        this.firmanteExterno=this.documento.firmantes.filter((f:any)=>f.rut=='19585125-5')
+        this.firmanteExterno=this.documento.firmantes.filter((f:any)=>f.correo==this.email)
         console.log(this.firmanteExterno)
         console.log(res)
       },
@@ -165,7 +183,7 @@ export class FirmaExternosComponent implements OnInit {
   modalFirmar(){
     this.modalRef=this.modalService.open(ConfirmacionFirmaDocumentoComponent,{backdrop:'static',size:'md'});
     this.modalRef.componentInstance.documento = this.documento;
-    this.modalRef.componentInstance.firmanteExterno=this.firmanteExterno
+    this.modalRef.componentInstance.datosFirmante=this.datosFirmante
     this.modalRef.result.then((res)=>{
       if(res.estado){
         this.modalRef.close();

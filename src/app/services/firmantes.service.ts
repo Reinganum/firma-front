@@ -15,4 +15,8 @@ export class FirmantesService {
     const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
     return this.http.put(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/editarFirmante`, body, {headers})
   }
+
+  getFirmante(email:any): Observable<any[]> {
+    return this.http.get<any>(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/getFirmante?email=${email}`);
+  }
 }
