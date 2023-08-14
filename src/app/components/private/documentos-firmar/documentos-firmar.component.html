@@ -114,7 +114,7 @@
                         <td><mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(document) : null" [checked]="selection.isSelected(document)"></mat-checkbox></td>
                         <td>
                             <div class="d-flex flex-row justify-content-center align-items-center" style="margin-top: 0.5rem;">
-                                {{convertDateForTable(document.fecha)}}
+                                <div>{{convertDateForTable(document.fecha)}}</div>
                             </div>
                         </td>
                         <td class="text-left">
@@ -135,7 +135,7 @@
                             <span class="fw-bold p-1 rounded"
                             [ngClass]="{'firmado':document.descripcionEstado==='Firmado',
                                         'parcial':document.descripcionEstado==='Firma parcial',
-                                        'rechazado':document.descripcionEstado==='Rechazado'}">
+                                        'rechazado':document.descripcionEstado==='No Firmada'}">
                                         {{document.descripcionEstado}}
                             </span>
                         </td>

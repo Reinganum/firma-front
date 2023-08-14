@@ -52,7 +52,7 @@
       </div>
   </div>
   <div class="row justify-content-left">
-    <div class="d-flex justify-content-center my-2" *ngIf="estadoFirmante[0].firmo===0">
+    <div class="d-flex justify-content-center my-2" *ngIf="firmanteExterno[0]?.firmo===0">
         <button class="btn btn-primary btn-main mx-2 py-2" (click)="modalFirmar()" style="background-color: #0B58A4 !important;">
             <img class="px-3" src="../../../../assets/img/firma_btn.svg">Firmar
         </button>
@@ -60,11 +60,11 @@
             <span class="fw-bold mx-2">X</span>Cancelar
         </button>
     </div>
-    <div class="d-flex flex-column justify-content-center my-2" *ngIf="estadoFirmante[0].firmo===1">
-      <h1 class="text-center">Ya has firmado el documento</h1>
+    <div class="d-flex flex-column justify-content-center my-2" *ngIf="firmanteExterno[0]?.firmo===1">
+      <h1 class="text-center">Ya ha firmado el documento</h1>
     </div>
-    <div class="d-flex flex-column justify-content-center my-2" *ngIf="estadoFirmante.length===0">
-      <h1 class="text-center">No figuras como firmante en la lista del documento</h1>
+    <div class="d-flex flex-column justify-content-center my-2" *ngIf="firmanteExterno.length===0">
+      <h1 class="text-center">No figura como firmante del documento</h1>
     </div>
 </div>
 </div>

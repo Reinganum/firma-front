@@ -27,7 +27,6 @@ const routes: Routes = [
     PdfViewerModule,
     RouterModule.forChild(routes),
     MaterialModule,
-    JwtModule,
     HeaderModule,
     FooterModule,
     CoreDirectivesModule

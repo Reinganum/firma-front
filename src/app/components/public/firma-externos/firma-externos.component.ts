@@ -41,7 +41,7 @@ export class FirmaExternosComponent implements OnInit {
   nombre=""
   rut!:any
  
-  estadoFirmante=[{firmo:0}]
+  firmanteExterno=[{firmo:0}]
 
   constructor(
     private comunesServices: ComunesService,
@@ -121,7 +121,8 @@ export class FirmaExternosComponent implements OnInit {
         this.obtenerPathS3(`Cargas/Documentos/${res.documento.data[0].archivo}`)
         this.fileName=res.documento.data[0].archivo;
         this.documento = res.documento.data[0];
-        // this.estadoFirmante=this.documento.firmantes.filter((f:any)=>f.rut==this.rut)
+        this.firmanteExterno=this.documento.firmantes.filter((f:any)=>f.rut=='19585125-5')
+        console.log(this.firmanteExterno)
         console.log(res)
       },
       error: async (error: any) => {
@@ -163,7 +164,8 @@ export class FirmaExternosComponent implements OnInit {
 
   modalFirmar(){
     this.modalRef=this.modalService.open(ConfirmacionFirmaDocumentoComponent,{backdrop:'static',size:'md'});
-    this.modalRef.componentInstance.documento = this.idDoc;
+    this.modalRef.componentInstance.documento = this.documento;
+    this.modalRef.componentInstance.firmanteExterno=this.firmanteExterno
     this.modalRef.result.then((res)=>{
       if(res.estado){
         this.modalRef.close();

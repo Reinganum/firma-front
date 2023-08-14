@@ -33,23 +33,24 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
   userInfo: any = {}
   @Input() documento: any;
   @Input() key: any;
+  @Input() firmanteExterno: any;
   userKnown: boolean = true;
-  infoFirmante!:any
+  infoFirmante:any={}
 
   ngOnInit(): void {
-    this.userInfo = this.authenticationService.currentUserValue;
-    console.log(this.documento);
-    this.infoFirmante=this.documento.firmantes.filter((firmante:any)=>firmante.correo===this.userInfo.email)[0]
-    console.log(this.infoFirmante)
+    if(this.authenticationService.currentUserValue){
+      this.userInfo = this.authenticationService.currentUserValue;
+      this.infoFirmante=this.documento.firmantes.filter((firmante:any)=>firmante.correo===this.userInfo.email)[0]
+    } else {
+      this.infoFirmante.firstName=this.firmanteExterno[0].nombres
+      this.infoFirmante.rut=this.firmanteExterno[0].rut
+      this.infoFirmante.email=this.firmanteExterno[0].correo
+    }
   }
 
   async confirmar() {
     let firmantes: any = this.documento?.firmantes;
-    // try {
-    //   firmantes = JSON.parse(`[${firmantes}]`);
-    // } catch (error: any) {
-    //   console.error('Error al parsear el JSON:', error.message);
-    // }
+    console.log(firmantes)
     let firma: boolean;
     let valida: any = firmantes.map((firmante: any, i: any) => {
       if (firmante.correo == this.userInfo.email) {
@@ -72,10 +73,10 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
     console.log(datosFirmante)
     const dataFirmante = {
       firmante: {
-        id: datosFirmante[0].idFirmante,
         firmo: 1
       },
-      docId:this.documento.id
+      idDoc:this.documento.idDoc,
+      idFir: datosFirmante[0].idFirmante
     }
     await this.spinner.show();
     this.editarFirmante(dataFirmante)
@@ -208,19 +209,9 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
 
 
   setEstadoDoc(firmantes: any) {
-    console.log("FIRMANTES EN SET ESTADO DOC")
     console.log(firmantes)
-    if (firmantes.length === 1) return 4;
-    let countFalse = 0;
-    for (let firmante of firmantes) {
-      if (firmante.firmo === false || firmante.firmo === null || firmante.firmo === 0) {
-        countFalse++;
-        if (countFalse > 1) {
-          return 3;
-        }
-      }
-    }
-    return 4;
+    let firmasFaltantes=firmantes.filter((f:any)=>f.firmo===false||f.firmo===null||f.firmo===0||f.firmo==='')
+    return firmasFaltantes.length > 0 ? 3 : 4
   }
 }
 

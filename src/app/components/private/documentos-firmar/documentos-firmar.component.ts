@@ -74,7 +74,7 @@ export class DocumentosFirmarComponent implements OnInit {
       this.tipoTabla = 'firmar';
       this.estadoDoc = 1;
     } else if (rutaActual?.includes('docsFirmados')) {
-      this.estadoDoc = 2;
+      this.estadoDoc = 4;
       console.log("docsFirmados");
       this.tipoTabla = 'firmados';
       this.documentData = [
@@ -84,8 +84,7 @@ export class DocumentosFirmarComponent implements OnInit {
         { icon: "../assets/img/opcion_tabla.svg", nombre: "Opciones"   }
       ]
     }
-    let documentos = this.obtenerDocumentos(null, '', this.paginador.pageIndex, this.paginador.pageSize | this.pageSize);
-    console.log(documentos)
+    this.obtenerDocumentos(null, '', this.paginador.pageIndex, this.paginador.pageSize | this.pageSize);
     this.filtrosForm = this.formBuilder.group({
       fechaDoc: [null],
       origen: [null],
@@ -435,16 +434,8 @@ export class DocumentosFirmarComponent implements OnInit {
 
 
   setEstadoDoc(firmantes: any) {
-    if (firmantes.length === 1) return 4;
-    let countFalse = 0;
-    for (let firmante of firmantes) {
-      if (firmante.firmo === false || firmante.firmo === null || firmante.firmo === 0) {
-        countFalse++;
-        if (countFalse >= 1) {
-          return 3;
-        }
-      }
-    }
-    return 4;
+    console.log(firmantes)
+    let firmasFaltantes=firmantes.filter((f:any)=>f.firmo===false || f.firmo===null)
+    return firmasFaltantes.length > 0 ? 3 : 4
   }
 }
