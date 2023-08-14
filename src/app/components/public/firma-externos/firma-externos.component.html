@@ -52,7 +52,8 @@
       </div>
   </div>
   <div class="row justify-content-left">
-    <div class="d-flex justify-content-center my-2" *ngIf="firmanteExterno[0]?.firmo===0">
+    <div class="d-flex justify-content-center my-2"
+       *ngIf="(firmanteExterno.length>0 && (firmanteExterno[0]?.firmo===0 || firmanteExterno[0]?.firmo===null))">
         <button class="btn btn-primary btn-main mx-2 py-2" (click)="modalFirmar()" style="background-color: #0B58A4 !important;">
             <img class="px-3" src="../../../../assets/img/firma_btn.svg">Firmar
         </button>

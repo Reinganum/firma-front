@@ -17,6 +17,7 @@ import { EnvioCorreoComponent } from '../../modals/envio-correo/envio-correo.com
 import { SelectionModel } from '@angular/cdk/collections';
 import { FirmantesService } from 'src/app/services/firmantes.service';
 import { ComunesService } from 'src/app/services/comunes.service';
+import { UsuariosService } from 'src/app/services/usuarios.service';
 
 @Component({
   selector: 'app-documentos-firmar',
@@ -49,7 +50,7 @@ export class DocumentosFirmarComponent implements OnInit {
     private formBuilder: FormBuilder,
     private correosService: CorreosService,
     private firmantesService: FirmantesService,
-    private comunesServices: ComunesService
+    private comunesServices: ComunesService,
   ) {
     this.filtrosForm = this.formBuilder.group({
       fechaDoc: [null],
@@ -90,6 +91,7 @@ export class DocumentosFirmarComponent implements OnInit {
       origen: [null],
       fechaComunicacion: [null],
     });
+    this.getFirmante()
   }
 
   ngAfterViewInit() {
@@ -173,8 +175,8 @@ export class DocumentosFirmarComponent implements OnInit {
               )*/
               console.log(res);
               this.documentList = res.listaDocs.data;
-              this.datosFirmante = this.documentList[0].firmantes.filter((firmante: any) => firmante.correo === this.currentUser.email)[0]
-              console.log(this.documentList);
+              //this.datosFirmante = this.documentList[0].firmantes.filter((firmante: any) => firmante.correo === this.currentUser.email)[0]
+              //console.log(this.datosFirmante)
               this.totalFilas = res.listaDocs.total;
               this.dataSource = new MatTableDataSource(this.documentList);
               this.tag = false;
@@ -200,6 +202,22 @@ export class DocumentosFirmarComponent implements OnInit {
       }
       console.log(error);
     }
+
+  }
+
+  getFirmante() {
+    this.spinner.show()
+    this.firmantesService.getFirmante(this.currentUser.email).subscribe({
+      next: (res:any) => {
+        console.log(res.firmante);
+        this.datosFirmante=res.firmante
+        this.spinner.hide()
+      },
+      error: (error) => {
+        console.log(error);
+        this.spinner.hide()
+      }
+    });
   }
 
   vistaPrevia(documento: any) {
@@ -209,6 +227,7 @@ export class DocumentosFirmarComponent implements OnInit {
   showModal(documento: any) {
     this.modalRef = this.modalService.open(ConfirmacionFirmaDocumentoComponent, { backdrop: 'static', size: 'md' });
     this.modalRef.componentInstance.documento = documento;
+    this.modalRef.componentInstance.datosFirmante = this.datosFirmante
     this.modalRef.result.then((res) => {
       if (res.estado) {
         this.modalRef.close();
@@ -313,10 +332,10 @@ export class DocumentosFirmarComponent implements OnInit {
         })
         const dataFirmante = {
           firmante: {
-            id: firmante[0].idFirmante,
             firmo: 1
           },
-          docId: document.id
+          idDoc: document.id,
+          idFir: firmante[0].idFirmante
         }
         this.spinner.show();
         this.editarFirmante(dataFirmante)
@@ -425,17 +444,17 @@ export class DocumentosFirmarComponent implements OnInit {
     this.documentosService.crearNotificacion(datos).subscribe({
       next: (res: any) => {
         console.log(res);
+        this.router.navigate([`private/docsFirmados`]);
       },
       error: (error: any) => {
         console.log(error);
       }
     });
   }
-
-
+  
   setEstadoDoc(firmantes: any) {
     console.log(firmantes)
-    let firmasFaltantes=firmantes.filter((f:any)=>f.firmo===false || f.firmo===null)
+    let firmasFaltantes=firmantes.filter((f:any)=>f.firmo===false||f.firmo===null||f.firmo===0||f.firmo==='')
     return firmasFaltantes.length > 0 ? 3 : 4
   }
 }
