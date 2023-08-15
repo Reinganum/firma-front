@@ -8,7 +8,7 @@
         <h4 class="text-center py-2">¿Estas seguro que deseas firmar el documento <span class="fw-bold">Declaración Jurada Participante?</span></h4>
         <div *ngIf="userKnown; else userForm">
         <div class="row border border-light">
-            <div class="col-2 px-4">
+            <div class="col-3 px-4">
                 <ul>
                     <li><p>Nombre:</p></li>
                     <li><p>RUT:</p></li>
@@ -20,7 +20,7 @@
                 <ul>
                     <li><p>{{datosFirmante?.nombres}} {{datosFirmante?.apellidos}}</p></li>
                     <li><p>{{datosFirmante?.rut ? datosFirmante.rut : "Sin registro"}}</p></li>
-                    <li><p>{{datosFirmante?.correo}}</p></li>
+                    <li><p>{{datosFirmante?.correo? datosFirmante?.correo:"Sin registro"}}</p></li>
                     <li><p>{{datosFirmante?.telefono ? datosFirmante.telefono : "Sin registro"}}</p></li>
                 </ul>
             </div>

@@ -1,31 +1,51 @@
 <div class="container">
     <div class="modal-body">
-        <div class="d-flex mt-5 flex-column justify-content-center" >
-            <h3 class="fw-bold">Tiene {{docsPendientes.length}} {{docsPendientes.length>1 || 
+        <div class="d-flex flex-row justify-content-center mb-2" >
+            <img class="p-3 rounded" src="../../../../assets/img/notifications_active.svg" style="background-color: #c9ddf3;">
+        </div>
+        <div class="d-flex flex-column justify-content-center" >
+            <h3 class="fw-bold text-center">Tiene {{docsPendientes.length}} {{docsPendientes.length>1 || 
                 docsPendientes.length===0?"archivos pendientes por firmar":"archivo pendiente por firmar"}}</h3>
             <div style="max-height: 30vh !important;overflow-y: scroll !important;">
                 <ul>
                     <li *ngFor="let doc of docsPendientes" class="card p-1 card-shadow">
-                        {{doc.archivo}}   
+                        <div class="d-flex flex-row w-100">
+                            <div class="d-flex align-items-center px-2">
+                                <img class="p-1 rounded pendiente" src="../../../../assets/img/pending.svg">
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <p class="fw-bold">{{doc.archivo}}</p>
+                            </div>
+                        </div> 
                     </li>
                 </ul>
             </div>
-            <h3 *ngIf="mensajesNotificacion.length>0;else noNotis" class="fw-bold">Sus últimas notificaciones:</h3>
+            <h3 *ngIf="mensajesNotificacion.length>0;else noNotis" class="fw-bold text-center">Sus últimas notificaciones:</h3>
             <ng-template #noNotis>
-                <h3 class="fw-bold">No tiene nuevas notificaciones</h3>
+                <h3 class="fw-bold text-center">No tiene nuevas notificaciones</h3>
             </ng-template>
             <div style="max-height: 20vh !important;overflow-y: scroll !important;">
                 <ul>
-                    <li *ngFor="let mensaje of mensajesNotificacion" class="card p-1 card-shadow">
-                        <p>{{mensaje}}</p>
+                    <li *ngFor="let mensaje of mensajesNotificacion; let i=index" class="card shadow p-1 bg-white rounded">
+                        <div class="d-flex flex-row w-100">
+                            <div class="d-flex align-items-center px-2">
+                                <img *ngIf="mensaje.tipo==='nuevaFirma';else nuevoDoc" class="p-1 rounded firma" src="../../../../assets/img/sign.svg">
+                                <ng-template #nuevoDoc>
+                                    <img class="p-1 rounded nuevo-doc" src="../../../../assets/img/note_add.svg">
+                                </ng-template>
+                            </div>
+                            <div class="d-flex">
+                                <p>{{mensaje.msg}}</p>
+                            </div>
+                        </div>
                     </li>
                 </ul>
             </div>
             <div class="row justify-content-end py-5">
                 <div class="d-flex flex-row-reverse">
-                    <button class="btn btn-primary btn-main mx-2 py-2" [routerLink]="['/private/docsFirmar']" (click)="activeModal.close({ estado: false})" style="margin-right: -12px !important;background-color: #0B58A4 !important;">
+                    <button *ngIf="docsPendientes.length>0" class="btn btn-primary btn-main mx-2 py-2" [routerLink]="['/private/docsFirmar']" (click)="activeModal.close({ estado: false})" style="margin-right: -12px !important;background-color: #0B58A4 !important;">
                         <img class="px-3" src="../../../../assets/img/firma_btn.svg" >Ir a firmar</button>
-                    <button class="btn btn-outline-secondary mx-2" style="background-color: transparent !important;" (click)="activeModal.close({ estado: false})">
+                    <button class="btn btn-outline-secondary mx-2" style="background-color: transparent !important;color: rgb(62, 60, 60)!important;" (click)="activeModal.close({ estado: false})">
                     <span class="fw-bold mx-2">X</span>Cancelar</button>
                 </div>
             </div>

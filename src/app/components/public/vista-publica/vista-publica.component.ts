@@ -104,7 +104,7 @@ export class VistaPublicaComponent implements OnInit {
 					{
 						columnDef: 'Estado',
 						header: 'Estado',
-						cell: (element: Firmante) => `${element.firmo === 0 ? 'Pendiente' : 'Firmado'}`,
+						cell: (element: Firmante) => `${element.firmo === 1 ? 'Firmado' : 'Pendiente'}`,
 					},
 					{
 						columnDef: 'RUT',

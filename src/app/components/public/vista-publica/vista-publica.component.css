@@ -30,3 +30,7 @@ tr.mat-header-row{
   color: #d9605d;
   background-color: rgb(251,234,235);
 }
+
+.cabecera-pdf{
+  height: 4rem!important;
+}

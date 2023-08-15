@@ -5,3 +5,8 @@ li{
 .btn-outline-secondary:hover{
     color: black!important;
 }
+
+.datos-container{
+    flex-grow:1!important;
+    width: 100%!important;
+}

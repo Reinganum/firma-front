@@ -33,10 +33,10 @@
 								<h1 class="fw-bold">Documento: {{fileName}}</h1>
 							</div>
 						</div>
-						<section style="background-color: #e4ebf5 !important; height: 7vh!important;" class="mt-2">
+						<section style="background-color: #e4ebf5 !important;" class="mt-2 align-items-center cabecera-pdf">
 							<div class="row mt-2">
 								<div class="col-2 col-md-2">
-									<div class="d-flex flex-row py-1 flex-wrap align-items-center" style="width:100%">
+									<div class="d-flex flex-row py-1 flex-wrap align-items-center cabecera-pdf" style="width:100%">
 										<div class="d-flex justify-content-center w-100">
 											<p class="fw-bold"><span class="mx-2">{{currentPage}}</span>/<span
 													class="p-2 mx-1"
@@ -46,7 +46,7 @@
 									</div>
 								</div>
 								<div class="col-6 col-md-4">
-									<div class="d-flex flex-row justify-content-center flex-wrap align-items-center"
+									<div class="d-flex flex-row justify-content-center flex-wrap align-items-center cabecera-pdf"
 										style="border-inline:solid 1px grey">
 										<mat-icon (click)="zoomOut()">remove</mat-icon>
 										<button class="mx-2 btn btn-main"
@@ -56,7 +56,7 @@
 									</div>
 								</div>
 								<div class="col-lg-6 col-md-4 col-2">
-									<div class="d-flex justify-content-end me-3">
+									<div class="d-flex justify-content-end me-3 align-items-center cabecera-pdf">
 										<mat-icon matTooltip="Descargar"
 											(click)="descargarArchivo(fileName)">cloud_download</mat-icon>
 									</div>
@@ -93,7 +93,7 @@
 										{{ column.header }}</th>
 									<td mat-cell *matCellDef="let row">
 										<span class="fw-bold p-1 rounded" [ngClass]="{'firmado':row.firmo===1,
-                                  'pendiente':row.firmo===0}">
+                                  'pendiente':(row.firmo===0||row.firmo===null||row.firmo==='')}">
 											{{column.cell(row)}}
 										</span>
 									</td>
