@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class UsuariosService {
-
+  firmante!:any
   constructor(private http: HttpClient) { }
 
   crearUsuario(data: any): Observable<any> {
@@ -51,5 +51,13 @@ export class UsuariosService {
     const body = JSON.stringify(data);
     const headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
     return this.http.put(`${environment.API_DOMAINS.USUARIOS}/usuarios/editarUsuario`, body, { headers })
+  }
+
+  setfirmante(data:any) {
+    this.firmante = data;
+  }
+
+  getfirmante() {
+    return this.firmante;
   }
 }

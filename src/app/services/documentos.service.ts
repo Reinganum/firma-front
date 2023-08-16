@@ -26,8 +26,7 @@ export class DocumentosService {
     return this.http.post(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/pdfFirma`, body, {headers})
   }
 
-  documentosPendientes(estado:any, responsable:any): Observable<any[]>{
-    console.log(estado,responsable)
+  documentosPendientes(responsable:any): Observable<any[]>{
     return this.http.get<any>(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/pendientes?responsable=${responsable}`);
   }
   

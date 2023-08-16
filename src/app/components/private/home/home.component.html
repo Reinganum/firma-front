@@ -9,7 +9,10 @@
                 </div>
                 <div class="d-flex flex-column col-11">
                     <p class="fw-bold">Documentos por firmar</p>
-                    <p>{{totalDocs>0? "Hay " + totalDocs + " documentos pendientes por firmar." : "No hay documentos pendientes por firmar"}}</p>
+                    <p *ngIf="totalDocs!==1;else noDocs">{{totalDocs > 0 ? "Hay " + totalDocs + " documentos pendientes por firmar." : "No hay documentos pendientes por firmar"}}</p>
+                    <ng-template #noDocs>
+                        <p>Hay 1 documento pendiente por firmar.</p>
+                    </ng-template>
                 </div>
             </div>
             <div class="row">
