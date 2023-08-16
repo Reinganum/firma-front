@@ -6,7 +6,7 @@
 				<div class="d-flex">
 					<div *ngIf="currentUser; else desconocido" class="col-12">
 						<h4>¡Te damos la bienvenida!</h4>
-						<h1 class="fw-bold">{{"Juan Pérez"}}</h1>
+						<h1 class="fw-bold">{{currentUser?.firstName + ' ' + currentUser?.lastName}}</h1>
 						<hr>
 					</div>
 				</div>
@@ -65,7 +65,7 @@
 						</section>
 						<div
 							style="background-color: #dedfe2;max-height: 43vh; overflow-y: scroll; margin-bottom: 10vh;">
-							<pdf-viewer (click)="pasarPagina()" (after-load-complete)="callBackFn($event)"
+							<pdf-viewer (click)="pasarPagina()" (after-load-complete)="callBackFn($event)" matTooltip="Haga click sobre el documento para pasar de página"
 								class="iframeFac" [(page)]="currentPage" [rotation]="rotation" [src]="archivoFirmar"
 								[show-all]="false" [zoom]="zoom" [original-size]="true"></pdf-viewer>
 						</div>

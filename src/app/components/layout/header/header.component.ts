@@ -23,6 +23,7 @@ export class HeaderComponent {
   notifications=0
   modalRef!:NgbModalRef
   newNotifications!:any // luego modificar nombres 
+  documentosPendientes!:any
 
   constructor(
     private authenticationService:AuthenticationService,
@@ -38,11 +39,12 @@ export class HeaderComponent {
   
   ngOnInit(): void {
     this.currentUser = this.authenticationService.currentUserValue;
+    console.log(this.currentUser)
     if (this.currentUser) {
       this.userId = localStorage.getItem('userId');
       console.log(this.userId)
-      this.getDocsPendientes(1,this.currentUser.email)
-      this.getNotificaciones(this.currentUser.email)
+      this.getDocsPendientes()
+      this.getNotificaciones()
       if (this.swUpdate.isEnabled) {
         this.swUpdate.available.subscribe(() => {
           if (confirm("Existe una nueva versión del sistema. Aceptar para actualizar")) {
@@ -65,6 +67,7 @@ export class HeaderComponent {
     this.modalRef=this.modalService.open(DocsPendientesComponent,{backdrop:'static',size:'md'});
     this.notifications=0
     this.modalRef.componentInstance.notificaciones = this.newNotifications
+    this.modalRef.componentInstance.docsPendientes = this.documentosPendientes
     this.modalRef.result.then((res)=>{
       if(res.estado){
         this.modalRef.close();
@@ -72,15 +75,16 @@ export class HeaderComponent {
     })
   }
 
-  async getDocsPendientes(estado:any, responsable:any) {
+  async getDocsPendientes() {
     try {
       await this.spinner.show();
-      this.documentosService.documentosPendientes(estado,responsable).subscribe(
+      this.documentosService.documentosPendientes(this.currentUser.email).subscribe(
         {
           next: async (res:any) => {
               console.log(res);
-              this.documentosService.setDocPendientes(res.docs)
-              this.notifications+=res.docs.length
+              this.documentosService.setDocPendientes(res.docs.data)
+              this.documentosPendientes=res.docs.data
+              this.notifications+=res.docs.data.length
               await this.spinner.hide();
               this.toastrService.warning(`Tienes un total de ${res.docs.total} documentos pendientes por firmar`);
           },
@@ -104,10 +108,10 @@ export class HeaderComponent {
     }
   }
 
-  async getNotificaciones(responsable:any){
+  async getNotificaciones(){
     try {
       await this.spinner.show();
-      this.documentosService.getNotificaciones(responsable).subscribe(
+      this.documentosService.getNotificaciones(this.currentUser.email).subscribe(
         {
           next: async (res:any) => {
               console.log(res);

@@ -10,19 +10,18 @@ import { DocumentosService } from 'src/app/services/documentos.service';
   styleUrls: ['./docs-pendientes.component.css'],
 })
 export class DocsPendientesComponent implements OnInit {
-  docsPendientes: any[] = [];
   @Input() notificaciones: any;
+  @Input() docsPendientes: any;
   mensajesNotificacion!:any
 
   constructor(
-    private documentosService:DocumentosService,
     public activeModal: NgbActiveModal,
     private router:Router,
   ) {}
 
 
   ngOnInit() {
-    this.docsPendientes = this.documentosService.getDocsPendientes();
+    console.log(this.docsPendientes)
     this.mensajesNotificacion=this.notificaciones.map((noti:any)=>{
       if(noti.mail_firmante==="1"){
         return {
@@ -32,7 +31,7 @@ export class DocsPendientesComponent implements OnInit {
       } else{ 
         return {
           tipo:"nuevaFirma",
-          msg:`Su documento "${noti.doc_firmado}" ha sido firmado por el usuario ${noti.mail_firmante}`
+          msg:`Su documento "${noti.doc_firmado}" ha sido firmado ${noti.createdAt}`
         }
       }
     })

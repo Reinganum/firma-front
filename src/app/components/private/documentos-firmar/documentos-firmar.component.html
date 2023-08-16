@@ -16,7 +16,7 @@
                         <p>Teléfono:</p>
                     </div> 
                     <div class="fw-bold d-flex flex-column justify-content-center py-1" id="user-data"  style="margin-top: 1%;margin-left:10%; height:80% !important" >
-                        <p>{{datosFirmante?.nombres + " " + datosFirmante?.apellidos}}</p>
+                        <p>{{datosFirmante?.nombreCompleto ? datosFirmante?.nombreCompleto : "Sin registro"}}</p>
                         <p>{{datosFirmante?.rut?datosFirmante.rut: "Sin registro"}}</p>
                         <p>{{datosFirmante?.correo?datosFirmante?.correo: "Sin registro"}}</p>
                         <p>{{datosFirmante?.telefono?datosFirmante?.telefono: "Sin registro"}}</p>
@@ -142,7 +142,7 @@
                         <td>
                             <div class="d-flex justify-content-center">
                                 <a (click)="vistaPrevia(document)"><img class="iconos-options rounded p-1" src="../../../../assets/img/lupa_btn.svg" matTooltip="Revisar"  alt="Vista previa" style="margin-left: 1px !important;"></a>
-                                <a (click)="showModal(document)" *ngIf="tipoTabla === 'firmar'"><img class="mx-1 iconos-options rounded p-1" src="../../../../assets/img/firma_btn.svg" matTooltip="Firmar" ></a>
+                                <a (click)="showModal(document)" *ngIf="(tipoTabla === 'firmar' && document.usuarioFirmo!==true)"><img class="mx-1 iconos-options rounded p-1" src="../../../../assets/img/firma_btn.svg" matTooltip="Firmar" ></a>
                                 <a (click)="showModalCorreo(document)" matTooltip="Enviar" *ngIf="tipoTabla !== 'firmar'"><img class="mx-1 iconos-options rounded" style="padding: 0.48em;" src="../../../../assets/img/fi_mail.svg"></a>
                             </div>
                         </td>

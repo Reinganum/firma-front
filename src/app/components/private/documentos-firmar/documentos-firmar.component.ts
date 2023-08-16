@@ -51,6 +51,7 @@ export class DocumentosFirmarComponent implements OnInit {
     private correosService: CorreosService,
     private firmantesService: FirmantesService,
     private comunesServices: ComunesService,
+    private usuariosService:UsuariosService
   ) {
     this.filtrosForm = this.formBuilder.group({
       fechaDoc: [null],
@@ -173,8 +174,14 @@ export class DocumentosFirmarComponent implements OnInit {
                 "Limit : ", pageLimit,
                 "Offset : ", pageOffset
               )*/
-              console.log(res);
-              this.documentList = res.listaDocs.data;
+              this.documentList = res.listaDocs.data.map((doc:any)=>{
+                if(doc.firmantes.filter((f:any)=>f.correo==this.currentUser.email&&f.firmo===1).length>0){
+                  doc.usuarioFirmo=true
+                  return doc
+                }
+                return doc
+              })
+              console.log(this.documentList)
               //this.datosFirmante = this.documentList[0].firmantes.filter((firmante: any) => firmante.correo === this.currentUser.email)[0]
               //console.log(this.datosFirmante)
               this.totalFilas = res.listaDocs.total;
@@ -210,7 +217,10 @@ export class DocumentosFirmarComponent implements OnInit {
     this.firmantesService.getFirmante(this.currentUser.email).subscribe({
       next: (res:any) => {
         console.log(res.firmante);
+        res.firmante.nombreCompleto=`${res.firmante.nombres?res.firmante.nombres:"(Sin registro)"} ${res.firmante.apellidos?res.firmante.apellidos:"(Sin registro)"}`
         this.datosFirmante=res.firmante
+        this.usuariosService.setfirmante(this.datosFirmante)
+        this.datosFirmante.nombre
         this.spinner.hide()
       },
       error: (error) => {
@@ -417,9 +427,7 @@ export class DocumentosFirmarComponent implements OnInit {
         archivoFirmado: url,
       }
     }
-    if (estadoDoc === 4) {
-      datos.documento.fechaFirma = this.convertDateForDB(Date.now().toString())
-    }
+    
     this.spinner.show();
     this.documentosService.editarDocumento(datos).subscribe({
       next: (res: any) => {

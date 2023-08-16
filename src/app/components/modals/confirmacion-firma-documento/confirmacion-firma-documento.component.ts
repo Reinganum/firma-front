@@ -42,23 +42,8 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
     console.log(this.documento)
   }
 
-  async getFirmante(){
-    this.spinner.show()
-    this.firmantesService.getFirmante(this.authenticationService.currentUserValue.email).subscribe({
-      next: async (res) => {
-        console.log(res);
-        await this.spinner.hide();
-      },
-      error: async (error) => {
-        console.log(error);
-        await this.spinner.hide();
-      }
-    });
-  }
-
   async confirmar() {
     let firmantes: any = this.documento?.firmantes;
-    console.log(firmantes)
     let firma: boolean;
     let valida: any = firmantes.map((firmante: any, i: any) => {
       if (firmante.correo == this.datosFirmante.correo) {
@@ -66,7 +51,6 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
         firma = true;
         return true;
       }
-      firmante.firmo = false;
       return false;
     })
     if (valida.indexOf(true) === -1) {
@@ -92,6 +76,7 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
     console.log(dataFirmante);
     
     this.editarFirmante(dataFirmante)
+    
     this.documentosService.crearPdfFirma({
       key: `Cargas/Documentos/${this.documento.archivo}`,
       firmantes
@@ -158,12 +143,10 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
       documento: {
         estado: estadoDoc,
         id: this.documento.id,
-        archivoFirmado: url,
+        archivoFirmado:url
       }
     }
-    if(estadoDoc===4){
-      datos.documento.fechaFirma="2023-08-10"
-    }
+
     console.log(datos)
     this.spinner.show();
     this.documentosService.editarDocumento(datos).subscribe({
@@ -173,7 +156,7 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
         console.log(res);
         this.spinner.hide();
         this.notificarFirma()
-        this.router.navigate([`private/docsFirmados`]);
+        this.router.navigate([`private/docsFirmar`]);
       },
       error: (error: any) => {
         console.log(error);
