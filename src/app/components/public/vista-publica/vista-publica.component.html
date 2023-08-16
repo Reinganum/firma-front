@@ -6,7 +6,7 @@
 				<div class="d-flex">
 					<div *ngIf="currentUser; else desconocido" class="col-12">
 						<h4>¡Te damos la bienvenida!</h4>
-						<h1 class="fw-bold">{{"Juan Pérez"}}</h1>
+						<h1 class="fw-bold">{{currentUser?.firstName + ' ' + currentUser?.lastName}}</h1>
 						<hr>
 					</div>
 				</div>

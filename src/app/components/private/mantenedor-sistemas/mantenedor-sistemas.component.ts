@@ -81,11 +81,9 @@ export class MantenedorSistemasComponent implements OnInit {
   }
 
   async onEnterDoc(event:any, idMedio:any){
-    console.log(event.target.value)
-    console.log(idMedio)
     const data = {
       tipoDoc: {
-        descripcion:event.target.value,
+        descripcion:event.value,
         disponible:1,
         id:idMedio
       }
@@ -227,9 +225,9 @@ export class MantenedorSistemasComponent implements OnInit {
   extraerIniciales(origen:string){
     const strArr=origen.split(' ');
     if(strArr.length===1){
-      return strArr[0].slice(0,1)
+      return strArr[0].slice(0,1).toUpperCase()
     } else {
-      return strArr[0].slice(0,1)+strArr[1].slice(0,1)
+      return (strArr[0].slice(0,1)+strArr[1].slice(0,1)).toUpperCase()
     }
    }
 }

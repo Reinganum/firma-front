@@ -109,7 +109,7 @@
                     {{medio.me_id}}
                   </td>
                   <td>
-                    {{medio.url?medio.url:"https://gn.vir.0s.cl"}}
+                    {{medio.me_url?medio.me_url:"Sin registro"}}
                   </td>
                   <td>
                     {{medio.api?medio.api:"desarrollo.c4wryyw566zb.us-east-1.rds.amazonaws.co"}}
@@ -168,8 +168,8 @@
                       </tbody>
                     </table>
                     <div class="d-flex w-100" style="height: 50px;" *ngIf="hiddenInput[i].visible">
-                        <input class="doc-input my-2" #docInput (keyup.enter)="onEnterDoc($event,medio.me_id)" type="text" placeholder="Escribe el nombre del documento">
-                          <button class="btn btn-primary btn-main mx-4 my-2" (click)="onEnterDoc($event,medio.me_id)" type="submit">
+                        <input class="doc-input my-2" #docInput (keyup.enter)="onEnterDoc(docInput,medio.me_id)" type="text" placeholder="Escribe el nombre del documento">
+                          <button class="btn btn-primary btn-main mx-4 my-2" (click)="onEnterDoc(docInput,medio.me_id)" type="submit">
                             <mat-icon>add</mat-icon>Confirmar</button>
                           <button class="btn btn-outline-secondary mx-4 my-2" style="background-color: transparent !important;">
                           <span class="fw-bold mx-2">X</span>Cancelar</button>
