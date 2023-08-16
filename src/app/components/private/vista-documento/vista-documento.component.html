@@ -51,20 +51,20 @@
         </div>
     </div>
     <div class="row justify-content-left mb-5">
-        <div class="d-flex justify-content-center my-2" *ngIf="(firmante && firmante?.firmo!==true)">
+        <div class="d-flex justify-content-center my-2" *ngIf="firmante?.firmo!==1&&firmante?.firmo!==true;else yaFirmo">
             <button class="btn btn-primary btn-main mx-2 py-2" (click)="modalFirmar()" style="background-color: #0B58A4 !important;">
                 <img class="px-3" src="../../../../assets/img/firma_btn.svg">Firmar</button>
             <button class="btn btn-outline-secondary mx-2" style="background-color: transparent !important;" (click)="volver()">
                 <span class="fw-bold mx-2">X</span>Cancelar
             </button>
         </div>
-        <div *ngIf="(!firmante || firmante.firmo===1)" class="text-center mb-5">
-          <div>
-            <h1>{{!firmante ? "No figuras en la lista de firmantes":"Ya has firmado este documento."}}</h1>
+        <ng-template #yaFirmo>
+          <div class="d-flex flex-column align-items-center my-2">
+            <h1 class="text-center">Ya has firmado el documento</h1>
+            <button class="btn btn-outline-secondary mx-2 mb-5" style="background-color: transparent !important;width: max-content!important;" (click)="volver()">
+                <span class="fw-bold mx-2">X</span>Cancelar
+            </button>
           </div>
-          <button class="btn btn-outline-secondary mx-2" style="background-color: transparent !important;" (click)="volver()">
-            <span class="fw-bold mx-2">X</span>Volver
-          </button>
-        </div>
+        </ng-template>
   </div>
 </div>

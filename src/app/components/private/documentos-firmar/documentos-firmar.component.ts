@@ -240,7 +240,8 @@ export class DocumentosFirmarComponent implements OnInit {
     this.modalRef.componentInstance.datosFirmante = this.datosFirmante
     this.modalRef.result.then((res) => {
       if (res.estado) {
-        this.modalRef.close();
+        console.log("llamando obtener docs")
+        this.obtenerDocumentos(null, '', this.paginador.pageIndex, this.paginador.pageSize | this.pageSize);
       }
     })
   }
