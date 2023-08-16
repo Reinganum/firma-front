@@ -33,11 +33,11 @@ export class HomeComponent implements OnInit {
   async obtenerDocumentos() {
     try {
       await this.spinner.show();
-      this.documentosService.obtenerDocumentos(this.currentUser.email, 1, null, null, '', '', 0, 5).subscribe(
+      this.documentosService.documentosPendientes(this.currentUser.email).subscribe(
         {
           next: async (res: any) => {
             console.log(res);
-            this.totalDocs = res.listaDocs.total
+            this.totalDocs = res.docs.data.length
             await this.spinner.hide();
           },
           error: async (error: any) => {
