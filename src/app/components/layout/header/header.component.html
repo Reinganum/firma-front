@@ -29,7 +29,7 @@
                 <li *ngIf="currentUser" style="align-self: center;">
                     <div class="d-flex flex-column px-2">
                         <p class="fw-bold">{{currentUser?.firstName}} {{currentUser?.lastName}}</p>
-                        <p>Otic SOFOFA</p>
+                        <p>{{currentUser.tipo===1?'OTIC SOFOFA':'Empresa'}}</p>
                     </div>
                 </li>
                 <li class="nav-item me-3" style="align-self: center;">
