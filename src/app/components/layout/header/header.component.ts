@@ -39,6 +39,7 @@ export class HeaderComponent {
   
   ngOnInit(): void {
     this.currentUser = this.authenticationService.currentUserValue;
+    console.log(this.currentUser)
     if (this.currentUser) {
       this.userId = localStorage.getItem('userId');
       console.log(this.userId)

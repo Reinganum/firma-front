@@ -26,12 +26,9 @@ export class LoginComponent implements OnInit {
 
     async ngOnInit() {
       if (this.authenticationService.isTokenNoValid()) {
-        this._toastrService.show("No hay token guardado")
         localStorage.clear();
         return;
       }
-      let nombre;
-      let correo;
       let token:any = localStorage.getItem('token');
       if (token !== null) {
         this.router.navigate(['/private/home']);
@@ -54,7 +51,7 @@ export class LoginComponent implements OnInit {
               dv: '',
               nombres: user.firstName,
               apellidoP: user.lastName,
-              apellidoM: 'apellido prueba',
+              apellidoM: '',
               tipo: this.verifyEmail(user.email,"sofofa"), // 1 = OTIC - 2 = EXTERNO,
               email: user.email,
               estado:null

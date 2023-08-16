@@ -31,7 +31,7 @@ export class DocsPendientesComponent implements OnInit {
       } else{ 
         return {
           tipo:"nuevaFirma",
-          msg:`Su documento "${noti.doc_firmado}" ha sido firmado por el usuario ${noti.mail_firmante}`
+          msg:`Su documento "${noti.doc_firmado}" ha sido firmado ${noti.createdAt}`
         }
       }
     })

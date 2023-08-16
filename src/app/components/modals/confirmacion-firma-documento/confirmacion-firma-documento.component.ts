@@ -74,7 +74,6 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
     console.log(dataFirmante);
     
     this.editarFirmante(dataFirmante)
-    console.log(firmantes);
     
     this.documentosService.crearPdfFirma({
       key: `Cargas/Documentos/${this.documento.archivo}`,
