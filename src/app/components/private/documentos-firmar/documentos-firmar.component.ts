@@ -427,9 +427,7 @@ export class DocumentosFirmarComponent implements OnInit {
         archivoFirmado: url,
       }
     }
-    if (estadoDoc === 4) {
-      datos.documento.archivoFirmado = url
-    }
+    
     this.spinner.show();
     this.documentosService.editarDocumento(datos).subscribe({
       next: (res: any) => {

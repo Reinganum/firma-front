@@ -51,7 +51,6 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
         firma = true;
         return true;
       }
-      firmante.firmo = false;
       return false;
     })
     if (valida.indexOf(true) === -1) {
@@ -75,6 +74,8 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
     console.log(dataFirmante);
     
     this.editarFirmante(dataFirmante)
+    console.log(firmantes);
+    
     this.documentosService.crearPdfFirma({
       key: `Cargas/Documentos/${this.documento.archivo}`,
       firmantes
@@ -140,12 +141,11 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
     const datos:any = {
       documento: {
         estado: estadoDoc,
-        id: this.documento.id
+        id: this.documento.id,
+        archivoFirmado:url
       }
     }
-    if(estadoDoc===4){
-      datos.documento.archivoFirmado=url
-    }
+
     console.log(datos)
     this.spinner.show();
     this.documentosService.editarDocumento(datos).subscribe({

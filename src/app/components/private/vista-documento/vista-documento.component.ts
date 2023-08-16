@@ -96,6 +96,8 @@ export class VistaDocumentoComponent implements OnInit {
           this.toaster.warning("No se encontró el documento.");
           return;
         }
+        console.log(res.documento.data[0].firmantes);
+        
         this.firmante = res.documento.data[0].firmantes?.filter((f: any) => f.correo === this.currentUser.email)
         console.log(this.firmante)
         if (res.documento.data[0].estado === 1  && !res.documento.data[0].archivoFirmado) {
@@ -107,7 +109,7 @@ export class VistaDocumentoComponent implements OnInit {
           console.log(res.documento.data[0].estado);
           
           this.documento = res.documento.data[0];
-          this.obtenerPathS3(res.documento.data[0].archivoFirmado);
+          this.obtenerPathS3Firm(res.documento.data[0].archivoFirmado);
         }
       },
       error: async (error: any) => {
@@ -117,11 +119,31 @@ export class VistaDocumentoComponent implements OnInit {
     });
   }
   documento: any;
+  async obtenerPathS3Firm(archivo: any) {
+    console.log(archivo);
+    let bucket = window.location.hostname == "localhost" ? 'firma-otic-qa-doc' : "ofe-local-services"
+    const fileData: any = {
+      key: archivo,
+      metodo: 'get',
+      bucket
+    }
+    let resultado: any;
+    try {
+      resultado = await this.comunesServices.getSignedUrl(fileData).toPromise();
+      console.log(resultado);
+      this.archivoFirmar = resultado.message;
+      this.toaster.success("Documento cargado correctamente!");
+      await this.spinner.hide();
+    } catch (error: any) {
+      console.log(error);
+      await this.spinner.hide();
+    }
+  }
   async obtenerPathS3(archivo: any) {
     console.log(archivo);
     const fileData: any = {
       key: archivo,
-      metodo: 'get'
+      metodo: 'get'      
     }
     let resultado: any;
     try {
