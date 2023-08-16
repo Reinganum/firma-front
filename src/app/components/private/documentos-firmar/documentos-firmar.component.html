@@ -16,7 +16,7 @@
                         <p>Teléfono:</p>
                     </div> 
                     <div class="fw-bold d-flex flex-column justify-content-center py-1" id="user-data"  style="margin-top: 1%;margin-left:10%; height:80% !important" >
-                        <p>{{datosFirmante?.nombres + " " + datosFirmante?.apellidos}}</p>
+                        <p>{{datosFirmante?.nombreCompleto ? datosFirmante?.nombreCompleto : "Sin registro"}}</p>
                         <p>{{datosFirmante?.rut?datosFirmante.rut: "Sin registro"}}</p>
                         <p>{{datosFirmante?.correo?datosFirmante?.correo: "Sin registro"}}</p>
                         <p>{{datosFirmante?.telefono?datosFirmante?.telefono: "Sin registro"}}</p>

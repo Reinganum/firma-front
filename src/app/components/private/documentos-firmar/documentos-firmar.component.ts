@@ -216,7 +216,9 @@ export class DocumentosFirmarComponent implements OnInit {
     this.firmantesService.getFirmante(this.currentUser.email).subscribe({
       next: (res:any) => {
         console.log(res.firmante);
+        res.firmante.nombreCompleto=`${res.firmante.nombres?res.firmante.nombres:"(Sin registro)"} ${res.firmante.apellidos?res.firmante.apellidos:"(Sin registro)"}`
         this.datosFirmante=res.firmante
+        this.datosFirmante.nombre
         this.spinner.hide()
       },
       error: (error) => {
