@@ -209,7 +209,7 @@ export class MantenedorUsuariosComponent implements OnInit {
       columnDef: 'RUT',
       header: 'RUT',
       icon:"../assets/img/rut_tabla.svg",
-      cell: (element: any) => `${element.rut}`,
+      cell: (element: any) => `${element.rut?element.rut:'Sin registro'}`,
     },
     {
       columnDef: 'Mail',
@@ -221,13 +221,13 @@ export class MantenedorUsuariosComponent implements OnInit {
       columnDef: 'Cargo',
       header: 'Cargo',
       icon:"../assets/img/origen_tabla.svg",
-      cell: (element: any) => `${element.cargo}`,
+      cell: (element: any) => `${element.cargo?element.cargo:'Sin registro'}`,
     },
     {
       columnDef: 'Clave',
       header: 'Clave',
       icon:"../assets/img/clave_tabla.svg",
-      cell: (element: any) => `${element.clave}`,
+      cell: (element: any) => `${element.clave?element.clave:'Sin registro'}`,
     },
     {
       columnDef: 'Estado',

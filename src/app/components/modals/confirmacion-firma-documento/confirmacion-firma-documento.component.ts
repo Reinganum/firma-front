@@ -140,12 +140,11 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
     const datos:any = {
       documento: {
         estado: estadoDoc,
-        id: this.documento.id,
-        archivoFirmado: url,
+        id: this.documento.id
       }
     }
     if(estadoDoc===4){
-      datos.documento.fechaFirma="2023-08-10"
+      datos.documento.archivoFirmado=url
     }
     console.log(datos)
     this.spinner.show();

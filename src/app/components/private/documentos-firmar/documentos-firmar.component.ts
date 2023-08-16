@@ -428,7 +428,7 @@ export class DocumentosFirmarComponent implements OnInit {
       }
     }
     if (estadoDoc === 4) {
-      datos.documento.fechaFirma = this.convertDateForDB(Date.now().toString())
+      datos.documento.archivoFirmado = url
     }
     this.spinner.show();
     this.documentosService.editarDocumento(datos).subscribe({
