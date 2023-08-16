@@ -11,6 +11,9 @@ import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { AuthenticationService } from '../../auth/service/authentication.service';
 import { Location } from '@angular/common';
+import { FirmantesService } from 'src/app/services/firmantes.service';
+import { UsuariosService } from 'src/app/services/usuarios.service';
+
 
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
@@ -34,8 +37,7 @@ export class VistaDocumentoComponent implements OnInit {
   page!: any
   pdfMake = pdfFonts.pdfMake.vfs;
   firmante:any
-  pdfUrl='../../../../assets/CV.pdf'
-
+  datosFirmante!:any
   constructor(
     private comunesServices: ComunesService,
     private route: ActivatedRoute,
@@ -45,12 +47,20 @@ export class VistaDocumentoComponent implements OnInit {
     private router: Router,
     private modalService: NgbModal,
     private authenticationService: AuthenticationService,
-    private location: Location
+    private location: Location,
+    private firmantesService:FirmantesService,
+    private usuariosService:UsuariosService
   ) {
 
   }
 
   ngOnInit(): void {
+    this.currentUser = this.authenticationService.currentUserValue;
+    this.datosFirmante=this.usuariosService.getfirmante()
+    if(!this.datosFirmante){
+      console.log("no hay datos firmante")
+      this.getFirmante()
+    }
     this.currentUser = this.authenticationService.currentUserValue;
     this.route.params.subscribe((params: any) => {
       console.log(params);
@@ -138,6 +148,7 @@ export class VistaDocumentoComponent implements OnInit {
 
   modalFirmar() {
     this.modalRef = this.modalService.open(ConfirmacionFirmaDocumentoComponent, { backdrop: 'static', size: 'lg' });
+    this.modalRef.componentInstance.datosFirmante=this.datosFirmante
     this.modalRef.componentInstance.key = `Cargas/Documentos/${this.fileName}`;
     this.modalRef.componentInstance.documento = this.documento;
   }
@@ -149,5 +160,24 @@ export class VistaDocumentoComponent implements OnInit {
   pasarPagina(): void {
     this.currentPage < this.totalPages ? this.currentPage += 1 : this.currentPage = 1
   }
+
+  async getFirmante() {
+    this.spinner.show()
+    this.firmantesService.getFirmante(this.currentUser.email).subscribe({
+      next: (res:any) => {
+        console.log(res.firmante);
+        res.firmante.nombreCompleto=`${res.firmante.nombres?res.firmante.nombres:"(Sin registro)"} ${res.firmante.apellidos?res.firmante.apellidos:"(Sin registro)"}`
+        this.datosFirmante=res.firmante
+        this.usuariosService.setfirmante(this.datosFirmante)
+        this.datosFirmante.nombre
+        this.spinner.hide()
+      },
+      error: (error) => {
+        console.log(error);
+        this.spinner.hide()
+      }
+    });
+  }
+
 }
 

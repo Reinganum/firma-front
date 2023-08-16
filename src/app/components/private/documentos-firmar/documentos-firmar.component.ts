@@ -51,6 +51,7 @@ export class DocumentosFirmarComponent implements OnInit {
     private correosService: CorreosService,
     private firmantesService: FirmantesService,
     private comunesServices: ComunesService,
+    private usuariosService:UsuariosService
   ) {
     this.filtrosForm = this.formBuilder.group({
       fechaDoc: [null],
@@ -218,6 +219,7 @@ export class DocumentosFirmarComponent implements OnInit {
         console.log(res.firmante);
         res.firmante.nombreCompleto=`${res.firmante.nombres?res.firmante.nombres:"(Sin registro)"} ${res.firmante.apellidos?res.firmante.apellidos:"(Sin registro)"}`
         this.datosFirmante=res.firmante
+        this.usuariosService.setfirmante(this.datosFirmante)
         this.datosFirmante.nombre
         this.spinner.hide()
       },

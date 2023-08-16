@@ -42,23 +42,8 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
     console.log(this.documento)
   }
 
-  async getFirmante(){
-    this.spinner.show()
-    this.firmantesService.getFirmante(this.authenticationService.currentUserValue.email).subscribe({
-      next: async (res) => {
-        console.log(res);
-        await this.spinner.hide();
-      },
-      error: async (error) => {
-        console.log(error);
-        await this.spinner.hide();
-      }
-    });
-  }
-
   async confirmar() {
     let firmantes: any = this.documento?.firmantes;
-    console.log(firmantes)
     let firma: boolean;
     let valida: any = firmantes.map((firmante: any, i: any) => {
       if (firmante.correo == this.datosFirmante.correo) {
