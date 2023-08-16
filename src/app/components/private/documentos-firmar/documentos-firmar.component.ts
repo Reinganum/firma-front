@@ -173,8 +173,14 @@ export class DocumentosFirmarComponent implements OnInit {
                 "Limit : ", pageLimit,
                 "Offset : ", pageOffset
               )*/
-              console.log(res);
-              this.documentList = res.listaDocs.data;
+              this.documentList = res.listaDocs.data.map((doc:any)=>{
+                if(doc.firmantes.filter((f:any)=>f.correo==this.currentUser.email&&f.firmo===1).length>0){
+                  doc.usuarioFirmo=true
+                  return doc
+                }
+                return doc
+              })
+              console.log(this.documentList)
               //this.datosFirmante = this.documentList[0].firmantes.filter((firmante: any) => firmante.correo === this.currentUser.email)[0]
               //console.log(this.datosFirmante)
               this.totalFilas = res.listaDocs.total;

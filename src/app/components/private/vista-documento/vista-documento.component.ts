@@ -34,6 +34,7 @@ export class VistaDocumentoComponent implements OnInit {
   page!: any
   pdfMake = pdfFonts.pdfMake.vfs;
   firmante:any
+  pdfUrl='../../../../assets/CV.pdf'
 
   constructor(
     private comunesServices: ComunesService,

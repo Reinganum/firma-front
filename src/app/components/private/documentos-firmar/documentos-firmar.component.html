@@ -142,7 +142,7 @@
                         <td>
                             <div class="d-flex justify-content-center">
                                 <a (click)="vistaPrevia(document)"><img class="iconos-options rounded p-1" src="../../../../assets/img/lupa_btn.svg" matTooltip="Revisar"  alt="Vista previa" style="margin-left: 1px !important;"></a>
-                                <a (click)="showModal(document)" *ngIf="tipoTabla === 'firmar'"><img class="mx-1 iconos-options rounded p-1" src="../../../../assets/img/firma_btn.svg" matTooltip="Firmar" ></a>
+                                <a (click)="showModal(document)" *ngIf="(tipoTabla === 'firmar' && document.usuarioFirmo!==true)"><img class="mx-1 iconos-options rounded p-1" src="../../../../assets/img/firma_btn.svg" matTooltip="Firmar" ></a>
                                 <a (click)="showModalCorreo(document)" matTooltip="Enviar" *ngIf="tipoTabla !== 'firmar'"><img class="mx-1 iconos-options rounded" style="padding: 0.48em;" src="../../../../assets/img/fi_mail.svg"></a>
                             </div>
                         </td>

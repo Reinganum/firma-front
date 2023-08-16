@@ -10,19 +10,18 @@ import { DocumentosService } from 'src/app/services/documentos.service';
   styleUrls: ['./docs-pendientes.component.css'],
 })
 export class DocsPendientesComponent implements OnInit {
-  docsPendientes: any[] = [];
   @Input() notificaciones: any;
+  @Input() docsPendientes: any;
   mensajesNotificacion!:any
 
   constructor(
-    private documentosService:DocumentosService,
     public activeModal: NgbActiveModal,
     private router:Router,
   ) {}
 
 
   ngOnInit() {
-    this.docsPendientes = this.documentosService.getDocsPendientes();
+    console.log(this.docsPendientes)
     this.mensajesNotificacion=this.notificaciones.map((noti:any)=>{
       if(noti.mail_firmante==="1"){
         return {

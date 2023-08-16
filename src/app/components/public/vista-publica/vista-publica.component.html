@@ -65,7 +65,7 @@
 						</section>
 						<div
 							style="background-color: #dedfe2;max-height: 43vh; overflow-y: scroll; margin-bottom: 10vh;">
-							<pdf-viewer (click)="pasarPagina()" (after-load-complete)="callBackFn($event)"
+							<pdf-viewer (click)="pasarPagina()" (after-load-complete)="callBackFn($event)" matTooltip="Haga click sobre el documento para pasar de página"
 								class="iframeFac" [(page)]="currentPage" [rotation]="rotation" [src]="archivoFirmar"
 								[show-all]="false" [zoom]="zoom" [original-size]="true"></pdf-viewer>
 						</div>
