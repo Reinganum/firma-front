@@ -121,7 +121,7 @@ export class VistaDocumentoComponent implements OnInit {
   documento: any;
   async obtenerPathS3Firm(archivo: any) {
     console.log(archivo);
-    let bucket = window.location.hostname == "localhost" ? 'firma-otic-qa-doc' : "ofe-local-services"
+    let bucket = window.location.hostname !== "localhost" ? 'firma-otic-qa-doc' : "ofe-local-services"
     const fileData: any = {
       key: archivo,
       metodo: 'get',
