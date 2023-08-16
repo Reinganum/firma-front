@@ -92,6 +92,9 @@ export class VistaDocumentoComponent implements OnInit {
           this.documento = res.documento.data[0];
           this.obtenerPathS3(`Cargas/Documentos/${res.documento.data[0].archivo}`)
         } else {
+          console.log('aqui');
+          console.log(res.documento.data[0].estado);
+          
           this.documento = res.documento.data[0];
           this.obtenerPathS3(res.documento.data[0].archivoFirmado);
         }

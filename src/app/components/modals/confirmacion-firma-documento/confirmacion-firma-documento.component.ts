@@ -171,7 +171,7 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
         console.log(res);
         this.spinner.hide();
         this.notificarFirma()
-        this.router.navigate([`private/docsFirmados`]);
+        this.router.navigate([`private/docsFirmar`]);
       },
       error: (error: any) => {
         console.log(error);

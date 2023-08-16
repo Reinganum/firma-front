@@ -79,8 +79,8 @@ export class HeaderComponent {
         {
           next: async (res:any) => {
               console.log(res);
-              this.documentosService.setDocPendientes(res.docs)
-              this.notifications+=res.docs.length
+              this.documentosService.setDocPendientes(res.docs.data)
+              this.notifications+=res.docs.data.length
               await this.spinner.hide();
               this.toastrService.warning(`Tienes un total de ${res.docs.total} documentos pendientes por firmar`);
           },
