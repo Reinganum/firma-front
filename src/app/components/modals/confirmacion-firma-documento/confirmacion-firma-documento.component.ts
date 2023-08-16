@@ -83,8 +83,10 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
       firmante: {
         firmo: 1
       },
+      firmanteCorreo: this.datosFirmante.correo,
       idDoc:this.documento.idDoc?this.documento.idDoc:this.documento.id,
-      idFir: this.datosFirmante.id
+      idFir: this.datosFirmante.id,
+      hashDoc: this.documento.hashDoc
     }
     await this.spinner.show();
     console.log(dataFirmante);
