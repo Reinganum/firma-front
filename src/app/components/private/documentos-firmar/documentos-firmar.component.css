@@ -55,22 +55,6 @@ thead{
   background-color: #ff0000 !important /* Cambia este valor al color de fondo deseado */
 }
 
-.firmado{
-    color: #4dab61;
-    background-color: rgba(236,248,239,255);
-    border-radius: 12px;
-}
-
-.parcial{
-    color: #e0c453;
-    background-color: rgb(253,249,230);
-}
-
-.rechazado{
-    color: #d9605d;
-    background-color: rgb(251,234,235);
-}
-
 .iconos-options{
     background-color: #0B58A4 !important;
     height: 2rem;
@@ -133,4 +117,20 @@ thead{
  max-height: 2rem;
  min-width: 2rem;
  min-height: 2rem;
+}
+
+.firmado{
+  color: #4dab61;
+  background-color: rgba(236,248,239,255);
+  border-radius: 12px;
+}
+
+.parcial{
+  color: #e0c453;
+  background-color: rgb(253,249,230);
+}
+
+.rechazado{
+  color: #d9605d;
+  background-color: rgb(251,234,235);
 }
