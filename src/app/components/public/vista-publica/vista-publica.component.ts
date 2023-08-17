@@ -50,6 +50,7 @@ export class VistaPublicaComponent implements OnInit {
 	dataSource: any;
 	displayedColumns: any;
 	columns: any;
+	documento: any;
 
 	constructor(
 		private comunesServices: ComunesService,
@@ -96,7 +97,17 @@ export class VistaPublicaComponent implements OnInit {
 					this.toaster.warning("No se encontró el documento.");
 					return;
 				}
-				this.obtenerPathS3(`Cargas/Documentos/${res.documento.data[0].archivo}`)
+				if (res.documento.data[0].estado === 1 && !res.documento.data[0].archivoFirmado) {
+					this.fileName = res.documento.data[0].archivo;
+					this.documento = res.documento.data[0];
+					this.obtenerPathS3(`Cargas/Documentos/${res.documento.data[0].archivo}`)
+				} else {
+					console.log('aqui');
+					console.log(res.documento.data[0].estado);
+
+					this.documento = res.documento.data[0];
+					this.obtenerPathS3Firm(res.documento.data[0].archivoFirmado);
+				}
 				this.fileName = res.documento.data[0].archivo;
 				let firmantes = res.documento.data[0].firmantes;
 				console.log(firmantes)
@@ -127,17 +138,44 @@ export class VistaPublicaComponent implements OnInit {
 		});
 	}
 
+	async obtenerPathS3Firm(archivo: any) {
+		console.log(archivo);
+		let bucket = window.location.hostname !== "localhost" ? 'firma-otic-qa-doc' : "ofe-local-services"
+		const fileData: any = {
+			key: archivo,
+			metodo: 'get',
+			bucket
+		}
+		let resultado: any;
+		try {
+			resultado = await this.comunesServices.getSignedUrl(fileData).toPromise();
+			console.log(resultado);
+			this.archivoFirmar = resultado.message;
+			this.toaster.success("Documento cargado correctamente!");
+			await this.spinner.hide();
+		} catch (error: any) {
+			console.log(error);
+			await this.spinner.hide();
+		}
+	}
+
 	async obtenerPathS3(archivo: any) {
 		console.log(archivo);
 		const fileData: any = {
 			key: archivo,
 			metodo: 'get'
 		}
-		const resultado: any = await this.comunesServices.getSignedUrl(fileData).toPromise();
-		console.log(resultado);
-		this.archivoFirmar = resultado.message;
-		this.toaster.success("Documento cargado correctamente!");
-		await this.spinner.hide();
+		let resultado: any;
+		try {
+			resultado = await this.comunesServices.getSignedUrl(fileData).toPromise();
+			console.log(resultado);
+			this.archivoFirmar = resultado.message;
+			this.toaster.success("Documento cargado correctamente!");
+			await this.spinner.hide();
+		} catch (error: any) {
+			console.log(error);
+			await this.spinner.hide();
+		}
 	}
 
 	async descargarArchivo(archivo: any) {
