@@ -16,6 +16,7 @@ export class EnvioCorreoComponent implements OnInit {
   currentUser:any={}
   formEnvioCorreo!: FormGroup;
   @Input() documento:any;
+  @Input() datosFirmante: any;
   correos:any;
   
 /*
@@ -48,7 +49,9 @@ export class EnvioCorreoComponent implements OnInit {
     const datos = {
       email: this.formEnvioCorreo.value.correos.correo,
       asunto: 'Aviso de documento',
-      seguimiento: `${this.documento.hashDoc}`
+      seguimiento: `${this.documento.hashDoc}`,
+      nombre: this.datosFirmante.nombres,
+      apellido: this.datosFirmante.apellidos
     }
     this.spinner.show();
     this.correosService.notificarDocFirmado(datos).subscribe({
