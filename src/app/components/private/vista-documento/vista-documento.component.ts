@@ -98,7 +98,7 @@ export class VistaDocumentoComponent implements OnInit {
         }
         console.log(res.documento.data[0].firmantes);
         
-        this.firmante = res.documento.data[0].firmantes?.filter((f: any) => f.correo === this.currentUser.email)
+        this.firmante = res.documento.data[0].firmantes?.filter((f: any) => f.correo === this.currentUser.email)[0]
         console.log(this.firmante)
         if (res.documento.data[0].estado === 1  && !res.documento.data[0].archivoFirmado) {
           this.fileName = res.documento.data[0].archivo;

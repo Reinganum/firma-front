@@ -99,7 +99,6 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
         await this.spinner.hide();
       }
     });
-    this.activeModal.close({ estado: true });
   }
 
   editarFirmante(data: any) {
@@ -163,13 +162,12 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
         this.spinner.hide();
       }
     });
-    this.activeModal.close({ estado: true });
   }
 
   notificarFirma() {
-    console.log(`se está enviando mail a ${this.userInfo.email}`)
+    console.log(`se está enviando mail a ${this.datosFirmante.correo}`)
     const datos = {
-      email: `${this.userInfo.email}`,
+      email: `${this.datosFirmante.correo}`,
       asunto: 'Nuevo documento firmado',
       seguimiento: `${this.documento.hashDoc}`
     }
@@ -182,7 +180,6 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
         console.log(error);
       }
     });
-    this.activeModal.close({ estado: true });
   }
 
   crearNotificacion(document: any) {
@@ -200,6 +197,7 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
         console.log(error);
       }
     });
+    this.activeModal.close({ estado: true });
   }
 
   setEstadoDoc(firmantes: any) {

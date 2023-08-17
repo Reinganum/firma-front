@@ -12,26 +12,27 @@ import { DocumentosService } from 'src/app/services/documentos.service';
 export class DocsPendientesComponent implements OnInit {
   @Input() notificaciones: any;
   @Input() docsPendientes: any;
-  mensajesNotificacion!:any
 
+  mensajesNotificacion!:any
   constructor(
     public activeModal: NgbActiveModal,
     private router:Router,
   ) {}
-
+  
 
   ngOnInit() {
+    console.log(this.notificaciones.length)
     console.log(this.docsPendientes)
     this.mensajesNotificacion=this.notificaciones.map((noti:any)=>{
       if(noti.mail_firmante==="1"){
         return {
           tipo:"nuevoDoc",
-          msg:`Se ha cargado un nuevo documento ${noti.doc_firmado} en el que figuras como firmante`
+          msg:`Se ha cargado un nuevo documento ${noti.doc_firmado} en el que figuras como firmante.`
         }
       } else{ 
         return {
           tipo:"nuevaFirma",
-          msg:`Su documento "${noti.doc_firmado}" ha sido firmado ${noti.createdAt}`
+          msg:`Su documento "${noti.doc_firmado}" ha sido firmado con fecha ${this.convertDateForTable(noti.createdAt)}`
         }
       }
     })
@@ -44,5 +45,16 @@ export class DocsPendientesComponent implements OnInit {
 
   irAlDocumento(docId:any){
     this.router.navigate([`private/vista/${docId}`]);
+  }
+
+  public convertDateForTable(inputDate: string): string {
+    if (inputDate) {
+      const day = inputDate.slice(8, 10)
+      const month = inputDate.slice(5, 7)
+      const year = inputDate.slice(0, 4)
+
+      return `${day}-${month}-${year}`;
+    }
+    return '';
   }
 }

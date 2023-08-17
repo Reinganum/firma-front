@@ -90,7 +90,7 @@ export class HeaderComponent {
           },
           error: async (error:any) => {
             await this.spinner.hide();
-            console.log(error)
+            this.documentosPendientes=[]
             this.toastrService.warning(error);
           }
       });
