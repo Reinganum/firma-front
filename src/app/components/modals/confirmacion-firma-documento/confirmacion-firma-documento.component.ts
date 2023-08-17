@@ -70,7 +70,9 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
       firmanteCorreo: this.datosFirmante.correo,
       idDoc:this.documento.idDoc?this.documento.idDoc:this.documento.id,
       idFir: this.datosFirmante.id,
-      hashDoc: this.documento.hashDoc
+      hashDoc: this.documento.hashDoc,
+      nombre: this.datosFirmante.nombre,
+      apellido: this.datosFirmante.apellido
     }
     await this.spinner.show();
     console.log(dataFirmante);
@@ -154,30 +156,11 @@ export class ConfirmacionFirmaDocumentoComponent implements OnInit {
         this.crearNotificacion(this.documento)
         console.log(res);
         this.spinner.hide();
-        this.notificarFirma()
         this.router.navigate([`private/docsFirmar`]);
       },
       error: (error: any) => {
         console.log(error);
         this.spinner.hide();
-      }
-    });
-  }
-
-  notificarFirma() {
-    console.log(`se está enviando mail a ${this.datosFirmante.correo}`)
-    const datos = {
-      email: `${this.datosFirmante.correo}`,
-      asunto: 'Nuevo documento firmado',
-      seguimiento: `${this.documento.hashDoc}`
-    }
-
-    this.correosService.notificarDocFirmado(datos).subscribe({
-      next: (res: any) => {
-        console.log(res);
-      },
-      error: (error: any) => {
-        console.log(error);
       }
     });
   }
