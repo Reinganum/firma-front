@@ -230,4 +230,24 @@ export class MantenedorSistemasComponent implements OnInit {
       return (strArr[0].slice(0,1)+strArr[1].slice(0,1)).toUpperCase()
     }
    }
+
+   deleteMedio(medio:any){
+    
+   }
+
+   deleteDocType(doc:any){
+    this.spinner.show();
+    this.parametrosService.eliminarTipoDoc(doc.idMedioGestion).subscribe({
+      next: async(res:any) => {
+        console.log(res)
+        this.toastrService.success(`Se ha eliminado el usuario ${doc.medio}`);
+        await this.spinner.hide();
+        this.obtenerMedios()
+      },
+      error: (error: any) => {
+        console.log(error);
+        this.spinner.hide();
+      }
+    });
+   }
 }

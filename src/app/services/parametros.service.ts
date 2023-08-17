@@ -48,4 +48,8 @@ export class ParametrosService {
     console.log(data)
     return this.http.get<any>(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/filtrarMedios?nombre=${data.nombre}&estado=${data.estado}`);
   }
+
+  eliminarTipoDoc(id:any){
+    return this.http.delete<any>(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/eliminarTipoDoc?id=${id}`)
+  }
 }

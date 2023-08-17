@@ -41,6 +41,18 @@
               <i [data-feather]="'hard-drive'"></i><span class="menu-title text-truncate"
                   data-i18n="Home">Mantenedor Sistemas/Documentos</span></a>
             </li>
+            <li class="nav-item hidden-icon"><a class="d-flex align-items-center" (click)="showPendientesModal()">
+                <img src="../../../../assets/img/message-square.svg">
+                <span class="menu-title text-truncate">
+                    <p>Notificaciones</p>
+                </span></a>
+                </li>
+            <li class="nav-item hidden-icon"><a class="d-flex align-items-center" (click)="logout()">
+                <img src="../../../../assets/img/log-out.svg">
+                <span class="menu-title text-truncate">
+                    <p>Cerrar Sesión</p>
+                </span></a>
+              </li>
             <!-- <li class="nav-item"><a class="d-flex align-items-center" [routerLink]="['disenoPlantillas']">
                 <img class="me-2"  src="../../../../assets/img/salida-sidebar.svg"/><span class="menu-title text-truncate" data-i18n="Home">Documentos firmados</span></a>
             </li>

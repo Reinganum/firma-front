@@ -156,3 +156,7 @@ display: inline-flex;
 ::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) {
   background-color: transparent !important;
 }
+
+.option-icons{
+  background-color: #0B58A4 !important;
+}

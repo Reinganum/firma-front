@@ -115,6 +115,7 @@ export class HeaderComponent {
         {
           next: async (res:any) => {
               console.log(res);
+              this.documentosService.setNotis(res.notis)
               this.newNotifications=res.notis
               this.notifications+=res.notis.length
               await this.spinner.hide();
@@ -138,7 +139,7 @@ export class HeaderComponent {
       console.log(error);
     }
   }
-
+  
 }
 
 

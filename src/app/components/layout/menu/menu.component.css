@@ -15,6 +15,17 @@ a {
   
 }
 
+.hidden-icon{
+  visibility:hidden;
+}
+
 @media screen and (max-width: 991px) {
-  
+  .hidden-icon{
+    visibility: visible;
+  }
+}
+
+.nav-item p{
+  padding-left: 1rem;
+  color: white;
 }

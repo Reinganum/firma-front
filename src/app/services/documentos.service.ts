@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 export class DocumentosService {
   private docsPendientes: any[] = [];
   private origenes!:any;
+  private notis!:any
   constructor(
     private http: HttpClient
   ) { }
@@ -69,6 +70,14 @@ export class DocumentosService {
 
   getDocsPendientes() {
     return this.docsPendientes;
+  }
+
+  setNotis(data: any[]) {
+    this.notis = data;
+  }
+
+  getNotis() {
+    return this.notis;
   }
 
   setOrigenes(data: any) {

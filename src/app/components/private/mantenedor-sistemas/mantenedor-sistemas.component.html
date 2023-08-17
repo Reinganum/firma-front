@@ -90,7 +90,7 @@
                 <tr>
                   <th style="font-weight: normal!important;" *ngFor="let column of columns">{{column}}</th>
                   <th>
-                    <div class="d-flex flex-row flex-wrap justify-content-end">
+                    <div class="d-flex flex-row flex-wrap justify-content-center">
                       <div>
                         <span [ngClass]="{
                           'inactivo':medio.me_disponible!==1,
@@ -118,9 +118,10 @@
                     {{medio.me_sigla?medio.me_sigla:extraerIniciales(medio.me_descripcion)}}
                   </td>
                   <td>
-                    <div class="d-flex flex-row w-100 justify-content-end">
-                      <img src="../../../../assets/img/archivo_blanco.svg" (click)="switchToggle(i)" matTooltip="Ver documentos" class="iconos-options mx-1 p-1 rounded">
-                      <img src="../../../../assets/img/editar_btn.svg" class="iconos-options mx-1 p-1 rounded" matTooltip="Editar Origen" (click)="showEditModal(medio)">
+                    <div class="d-flex flex-row w-100 justify-content-center">
+                      <a><img src="../../../../assets/img/archivo_blanco.svg" (click)="switchToggle(i)" matTooltip="Ver tipos de documento" class="iconos-options mx-1 p-1 rounded"></a>
+                      <a><img src="../../../../assets/img/editar_btn.svg" class="iconos-options mx-1 p-1 rounded" matTooltip="Editar Origen" (click)="showEditModal(medio)"></a>
+                      <!-- <a><img src="../../../../assets/img/eliminar_btn.svg" matTooltip="Eliminar" (click)="deleteMedio(medio)" matTooltipClass="custom-tooltip" class="option-icons p-1 mx-1 rounded"/></a> -->
                     </div>
                   </td>
                 </tr>
@@ -140,6 +141,7 @@
                           <td>Nombre documento</td>
                           <td>ID</td>
                           <td class="text-center">Estado</td>
+                          <!-- <td>Eliminar</td> -->
                         </tr>
                       </thead>
                       <tbody *ngIf="medio.medioGestionData!==null" class="doc-table-body">
@@ -164,6 +166,9 @@
                               </span>
                             </div>
                           </td>
+                          <!-- <td>
+                            <a><img src="../../../../assets/img/eliminar_btn.svg" matTooltip="Eliminar" (click)="deleteDocType(documento)" matTooltipClass="custom-tooltip" class="option-icons p-1 mx-1 rounded"/></a>
+                          </td> -->
                         </tr> 
                       </tbody>
                     </table>

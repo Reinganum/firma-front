@@ -9,6 +9,10 @@ import {
   ViewEncapsulation } from '@angular/core';
   import { Router, NavigationEnd } from '@angular/router';
 import { AuthenticationService } from '../../auth/service/authentication.service';
+import { DocsPendientesComponent } from '../../modals/docs-pendientes/docs-pendientes.component';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { DocumentosService } from 'src/app/services/documentos.service';
+
 
 @Component({
   selector: 'app-menu',
@@ -19,11 +23,17 @@ export class MenuComponent {
   isCollapsed: boolean=false;
   isScrolled: boolean = false;
   mouseEnter: boolean = false;
+  modalRef!:NgbModalRef
+  notifications=0
   currentUser!:any
   @Input() menuVar:any;
   @Output() menuShow = new EventEmitter();
   @Output() menuColapsar = new EventEmitter();
-  constructor(private authenticationService:AuthenticationService) { }
+  constructor(
+    private authenticationService:AuthenticationService,
+    private modalService:NgbModal,
+    private documentosService:DocumentosService
+    ) { }
 
     /**
    * On Sidebar scroll set isScrolled as true
@@ -72,5 +82,21 @@ export class MenuComponent {
       this.colapsar();
       this.currentUser = this.authenticationService.currentUserValue;
       console.log(this.currentUser);
+    }
+
+    logout(){
+      this.authenticationService.logout()
+    }
+
+    showPendientesModal(){
+      this.modalRef=this.modalService.open(DocsPendientesComponent,{backdrop:'static',size:'md'});
+      this.notifications=0
+      this.modalRef.componentInstance.notificaciones = this.documentosService.getNotis()
+      this.modalRef.componentInstance.docsPendientes = this.documentosService.getDocsPendientes()
+      this.modalRef.result.then((res)=>{
+        if(res.estado){
+          this.modalRef.close();
+        }
+      })
     }
 }
