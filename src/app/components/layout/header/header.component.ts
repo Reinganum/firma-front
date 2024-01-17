@@ -45,6 +45,9 @@ export class HeaderComponent {
       console.log(this.userId)
       this.getDocsPendientes()
       this.getNotificaciones()
+      this.documentosService.notificationsCount$.subscribe((notis) => {
+        this.notifications = notis;
+      });
       if (this.swUpdate.isEnabled) {
         this.swUpdate.available.subscribe(() => {
           if (confirm("Existe una nueva versión del sistema. Aceptar para actualizar")) {
@@ -81,10 +84,8 @@ export class HeaderComponent {
       this.documentosService.documentosPendientes(this.currentUser.email).subscribe(
         {
           next: async (res:any) => {
-              console.log(res);
-              this.documentosService.setDocPendientes(res.docs.data)
+              if(res.docs)
               this.documentosPendientes=res.docs.data
-              this.notifications+=res.docs.data.length
               await this.spinner.hide();
               this.toastrService.warning(`Tienes un total de ${res.docs.total} documentos pendientes por firmar`);
           },
@@ -115,7 +116,11 @@ export class HeaderComponent {
         {
           next: async (res:any) => {
               console.log(res);
-              this.documentosService.setNotis(res.notis)
+              this.documentosService.updateNotificationCount(
+                {
+                  docs:this.documentosPendientes?this.documentosPendientes:[],
+                  notis:res.notis
+                });
               this.newNotifications=res.notis
               this.notifications+=res.notis.length
               await this.spinner.hide();

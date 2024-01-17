@@ -24,7 +24,8 @@ export class MenuComponent {
   isScrolled: boolean = false;
   mouseEnter: boolean = false;
   modalRef!:NgbModalRef
-  notifications=0
+  notifications:any
+  notificationCount:any
   currentUser!:any
   @Input() menuVar:any;
   @Output() menuShow = new EventEmitter();
@@ -81,7 +82,10 @@ export class MenuComponent {
     ngOnInit() {
       this.colapsar();
       this.currentUser = this.authenticationService.currentUserValue;
-      console.log(this.currentUser);
+      this.documentosService.notificationsCount$.subscribe((notis) => {
+        this.notificationCount = notis.notis.length + notis?.docs.length
+        this.notifications=notis
+      });
     }
 
     logout(){
@@ -90,9 +94,9 @@ export class MenuComponent {
 
     showPendientesModal(){
       this.modalRef=this.modalService.open(DocsPendientesComponent,{backdrop:'static',size:'md'});
-      this.notifications=0
-      this.modalRef.componentInstance.notificaciones = this.documentosService.getNotis()
-      this.modalRef.componentInstance.docsPendientes = this.documentosService.getDocsPendientes()
+      console.log(this.notifications)
+      this.modalRef.componentInstance.notificaciones = this.notifications.notis
+      this.modalRef.componentInstance.docsPendientes = this.notifications.docs
       this.modalRef.result.then((res)=>{
         if(res.estado){
           this.modalRef.close();

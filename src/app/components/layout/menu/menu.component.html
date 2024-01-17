@@ -42,9 +42,12 @@
                   data-i18n="Home">Mantenedor Sistemas/Documentos</span></a>
             </li>
             <li class="nav-item hidden-icon"><a class="d-flex align-items-center" (click)="showPendientesModal()">
-                <img src="../../../../assets/img/message-square.svg">
+                <div>
+                    <img src="../../../../assets/img/message-square.svg">
+                    <i [matBadge]="notificationCount" matBadgeSize="small" matBadgePosition="below before" [ngClass]="{hide:notifications===0}"></i>
+                </div>
                 <span class="menu-title text-truncate">
-                    <p>Notificaciones</p>
+                    <p class="notis">Notificaciones</p>
                 </span></a>
                 </li>
             <li class="nav-item hidden-icon"><a class="d-flex align-items-center" (click)="logout()">

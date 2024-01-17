@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class DocumentosService {
+  private notificationsSubject = new BehaviorSubject<any>({});
+  public notificationsCount$ = this.notificationsSubject.asObservable();
   private docsPendientes: any[] = [];
   private origenes!:any;
   private notis!:any
@@ -63,7 +66,11 @@ export class DocumentosService {
     const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
     return this.http.post(`${environment.API_DOMAINS.DOCUMENTOS}/documentos/crearNotificacion`, body, {headers})
   }
-  
+
+  updateNotificationCount(notis: any) {
+    this.notificationsSubject.next(notis);
+  }
+
   setDocPendientes(data: any[]) {
     this.docsPendientes = data;
   }

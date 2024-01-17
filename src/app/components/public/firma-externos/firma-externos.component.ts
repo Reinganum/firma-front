@@ -77,7 +77,7 @@ export class FirmaExternosComponent implements OnInit {
           next: async (res: any) => {
             try {
               this.esFirmante=true
-              this.obtenerPath(this.idDoc);
+              await this.obtenerPath(this.idDoc);
             } catch (error) {
               this.toaster.show("El token es inválido o ya expiró");
               return ;
@@ -184,6 +184,8 @@ export class FirmaExternosComponent implements OnInit {
     this.modalRef=this.modalService.open(ConfirmacionFirmaDocumentoComponent,{backdrop:'static',size:'md'});
     this.modalRef.componentInstance.documento = this.documento;
     this.modalRef.componentInstance.datosFirmante=this.datosFirmante
+    console.log("documento",this.documento)
+    console.log("datos firmante", this.datosFirmante);
     this.modalRef.result.then((res)=>{
       if(res.estado){
         this.modalRef.close();

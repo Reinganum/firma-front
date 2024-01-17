@@ -21,7 +21,7 @@ export class DocsPendientesComponent implements OnInit {
   
 
   ngOnInit() {
-    console.log(this.notificaciones.length)
+    console.log(this.notificaciones)
     console.log(this.docsPendientes)
     this.mensajesNotificacion=this.notificaciones.map((noti:any)=>{
       if(noti.mail_firmante==="1"){

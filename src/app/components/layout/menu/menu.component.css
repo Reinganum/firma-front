@@ -16,7 +16,7 @@ a {
 }
 
 .hidden-icon{
-  visibility:hidden;
+  
 }
 
 @media screen and (max-width: 991px) {
@@ -28,4 +28,8 @@ a {
 .nav-item p{
   padding-left: 1rem;
   color: white;
+}
+
+.notis{
+  margin-left: -1rem!important;
 }
